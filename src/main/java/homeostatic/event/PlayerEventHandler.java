@@ -24,7 +24,7 @@ import net.minecraftforge.network.PacketDistributor;
 import homeostatic.common.capabilities.CapabilityRegistry;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
-import homeostatic.network.TemperatureData;
+import homeostatic.network.StatsData;
 
 @Mod.EventBusSubscriber(modid=Homeostatic.MODID)
 public class PlayerEventHandler {
@@ -37,7 +37,20 @@ public class PlayerEventHandler {
 
         if (player != null && !player.level.isClientSide) {
             final ServerPlayer sp = (ServerPlayer) player;
+            ServerLevel world = sp.getLevel() instanceof ServerLevel ? (ServerLevel)sp.getLevel() : null;
 
+            if (world == null) return;
+            sp.getCapability(CapabilityRegistry.STATS_CAPABILITY).ifPresent(data -> {
+                BlockPos pos = sp.eyeBlockPosition();
+                Holder<Biome> biome = world.getBiome(pos);
+                float localTemperature = Temperature.getLocal(sp, pos, biome, world);
+                float bodyTemperature = data.getBodyTemperature();
+
+                NetworkHandler.INSTANCE.send(
+                        PacketDistributor.PLAYER.with(() -> sp),
+                        new StatsData(localTemperature, bodyTemperature)
+                );
+            });
         }
     }
 
@@ -68,22 +81,44 @@ public class PlayerEventHandler {
         if (tick % 20 == 0) {
             ProfilerFiller profilerfiller = world.getProfiler();
             profilerfiller.push("tempCalc");
-            sp.getCapability(CapabilityRegistry.TEMPERATURE).ifPresent(data -> {
+            sp.getCapability(CapabilityRegistry.STATS_CAPABILITY).ifPresent(data -> {
                 BlockPos pos = sp.eyeBlockPosition();
                 Holder<Biome> biome = world.getBiome(pos);
                 float localTemperature = Temperature.getLocal(sp, pos, biome, world);
-
-                float bodyTemperature = 0.1F;
+                float bodyTemperature = data.getBodyTemperature() + 0.0001F;
 
                 data.setLocalTemperature(localTemperature);
                 data.setBodyTemperature(bodyTemperature);
 
                 NetworkHandler.INSTANCE.send(
                     PacketDistributor.PLAYER.with(() -> sp),
-                    new TemperatureData(localTemperature, bodyTemperature)
+                    new StatsData(localTemperature, bodyTemperature)
                 );
             });
             profilerfiller.pop();
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerDeath(EntityJoinWorldEvent event) {
+        final Player player = event.getEntity() instanceof Player ? (Player) event.getEntity() : null;
+
+        if (player != null && !player.level.isClientSide) {
+            final ServerPlayer sp = (ServerPlayer) player;
+            ServerLevel world = sp.getLevel() instanceof ServerLevel ? (ServerLevel)sp.getLevel() : null;
+
+            if (world == null) return;
+            sp.getCapability(CapabilityRegistry.STATS_CAPABILITY).ifPresent(data -> {
+                BlockPos pos = sp.eyeBlockPosition();
+                Holder<Biome> biome = world.getBiome(pos);
+                float localTemperature = Temperature.getLocal(sp, pos, biome, world);
+                float bodyTemperature = 1.634F;
+
+                NetworkHandler.INSTANCE.send(
+                        PacketDistributor.PLAYER.with(() -> sp),
+                        new StatsData(localTemperature, bodyTemperature)
+                );
+            });
         }
     }
 

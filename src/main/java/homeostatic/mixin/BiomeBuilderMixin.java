@@ -18,6 +18,8 @@ public abstract class BiomeBuilderMixin {
 
     @Shadow @Nullable private Biome.BiomeCategory biomeCategory;
 
+    @Shadow private Biome.TemperatureModifier temperatureModifier;
+
     @Shadow public abstract BiomeBuilder temperature(float pTemperature);
 
     @Shadow @Nullable private Biome.Precipitation precipitation;
@@ -58,7 +60,7 @@ public abstract class BiomeBuilderMixin {
                     this.temperature(0.105F);
                     break;
                 case JUNGLE:
-                    this.temperature(0.952F);
+                    this.temperature(1.108F);
                     break;
                 case MESA:
                     this.temperature(1.309F);
@@ -108,6 +110,11 @@ public abstract class BiomeBuilderMixin {
                     }
                     break;
             }
+
+            if (this.temperatureModifier == Biome.TemperatureModifier.FROZEN) {
+                this.temperature(0.105F);
+            }
+
         }
         Homeostatic.LOGGER.warn(this.toString());
     }

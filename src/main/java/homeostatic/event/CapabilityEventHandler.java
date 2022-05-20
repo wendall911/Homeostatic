@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.common.util.FakePlayer;
 
-import homeostatic.common.capabilities.TemperatureCapability;
+import homeostatic.common.capabilities.Stats;
 import homeostatic.Homeostatic;
 
 @Mod.EventBusSubscriber(modid=Homeostatic.MODID)
@@ -20,7 +20,7 @@ public class CapabilityEventHandler {
         if (event.getObject() instanceof Player && !(event.getObject() instanceof FakePlayer)) {
             event.addCapability(
                 new ResourceLocation(Homeostatic.MODID, "temperature"),
-                new TemperatureCapability.Provider()
+                new Stats.Provider()
             );
         }
     }

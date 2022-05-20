@@ -18,7 +18,7 @@ public final class BlockRadiation {
         return this.isFluid;
     }
 
-    public double getBlockRadiation(double distance, boolean obscured) {
+    public double getBlockRadiation(double distance, boolean obscured, int y) {
         double radiation;
 
         if (distance <= 1) {
@@ -28,6 +28,10 @@ public final class BlockRadiation {
             radiation = this.getMaxRadiation() / distance;
         }
 
+        if (y > 0 && y < 5) {
+            radiation = radiation * ((4 - y) * 0.25);
+        }
+
         if (obscured) {
             radiation = radiation * 0.9;
         }
@@ -35,7 +39,7 @@ public final class BlockRadiation {
         return Math.min(radiation, getMaxRadiation());
     }
 
-    public double getBlockRadiation(double distance, boolean obscured, double amount) {
+    public double getBlockRadiation(double distance, boolean obscured, double amount, int y) {
         double radiation = 0.0;
 
         if (amount <= 0) return radiation;
@@ -45,6 +49,10 @@ public final class BlockRadiation {
         }
         else {
             radiation = this.getMaxRadiation() * amount / distance;
+        }
+
+        if (y > 0 && y < 5) {
+            radiation = radiation * ((4 - y) * 0.25);
         }
 
         if (obscured) {

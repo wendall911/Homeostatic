@@ -12,11 +12,11 @@ import homeostatic.Homeostatic;
 @Mod.EventBusSubscriber(modid=Homeostatic.MODID)
 public class CapabilityRegistry {
 
-    public static final Capability<TemperatureCapability> TEMPERATURE = CapabilityManager.get(new CapabilityToken<>() {});
+    public static final Capability<Stats> STATS_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
     @SubscribeEvent
     public static void registerCapability(RegisterCapabilitiesEvent event) {
-        event.register(TemperatureCapability.class);
+        event.register(Stats.class);
     }
 
 }

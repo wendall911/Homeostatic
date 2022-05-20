@@ -24,7 +24,7 @@ public final class NetworkHandler {
     public static void init() {
         int id = 0;
 
-        registerMessage(id++, TemperatureData.class, TemperatureData::new);
+        registerMessage(id++, StatsData.class, StatsData::new);
     }
 
     private static <T extends IData> void registerMessage(int idx, Class<T> type, Function<FriendlyByteBuf, T> decoder) {

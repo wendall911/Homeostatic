@@ -11,6 +11,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
 
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.ModList;
 import sereneseasons.api.season.SeasonHelper;
 import sereneseasons.config.BiomeConfig;
 
-import homeostatic.common.block.BlockRegistry;
+import homeostatic.Homeostatic;
 import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.util.TempHelper;
 
@@ -27,11 +28,10 @@ public final class Temperature {
 
     /*
      * Returns WBGT
+     * See: https://en.wikipedia.org/wiki/Wet-bulb_globe_temperature
      */
     public static float getLocal(ServerPlayer sp, BlockPos pos, Holder<Biome> biome, ServerLevel world) {
         LevelData info = world.getLevelData();
-        ServerLevelAccessor serverLevel = (ServerLevelAccessor) world;
-        ServerLevelData serverInfo = serverLevel.getServerLevelData();
         ArrayList<Holder<Biome>> biomes = new ArrayList<>();
         int chunks = 3;
         float accumulatedDryTemp = 0.0F;
@@ -40,19 +40,35 @@ public final class Temperature {
         float dryTemp;
         float wetTemp;
         float blackGlobeTemp;
-        boolean isUnderground = isUnderground(pos, world);
-        boolean isSheltered = isSheltered(pos, world);
+        float airTemperature;
+        float waterTemperature;
+        EnvironmentData envData = Environment.getData(world, sp);
+        boolean isUnderground = envData.isUnderground();
+        boolean isSheltered = envData.isSheltered();
+        double envRadiation = envData.getRadiation();
+        double waterVolume = envData.getWaterVolume();
+        boolean isPartialSubmersion = !sp.isUnderWater() && sp.isInWater() && sp.isInWaterRainOrBubble();
+        boolean isSubmerged = sp.isUnderWater() && sp.isInWater() && sp.isInWaterRainOrBubble();
+        Holder<Biome> lushBiome = world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getHolderOrThrow(Biomes.LUSH_CAVES);
+
+        /*
+         * Since we can literally jump vertically out of the water, check the block under the player to see if they are
+         * "swimming" ... mc mechanics are so weird, lol.
+         */
+        if (!isPartialSubmersion) {
+            isPartialSubmersion = sp.getFeetBlockState().getMaterial().equals(Material.WATER);
+        }
 
         // If sheltered, consider local biome UNDERGROUND
         if (isSheltered || isUnderground) {
-            biomes.add(world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getHolderOrThrow(Biomes.LUSH_CAVES));
+            biomes.add(lushBiome);
         }
         else {
             biomes.add(biome);
         }
 
-        // Only do biome smoothing if not underground
-        if (!isUnderground) {
+        // Only do biome smoothing if not underground or submerged
+        if (!isUnderground || isSubmerged) {
             for (int x = chunks; x < chunks + 1; x++) {
                 for (int z = -chunks; z < chunks + 1; z++) {
                     BlockPos chunkPos = pos.offset(x * 16, 0, z * 16);
@@ -65,32 +81,13 @@ public final class Temperature {
         }
 
         for (Holder<Biome> chunkBiome : biomes) {
-            float seasonOffset = getSeasonOffset(chunkBiome, world);
+            float seasonOffset = getSeasonOffset(world, BiomeConfig.enablesSeasonalEffects(chunkBiome));
 
             accumulatedDryTemp += chunkBiome.value().getHeightAdjustedTemperature(pos) * seasonOffset;
 
             // Only calculate humidity for rain biomes
             if (info.getGameRules().getBoolean(GameRules.RULE_WEATHER_CYCLE)) {
-                double biomeHumidity;
-                double maxRH = getMaxBiomeHumidity(biome);
-                double minRH = maxRH - 20;
-
-                if (chunkBiome.value().getPrecipitation() == Biome.Precipitation.RAIN) {
-                    int nextRain = serverInfo.getClearWeatherTime();
-
-                    if (info.isRaining()) {
-                        biomeHumidity = maxRH;
-                    } else if (nextRain > 0 && nextRain < 12001) {
-                        biomeHumidity = minRH + (20 * (1 - (float) nextRain / 12000));
-                    } else {
-                        biomeHumidity = minRH;
-                    }
-                }
-                else {
-                    biomeHumidity = minRH;
-                }
-
-                accumulatedHumidity += biomeHumidity;
+                accumulatedHumidity += getBiomeHumidity(world, biome, chunkBiome);
             }
         }
 
@@ -98,30 +95,64 @@ public final class Temperature {
 
         relativeHumidity = accumulatedHumidity / biomes.size();
         wetTemp = (float) TempHelper.getHeatIndex(dryTemp, relativeHumidity);
-        blackGlobeTemp = (float) getBlackGlobeTemp(world, sp, dryTemp, relativeHumidity, isSheltered, isUnderground);
+        blackGlobeTemp = (float) getBlackGlobeTemp(world, envRadiation, dryTemp, relativeHumidity, isSheltered, isUnderground);
 
-        /*
-         * If not exposed to solar radiation, we use the simplified formula for temperature calculation.
-         * See: https://en.wikipedia.org/wiki/Wet-bulb_globe_temperature
-         */
         if (isSheltered || isUnderground) {
-            return (wetTemp * 0.7F) + (blackGlobeTemp * 0.3F);
+            //If not exposed to solar radiation, we use the simplified formula for temperature calculation.
+            airTemperature = (wetTemp * 0.7F) + (blackGlobeTemp * 0.3F);
         }
         else {
-            return (wetTemp * 0.7F) + (blackGlobeTemp * 0.2F) + (dryTemp * 0.1F);
+            airTemperature = (wetTemp * 0.7F) + (blackGlobeTemp * 0.2F) + (dryTemp * 0.1F);
         }
+
+        if (isSubmerged || isPartialSubmersion) {
+            waterTemperature = getWaterTemperature(airTemperature, waterVolume);
+
+            if (isSubmerged) {
+                return waterTemperature;
+            }
+
+            return (waterTemperature * 0.7F) + (airTemperature * 0.3F);
+        }
+
+        return airTemperature;
     }
 
     /*
      * Calculate current radiation where player is standing.
      */
-    private static double getBlackGlobeTemp(ServerLevel world, ServerPlayer sp, float dryTemp, double relativeHumidity, boolean isSheltered, boolean isUnderground) {
-        double radiation = 0.0;
+    private static double getBlackGlobeTemp(ServerLevel world, double envRadiation, float dryTemp, double relativeHumidity, boolean isSheltered, boolean isUnderground) {
+        double radiation = envRadiation;
 
         radiation += getSunRadiation(world, isSheltered, isUnderground);
-        radiation += BlockRegistry.getBlockRadiation(world, sp);
 
         return TempHelper.getBlackGlobe(radiation, dryTemp, relativeHumidity);
+    }
+
+    private static double getBiomeHumidity(ServerLevel world, Holder<Biome> curBiome, Holder<Biome> targetBiome) {
+        LevelData info = world.getLevelData();
+        ServerLevelAccessor serverLevel = (ServerLevelAccessor) world;
+        ServerLevelData serverInfo = serverLevel.getServerLevelData();
+        double biomeHumidity;
+        double maxRH = getMaxBiomeHumidity(curBiome);
+        double minRH = maxRH - 20;
+
+        if (targetBiome.value().getPrecipitation() == Biome.Precipitation.RAIN) {
+            int nextRain = serverInfo.getClearWeatherTime();
+
+            if (info.isRaining()) {
+                biomeHumidity = maxRH;
+            } else if (nextRain > 0 && nextRain <= 12000) {
+                biomeHumidity = minRH + (20 * (1 - (float) nextRain / 12000));
+            } else {
+                biomeHumidity = minRH;
+            }
+        }
+        else {
+            biomeHumidity = minRH;
+        }
+
+        return biomeHumidity;
     }
 
     private static double getSunRadiation(ServerLevel world, boolean isSheltered, boolean isUnderground) {
@@ -154,65 +185,33 @@ public final class Temperature {
             case OCEAN, BEACH, MUSHROOM, RIVER -> 70.0;
             case EXTREME_HILLS, MOUNTAIN, FOREST, TAIGA -> 50.0;
             case JUNGLE, SWAMP -> 90.0;
-            case PLAINS, UNDERGROUND -> 60.0;
+            case PLAINS -> 60.0;
             default -> 40.0;
         };
     }
 
-    /*
-     * Simple check to see if player is sheltered.
-     */
-    private static boolean isSheltered(BlockPos pos, ServerLevel world) {
-        boolean isSheltered = !world.canSeeSky(pos.above());
-        DimensionType dimensionType = world.dimensionType();
+    private static float getWaterTemperature(float airTemperature, double waterVolume) {
+        float baseWaterTemp = 0.663F;
+        float waterTemp;
+        float parity = 0.997F;
 
-        if (DimensionType.OVERWORLD_LOCATION.equals(dimensionType)) {
-            for (int x = -2; x <= 2; x++) {
-                for (int z = -2; z <= 2; z++) {
-                    if (isSheltered) {
-                        isSheltered = !world.canSeeSky(pos.offset(x, 0, z).above());
-                    }
-                }
-            }
+        if (airTemperature >= parity) {
+            float increase = 0.1F + ((float) (1 - waterVolume) * 0.35F);
+            waterTemp = baseWaterTemp + ((airTemperature - parity) * increase);
         }
         else {
-            isSheltered = false;
+            waterTemp = Math.max(baseWaterTemp - (((parity - airTemperature) * 0.5F)), 0.072F);
         }
 
-        return isSheltered;
+        return waterTemp;
     }
 
-    /*
-     * Simple check to see if player is Underground.
-     */
-    private static boolean isUnderground(BlockPos pos, ServerLevel world) {
-        boolean isUnderground = !world.canSeeSky(pos.above());
-        DimensionType dimensionType = world.dimensionType();
-
-        if (DimensionType.OVERWORLD_LOCATION.equals(dimensionType)) {
-            for (int x = -12; x <= 12; x++) {
-                for (int y = 0; y <= 11; y++) {
-                    for (int z = -12; z <= 12; z++) {
-                        if (isUnderground) {
-                            isUnderground = !world.canSeeSky(pos.offset(x, y, z).above());
-                        }
-                    }
-                }
-            }
-        }
-        else {
-            isUnderground = false;
-        }
-
-        return isUnderground;
-    }
-
-    private static float getSeasonOffset(Holder<Biome> biome, ServerLevel world) {
+    private static float getSeasonOffset(ServerLevel world, boolean seasonEffects) {
         float offset = 1.0F;
         DimensionType dimensionType = world.dimensionType();
 
         if (ModList.get().isLoaded("sereneseasons")) {
-            if (BiomeConfig.enablesSeasonalEffects(biome) && !DimensionType.OVERWORLD_LOCATION.equals(dimensionType)) {
+            if (seasonEffects && !DimensionType.OVERWORLD_LOCATION.equals(dimensionType)) {
                 switch(SeasonHelper.getSeasonState(world).getSubSeason()) {
                     case MID_SPRING:
                         break;

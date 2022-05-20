@@ -11,9 +11,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class TemperatureCapability {
+public class Stats {
 
-    public static Tag writeNBT(Capability<TemperatureCapability> capability, TemperatureCapability instance, Direction side) {
+    public static Tag writeNBT(Capability<Stats> capability, Stats instance, Direction side) {
         CompoundTag tag = new CompoundTag();
 
         tag.putFloat("bodyTemperature", instance.getBodyTemperature());
@@ -22,12 +22,12 @@ public class TemperatureCapability {
         return tag;
     }
 
-    public static void readNBT(Capability<TemperatureCapability> capability, TemperatureCapability instance, Direction side, Tag nbt) {
+    public static void readNBT(Capability<Stats> capability, Stats instance, Direction side, Tag nbt) {
         instance.setBodyTemperature(((CompoundTag) nbt).getFloat("bodyTemperature"));
         instance.setLocalTemperature(((CompoundTag) nbt).getFloat("localTemperature"));
     }
 
-    private float bodyTemperature = 0F;
+    private float bodyTemperature = 1.634F;
     private float localTemperature = 0F;
 
     public void setBodyTemperature(float temperature) {
@@ -48,12 +48,12 @@ public class TemperatureCapability {
 
     public static class Provider implements ICapabilitySerializable<Tag> {
         @Nonnull
-        private final TemperatureCapability instance;
+        private final Stats instance;
 
-        private final LazyOptional<TemperatureCapability> handler;
+        private final LazyOptional<Stats> handler;
 
         public Provider() {
-            instance = new TemperatureCapability();
+            instance = new Stats();
             handler = LazyOptional.of(this::getInstance);
         }
 
@@ -62,21 +62,21 @@ public class TemperatureCapability {
         public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
             if (cap == null) return LazyOptional.empty();
 
-            return CapabilityRegistry.TEMPERATURE.orEmpty(cap, handler);
+            return CapabilityRegistry.STATS_CAPABILITY.orEmpty(cap, handler);
         }
 
-        public TemperatureCapability getInstance() {
+        public Stats getInstance() {
             return instance;
         }
 
         @Override
         public Tag serializeNBT() {
-            return TemperatureCapability.writeNBT(CapabilityRegistry.TEMPERATURE, instance, null);
+            return Stats.writeNBT(CapabilityRegistry.STATS_CAPABILITY, instance, null);
         }
 
         @Override
         public void deserializeNBT(Tag nbt) {
-            TemperatureCapability.readNBT(CapabilityRegistry.TEMPERATURE, instance, null, nbt);
+            Stats.readNBT(CapabilityRegistry.STATS_CAPABILITY, instance, null, nbt);
         }
 
     }

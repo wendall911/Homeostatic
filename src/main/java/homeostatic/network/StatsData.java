@@ -10,17 +10,17 @@ import net.minecraftforge.network.NetworkEvent;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
 
-public class TemperatureData implements IData {
+public class StatsData implements IData {
 
     float localTemperature;
     float bodyTemperature;
 
-    public TemperatureData(float localTemperature, float bodyTemperature) {
+    public StatsData(float localTemperature, float bodyTemperature) {
         this.localTemperature = localTemperature;
         this.bodyTemperature = bodyTemperature;
     }
 
-    public TemperatureData(FriendlyByteBuf buf) {
+    public StatsData(FriendlyByteBuf buf) {
         localTemperature = buf.readFloat();
         bodyTemperature = buf.readFloat();
     }
@@ -34,7 +34,7 @@ public class TemperatureData implements IData {
     @Override
     public void process(Supplier<NetworkEvent.Context> ctx) {
         if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
-            ctx.get().enqueueWork(() -> Minecraft.getInstance().player.getCapability(CapabilityRegistry.TEMPERATURE).ifPresent(data -> {
+            ctx.get().enqueueWork(() -> Minecraft.getInstance().player.getCapability(CapabilityRegistry.STATS_CAPABILITY).ifPresent(data -> {
                 data.setLocalTemperature(localTemperature);
                 data.setBodyTemperature(bodyTemperature);
             }));

@@ -25,12 +25,12 @@ public class TemperatureInfo extends Info {
     public void renderText(PoseStack matrix, Minecraft mc, BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
 
-        player.getCapability(CapabilityRegistry.TEMPERATURE).ifPresent(data -> {
+        player.getCapability(CapabilityRegistry.STATS_CAPABILITY).ifPresent(data -> {
             int temperature = 5;
             String formattedTemp;
 
             String localTemp = String.format("%.2f", TempHelper.convertMcTemp(data.getLocalTemperature(), ConfigHandler.Client.useFahrenheit()));
-            String bodyTemp = String.format("%.2f", data.getBodyTemperature());
+            String bodyTemp = String.format("%.2f", TempHelper.convertMcTemp(data.getBodyTemperature(), ConfigHandler.Client.useFahrenheit()));
 
             formattedTemp = String.format(Locale.ENGLISH, "%s %s", localTemp, bodyTemp);
 
