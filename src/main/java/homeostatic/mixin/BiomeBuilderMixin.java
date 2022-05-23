@@ -2,6 +2,8 @@ package homeostatic.mixin;
 
 import javax.annotation.Nullable;
 
+import homeostatic.common.biome.BiomeData;
+import homeostatic.common.biome.BiomeRegistry;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeBuilder;
 
@@ -29,7 +31,7 @@ public abstract class BiomeBuilderMixin {
     /*
      * Override default minecraft temperatures with ones that make a little more sense.
      * It is already silly that we can have icy next to desert and whatnot, but this at
-     * least makes it so we can blend a little better. Icy biomes should just be below
+     * least makes it so we can blend a little better. Cold biomes should just be below
      * freezing, not insane cold temperatures. Hot biomes shouldn't be 120 degrees in the
      * spring, etc. Also remove dumb things like savanna being hotter than a desert. I
      * guess the Minecraft devs never even did a basic lookup of weather and temperature.
@@ -42,81 +44,12 @@ public abstract class BiomeBuilderMixin {
         at = @At("HEAD"),
         cancellable = true)
     private void injectBuild(CallbackInfoReturnable<Biome> cir) {
-        if (this.biomeCategory != null) {
-            switch(this.biomeCategory) {
-                case BEACH:
-                    this.temperature(0.886F);
-                    break;
-                case DESERT:
-                    this.temperature(1.354F);
-                    break;
-                case EXTREME_HILLS:
-                    this.temperature(0.841F);
-                    break;
-                case FOREST:
-                    this.temperature(0.886F);
-                    break;
-                case ICY:
-                    this.temperature(0.105F);
-                    break;
-                case JUNGLE:
-                    this.temperature(1.108F);
-                    break;
-                case MESA:
-                    this.temperature(1.309F);
-                    break;
-                case MOUNTAIN:
-                    this.temperature(0.841F);
-                    break;
-                case MUSHROOM:
-                    this.temperature(0.908F);
-                    break;
-                case NETHER:
-                    this.temperature(1.666F);
-                    break;
-                case NONE:
-                    this.temperature(0.15F);
-                    break;
-                case OCEAN:
-                    this.temperature(0.663F);
-                    break;
-                case PLAINS:
-                    this.temperature(0.997F);
-                    break;
-                case RIVER:
-                    this.temperature(0.663F);
-                    break;
-                case SAVANNA:
-                    this.temperature(1.220F);
-                    break;
-                case SWAMP:
-                    this.temperature(0.886F);
-                    break;
-                case TAIGA:
-                    this.temperature(0.730F);
-                    break;
-                case THEEND:
-                    this.temperature(0.551F);
-                    break;
-                case UNDERGROUND:
-                    this.temperature(0.663F);
-                    break;
-            }
+        BiomeData biomeData = BiomeRegistry.BIOMES.get(this.biomeCategory);
 
-            switch(this.precipitation) {
-                case SNOW:
-                    if (this.temperature > 0.105F) {
-                        this.temperature(0.217F);
-                    }
-                    break;
-            }
-
-            if (this.temperatureModifier == Biome.TemperatureModifier.FROZEN) {
-                this.temperature(0.105F);
-            }
-
+        if (biomeData != null) {
+            this.temperature(biomeData.getTemperature(this.temperatureModifier, this.precipitation));
         }
-        Homeostatic.LOGGER.warn(this.toString());
+
     }
 
 }

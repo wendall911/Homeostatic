@@ -1,4 +1,4 @@
-package homeostatic.common;
+package homeostatic.common.temperature;
 
 public class EnvironmentData {
 

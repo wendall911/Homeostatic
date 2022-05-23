@@ -1,6 +1,7 @@
 package homeostatic.event;
 
-import homeostatic.common.Temperature;
+import homeostatic.common.temperature.BodyTemperature;
+import homeostatic.common.temperature.EnvironmentTemperature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
@@ -43,7 +44,7 @@ public class PlayerEventHandler {
             sp.getCapability(CapabilityRegistry.STATS_CAPABILITY).ifPresent(data -> {
                 BlockPos pos = sp.eyeBlockPosition();
                 Holder<Biome> biome = world.getBiome(pos);
-                float localTemperature = Temperature.getLocal(sp, pos, biome, world);
+                float localTemperature = EnvironmentTemperature.get(sp, pos, biome, world);
                 float bodyTemperature = data.getBodyTemperature();
 
                 NetworkHandler.INSTANCE.send(
@@ -84,7 +85,7 @@ public class PlayerEventHandler {
             sp.getCapability(CapabilityRegistry.STATS_CAPABILITY).ifPresent(data -> {
                 BlockPos pos = sp.eyeBlockPosition();
                 Holder<Biome> biome = world.getBiome(pos);
-                float localTemperature = Temperature.getLocal(sp, pos, biome, world);
+                float localTemperature = EnvironmentTemperature.get(sp, pos, biome, world);
                 float bodyTemperature = data.getBodyTemperature() + 0.0001F;
 
                 data.setLocalTemperature(localTemperature);
@@ -111,8 +112,8 @@ public class PlayerEventHandler {
             sp.getCapability(CapabilityRegistry.STATS_CAPABILITY).ifPresent(data -> {
                 BlockPos pos = sp.eyeBlockPosition();
                 Holder<Biome> biome = world.getBiome(pos);
-                float localTemperature = Temperature.getLocal(sp, pos, biome, world);
-                float bodyTemperature = 1.634F;
+                float localTemperature = EnvironmentTemperature.get(sp, pos, biome, world);
+                float bodyTemperature = BodyTemperature.NORMAL;
 
                 NetworkHandler.INSTANCE.send(
                         PacketDistributor.PLAYER.with(() -> sp),

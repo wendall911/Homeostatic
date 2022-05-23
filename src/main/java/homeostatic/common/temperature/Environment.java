@@ -1,4 +1,4 @@
-package homeostatic.common;
+package homeostatic.common.temperature;
 
 import com.mojang.math.Vector3d;
 
@@ -20,7 +20,6 @@ import net.minecraft.world.phys.Vec3;
 
 import homeostatic.common.block.BlockRadiation;
 import homeostatic.common.block.BlockRegistry;
-import homeostatic.Homeostatic;
 import homeostatic.util.VecMath;
 
 public class Environment {
@@ -57,9 +56,21 @@ public class Environment {
                 for (int y = -3; y <= 11; y++) {
                     chunkPos = new ChunkPos((pos.getX() + x) >> 4,(pos.getZ() + z) >> 4);
                     chunk = getChunk(world, chunkPos, chunkMap);
+
                     if (chunk == null) continue;
+
                     BlockPos blockpos = pos.offset(x, y, z);
-                    PalettedContainer<BlockState> palette = chunk.getSection((blockpos.getY() >> 4) - chunk.getMinSection()).getStates();
+                    PalettedContainer<BlockState> palette;
+
+                    // If in the void, this gets weird, let's just catch and move on.
+                    try {
+                        palette = chunk.getSection((blockpos.getY() >> 4) - chunk.getMinSection()).getStates();
+
+                    }
+                    catch (Exception e) {
+                        continue;
+                    }
+
                     BlockState state = palette.get(blockpos.getX() & 15, blockpos.getY() & 15, blockpos.getZ() & 15);
                     boolean isWater = state.getMaterial().equals(Material.WATER);
 
@@ -67,9 +78,9 @@ public class Environment {
                         isUnderground = !world.canSeeSky(eyePos.offset(x, y, z).above());
                     }
 
-                    if (state.isAir()) continue;
-
                     totalBlocks++;
+
+                    if (state.isAir()) continue;
 
                     if (isWater) {
                         waterVolume++;
@@ -94,6 +105,8 @@ public class Environment {
                 }
             }
         }
+
+        waterVolume = waterVolume == 0 ? 0 : waterVolume / totalBlocks;
 
         return new EnvironmentData(isUnderground, isSheltered, radiation, waterVolume / totalBlocks);
     }
