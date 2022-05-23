@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.mojang.datafixers.util.Pair;
 
-import homeostatic.Homeostatic;
 import homeostatic.common.biome.BiomeData;
 import homeostatic.common.biome.BiomeRegistry;
 import net.minecraft.core.BlockPos;
@@ -27,6 +26,7 @@ import net.minecraftforge.fml.ModList;
 import sereneseasons.api.season.SeasonHelper;
 import sereneseasons.config.BiomeConfig;
 
+import homeostatic.Homeostatic;
 import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.util.TempHelper;
 
@@ -200,6 +200,7 @@ public final class EnvironmentTemperature {
 
         if (airTemperature >= parity) {
             float increase = 0.1F + ((float) (1 - waterVolume) * 0.35F);
+
             waterTemp = baseWaterTemp + ((airTemperature - parity) * increase);
         }
         else {

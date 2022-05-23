@@ -5,6 +5,7 @@ import com.mojang.math.Vector3d;
 import java.util.HashMap;
 import java.util.Map;
 
+import homeostatic.Homeostatic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -27,6 +28,7 @@ public class Environment {
     public static EnvironmentData getData(ServerLevel world, ServerPlayer sp) {
         double radiation = 0.0;
         double waterVolume = 0;
+        double waterBlocks = 0;
         double totalBlocks = 0;
         Map<ChunkPos, LevelChunk> chunkMap = new HashMap<>();
         BlockPos pos = sp.blockPosition();
@@ -78,13 +80,15 @@ public class Environment {
                         isUnderground = !world.canSeeSky(eyePos.offset(x, y, z).above());
                     }
 
-                    totalBlocks++;
+                    if ((x <= 5 && x >= -5) && (y <= 5) && (z <= 5 && z <= -5)) {
+                        totalBlocks++;
+
+                        if (isWater) {
+                            waterBlocks++;
+                        }
+                    }
 
                     if (state.isAir()) continue;
-
-                    if (isWater) {
-                        waterVolume++;
-                    }
 
                     if (y <= 3) {
                         BlockRadiation blockRadiation = BlockRegistry.RADIATION_BLOCKS.get(state.getBlock());
@@ -106,9 +110,9 @@ public class Environment {
             }
         }
 
-        waterVolume = waterVolume == 0 ? 0 : waterVolume / totalBlocks;
+        waterVolume = waterBlocks == 0 ? 0 : waterBlocks / totalBlocks;
 
-        return new EnvironmentData(isUnderground, isSheltered, radiation, waterVolume / totalBlocks);
+        return new EnvironmentData(isUnderground, isSheltered, radiation, waterVolume);
     }
 
     private static LevelChunk getChunk(Level world, ChunkPos pos, Map<ChunkPos, LevelChunk> chunks) {
