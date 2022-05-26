@@ -5,7 +5,6 @@ import com.mojang.math.Vector3d;
 import java.util.HashMap;
 import java.util.Map;
 
-import homeostatic.Homeostatic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -25,7 +24,9 @@ import homeostatic.util.VecMath;
 
 public class Environment {
 
-    public static EnvironmentData getData(ServerLevel world, ServerPlayer sp) {
+    public static final float PARITY = 1.108F;
+
+    public static EnvironmentInfo get(ServerLevel world, ServerPlayer sp) {
         double radiation = 0.0;
         double waterVolume = 0;
         double waterBlocks = 0;
@@ -112,7 +113,7 @@ public class Environment {
 
         waterVolume = waterBlocks == 0 ? 0 : waterBlocks / totalBlocks;
 
-        return new EnvironmentData(isUnderground, isSheltered, radiation, waterVolume);
+        return new EnvironmentInfo(isUnderground, isSheltered, radiation, waterVolume);
     }
 
     private static LevelChunk getChunk(Level world, ChunkPos pos, Map<ChunkPos, LevelChunk> chunks) {

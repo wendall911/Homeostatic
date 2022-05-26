@@ -17,7 +17,7 @@ public class BiomeRegistry {
     private static final BiomeData BEACH = new BiomeData(0.663F, 70.0F, 40F, 10F);
     private static final BiomeData FOREST = new BiomeData(0.663F, 50.0F, 40F, 12F);
     private static final BiomeData SWAMP = new BiomeData(0.663F, 90.0F, 40F, 12F);
-    private static final BiomeData UNDERGROUND = new BiomeData(0.663F, 40.0F, 40F, 12F);
+    public static final BiomeData UNDERGROUND = new BiomeData(0.663F, 40.0F, 40F, 12F);
     private static final BiomeData MUSHROOM = new BiomeData(0.685F, 70.0F, 40F, 12F);
     private static final BiomeData PLAINS = new BiomeData(0.774F, 60.0F, 40F, 15F);
     private static final BiomeData JUNGLE = new BiomeData(0.997F, 90.0F, 40F, 15F);

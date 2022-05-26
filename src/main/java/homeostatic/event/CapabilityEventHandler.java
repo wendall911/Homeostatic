@@ -19,7 +19,7 @@ public class CapabilityEventHandler {
     public static void addCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player && !(event.getObject() instanceof FakePlayer)) {
             event.addCapability(
-                new ResourceLocation(Homeostatic.MODID, "temperature"),
+                new ResourceLocation(Homeostatic.MODID, "stats"),
                 new Stats.Provider()
             );
         }

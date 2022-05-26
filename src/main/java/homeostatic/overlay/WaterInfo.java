@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import java.util.Locale;
 
-import homeostatic.Homeostatic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -16,9 +15,9 @@ import homeostatic.util.ColorHelper;
 import homeostatic.util.FontHelper;
 import homeostatic.util.TempHelper;
 
-public class TemperatureInfo extends Info {
+public class WaterInfo extends Info {
 
-    public TemperatureInfo(String label, int lineNum) {
+    public WaterInfo(String label, int lineNum) {
         super(label, lineNum);
     }
 
@@ -30,11 +29,10 @@ public class TemperatureInfo extends Info {
             int temperature = 5;
             String formattedTemp;
 
-            String localTemp = String.format("%.2f", TempHelper.convertMcTemp(data.getLocalTemperature(), ConfigHandler.Client.useFahrenheit()));
-            String skinTemp = String.format("%.2f", TempHelper.convertMcTemp(data.getSkinTemperature(), ConfigHandler.Client.useFahrenheit()));
-            String coreTemp = String.format("%.2f", TempHelper.convertMcTemp(data.getCoreTemperature(), ConfigHandler.Client.useFahrenheit()));
+            String waterLevel = String.format("%d", data.getWaterLevel());
+            String saturation = String.format("%.2f", data.getWaterSaturationLevel());
 
-            formattedTemp = String.format(Locale.ENGLISH, "%s %s %s", localTemp, skinTemp, coreTemp);
+            formattedTemp = String.format(Locale.ENGLISH, "%s %s", waterLevel, saturation);
 
             int x = Alignment.getX(scaledWidth, mc.font.width(super.label) + mc.font.width(formattedTemp));
             int y = Alignment.getY(scaledHeight, super.lineNum, mc.font.lineHeight);

@@ -38,7 +38,7 @@ public final class ConfigHandler {
 
         private static final List<String> positions = Arrays.asList("TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT");
         private static final List<String> fieldList = Arrays.asList("fields");
-        private static final String[] fieldStrings = new String[] { "temperature", "time", "season" };
+        private static final String[] fieldStrings = new String[] { "temperature", "water", "time", "season" };
         private static Color temperatureColorDark = ColorHelper.decode("#b02e26");
         private static Color temperatureColorBright = ColorHelper.decode("#ffd83d");
         private static Color timeColorDark = ColorHelper.decode("#474f52");

@@ -12,9 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.ModList;
 
 import homeostatic.config.ConfigHandler;
-import homeostatic.overlay.SeasonInfo;
-import homeostatic.overlay.TemperatureInfo;
-import homeostatic.overlay.TimeInfo;
 
 public class OverlayManager {
 
@@ -42,6 +39,9 @@ public class OverlayManager {
                     break;
                 case "temperature":
                     lines.add(new TemperatureInfo(ConfigHandler.Client.temperatureLabel(), lineNum));
+                    break;
+                case "water":
+                    lines.add(new WaterInfo("Water: ", lineNum));
                     break;
                 case "time":
                     lines.add(new TimeInfo(ConfigHandler.Client.timeLabel(), lineNum));
