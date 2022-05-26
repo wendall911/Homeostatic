@@ -1,21 +1,17 @@
 package homeostatic.common.water;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageSource;
 
-import homeostatic.Homeostatic;
+public class WaterInfo {
 
-public class WaterData {
+    public static final int MAX_WATER_LEVEL = 20;
+    public static final float MAX_SATURATION_LEVEL = 5.0F;
 
-    private int waterLevel = 20;
+    private int waterLevel;
     private float waterSaturationLevel;
     private float waterExhaustionLevel;
 
-    public WaterData() {
-        this(20, 5.0F, 0.0F);
-    }
-
-    public WaterData(int waterLevel, float waterSaturationLevel, float waterExhaustionLevel) {
+    public WaterInfo(int waterLevel, float waterSaturationLevel, float waterExhaustionLevel) {
         this.waterLevel = waterLevel;
         this.waterSaturationLevel = waterSaturationLevel;
         this.waterExhaustionLevel = waterExhaustionLevel;
@@ -33,7 +29,7 @@ public class WaterData {
         return waterSaturationLevel;
     }
 
-    public void update(ServerPlayer sp, float sweatLevel) {
+    public void update(float sweatLevel) {
         if (this.waterExhaustionLevel > 4.0F) {
             this.waterExhaustionLevel -= 4.0F;
             if (this.waterSaturationLevel > 0.0F) {
@@ -51,9 +47,6 @@ public class WaterData {
             else {
                 this.addExhaustion(sweatLevel);
             }
-        }
-        else if (this.waterLevel <= 0) {
-            sp.hurt(new DamageSource("Dehydration"), 1.0F);
         }
 
     }

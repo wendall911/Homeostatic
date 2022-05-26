@@ -109,7 +109,7 @@ public class EnvironmentData {
         dayNightOffset = isUnderground ? 0F : getDayNightOffset(world, biome, this.relativeHumidity);
         dryTemp = (accumulatedDryTemp / biomes.size()) + dayNightOffset;
         wetTemp = (float) TempHelper.getHeatIndex(dryTemp, this.relativeHumidity);
-        blackGlobeTemp = (float) getBlackGlobeTemp(world, pos, envRadiation, dryTemp, this.relativeHumidity);
+        blackGlobeTemp = (float) getBlackGlobeTemp(world, pos, dryTemp, this.relativeHumidity);
 
         if (isSheltered || isUnderground) {
             //If not exposed to solar radiation, we use the simplified formula for temperature calculation.
@@ -146,15 +146,17 @@ public class EnvironmentData {
         return localTemperature;
     }
 
+    public double getEnvRadiation() {
+        return envRadiation;
+    }
+
     /*
      * Calculate current radiation where player is standing.
      */
-    private static double getBlackGlobeTemp(ServerLevel world, BlockPos pos, double envRadiation, float dryTemp, double relativeHumidity) {
-        double radiation = envRadiation;
+    private double getBlackGlobeTemp(ServerLevel world, BlockPos pos, float dryTemp, double relativeHumidity) {
+        this.envRadiation += getSunRadiation(world, pos);
 
-        radiation += getSunRadiation(world, pos);
-
-        return TempHelper.getBlackGlobe(radiation, dryTemp, relativeHumidity);
+        return TempHelper.getBlackGlobe(this.envRadiation, dryTemp, relativeHumidity);
     }
 
     /*

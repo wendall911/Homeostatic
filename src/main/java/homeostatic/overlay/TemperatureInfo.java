@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import java.util.Locale;
 
-import homeostatic.Homeostatic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +25,7 @@ public class TemperatureInfo extends Info {
     public void renderText(PoseStack matrix, Minecraft mc, BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
 
-        player.getCapability(CapabilityRegistry.STATS_CAPABILITY).ifPresent(data -> {
+        player.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
             int temperature = 5;
             String formattedTemp;
 

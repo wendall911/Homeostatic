@@ -13,7 +13,6 @@ import homeostatic.config.ConfigHandler;
 import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
 import homeostatic.util.FontHelper;
-import homeostatic.util.TempHelper;
 
 public class WaterInfo extends Info {
 
@@ -25,7 +24,7 @@ public class WaterInfo extends Info {
     public void renderText(PoseStack matrix, Minecraft mc, BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
 
-        player.getCapability(CapabilityRegistry.STATS_CAPABILITY).ifPresent(data -> {
+        player.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
             int temperature = 5;
             String formattedTemp;
 

@@ -2,8 +2,8 @@ package homeostatic.common.temperature;
 
 import net.minecraft.server.level.ServerPlayer;
 
-import homeostatic.common.water.WaterData;
 import homeostatic.util.TempHelper;
+import homeostatic.util.WaterHelper;
 
 public class BodyTemperature {
 
@@ -11,18 +11,16 @@ public class BodyTemperature {
     public static final float NORMAL = 1.634457832F;
     public static final float HIGH = 1.799397591F;
     private EnvironmentData environmentData;
-    private WaterData waterData;
     private float coreTemperature;
     private float skinTemperature;
     private float lastTempChange;
 
-    public BodyTemperature(ServerPlayer sp, EnvironmentData environmentData, WaterData waterData) {
-        this(sp, environmentData, waterData, NORMAL, NORMAL, 0);
+    public BodyTemperature(ServerPlayer sp, EnvironmentData environmentData) {
+        this(sp, environmentData, NORMAL, NORMAL, 0);
     }
 
-    public BodyTemperature(ServerPlayer sp, EnvironmentData environmentData, WaterData waterData, float coreTemp, float skinTemp, int ticks) {
+    public BodyTemperature(ServerPlayer sp, EnvironmentData environmentData, float coreTemp, float skinTemp, int ticks) {
         this.environmentData = environmentData;
-        this.waterData = waterData;
         this.setCoreTemperature(coreTemp);
         this.setSkinTemperature(sp, skinTemp, ticks);
 
@@ -45,10 +43,6 @@ public class BodyTemperature {
 
     public float getSkinTemperature() {
         return this.skinTemperature;
-    }
-
-    public WaterData getWaterData() {
-        return this.waterData;
     }
 
     /*
@@ -90,18 +84,23 @@ public class BodyTemperature {
         }
 
         if (this.environmentData.isSubmerged()) {
-            tempChange = getWaterTemperatureSkinChange(environmentData.getLocalTemperature());
+            tempChange = getWaterTemperatureSkinChange();
         }
         else {
-            tempChange = getAirTemperatureSkinChange(environmentData.getLocalTemperature());
+            tempChange = getAirTemperatureSkinChange(skinTemperature);
         }
 
         // Add food or water exhaustion depending on temperature change if warming or cooling
         if (tempChange < 0.0F && this.coreTemperature <= NORMAL) { // shivering
             sp.getFoodData().addExhaustion((tempChange * -1.0F) * 25.0F);
+
+            // Lose water very slowly when cooling
+            if (ticks % 96 == 0) {
+                WaterHelper.updateWaterInfo(sp, 0.1F);
+            }
         }
         else if (tempChange > 0.0F && this.coreTemperature >= NORMAL) { // sweating
-            this.waterData.update(sp, tempChange * 25.0F);
+            WaterHelper.updateWaterInfo(sp, tempChange * 25.0F);
         }
 
         this.lastTempChange = tempChange;
@@ -111,7 +110,8 @@ public class BodyTemperature {
     /*
      * Return cooling/heating rate per mc minute (16 ticks)
      */
-    public float getWaterTemperatureSkinChange(float temperature) {
+    public float getWaterTemperatureSkinChange() {
+        float temperature = environmentData.getLocalTemperature();
         float change = 0.0F;
         double tempF = TempHelper.convertMcTemp(temperature, true);
         double minutes;
@@ -130,7 +130,8 @@ public class BodyTemperature {
         return change;
     }
 
-    public float getAirTemperatureSkinChange(float temperature) {
+    public float getAirTemperatureSkinChange(float skinTemperature) {
+        float temperature = environmentData.getLocalTemperature();
         float change = 0.0F;
         double tempF = TempHelper.convertMcTemp(temperature, true);
         double parityF = TempHelper.convertMcTemp(Environment.PARITY, true);
@@ -152,6 +153,20 @@ public class BodyTemperature {
             minutes = 24.45765 + (599.3552 - 24.45765)/(1 + Math.pow((tempF/109.1499), 27.47623));
 
             change = (this.HIGH - this.NORMAL) / (float) minutes;
+        }
+
+        /*
+         * Radiation should have a heating effect, even if the env temperature is low.
+         */
+        if (skinTemperature < this.NORMAL && environmentData.getEnvRadiation() > 0) {
+            float radiationModifier = (float) (Math.min(environmentData.getEnvRadiation(), 10000) / 10000);
+
+            if (change > 0.0F) {
+                change = change * (radiationModifier + 1.0F);
+            }
+            else {
+                change = change * radiationModifier;
+            }
         }
 
         return change;
