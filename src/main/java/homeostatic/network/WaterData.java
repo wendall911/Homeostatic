@@ -2,7 +2,6 @@ package homeostatic.network;
 
 import java.util.function.Supplier;
 
-import homeostatic.common.water.WaterInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 
@@ -10,6 +9,7 @@ import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
+import homeostatic.common.water.WaterInfo;
 
 public class WaterData implements IData {
 

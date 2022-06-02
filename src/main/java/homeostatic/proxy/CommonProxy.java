@@ -1,9 +1,14 @@
 package homeostatic.proxy;
 
+import homeostatic.common.effect.HomeostaticEffects;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import homeostatic.config.ConfigHandler;
@@ -33,6 +38,20 @@ public class CommonProxy {
         @SubscribeEvent
         public static void setup(FMLCommonSetupEvent event) {
             NetworkHandler.init();
+        }
+
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void registerMobEffects(RegistryEvent.Register<MobEffect> event) {
+            IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+
+            bus.register(new HomeostaticEffects());
+        }
+
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void setupRegistries(FMLConstructModEvent event) {
+            IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+
+            HomeostaticEffects.EFFECT_REGISTRY.register(bus);
         }
 
     }

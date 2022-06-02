@@ -27,6 +27,7 @@ public final class NetworkHandler {
         registerMessage(id++, TemperatureData.class, TemperatureData::new);
         registerMessage(id++, WaterData.class, WaterData::new);
         registerMessage(id++, DrinkWater.class, DrinkWater::new);
+        registerMessage(id++, WetnessData.class, WetnessData::new);
     }
 
     private static <T extends IData> void registerMessage(int idx, Class<T> type, Function<FriendlyByteBuf, T> decoder) {

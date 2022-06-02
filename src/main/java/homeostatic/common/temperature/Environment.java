@@ -9,6 +9,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,6 +27,7 @@ import homeostatic.util.VecMath;
 public class Environment {
 
     public static final float PARITY = 1.108F;
+    public static final float HOT = 1.888F;
 
     public static EnvironmentInfo get(ServerLevel world, ServerPlayer sp) {
         double radiation = 0.0;
@@ -35,6 +38,7 @@ public class Environment {
         BlockPos pos = sp.blockPosition();
         BlockPos eyePos = sp.eyeBlockPosition();
         ResourceKey<Level> worldKey = world.dimension();
+        MobEffectInstance effectInstance = sp.getEffect(MobEffects.FIRE_RESISTANCE);
         boolean inOverworld = worldKey.location().toString().contains(DimensionType.OVERWORLD_EFFECTS.toString());
         boolean isSubmerged = sp.isUnderWater() && sp.isInWater() && sp.isInWaterRainOrBubble();
         boolean isSheltered = true;
@@ -91,7 +95,8 @@ public class Environment {
 
                     if (state.isAir()) continue;
 
-                    if (y <= 3) {
+                    // Only check up to three blocks up, and ignore radiation if fire resistance is active.
+                    if (y <= 3 && effectInstance == null) {
                         BlockRadiation blockRadiation = BlockRegistry.RADIATION_BLOCKS.get(state.getBlock());
 
                         if (blockRadiation != null) {

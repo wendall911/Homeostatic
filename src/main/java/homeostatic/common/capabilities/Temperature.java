@@ -7,6 +7,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -63,6 +66,18 @@ public class Temperature {
 
     public float getLocalTemperature() {
         return this.localTemperature;
+    }
+
+    public void checkTemperatureLevel(Player player) {
+        if (this.coreTemperature < BodyTemperature.LOW) {
+            player.setTicksFrozen(player.getTicksFrozen() + 5);
+        }
+        else if (this.coreTemperature > BodyTemperature.HIGH) {
+            player.hurt(new DamageSource("Hyperthermia").bypassArmor().bypassMagic(), 0.08F);
+        }
+        if (this.skinTemperature > BodyTemperature.SCALDING) {
+            player.hurt(new DamageSource("Burning").bypassArmor().bypassMagic(), 0.15F);
+        }
     }
 
     public static class Provider implements ICapabilitySerializable<Tag> {

@@ -41,12 +41,7 @@ public class WaterInfo {
         }
 
         if (sweatLevel > 0.0F) {
-            if (this.waterSaturationLevel > 0.0F) {
-                this.addExhaustion(Math.min(this.waterSaturationLevel, sweatLevel));
-            }
-            else {
-                this.addExhaustion(sweatLevel);
-            }
+            this.addExhaustion(sweatLevel);
         }
 
     }

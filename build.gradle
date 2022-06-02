@@ -72,6 +72,27 @@ minecraft {
                 }
             }
         }
+
+        data {
+            workingDirectory project.file('run')
+            arg "-mixin.config=${modid}.mixins.json"
+            property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+            args '--mod', "${modid}",
+                    '--all',
+                    '--output', file('src/generated/resources/'),
+                    '--existing', file('src/main/resources/'),
+                    '--existing', file('src/generated/resources')
+
+            mods {
+                homeostatic {
+                    source sourceSets.main
+                }
+            }
+        }
+
     }    
 }
 
@@ -81,6 +102,7 @@ dependencies {
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
     implementation fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
+    implementation fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
 }
 
 jar {

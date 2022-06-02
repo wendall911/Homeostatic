@@ -11,6 +11,7 @@ import net.minecraftforge.common.util.FakePlayer;
 
 import homeostatic.common.capabilities.Temperature;
 import homeostatic.common.capabilities.Water;
+import homeostatic.common.capabilities.Wetness;
 import homeostatic.Homeostatic;
 
 @Mod.EventBusSubscriber(modid=Homeostatic.MODID)
@@ -24,8 +25,12 @@ public class CapabilityEventHandler {
                 new Temperature.Provider()
             );
             event.addCapability(
-                    new ResourceLocation(Homeostatic.MODID, "water"),
-                    new Water.Provider()
+                new ResourceLocation(Homeostatic.MODID, "water"),
+                new Water.Provider()
+            );
+            event.addCapability(
+                new ResourceLocation(Homeostatic.MODID, "wetness"),
+                new Wetness.Provider()
             );
         }
     }

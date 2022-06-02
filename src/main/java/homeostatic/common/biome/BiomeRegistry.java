@@ -24,9 +24,9 @@ public class BiomeRegistry {
     private static final BiomeData SAVANNA = new BiomeData(1.108F, 30.0F, 40F, 15F);
     private static final BiomeData MESA = new BiomeData(1.309F, 20.0F, 40F, 15F);
     private static final BiomeData DESERT = new BiomeData(1.354F, 20.0F, 40F, 20F);
-    private static final BiomeData NONE = new BiomeData(1.666F, 40.0F, 40F, 0F);
-    private static final BiomeData THEEND = new BiomeData(0.15F, 40.0F, 40F, 0F);
-    private static final BiomeData NETHER = new BiomeData(0.551F, 20.0F, 40F, 0F);
+    private static final BiomeData NONE = new BiomeData(0.15F, 40.0F, 40F, 0F);
+    private static final BiomeData THEEND = new BiomeData(0.551F, 40.0F, 40F, 0F);
+    private static final BiomeData NETHER = new BiomeData(1.666F, 20.0F, 40F, 0F);
 
     static {
         BIOMES.put(Biome.BiomeCategory.ICY, ICY);

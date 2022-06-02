@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.IIngameOverlay;
@@ -26,6 +27,7 @@ public class GameOverlayEventHandler {
     private static boolean enabled = false;
 
     private final IIngameOverlay OVERLAY;
+    private final IIngameOverlay HUD_OVERLAY;
 
     static {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(INSTANCE::onLoadComplete);
@@ -38,6 +40,15 @@ public class GameOverlayEventHandler {
             Homeostatic.MODID + ":overlay",
             (matrix, partialTicks, width, height, height2) -> callRenderOverlay(partialTicks, width)
         );
+
+        HUD_OVERLAY = OverlayRegistry.registerOverlayTop("Water Level", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+            Minecraft minecraft = Minecraft.getInstance();
+            boolean isMounted = minecraft.player.getVehicle() instanceof LivingEntity;
+
+            if (!isMounted && !minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
+                overlayManager.renderHud(poseStack);
+            }
+        });
     }
 
     public void callRenderOverlay(PoseStack matrix, float partialTicks) {
@@ -55,6 +66,7 @@ public class GameOverlayEventHandler {
         if (enabled && event.getConfig().getSpec() == ConfigHandler.Client.CONFIG_SPEC) {
             overlayManager.init();
             OverlayRegistry.enableOverlay(OVERLAY, ConfigHandler.Client.enabled());
+            OverlayRegistry.enableOverlay(HUD_OVERLAY, true);
         }
     }
 

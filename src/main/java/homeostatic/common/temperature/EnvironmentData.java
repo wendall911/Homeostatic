@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import com.mojang.datafixers.util.Pair;
 
+import homeostatic.Homeostatic;
 import homeostatic.common.biome.BiomeData;
 import homeostatic.common.biome.BiomeRegistry;
+import homeostatic.util.WetnessHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -49,6 +51,7 @@ public class EnvironmentData {
         int chunkRange = 3;
         float accumulatedDryTemp = 0.0F;
         float accumulatedHumidity = 0.0F;
+        float moisture = 0.0F;
         float dryTemp;
         float dayNightOffset;
         float wetTemp;
@@ -62,6 +65,20 @@ public class EnvironmentData {
         this.envRadiation = envData.getRadiation();
         this.isPartialSubmersion = !sp.isUnderWater() && sp.isInWater() && sp.isInWaterRainOrBubble();
         this.isSubmerged = sp.isUnderWater() && sp.isInWater() && sp.isInWaterRainOrBubble();
+
+        if (isSubmerged) {
+            moisture = 20.0F;
+        }
+        else if (isPartialSubmersion) {
+            moisture = 10.0F;
+        }
+        else if (sp.isInWaterRainOrBubble()) {
+            moisture = 0.5F;
+        }
+
+        if (moisture > 0.0F) {
+            WetnessHelper.updateWetnessInfo(sp, moisture, true);
+        }
 
         /*
          * Since we can literally jump vertically out of the water, check the block under the player to see if they are
@@ -138,6 +155,10 @@ public class EnvironmentData {
         return isSubmerged;
     }
 
+    public boolean isPartialSubmersion() {
+        return isPartialSubmersion;
+    }
+
     public double getRelativeHumidity() {
         return relativeHumidity;
     }
@@ -204,7 +225,7 @@ public class EnvironmentData {
 
         radiation += sunlight * 100;
 
-        return radiation;
+        return Math.max(radiation, 0);
     }
 
     private static double getMaxBiomeHumidity(Holder<Biome> biome) {
@@ -285,6 +306,19 @@ public class EnvironmentData {
         }
 
         return biomeTemp;
+    }
+
+    @Override
+    public String toString() {
+        return "EnvironmentData{" +
+                "isSubmerged=" + isSubmerged +
+                ", isPartialSubmersion=" + isPartialSubmersion +
+                ", relativeHumidity=" + relativeHumidity +
+                ", airTemperature=" + airTemperature +
+                ", waterTemperature=" + waterTemperature +
+                ", localTemperature=" + localTemperature +
+                ", envRadiation=" + envRadiation +
+                '}';
     }
 
 }

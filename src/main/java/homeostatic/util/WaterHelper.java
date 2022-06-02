@@ -11,19 +11,18 @@ public class WaterHelper {
 
     public static void updateWaterInfo(ServerPlayer sp, float sweatLevel) {
         sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
-
             WaterInfo waterInfo = new WaterInfo(
-                    data.getWaterLevel(),
-                    data.getWaterSaturationLevel(),
-                    data.getWaterExhaustionLevel()
+                data.getWaterLevel(),
+                data.getWaterSaturationLevel(),
+                data.getWaterExhaustionLevel()
             );
 
             waterInfo.update(sweatLevel);
             data.setWaterData(waterInfo);
 
             NetworkHandler.INSTANCE.send(
-                    PacketDistributor.PLAYER.with(() -> sp),
-                    new WaterData(waterInfo)
+                PacketDistributor.PLAYER.with(() -> sp),
+                new WaterData(waterInfo)
             );
         });
     }

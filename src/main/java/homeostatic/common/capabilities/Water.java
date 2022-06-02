@@ -7,9 +7,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -77,11 +76,9 @@ public class Water {
         return this.waterSaturationLevel;
     }
 
-    public void checkWaterLevel(Player player, Level level) {
+    public void checkWaterLevel(ServerPlayer player) {
         if (this.waterLevel <= 0) {
-            if (!level.isClientSide()) {
-                player.hurt(new DamageSource("Dehydration"), 1.0F);
-            }
+            player.hurt(new DamageSource("Dehydration").bypassArmor().bypassMagic(), 1.0F);
         }
     }
 

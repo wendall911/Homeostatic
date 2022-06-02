@@ -1,6 +1,5 @@
 package homeostatic.event;
 
-import homeostatic.network.WaterData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
@@ -10,6 +9,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
@@ -19,6 +19,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.Level;
 
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
@@ -38,11 +39,12 @@ import homeostatic.Homeostatic;
 import homeostatic.network.DrinkWater;
 import homeostatic.network.NetworkHandler;
 import homeostatic.network.TemperatureData;
+import homeostatic.network.WaterData;
+import homeostatic.util.WaterHelper;
+import homeostatic.util.WetnessHelper;
 
 @Mod.EventBusSubscriber(modid=Homeostatic.MODID)
 public class PlayerEventHandler {
-
-    private static int ticks = 0;
 
     @SubscribeEvent
     public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
@@ -52,12 +54,14 @@ public class PlayerEventHandler {
             final ServerPlayer sp = (ServerPlayer) player;
             ServerLevel world = sp.getLevel();
 
+            WaterHelper.updateWaterInfo(sp, 0.0F);
+            WetnessHelper.updateWetnessInfo(sp, 0.0F, true);
+
             sp.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
                 BlockPos pos = sp.eyeBlockPosition();
                 Holder<Biome> biome = world.getBiome(pos);
                 EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
-                BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData,
-                        data.getCoreTemperature(), data.getSkinTemperature(), ticks);
+                BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, data);
 
                 NetworkHandler.INSTANCE.send(
                         PacketDistributor.PLAYER.with(() -> sp),
@@ -81,36 +85,39 @@ public class PlayerEventHandler {
     @SubscribeEvent
     public static void onPlayerTickEvent(TickEvent.PlayerTickEvent event) {
         if (event.player instanceof FakePlayer) return;
-        ticks++;
+        if (event.phase != TickEvent.Phase.START) return;
 
-        if (ticks % 16 != 0) return;
-
-        if (event.player.getLevel().isClientSide()) {
-            Player player = event.player;
-
-            player.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
-                data.checkWaterLevel(player, player.getLevel());
-            });
-        }
-        else {
+        if (!event.player.getLevel().isClientSide()) {
             final ServerPlayer sp = (ServerPlayer) event.player;
+
             ServerLevel world = sp.getLevel();
             ProfilerFiller profilerfiller = world.getProfiler();
 
+            sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
+                data.checkWaterLevel(sp);
+            });
+
             profilerfiller.push("tempCalc");
             sp.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
-                BlockPos pos = sp.eyeBlockPosition();
-                Holder<Biome> biome = world.getBiome(pos);
-                EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
-                BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData,
-                        data.getCoreTemperature(), data.getSkinTemperature(), ticks);
+                if (sp.tickCount % 2 == 0) {
+                    data.checkTemperatureLevel(sp);
+                }
 
-                data.setTemperatureData(environmentData.getLocalTemperature(), bodyTemperature);
+                if (sp.tickCount % 16 == 0 || sp.tickCount % 60 == 0) {
+                    BlockPos pos = sp.eyeBlockPosition();
+                    Holder<Biome> biome = world.getBiome(pos);
+                    EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
+                    boolean updateCore = sp.tickCount % 60 == 0;
+                    BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, data, updateCore, true);
 
-                NetworkHandler.INSTANCE.send(
-                        PacketDistributor.PLAYER.with(() -> sp),
-                        new TemperatureData(environmentData.getLocalTemperature(), bodyTemperature)
-                );
+                    data.setTemperatureData(environmentData.getLocalTemperature(), bodyTemperature);
+
+                    NetworkHandler.INSTANCE.send(
+                            PacketDistributor.PLAYER.with(() -> sp),
+                            new TemperatureData(environmentData.getLocalTemperature(), bodyTemperature)
+                    );
+                }
+
             });
             profilerfiller.pop();
         }
@@ -147,8 +154,7 @@ public class PlayerEventHandler {
                 BlockPos pos = sp.eyeBlockPosition();
                 Holder<Biome> biome = world.getBiome(pos);
                 EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
-                BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData,
-                        BodyTemperature.NORMAL, BodyTemperature.NORMAL, ticks);
+                BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, data);
 
                 data.setTemperatureData(environmentData.getLocalTemperature(), bodyTemperature);
 
@@ -165,21 +171,38 @@ public class PlayerEventHandler {
         final Player player = event.getPlayer() instanceof Player ? (Player) event.getPlayer() : null;
 
         if (player != null && player.level.isClientSide) {
-            final LevelAccessor level = event.getWorld();
-            final HitResult hitresult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
+            drinkWater(player, event);
+        }
+    }
 
-            if (player.getPose() == Pose.CROUCHING && hitresult.getType() == HitResult.Type.BLOCK &&
-                    level.getFluidState(new BlockPos(hitresult.getLocation())).getType() == Fluids.WATER) {
+    @SubscribeEvent
+    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        final Player player = event.getPlayer() instanceof Player ? (Player) event.getPlayer() : null;
 
-                player.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
+        if (player != null && player.level.isClientSide) {
+            drinkWater(player, event);
+        }
+    }
 
-                    if (data.getWaterLevel() < WaterInfo.MAX_WATER_LEVEL) {
-                        player.getLevel().playSound(player, new BlockPos(player.getPosition(0f)), SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 0.4f, 1.0f);
+    private static void drinkWater(Player player, PlayerInteractEvent event) {
+        final InteractionHand hand = event.getHand();
 
-                        NetworkHandler.INSTANCE.sendToServer(new DrinkWater());
-                    }
-                });
-            }
+        if (hand != InteractionHand.OFF_HAND
+                || player.getPose() != Pose.CROUCHING
+                || !player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) return;
+
+        final LevelAccessor level = event.getWorld();
+        final HitResult hitresult = player.pick(2.0D, 0.0F, true);
+        BlockPos pos = ((BlockHitResult)hitresult).getBlockPos();
+
+        if (hitresult.getType() == HitResult.Type.BLOCK && level.getFluidState(pos).getType() == Fluids.WATER) {
+            player.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
+                if (data.getWaterLevel() < WaterInfo.MAX_WATER_LEVEL) {
+                    player.getLevel().playSound(player, pos, SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 0.4f, 1.0f);
+
+                    NetworkHandler.INSTANCE.sendToServer(new DrinkWater());
+                }
+            });
         }
     }
 

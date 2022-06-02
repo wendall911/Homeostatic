@@ -38,7 +38,7 @@ public final class ConfigHandler {
 
         private static final List<String> positions = Arrays.asList("TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT");
         private static final List<String> fieldList = Arrays.asList("fields");
-        private static final String[] fieldStrings = new String[] { "temperature", "water", "time", "season" };
+        private static final String[] fieldStrings = new String[] { "temperature", "time", "season" };
         private static Color temperatureColorDark = ColorHelper.decode("#b02e26");
         private static Color temperatureColorBright = ColorHelper.decode("#ffd83d");
         private static Color timeColorDark = ColorHelper.decode("#474f52");
@@ -221,8 +221,8 @@ public final class ConfigHandler {
                 .comment("Amount of saturation gained per drink. Default 0.2")
                 .defineInRange("DRINK_SATURATION", 0.2, 0.0, 20.0);
             EFFECT_POTENCY = builder
-                .comment("Potency of thirst effect when drinking from an open water source. Default 12")
-                .defineInRange("EFFECT_POTENCY", 12, 1, 255);
+                .comment("Potency of thirst effect when drinking from an open water source. Default 25")
+                .defineInRange("EFFECT_POTENCY", 25, 1, 255);
             EFFECT_DURATION = builder
                 .comment("Duration of thirst effect in ticks (20/second). Default 200")
                 .defineInRange("EFFECT_DURATION", 200, 1, 6000);

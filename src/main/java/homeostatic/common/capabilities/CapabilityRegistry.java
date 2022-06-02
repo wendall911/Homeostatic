@@ -14,11 +14,13 @@ public class CapabilityRegistry {
 
     public static final Capability<Temperature> TEMPERATURE_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<Water> WATER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    public static final Capability<Wetness> WETNESS_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
     @SubscribeEvent
     public static void registerCapability(RegisterCapabilitiesEvent event) {
         event.register(Temperature.class);
         event.register(Water.class);
+        event.register(Wetness.class);
     }
 
 }

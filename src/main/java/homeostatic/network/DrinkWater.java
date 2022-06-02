@@ -2,6 +2,7 @@ package homeostatic.network;
 
 import java.util.function.Supplier;
 
+import homeostatic.common.effect.HomeostaticEffects;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -31,10 +32,10 @@ public class DrinkWater implements IData {
 
             if (Homeostatic.RANDOM.nextFloat() < ConfigHandler.Server.effectChance()) {
                 player.addEffect(new MobEffectInstance(
-                        MobEffects.WEAKNESS,
+                        HomeostaticEffects.THIRST.get(),
                         ConfigHandler.Server.effectDuration(),
                         ConfigHandler.Server.effectPotency(),
-                        false, true, true));
+                        false, false, false));
             }
         });
     }
