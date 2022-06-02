@@ -53,18 +53,16 @@ public class GameOverlayEventHandler {
 
     public void callRenderOverlay(PoseStack matrix, float partialTicks) {
         if (enabled && ConfigHandler.Client.enabled() && !Minecraft.getInstance().options.renderDebug) {
-            overlayManager.renderOverlay(matrix, partialTicks);
+            overlayManager.renderOverlay(matrix);
         }
     }
 
     public void onLoadComplete(FMLLoadCompleteEvent event) {
         enabled = true;
-        overlayManager.init();
     }
 
     public void onModConfigReloading(ModConfigEvent.Reloading event) {
         if (enabled && event.getConfig().getSpec() == ConfigHandler.Client.CONFIG_SPEC) {
-            overlayManager.init();
             OverlayRegistry.enableOverlay(OVERLAY, ConfigHandler.Client.enabled());
             OverlayRegistry.enableOverlay(HUD_OVERLAY, true);
         }

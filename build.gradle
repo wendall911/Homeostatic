@@ -38,6 +38,11 @@ apply plugin: 'org.spongepowered.mixin'
 
 repositories {
     maven {
+        // location of the maven that hosts Mantle and JEI files
+        name = 'Progwml6 maven'
+        url = 'https://dvs1.progwml6.com/files/maven'
+    }
+    maven {
         name = "Curse Maven"
         url = "https://cursemaven.com"
         content {
@@ -100,6 +105,9 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
     implementation fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
     implementation fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
@@ -177,6 +185,8 @@ curseforge {
                 relations {
                     optionalLibrary 'configured'
                     optionalLibrary 'catalogue'
+                    optionalLibrary 'jei'
+                    optionalLibrary 'simpletextoverlay'
                     optionalLibrary 'serene-seasons'
                 }
             }

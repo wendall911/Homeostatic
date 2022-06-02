@@ -1,0 +1,5 @@
+{
+	"effect.homeostatic.thirst": "口渴",
+	"death.attack.hyperthermia": "中暑",
+  "death.attack.heat": "暖和"
+}

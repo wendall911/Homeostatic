@@ -1,2 +1,5 @@
 {
+	"effect.homeostatic.thirst": "Thirst",
+	"death.attack.hyperthermia": "Hyperthermia",
+	"death.attack.heat": "Heat"
 }

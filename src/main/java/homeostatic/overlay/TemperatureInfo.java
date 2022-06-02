@@ -15,13 +15,10 @@ import homeostatic.util.ColorHelper;
 import homeostatic.util.FontHelper;
 import homeostatic.util.TempHelper;
 
-public class TemperatureInfo extends Info {
+public class TemperatureInfo {
 
-    public TemperatureInfo(String label, int lineNum) {
-        super(label, lineNum);
-    }
+    public TemperatureInfo() {}
 
-    @Override
     public void renderText(PoseStack matrix, Minecraft mc, BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
 
@@ -35,12 +32,8 @@ public class TemperatureInfo extends Info {
 
             formattedTemp = String.format(Locale.ENGLISH, "%s %s %s", localTemp, skinTemp, coreTemp);
 
-            int x = Alignment.getX(scaledWidth, mc.font.width(super.label) + mc.font.width(formattedTemp));
-            int y = Alignment.getY(scaledHeight, super.lineNum, mc.font.lineHeight);
-
-            FontHelper.draw(mc, matrix, super.label, x, y, ConfigHandler.Client.labelColor().getRGB());
-
-            x = x + mc.font.width(super.label);
+            int x = Alignment.getX(scaledWidth, mc.font.width(formattedTemp));
+            int y = Alignment.getY(scaledHeight, 1, mc.font.lineHeight);
 
             FontHelper.draw(mc, matrix, formattedTemp, x, y, ColorHelper.getTemperatureColor(temperature));
         });

@@ -9,7 +9,6 @@ import net.minecraft.nbt.Tag;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -73,10 +72,14 @@ public class Temperature {
             player.setTicksFrozen(player.getTicksFrozen() + 5);
         }
         else if (this.coreTemperature > BodyTemperature.HIGH) {
-            player.hurt(new DamageSource("Hyperthermia").bypassArmor().bypassMagic(), 0.08F);
+            float amount = (1.0F + (this.coreTemperature - BodyTemperature.HIGH)) * 0.5F;
+
+            player.hurt(new DamageSource("hyperthermia").bypassArmor().bypassMagic(), amount);
         }
         if (this.skinTemperature > BodyTemperature.SCALDING) {
-            player.hurt(new DamageSource("Burning").bypassArmor().bypassMagic(), 0.15F);
+            float amount = (1.0F + (this.skinTemperature - BodyTemperature.SCALDING)) * 0.35F;
+
+            player.hurt(new DamageSource("heat").bypassArmor().bypassMagic(), amount);
         }
     }
 
