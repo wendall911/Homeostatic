@@ -1,5 +1,12 @@
 {
+	"death.attack.hyperthermia": "Hyperthermia has claimed poor %1$s",
+	"death.attack.hyperthermia.player": "Hyperthermia has claimed poor %1$s whilst fighting %2$s",
+	"death.attack.heat": "%1$s died of scalding",
+	"death.attack.heat.player": "%1$s died of scalding whilst fighting %2$s",
+  "death.attack.dehydration": "%1%s turned into dead dried %1$s",
+  "death.attack.dehydration.player": "%1%s turned into dead dried %1$s whilst fighting %2$s",
 	"effect.homeostatic.thirst": "Thirst",
-	"death.attack.hyperthermia": "Hyperthermia",
-	"death.attack.heat": "Heat"
+  "tooltip.insulation": "Insulation",
+  "tooltip.waterproof": "Waterproof",
+  "tooltip.radiation_protection": "Radiation Protection"
 }
