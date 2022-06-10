@@ -14,6 +14,7 @@ import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
 import homeostatic.util.FontHelper;
 import homeostatic.util.TempHelper;
+import static homeostatic.util.TempHelper.TemperatureDirection;
 
 public class TemperatureInfo {
 
@@ -23,20 +24,38 @@ public class TemperatureInfo {
         final Player player = mc.player;
 
         player.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
-            int temperature = 5;
-            String formattedTemp;
+            TemperatureDirection skinTemperatureDirection = TempHelper.getSkinTemperatureDirection(
+                    data.getLocalTemperature(), data.getSkinTemperature());
+            TemperatureDirection coreTemperatureDirection = TempHelper.getCoreTemperatureDirection(
+                    data.getLastSkinTemperature(), data.getCoreTemperature(), data.getSkinTemperature());
+            String skinIcon = getDirectionIcon(skinTemperatureDirection);
+            String coreIcon = getDirectionIcon(coreTemperatureDirection);
 
-            String localTemp = String.format("%.2f", TempHelper.convertMcTemp(data.getLocalTemperature(), ConfigHandler.Client.useFahrenheit()));
-            String skinTemp = String.format("%.2f", TempHelper.convertMcTemp(data.getSkinTemperature(), ConfigHandler.Client.useFahrenheit()));
-            String coreTemp = String.format("%.2f", TempHelper.convertMcTemp(data.getCoreTemperature(), ConfigHandler.Client.useFahrenheit()));
+            String localTemp = String.format(" %.2f", TempHelper.convertMcTemp(data.getLocalTemperature(), ConfigHandler.Client.useFahrenheit()));
+            String skinTemp = String.format("s: %.2f%s", TempHelper.convertMcTemp(data.getSkinTemperature(), ConfigHandler.Client.useFahrenheit()), skinIcon);
+            String coreTemp = String.format(" c: %.2f%s ", TempHelper.convertMcTemp(data.getCoreTemperature(), ConfigHandler.Client.useFahrenheit()), coreIcon);
 
-            formattedTemp = String.format(Locale.ENGLISH, "%s %s %s", localTemp, skinTemp, coreTemp);
-
-            int x = Alignment.getX(scaledWidth, mc.font.width(formattedTemp));
+            int localTempWidth = mc.font.width(localTemp);
+            int skinTempWidth = mc.font.width(skinTemp) + localTempWidth;
+            int coreTempWidth = mc.font.width(coreTemp) + skinTempWidth;
             int y = Alignment.getY(scaledHeight, 1, mc.font.lineHeight);
 
-            FontHelper.draw(mc, matrix, formattedTemp, x, y, ColorHelper.getTemperatureColor(temperature));
+            FontHelper.draw(mc, matrix, localTemp, Alignment.getX(scaledWidth, localTempWidth), y, ColorHelper.getLocalTemperatureColor(data.getLocalTemperature()));
+            FontHelper.draw(mc, matrix, skinTemp, Alignment.getX(scaledWidth, skinTempWidth), y, ColorHelper.getTemperatureColor(data.getSkinTemperature()));
+            FontHelper.draw(mc, matrix, coreTemp, Alignment.getX(scaledWidth, coreTempWidth), y, ColorHelper.getTemperatureColor(data.getCoreTemperature()));
         });
+    }
+
+    private String getDirectionIcon(TemperatureDirection direction) {
+        return switch(direction) {
+            case COOLING -> "↓";
+            case COOLING_RAPIDLY -> "⇊";
+            case WARMING -> "↑";
+            case WARMING_RAPIDLY -> "⇈";
+            case NONE -> "·";
+            case COOLING_NORMALLY -> "ˬ";
+            case WARMING_NORMALLY -> "ˆ";
+        };
     }
 
 }

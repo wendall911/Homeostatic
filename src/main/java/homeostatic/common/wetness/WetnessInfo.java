@@ -26,10 +26,14 @@ public class WetnessInfo {
         return moistureLevel;
     }
 
-    public void increaseMoisture(float moistureLevel) {
+    public void increaseMoisture(float moistureLevel, int waterproofing) {
+        float moistureReduction = moistureLevel * ((float) waterproofing / (float) MAX_WETNESS_LEVEL);
+
+        moistureLevel = moistureLevel - moistureReduction;
+
         if (this.moistureLevel > 4.0F) {
             this.moistureLevel -= 4.0F;
-            this.setWetnessLevel(Math.min(this.wetnessLevel + 1, this.MAX_WETNESS_LEVEL));
+            this.setWetnessLevel(Math.min(this.wetnessLevel + 1, MAX_WETNESS_LEVEL - waterproofing));
         }
 
         if (moistureLevel > 0.0F) {
@@ -49,12 +53,12 @@ public class WetnessInfo {
     }
 
     public void addMoisture(float amount) {
-        this.moistureLevel = Math.min(this.moistureLevel + amount, this.MAX_MOISTURE_LEVEL);
+        this.moistureLevel = Math.min(this.moistureLevel + amount, MAX_MOISTURE_LEVEL);
     }
 
     public void removeMoisture(float amount) {
         if (this.wetnessLevel > 0) {
-            this.moistureLevel = Math.max(this.moistureLevel - amount, this.MIN_MOISTURE_LEVEL);
+            this.moistureLevel = Math.max(this.moistureLevel - amount, MIN_MOISTURE_LEVEL);
         }
         else {
             this.moistureLevel = 0.0F;

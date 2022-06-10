@@ -1,0 +1,46 @@
+package homeostatic.event;
+
+import java.util.List;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+
+import homeostatic.Homeostatic;
+
+@Mod.EventBusSubscriber(modid = Homeostatic.MODID)
+public class TooltipEventHandler {
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void onItemToolTip(ItemTooltipEvent event) {
+        ItemStack stack = event.getItemStack();
+        List<Component> toolTip = event.getToolTip();
+
+        if (stack.getItem() instanceof ArmorItem) {
+            CompoundTag tags = stack.getTag();
+
+            if (tags.contains("insulation")) {
+                toolTip.add((new TranslatableComponent("tooltip.insulation")).withStyle(ChatFormatting.GRAY));
+            }
+
+            if (tags.contains("waterproof")) {
+                toolTip.add((new TranslatableComponent("tooltip.waterproof")).withStyle(ChatFormatting.DARK_AQUA));
+            }
+
+            if (tags.contains("radiation_protection")) {
+                toolTip.add((new TranslatableComponent("tooltip.radiation_protection")).withStyle(ChatFormatting.GREEN));
+            }
+        }
+    }
+
+}

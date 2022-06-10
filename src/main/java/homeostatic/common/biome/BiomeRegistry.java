@@ -8,7 +8,7 @@ import net.minecraft.world.level.biome.Biome;
 public class BiomeRegistry {
 
     public static final Map<Biome.BiomeCategory, BiomeData> BIOMES = new HashMap<>();
-    private static final BiomeData ICY = new BiomeData(BiomeData.ICY, 20.0F, 20F, 5F);
+    private static final BiomeData ICY = new BiomeData(0.507F, 20.0F, 20F, 5F);
     private static final BiomeData TAIGA = new BiomeData(0.507F, 50.0F, 40F, 10F);
     private static final BiomeData OCEAN = new BiomeData(0.551F, 70.0F, 40F, 10F);
     private static final BiomeData RIVER = new BiomeData(0.551F, 70.0F, 40F, 10F);

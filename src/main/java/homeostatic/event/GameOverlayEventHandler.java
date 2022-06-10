@@ -58,11 +58,13 @@ public class GameOverlayEventHandler {
     }
 
     public void onLoadComplete(FMLLoadCompleteEvent event) {
+        ConfigHandler.Client.init();
         enabled = true;
     }
 
     public void onModConfigReloading(ModConfigEvent.Reloading event) {
         if (enabled && event.getConfig().getSpec() == ConfigHandler.Client.CONFIG_SPEC) {
+            ConfigHandler.Client.init();
             OverlayRegistry.enableOverlay(OVERLAY, ConfigHandler.Client.enabled());
             OverlayRegistry.enableOverlay(HUD_OVERLAY, true);
         }

@@ -7,15 +7,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 import homeostatic.common.wetness.WetnessInfo;
-import homeostatic.config.ConfigHandler;
 
 public class Wetness {
 
@@ -38,10 +34,6 @@ public class Wetness {
 
     public void setWetnessLevel(int wetnessLevel) {
         this.wetnessLevel = wetnessLevel;
-    }
-
-    public void increaseWetnessLevel() {
-        this.wetnessLevel = Math.min(this.wetnessLevel + 1, WetnessInfo.MAX_WETNESS_LEVEL);
     }
 
     public void setMoistureLevel(float moistureLevel) {

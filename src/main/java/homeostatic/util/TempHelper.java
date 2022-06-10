@@ -1,6 +1,103 @@
 package homeostatic.util;
 
+import homeostatic.Homeostatic;
+import homeostatic.common.temperature.BodyTemperature;
+import homeostatic.common.temperature.Environment;
+
 public class TempHelper {
+
+    public enum TemperatureDirection {
+
+        WARMING(0.025F),
+        WARMING_NORMALLY(0.00625F),
+        WARMING_RAPIDLY(0.2F),
+        NONE(0.0F),
+        COOLING(0.0125F),
+        COOLING_NORMALLY(0.00625F),
+        COOLING_RAPIDLY(0.2F);
+
+        public final float coreRate;
+
+        TemperatureDirection(float coreRate) {
+            this.coreRate = coreRate;
+        }
+
+    }
+
+    public static TemperatureDirection getCoreTemperatureDirection(float lastSkinTemperature, float coreTemperature, float skinTemperature) {
+        TemperatureDirection direction = TemperatureDirection.NONE;
+
+        if (lastSkinTemperature > skinTemperature) {
+            direction = TemperatureDirection.COOLING_NORMALLY;
+
+            if (coreTemperature > BodyTemperature.NORMAL) {
+                if (skinTemperature < coreTemperature) {
+                    direction = TemperatureDirection.COOLING_RAPIDLY;
+                } else {
+                    direction = TemperatureDirection.COOLING;
+                }
+            }
+        }
+        else if (lastSkinTemperature < skinTemperature) {
+            direction = TemperatureDirection.WARMING_NORMALLY;
+
+            if (coreTemperature < BodyTemperature.NORMAL) {
+                if (skinTemperature > coreTemperature) {
+                    direction = TemperatureDirection.WARMING_RAPIDLY;
+                } else {
+                    direction = TemperatureDirection.WARMING;
+                }
+            }
+        }
+
+        return direction;
+    }
+
+    public static TemperatureDirection getSkinTemperatureDirection(float localTemperature, float lastSkinTemperature) {
+        TemperatureDirection direction = TemperatureDirection.NONE;
+
+        if (lastSkinTemperature > BodyTemperature.NORMAL) {
+            if (localTemperature > Environment.PARITY_HIGH) {
+                direction = TemperatureDirection.WARMING_NORMALLY;
+
+                if (localTemperature > Environment.HOT) {
+                    direction = TemperatureDirection.WARMING;
+                }
+            }
+            else if (localTemperature < Environment.PARITY_HIGH){
+                direction = TemperatureDirection.COOLING;
+
+                if (localTemperature < Environment.PARITY_LOW) {
+                    direction = TemperatureDirection.COOLING_RAPIDLY;
+                }
+            }
+        }
+        else if (lastSkinTemperature < BodyTemperature.NORMAL) {
+            if (localTemperature > Environment.PARITY_LOW) {
+                direction = TemperatureDirection.WARMING_NORMALLY;
+
+                if (localTemperature > Environment.EXTREME_HEAT) {
+                    direction = TemperatureDirection.WARMING_RAPIDLY;
+                }
+                else if (localTemperature > Environment.PARITY_HIGH) {
+                    direction = TemperatureDirection.WARMING;
+                }
+            }
+            else {
+                direction = TemperatureDirection.COOLING_NORMALLY;
+            }
+        }
+        else {
+            if (localTemperature > Environment.PARITY_HIGH) {
+                direction = TemperatureDirection.WARMING_NORMALLY;
+            }
+            else if (localTemperature < Environment.PARITY_LOW) {
+                direction = TemperatureDirection.COOLING_NORMALLY;
+            }
+        }
+
+        return direction;
+    }
 
     public static double convertMcTemp(float mcTemp, boolean fahrenheit) {
         double temp = 25.27027027 + (44.86486486 * mcTemp);

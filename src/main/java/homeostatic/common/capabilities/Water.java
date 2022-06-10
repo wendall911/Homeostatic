@@ -78,7 +78,7 @@ public class Water {
 
     public void checkWaterLevel(ServerPlayer player) {
         if (this.waterLevel <= 0) {
-            player.hurt(new DamageSource("Dehydration").bypassArmor().bypassMagic(), 1.0F);
+            player.hurt(new DamageSource("dehydration").bypassArmor().bypassMagic(), 1.0F);
         }
     }
 

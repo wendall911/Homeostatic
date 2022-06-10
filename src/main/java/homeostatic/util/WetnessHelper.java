@@ -2,6 +2,7 @@ package homeostatic.util;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 
 import net.minecraftforge.network.PacketDistributor;
@@ -19,9 +20,18 @@ public class WetnessHelper {
                 data.getWetnessLevel(),
                 data.getMoistureLevel()
             );
+            AtomicInteger waterproofing = new AtomicInteger();
+
+            sp.getArmorSlots().forEach(armorItem -> {
+                CompoundTag tags = armorItem.getTag();
+
+                if (tags != null && tags.contains("waterproof")) {
+                    waterproofing.addAndGet(5);
+                }
+            });
 
             if (increase) {
-                wetnessInfo.increaseMoisture(moistureLevel);
+                wetnessInfo.increaseMoisture(moistureLevel, waterproofing.get());
             }
             else {
                 wetnessInfo.decreaseMoisture(moistureLevel);

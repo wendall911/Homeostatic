@@ -1,7 +1,10 @@
 package homeostatic.proxy;
 
 import homeostatic.common.effect.HomeostaticEffects;
+import homeostatic.common.recipe.ArmorEnhancement;
+import homeostatic.common.recipe.HomeostaticRecipes;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -52,6 +55,13 @@ public class CommonProxy {
             IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
             HomeostaticEffects.EFFECT_REGISTRY.register(bus);
+            HomeostaticRecipes.RECIPE_REGISTRY.register(bus);
+            ArmorEnhancement.init();
+        }
+
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
+            event.getRegistry().register(ArmorEnhancement.ARMOR_ENHANCEMENT_SERIALIZER);
         }
 
     }

@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
+import homeostatic.common.wetness.WetnessInfo;
 import homeostatic.Homeostatic;
 import homeostatic.util.OverlayHelper;
 
@@ -19,7 +20,7 @@ public class WetnessOverlay extends GuiComponent {
         final Player player = mc.player;
 
         player.getCapability(CapabilityRegistry.WETNESS_CAPABILITY).ifPresent(data -> {
-            float wetnessPercentage = (data.getWetnessLevel() + data.getMoistureLevel()) / 40.0F;
+            float wetnessPercentage = (float) data.getWetnessLevel() / (float) WetnessInfo.MAX_WETNESS_LEVEL;
 
             if (wetnessPercentage > 0.0F) {
                 OverlayHelper.renderTexture(WETNESS_OVERLAY, scaledWidth, scaledHeight, wetnessPercentage);

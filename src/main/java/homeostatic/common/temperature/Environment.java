@@ -4,8 +4,10 @@ import com.mojang.math.Vector3d;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,6 +16,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.PalettedContainer;
 import net.minecraft.world.level.dimension.DimensionType;
@@ -27,13 +30,18 @@ import homeostatic.util.VecMath;
 public class Environment {
 
     public static final float PARITY = 1.108F;
+    public static final float PARITY_LOW = 0.997F;
+    public static final float PARITY_HIGH = 1.220F;
     public static final float HOT = 1.888F;
+    public static final float EXTREME_HEAT = 2.557F;
+    public static final float EXTREME_COLD = -0.3403614458F;
 
     public static EnvironmentInfo get(ServerLevel world, ServerPlayer sp) {
         double radiation = 0.0;
         double waterVolume = 0;
         double waterBlocks = 0;
         double totalBlocks = 0;
+        AtomicReference<Double> radiationReduction = new AtomicReference<>(1.0);
         Map<ChunkPos, LevelChunk> chunkMap = new HashMap<>();
         BlockPos pos = sp.blockPosition();
         BlockPos eyePos = sp.eyeBlockPosition();
@@ -54,6 +62,15 @@ public class Environment {
         if (isSubmerged) {
             isSheltered = false;
         }
+
+        sp.getArmorSlots().forEach(armorItem -> {
+            CompoundTag tags = armorItem.getTag();
+
+            if (tags != null && tags.contains("radiation_protection")) {
+                // TODO: add to config
+                radiationReduction.updateAndGet(v -> (double) (v - 0.20));
+            }
+        });
 
         for (int x = -12; x <= 12; x++) {
             for (int z = -12; z <= 12; z++) {
@@ -100,15 +117,23 @@ public class Environment {
                         BlockRadiation blockRadiation = BlockRegistry.RADIATION_BLOCKS.get(state.getBlock());
 
                         if (blockRadiation != null) {
-                            Vec3 vPos = new Vec3(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5);
-                            double distance = VecMath.getDistance(sp, new Vector3d(vPos.x, vPos.y, vPos.z));
-                            boolean obscured = VecMath.isBlockObscured(sp, vPos);
+                            boolean hasRadiation = true;
 
-                            if (blockRadiation.isFluid()) {
-                                double amount = state.getFluidState().getAmount() / 8;
-                                radiation += blockRadiation.getBlockRadiation(distance, obscured, amount, y);
-                            } else {
-                                radiation += blockRadiation.getBlockRadiation(distance, obscured, y);
+                            if (state.hasProperty(BlockStateProperties.LIT)) {
+                                hasRadiation = state.getValue(BlockStateProperties.LIT);
+                            }
+
+                            if (hasRadiation) {
+                                Vec3 vPos = new Vec3(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5);
+                                double distance = VecMath.getDistance(sp, new Vector3d(vPos.x, vPos.y, vPos.z));
+                                boolean obscured = VecMath.isBlockObscured(sp, vPos);
+
+                                if (!state.getFluidState().isEmpty()) {
+                                    double amount = state.getFluidState().getAmount() / 8;
+                                    radiation += blockRadiation.getBlockRadiation(distance, obscured, amount, y);
+                                } else {
+                                    radiation += blockRadiation.getBlockRadiation(distance, obscured, y);
+                                }
                             }
                         }
                     }
@@ -116,6 +141,7 @@ public class Environment {
             }
         }
 
+        radiation = radiation * radiationReduction.get();
         waterVolume = waterBlocks == 0 ? 0 : waterBlocks / totalBlocks;
 
         return new EnvironmentInfo(isUnderground, isSheltered, radiation, waterVolume);

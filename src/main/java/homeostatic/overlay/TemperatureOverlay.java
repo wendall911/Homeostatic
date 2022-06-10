@@ -11,6 +11,7 @@ import homeostatic.Homeostatic;
 import homeostatic.util.OverlayHelper;
 
 public class TemperatureOverlay extends GuiComponent {
+
     public final static ResourceLocation BURNING_OVERLAY = new ResourceLocation(Homeostatic.MODID, "textures/gui/burning.png");
     public final static ResourceLocation HYPERTHERMIA_OVERLAY = new ResourceLocation(Homeostatic.MODID, "textures/gui/hyperthermia.png");
 

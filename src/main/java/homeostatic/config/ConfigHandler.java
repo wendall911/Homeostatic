@@ -37,8 +37,8 @@ public final class ConfigHandler {
         private static final Client CONFIG;
 
         private static final List<String> positions = Arrays.asList("TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT");
-        private static Color temperatureColorDark = ColorHelper.decode("#b02e26");
-        private static Color temperatureColorBright = ColorHelper.decode("#ffd83d");
+        private static Color temperatureColorCold = ColorHelper.decode("#3ab3da");
+        private static Color temperatureColorHot = ColorHelper.decode("#f9801d");
         private static final Predicate<Object> hexRangeValidator = s -> s instanceof String
                 && ((String) s).matches("#[a-zA-Z\\d]{6}->#[a-zA-Z\\d]{6}");
 
@@ -77,8 +77,8 @@ public final class ConfigHandler {
                 .comment("The size of the text info (multiplier)")
                 .defineInRange("scale", 0.5, 0.5, 2.0);
             temperatureColorRange = builder
-                .comment("Temperature color range (Format (dark->bright): #b02e26->#ffd83d)")
-                .define("temperatureColorRange", "#b02e26->#ffd83d", hexRangeValidator);
+                .comment("Temperature color range (Format (cold->hot): #3ab3da->#f9801d)")
+                .define("temperatureColorRange", "#3ab3da->#f9801d", hexRangeValidator);
         }
 
         public static boolean enabled() {
@@ -105,12 +105,19 @@ public final class ConfigHandler {
             return CONFIG.scale.get();
         }
 
-        public static Color temperatureColorDark() {
-            return temperatureColorDark;
+        public static Color temperatureColorCold() {
+            return temperatureColorCold;
         }
 
-        public static Color temperatureColorBright() {
-            return temperatureColorBright;
+        public static Color temperatureColorHot() {
+            return temperatureColorHot;
+        }
+
+        public static void init() {
+            String[] temperatureColors = CONFIG.temperatureColorRange.get().split("->");
+
+            temperatureColorCold = ColorHelper.decode(temperatureColors[0]);
+            temperatureColorHot = ColorHelper.decode(temperatureColors[1]);
         }
 
     }

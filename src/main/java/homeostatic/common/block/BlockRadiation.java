@@ -1,21 +1,9 @@
 package homeostatic.common.block;
 
-public final class BlockRadiation {
-
-    private final double maxRadiation;
-    private final boolean isFluid;
-
-    BlockRadiation(double maxRadiation, boolean isFluid) {
-        this.maxRadiation = maxRadiation;
-        this.isFluid = isFluid;
-    }
+public record BlockRadiation(double maxRadiation) {
 
     public double getMaxRadiation() {
         return this.maxRadiation;
-    }
-
-    public boolean isFluid() {
-        return this.isFluid;
     }
 
     public double getBlockRadiation(double distance, boolean obscured, int y) {
@@ -23,8 +11,7 @@ public final class BlockRadiation {
 
         if (distance <= 1) {
             radiation = this.getMaxRadiation();
-        }
-        else {
+        } else {
             radiation = this.getMaxRadiation() / distance;
         }
 
@@ -46,8 +33,7 @@ public final class BlockRadiation {
 
         if (distance <= 1) {
             radiation = this.getMaxRadiation();
-        }
-        else {
+        } else {
             radiation = this.getMaxRadiation() * amount / distance;
         }
 

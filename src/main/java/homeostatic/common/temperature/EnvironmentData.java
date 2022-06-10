@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.mojang.datafixers.util.Pair;
 
-import homeostatic.Homeostatic;
 import homeostatic.common.biome.BiomeData;
 import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.util.WetnessHelper;
@@ -28,6 +27,7 @@ import net.minecraftforge.fml.ModList;
 import sereneseasons.api.season.SeasonHelper;
 import sereneseasons.config.BiomeConfig;
 
+import homeostatic.Homeostatic;
 import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.util.TempHelper;
 

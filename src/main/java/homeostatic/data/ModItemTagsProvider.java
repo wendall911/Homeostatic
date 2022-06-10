@@ -1,15 +1,9 @@
 package homeostatic.data;
 
-import java.util.Arrays;
-
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
 
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -29,22 +23,14 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags() {
-        getBuilder(TagManager.Items.INSULATION)
+        this.tag(TagManager.Items.INSULATION)
             .addTag(ItemTags.WOOL);
 
-        getBuilder(TagManager.Items.WATERPROOF)
+        this.tag(TagManager.Items.WATERPROOF)
             .addTag(ItemTags.CANDLES);
 
-        getBuilder(TagManager.Items.RADIATION_PROTECTION)
+        this.tag(TagManager.Items.RADIATION_PROTECTION)
             .addTag(ItemTags.CRIMSON_STEMS);
-    }
-
-    protected TagsProvider.TagAppender<Item> getBuilder(TagKey<Item> tag) {
-        return tag(tag);
-    }
-
-    private void builder(TagKey<Item> tag, ItemLike... items) {
-        getBuilder(tag).add(Arrays.stream(items).map(ItemLike::asItem).toArray(Item[]::new));
     }
 
 }

@@ -17,10 +17,16 @@ import homeostatic.common.temperature.BodyTemperature;
 
 public class Temperature {
 
+    private float skinTemperature = BodyTemperature.NORMAL;
+    private float lastSkinTemperature = BodyTemperature.NORMAL;
+    private float coreTemperature = BodyTemperature.NORMAL;
+    private float localTemperature = 0.0F;
+
     public static Tag writeNBT(Capability<Temperature> capability, Temperature instance, Direction side) {
         CompoundTag tag = new CompoundTag();
 
         tag.putFloat("skinTemperature", instance.getSkinTemperature());
+        tag.putFloat("lastSkinTemperature", instance.getLastSkinTemperature());
         tag.putFloat("coreTemperature", instance.getCoreTemperature());
         tag.putFloat("localTemperature", instance.getLocalTemperature());
 
@@ -29,16 +35,17 @@ public class Temperature {
 
     public static void readNBT(Capability<Temperature> capability, Temperature instance, Direction side, Tag nbt) {
         instance.setSkinTemperature(((CompoundTag) nbt).getFloat("skinTemperature"));
+        instance.setLastSkinTemperature(((CompoundTag) nbt).getFloat("lastSkinTemperature"));
         instance.setCoreTemperature(((CompoundTag) nbt).getFloat("coreTemperature"));
         instance.setLocalTemperature(((CompoundTag) nbt).getFloat("localTemperature"));
     }
 
-    private float skinTemperature = BodyTemperature.NORMAL;
-    private float coreTemperature = BodyTemperature.NORMAL;
-    private float localTemperature = 0.0F;
-
     public void setSkinTemperature(float skinTemperature) {
         this.skinTemperature = skinTemperature;
+    }
+
+    public void setLastSkinTemperature(float lastSkinTemperature) {
+        this.lastSkinTemperature = lastSkinTemperature;
     }
 
     public void setCoreTemperature(float coreTemperature) {
@@ -50,13 +57,18 @@ public class Temperature {
     }
 
     public void setTemperatureData(float localTemperature, BodyTemperature bodyTemperature) {
-        this.setCoreTemperature(bodyTemperature.getCoreTemperature());
         this.setSkinTemperature(bodyTemperature.getSkinTemperature());
+        this.setLastSkinTemperature(bodyTemperature.getLastSkinTemperature());
+        this.setCoreTemperature(bodyTemperature.getCoreTemperature());
         this.setLocalTemperature(localTemperature);
     }
 
     public float getSkinTemperature() {
         return this.skinTemperature;
+    }
+
+    public float getLastSkinTemperature() {
+        return lastSkinTemperature;
     }
 
     public float getCoreTemperature() {

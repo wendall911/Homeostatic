@@ -5,8 +5,10 @@ import net.minecraft.world.level.biome.Biome;
 
 public class BiomeData {
 
-    public static final float ICY = -0.006F;
-    public final float MC_DEGREE = 0.022289157F;
+    public static final float FROZEN_OFFSET = -0.1114457831F;
+    public static final float SNOW_OFFSET = -0.446F;
+    public static final float MC_DEGREE = 0.022289157F;
+
     private final float temperature;
     private double humidity;
     private float seasonVariation;
@@ -20,17 +22,17 @@ public class BiomeData {
     }
 
     public float getTemperature(Biome.TemperatureModifier temperatureModifier, Biome.Precipitation precipitation) {
-
-        final float FROZEN_OFFSET = 0.446F;
+        float temperature = this.temperature;
 
         if (temperatureModifier == Biome.TemperatureModifier.FROZEN) {
-            return ICY;
-        }
-        if (precipitation == Biome.Precipitation.SNOW) {
-            return this.temperature - FROZEN_OFFSET;
+            temperature += FROZEN_OFFSET;
         }
 
-        return this.temperature;
+        if (precipitation == Biome.Precipitation.SNOW) {
+            temperature += SNOW_OFFSET;
+        }
+
+        return temperature;
     }
 
     public float getRawTemperature() {
@@ -38,7 +40,7 @@ public class BiomeData {
     }
 
     public double getHumidity(Holder<Biome> biome) {
-        if (biome.value().getBaseTemperature() == ICY) {
+        if (biome.value().getBaseTemperature() < 0.33F) {
             humidity = 20.0;
         }
         return this.humidity;
