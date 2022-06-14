@@ -42,7 +42,7 @@ public final class ConfigHandler {
         private static final Predicate<Object> hexRangeValidator = s -> s instanceof String
                 && ((String) s).matches("#[a-zA-Z\\d]{6}->#[a-zA-Z\\d]{6}");
 
-        public final BooleanValue enabled;
+        public final BooleanValue debugEnabled;
         public final BooleanValue useFahrenheit;
         public final ConfigValue<String> position;
         public final IntValue offsetX;
@@ -58,9 +58,9 @@ public final class ConfigHandler {
         }
 
         Client(ForgeConfigSpec.@NotNull Builder builder) {
-            enabled = builder
+            debugEnabled = builder
                 .comment("Show temperature debug info.")
-                .define("enabled", true);
+                .define("debugEnabled", false);
             useFahrenheit = builder
                 .comment("Use Fahrenheit, otherwise use Celcius.")
                 .define("useFahrenheit", true);
@@ -81,8 +81,8 @@ public final class ConfigHandler {
                 .define("temperatureColorRange", "#3ab3da->#f9801d", hexRangeValidator);
         }
 
-        public static boolean enabled() {
-            return CONFIG.enabled.get();
+        public static boolean debugEnabled() {
+            return CONFIG.debugEnabled.get();
         }
 
         public static boolean useFahrenheit() {

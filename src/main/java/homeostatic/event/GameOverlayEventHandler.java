@@ -52,7 +52,7 @@ public class GameOverlayEventHandler {
     }
 
     public void callRenderOverlay(PoseStack matrix, float partialTicks) {
-        if (enabled && ConfigHandler.Client.enabled() && !Minecraft.getInstance().options.renderDebug) {
+        if (enabled && ConfigHandler.Client.debugEnabled() && !Minecraft.getInstance().options.renderDebug) {
             overlayManager.renderOverlay(matrix);
         }
     }
@@ -65,7 +65,7 @@ public class GameOverlayEventHandler {
     public void onModConfigReloading(ModConfigEvent.Reloading event) {
         if (enabled && event.getConfig().getSpec() == ConfigHandler.Client.CONFIG_SPEC) {
             ConfigHandler.Client.init();
-            OverlayRegistry.enableOverlay(OVERLAY, ConfigHandler.Client.enabled());
+            OverlayRegistry.enableOverlay(OVERLAY, ConfigHandler.Client.debugEnabled());
             OverlayRegistry.enableOverlay(HUD_OVERLAY, true);
         }
     }
