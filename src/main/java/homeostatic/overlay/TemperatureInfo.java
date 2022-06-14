@@ -2,8 +2,6 @@ package homeostatic.overlay;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import java.util.Locale;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -46,7 +44,7 @@ public class TemperatureInfo {
         });
     }
 
-    private String getDirectionIcon(TemperatureDirection direction) {
+    public static String getDirectionIcon(TemperatureDirection direction) {
         return switch(direction) {
             case COOLING -> "↓";
             case COOLING_RAPIDLY -> "⇊";

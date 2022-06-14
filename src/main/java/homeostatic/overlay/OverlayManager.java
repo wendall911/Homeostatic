@@ -49,7 +49,7 @@ public class OverlayManager {
 
             waterHud.render(matrix, mc, scaledWidth, scaledHeight);
             wetnessOverlay.render(mc, scaledWidth, scaledHeight);
-            temperatureOverlay.render(mc, scaledWidth, scaledHeight);
+            temperatureOverlay.render(matrix, mc, scaledWidth, scaledHeight);
 
             matrix.popPose();
         }
