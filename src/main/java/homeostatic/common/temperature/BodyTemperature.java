@@ -136,14 +136,14 @@ public class BodyTemperature {
                         // Shivering
                         float exhaustion = Math.abs(Math.min(tempChange * 200.0F, 0.2F));
 
-                        Homeostatic.LOGGER.debug("shivering ... adding exhaustion: %s", exhaustion);
+                        //Homeostatic.LOGGER.debug("shivering ... adding exhaustion: %s", exhaustion);
                         sp.getFoodData().addExhaustion(exhaustion);
                     }
                 }
                 case WARMING -> {
                     if (canSweat) {
                         // Moderate Sweating
-                        Homeostatic.LOGGER.debug("WARMING sweating: %s", Math.min(tempChange * 150.0F, 0.3F));
+                        //Homeostatic.LOGGER.debug("WARMING sweating: %s", Math.min(tempChange * 150.0F, 0.3F));
                         WaterHelper.updateWaterInfo(sp, Math.min(tempChange * 150.0F, 0.3F));
                     }
                     else {
@@ -154,7 +154,7 @@ public class BodyTemperature {
                 case WARMING_NORMALLY -> {
                     if (canSweat) {
                         // Sweating
-                        Homeostatic.LOGGER.debug("WARMING_NORMALLY sweating: %s", Math.min(tempChange * 100.0F, 0.1F));
+                        //Homeostatic.LOGGER.debug("WARMING_NORMALLY sweating: %s", Math.min(tempChange * 100.0F, 0.1F));
                         WaterHelper.updateWaterInfo(sp, Math.min(tempChange * 100.0F, 0.1F));
                     }
                 }
@@ -163,7 +163,7 @@ public class BodyTemperature {
 
         // Lose water slowly under cooling or normal conditions
         if (localTemperature < Environment.PARITY_HIGH && !canSweat && Homeostatic.RANDOM.nextFloat() < 0.17F) {
-            Homeostatic.LOGGER.debug("Random cool water loss: %s", 0.05F);
+            //Homeostatic.LOGGER.debug("Random cool water loss: %s", 0.05F);
             WaterHelper.updateWaterInfo(sp, 0.05F);
         }
 
