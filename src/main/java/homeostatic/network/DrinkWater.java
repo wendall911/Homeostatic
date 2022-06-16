@@ -2,17 +2,12 @@ package homeostatic.network;
 
 import java.util.function.Supplier;
 
-import homeostatic.common.effect.HomeostaticEffects;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 
 import net.minecraftforge.network.NetworkEvent;
 
-import homeostatic.common.capabilities.CapabilityRegistry;
-import homeostatic.config.ConfigHandler;
-import homeostatic.Homeostatic;
+import homeostatic.util.WaterHelper;
 
 public class DrinkWater implements IData {
 
@@ -25,19 +20,12 @@ public class DrinkWater implements IData {
 
     @Override
     public void process(Supplier<NetworkEvent.Context> ctx) {
-        Player player = ctx.get().getSender();
-        player.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
-            data.increaseWaterLevel();
-            data.increaseSaturationLevel();
+        ServerPlayer sp = ctx.get().getSender();
 
-            if (Homeostatic.RANDOM.nextFloat() < ConfigHandler.Server.effectChance()) {
-                player.addEffect(new MobEffectInstance(
-                        HomeostaticEffects.THIRST.get(),
-                        ConfigHandler.Server.effectDuration(),
-                        ConfigHandler.Server.effectPotency(),
-                        false, false, false));
-            }
-        });
+        if (sp != null) {
+            WaterHelper.drinkWater(sp, true, false);
+        }
+
     }
 
 }

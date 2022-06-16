@@ -1,7 +1,5 @@
 package homeostatic.common.water;
 
-import net.minecraft.server.level.ServerPlayer;
-
 public class WaterInfo {
 
     public static final int MAX_WATER_LEVEL = 20;

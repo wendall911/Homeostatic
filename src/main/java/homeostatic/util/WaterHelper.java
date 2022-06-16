@@ -1,11 +1,17 @@
 package homeostatic.util;
 
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+
+import net.minecraftforge.network.PacketDistributor;
+
 import homeostatic.common.capabilities.CapabilityRegistry;
+import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.water.WaterInfo;
+import homeostatic.config.ConfigHandler;
+import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
 import homeostatic.network.WaterData;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.PacketDistributor;
 
 public class WaterHelper {
 
@@ -24,6 +30,35 @@ public class WaterHelper {
                 PacketDistributor.PLAYER.with(() -> sp),
                 new WaterData(waterInfo)
             );
+        });
+    }
+
+    public static void drinkWater(ServerPlayer sp, boolean isDirty, boolean update) {
+        sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
+            data.increaseWaterLevel();
+
+            if (!isDirty) {
+                data.increaseSaturationLevel();
+            }
+
+            if (isDirty && Homeostatic.RANDOM.nextFloat() < ConfigHandler.Server.effectChance()) {
+                sp.addEffect(new MobEffectInstance(
+                        HomeostaticEffects.THIRST.get(),
+                        ConfigHandler.Server.effectDuration(),
+                        ConfigHandler.Server.effectPotency(),
+                        false, false, false));
+            }
+
+            if (update) {
+                NetworkHandler.INSTANCE.send(
+                        PacketDistributor.PLAYER.with(() -> sp),
+                        new WaterData(new WaterInfo(
+                            data.getWaterLevel(),
+                            data.getWaterSaturationLevel(),
+                            data.getWaterExhaustionLevel()
+                        ))
+                );
+            }
         });
     }
 

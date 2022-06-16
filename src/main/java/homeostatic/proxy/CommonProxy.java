@@ -1,10 +1,14 @@
 package homeostatic.proxy;
 
-import homeostatic.common.effect.HomeostaticEffects;
-import homeostatic.common.recipe.ArmorEnhancement;
-import homeostatic.common.recipe.HomeostaticRecipes;
+import homeostatic.common.block.HomeostaticBlocks;
+import homeostatic.common.fluid.HomeostaticFluids;
+import homeostatic.common.item.HomeostaticItems;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -16,6 +20,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import homeostatic.config.ConfigHandler;
 import homeostatic.common.block.BlockRegistry;
+import homeostatic.common.effect.HomeostaticEffects;
+import homeostatic.common.recipe.ArmorEnhancement;
+import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
 
@@ -48,6 +55,21 @@ public class CommonProxy {
             IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
             bus.register(new HomeostaticEffects());
+        }
+
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void registerItems(RegistryEvent.Register<Item> event) {
+            HomeostaticItems.init(event.getRegistry());
+        }
+
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void registerBlocks(RegistryEvent.Register<Block> event) {
+            HomeostaticBlocks.init(event.getRegistry());
+        }
+
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void registerFluids(RegistryEvent.Register<Fluid> event) {
+            HomeostaticFluids.init(event.getRegistry());
         }
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
