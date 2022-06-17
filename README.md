@@ -1,5 +1,5 @@
-# Homeostatic [![Project](http://cf.way2muchnoise.eu/full_321283_downloads.svg)](https://minecraft.curseforge.com/projects/321283)
-![Minecraft](http://cf.way2muchnoise.eu/versions/For%20MC_321283_all.svg)
+# Homeostatic [![Project](http://cf.way2muchnoise.eu/full_634446_downloads.svg)](https://minecraft.curseforge.com/projects/634446)
+![Minecraft](http://cf.way2muchnoise.eu/versions/For%20MC_634446_all.svg)
 ![Forge](https://img.shields.io/badge/Forge-39.0.66+-green.svg?longCache=true&style=flat)
 ![MIT](https://img.shields.io/badge/license-MIT-blue.svg?longCache=true&style=flat)
 
@@ -21,11 +21,11 @@ A temperature and thirst mod that doesn't defy logic:
 
 Download latest (1.18.2):
 
-[![Download](https://curse.nikky.moe/api/img/321283?logo)](https://curse.nikky.moe/api/url/321283)
+[![Download](https://curse.nikky.moe/api/img/634446?logo)](https://curse.nikky.moe/api/url/634446)
 
 All Downloads:
 
-[![Files](https://curse.nikky.moe/api/img/321283/files?logo)](https://minecraft.curseforge.com/projects/321283/files)
+[![Files](https://curse.nikky.moe/api/img/634446/files?logo)](https://minecraft.curseforge.com/projects/634446/files)
 
 ## Links of Interest
 
