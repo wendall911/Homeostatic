@@ -35,9 +35,13 @@ public class WaterHelper {
 
     public static void drinkWater(ServerPlayer sp, boolean isDirty, boolean update) {
         sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
-            data.increaseWaterLevel();
 
-            if (!isDirty) {
+
+            if (isDirty) {
+                data.increaseWaterLevel();
+            }
+            else {
+                data.increaseCleanWaterLevel();
                 data.increaseSaturationLevel();
             }
 

@@ -141,11 +141,11 @@ public final class ConfigHandler {
 
         Server(ForgeConfigSpec.Builder builder) {
             DRINK_AMOUNT = builder
-                .comment("Amount of water that can drank per interaction in half shanks. Default 1")
+                .comment("Amount of water that can drank per interaction in half shanks. Purified water is 3X. Default 1")
                 .defineInRange("DRINK_AMOUNT", 1, 1, 20);
             DRINK_SATURATION = builder
-                .comment("Amount of saturation gained per drink. Default 0.2")
-                .defineInRange("DRINK_SATURATION", 0.2, 0.0, 20.0);
+                .comment("Amount of saturation gained per drink of purified water. Default 0.7")
+                .defineInRange("DRINK_SATURATION", 0.7, 0.0, 20.0);
             EFFECT_POTENCY = builder
                 .comment("Potency of thirst effect when drinking from an open water source. Default 25")
                 .defineInRange("EFFECT_POTENCY", 45, 1, 255);

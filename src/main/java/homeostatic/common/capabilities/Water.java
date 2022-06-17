@@ -46,6 +46,10 @@ public class Water {
         this.waterLevel = Math.min(this.waterLevel + ConfigHandler.Server.drinkAmount(), WaterInfo.MAX_WATER_LEVEL);
     }
 
+    public void increaseCleanWaterLevel() {
+        this.waterLevel = Math.min(this.waterLevel + (ConfigHandler.Server.drinkAmount() * 3), WaterInfo.MAX_WATER_LEVEL);
+    }
+
     public void increaseSaturationLevel() {
         this.waterSaturationLevel = Math.min(this.waterSaturationLevel + ConfigHandler.Server.drinkSaturation(), WaterInfo.MAX_SATURATION_LEVEL);
     }

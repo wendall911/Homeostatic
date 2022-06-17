@@ -1,10 +1,11 @@
 package homeostatic.common.recipe;
 
-import homeostatic.Homeostatic;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.crafting.RecipeType;
 
 import net.minecraftforge.registries.DeferredRegister;
+
+import homeostatic.Homeostatic;
 
 public class HomeostaticRecipes {
 

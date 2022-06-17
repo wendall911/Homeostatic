@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import homeostatic.common.fluid.HomeostaticFluids;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -82,7 +83,12 @@ public class WaterContainerItem extends ItemFluidContainer {
                 updateDamage(stack);
 
                 if (!player.level.isClientSide) {
-                    WaterHelper.drinkWater((ServerPlayer) player, true, true);
+                    if (fluidHandlerItem.getFluidInTank(0).getFluid() == Fluids.WATER) {
+                        WaterHelper.drinkWater((ServerPlayer) player, true, true);
+                    }
+                    else if (fluidHandlerItem.getFluidInTank(0).getFluid() == HomeostaticFluids.PURIFIED_WATER) {
+                        WaterHelper.drinkWater((ServerPlayer) player, false, true);
+                    }
                 }
             }
         }
@@ -110,6 +116,11 @@ public class WaterContainerItem extends ItemFluidContainer {
         }
 
         components.add(textComponent.append(String.format(": %d uses.", amount / 250)).setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)));
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return false;
     }
 
     public int getUseDuration(ItemStack stack) {

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "homeostatic:smoking_purified_leather_flask"
+    ]
+  },
+  "criteria": {
+    "has_leather_flask": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "homeostatic:leather_flask"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "homeostatic:smoking_purified_leather_flask"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_leather_flask",
+      "has_the_recipe"
+    ]
+  ]
+}

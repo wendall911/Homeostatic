@@ -3,6 +3,7 @@ package homeostatic.proxy;
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
+import homeostatic.common.recipe.PurifiedLeatherFlask;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -79,11 +80,13 @@ public class CommonProxy {
             HomeostaticEffects.EFFECT_REGISTRY.register(bus);
             HomeostaticRecipes.RECIPE_REGISTRY.register(bus);
             ArmorEnhancement.init();
+            PurifiedLeatherFlask.init();
         }
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
             event.getRegistry().register(ArmorEnhancement.ARMOR_ENHANCEMENT_SERIALIZER);
+            event.getRegistry().register(PurifiedLeatherFlask.PURIFIED_LEATHER_FLASK_SERIALIZER);
         }
 
     }

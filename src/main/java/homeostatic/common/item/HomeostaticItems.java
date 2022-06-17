@@ -2,6 +2,7 @@ package homeostatic.common.item;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 
 import net.minecraftforge.registries.IForgeRegistry;
@@ -15,6 +16,7 @@ public final class HomeostaticItems {
     public static IForgeRegistry<Item> ITEM_REGISTRY;
     public static Item LEATHER_FLASK;
     public static Item PURIFIED_WATER_BUCKET;
+    public static Item WATER_FILTER;
 
 
     public static void init(IForgeRegistry<Item> registry) {
@@ -27,6 +29,10 @@ public final class HomeostaticItems {
         PURIFIED_WATER_BUCKET = registerItem(
                 "purified_water_bucket",
                 new BucketItem(() -> HomeostaticFluids.PURIFIED_WATER, new Item.Properties().tab(CreativeTabs.ITEM_TAB_GROUP)));
+
+        WATER_FILTER = registerItem(
+                "water_filter",
+                new Item(new Item.Properties().tab(CreativeTabs.ITEM_TAB_GROUP)));
     }
 
     public static Item registerItem(String name, Item item) {

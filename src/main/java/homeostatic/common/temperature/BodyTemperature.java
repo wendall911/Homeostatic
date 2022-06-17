@@ -192,7 +192,7 @@ public class BodyTemperature {
                 && localTemperature < this.skinTemperature) {
             float coolingRate = Math.max((this.skinTemperature - NORMAL) / 20.0F, BiomeData.MC_DEGREE);
             if (canSweat) {
-                Homeostatic.LOGGER.debug("sweating to normalize: %s", Math.min(tempChange * 150.0F, 0.2F));
+                //Homeostatic.LOGGER.debug("sweating to normalize: %s", Math.min(tempChange * 150.0F, 0.2F));
                 WaterHelper.updateWaterInfo(sp, Math.min(tempChange * 150.0F, 0.2F));
                 this.skinTemperature = Math.max(this.skinTemperature - coolingRate, NORMAL);
             }
