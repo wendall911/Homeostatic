@@ -1,6 +1,6 @@
 # Homeostatic [![Project](http://cf.way2muchnoise.eu/full_634446_downloads.svg)](https://minecraft.curseforge.com/projects/634446)
 ![Minecraft](http://cf.way2muchnoise.eu/versions/For%20MC_634446_all.svg)
-![Forge](https://img.shields.io/badge/Forge-39.0.66+-green.svg?longCache=true&style=flat)
+![Forge](https://img.shields.io/badge/Forge-40.0.1+-green.svg?longCache=true&style=flat)
 ![MIT](https://img.shields.io/badge/license-MIT-blue.svg?longCache=true&style=flat)
 
 A temperature and thirst mod that doesn't defy logic:
