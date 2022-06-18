@@ -9,7 +9,7 @@ A temperature and thirst mod that doesn't defy logic:
     - Just because there is snow, doesn't mean that it is stupid cold. That doesn't work in reality with Minecraft anyhow, since the biomes are mixed where they are often close.
     - Temperature smoothing is done to try and normalize temperature with nearby biomes.
     - Seasons are taken into account if using Serene Seasons. (At least until there is a viable season alternative).
-  - Thirst is affected by the environment temerature, body temperature and activity.
+  - Thirst is affected by the environment temperature, body temperature and activity.
     - Water is life
     - Being overheated will cause water to be used rapidly, which could lead to bad effects or death.
   - Body temperature is regulated through armor modifications and heat sources.
