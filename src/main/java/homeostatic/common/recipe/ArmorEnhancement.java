@@ -1,5 +1,6 @@
 package homeostatic.common.recipe;
 
+import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 
 import com.mojang.datafixers.util.Pair;
@@ -20,8 +21,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 import net.minecraftforge.registries.ForgeRegistryEntry;
-
-import org.apache.commons.compress.utils.Lists;
 
 import homeostatic.Homeostatic;
 import homeostatic.common.TagManager;
