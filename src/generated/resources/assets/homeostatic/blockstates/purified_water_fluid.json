@@ -6,6 +6,24 @@
     "level=1": {
       "model": "homeostatic:block/purified_water_fluid"
     },
+    "level=10": {
+      "model": "homeostatic:block/purified_water_fluid"
+    },
+    "level=11": {
+      "model": "homeostatic:block/purified_water_fluid"
+    },
+    "level=12": {
+      "model": "homeostatic:block/purified_water_fluid"
+    },
+    "level=13": {
+      "model": "homeostatic:block/purified_water_fluid"
+    },
+    "level=14": {
+      "model": "homeostatic:block/purified_water_fluid"
+    },
+    "level=15": {
+      "model": "homeostatic:block/purified_water_fluid"
+    },
     "level=2": {
       "model": "homeostatic:block/purified_water_fluid"
     },
@@ -28,24 +46,6 @@
       "model": "homeostatic:block/purified_water_fluid"
     },
     "level=9": {
-      "model": "homeostatic:block/purified_water_fluid"
-    },
-    "level=10": {
-      "model": "homeostatic:block/purified_water_fluid"
-    },
-    "level=11": {
-      "model": "homeostatic:block/purified_water_fluid"
-    },
-    "level=12": {
-      "model": "homeostatic:block/purified_water_fluid"
-    },
-    "level=13": {
-      "model": "homeostatic:block/purified_water_fluid"
-    },
-    "level=14": {
-      "model": "homeostatic:block/purified_water_fluid"
-    },
-    "level=15": {
       "model": "homeostatic:block/purified_water_fluid"
     }
   }

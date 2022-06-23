@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "minecraft:charcoal"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
   "pattern": [
     "P",
     "C",
     "P"
   ],
-  "key": {
-    "P": {
-      "item": "minecraft:paper"
-    },
-    "C": {
-      "item": "minecraft:charcoal"
-    }
-  },
   "result": {
     "item": "homeostatic:water_filter"
   }

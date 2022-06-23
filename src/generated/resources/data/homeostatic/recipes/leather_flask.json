@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "SPS",
-    "L L",
-    "LLL"
-  ],
   "key": {
-    "S": {
-      "item": "minecraft:string"
-    },
     "L": {
       "item": "minecraft:leather"
     },
     "P": {
       "tag": "minecraft:planks"
+    },
+    "S": {
+      "item": "minecraft:string"
     }
   },
+  "pattern": [
+    "SPS",
+    "L L",
+    "LLL"
+  ],
   "result": {
     "item": "homeostatic:leather_flask"
   }

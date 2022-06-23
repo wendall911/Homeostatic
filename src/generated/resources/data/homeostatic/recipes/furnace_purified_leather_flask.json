@@ -1,17 +1,17 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.15,
   "ingredient": {
     "type": "forge:nbt",
-    "item": "homeostatic:leather_flask",
     "count": 1,
+    "item": "homeostatic:leather_flask",
     "nbt": "{Damage:0,Fluid:{Amount:5000,FluidName:\"minecraft:water\"}}"
   },
   "result": {
     "type": "forge:nbt",
-    "item": "homeostatic:leather_flask",
     "count": 1,
+    "item": "homeostatic:leather_flask",
     "nbt": "{Damage:0,Fluid:{Amount:5000,FluidName:\"homeostatic:purified_water\"}}"
-  },
-  "experience": 0.15,
-  "cookingtime": 200
+  }
 }
