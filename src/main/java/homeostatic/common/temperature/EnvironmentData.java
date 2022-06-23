@@ -276,10 +276,10 @@ public class EnvironmentData {
     }
 
     private static float getSeasonAdjustedTemperature(ServerLevel world, Holder<Biome> biome, float biomeTemp) {
-        DimensionType dimensionType = world.dimensionType();
-        boolean seasonEffects = BiomeConfig.enablesSeasonalEffects(biome);
-
         if (ModList.get().isLoaded("sereneseasons")) {
+            DimensionType dimensionType = world.dimensionType();
+            boolean seasonEffects = BiomeConfig.enablesSeasonalEffects(biome);
+
             if (seasonEffects && !DimensionType.OVERWORLD_LOCATION.equals(dimensionType)) {
                 Biome.BiomeCategory biomeCategory = Biome.getBiomeCategory(biome);
                 BiomeData biomeData = BiomeRegistry.BIOMES.get(biomeCategory);
