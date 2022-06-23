@@ -111,7 +111,7 @@ dependencies {
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
     implementation fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
     implementation fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
