@@ -59,7 +59,7 @@ def modid = "${modid}"
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '17'
 
 minecraft {
-    mappings channel: "${mappings_channel}", version: mappings_version
+    mappings channel: "${mappings_channel}", version: "${mappings_version}-${minecraft_version}"
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -110,8 +110,8 @@ dependencies {
 
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
 
     implementation fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
     implementation fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
