@@ -11,8 +11,8 @@ public class BiomeData {
 
     private final float temperature;
     private double humidity;
-    private float seasonVariation;
-    private float dayNightOffset;
+    private final float seasonVariation;
+    private final float dayNightOffset;
 
     BiomeData (float temperature, double humidity, double seasonVariation, double dayNightOffset) {
         this.humidity = humidity;
@@ -41,7 +41,7 @@ public class BiomeData {
 
     public double getHumidity(Holder<Biome> biome) {
         if (biome.value().getBaseTemperature() < 0.33F) {
-            humidity = 20.0;
+            this.humidity = 20.0;
         }
         return this.humidity;
     }

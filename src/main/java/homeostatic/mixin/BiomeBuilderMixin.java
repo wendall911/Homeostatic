@@ -2,23 +2,25 @@ package homeostatic.mixin;
 
 import javax.annotation.Nullable;
 
-import homeostatic.common.biome.BiomeData;
-import homeostatic.common.biome.BiomeRegistry;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeBuilder;
 
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+import homeostatic.common.biome.BiomeData;
+import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.Homeostatic;
 
 @Mixin(BiomeBuilder.class)
 public abstract class BiomeBuilderMixin {
 
-    @Shadow @Nullable private Biome.BiomeCategory biomeCategory;
+    @Shadow @Nullable private BiomeGenerationSettings generationSettings;
 
     @Shadow private Biome.TemperatureModifier temperatureModifier;
 
@@ -26,7 +28,11 @@ public abstract class BiomeBuilderMixin {
 
     @Shadow @Nullable private Biome.Precipitation precipitation;
 
+    @Shadow @Nullable private MobSpawnSettings mobSpawnSettings;
+
     @Shadow @Nullable private Float temperature;
+
+    @Shadow @Nullable private Float downfall;
 
     /*
      * Override default minecraft temperatures with ones that make a little more sense.
@@ -41,15 +47,28 @@ public abstract class BiomeBuilderMixin {
      * works out.
      */
     @Inject(method = "build",
-        at = @At("HEAD"),
-        cancellable = true)
+        at = @At("HEAD"))
     private void injectBuild(CallbackInfoReturnable<Biome> cir) {
-        BiomeData biomeData = BiomeRegistry.BIOMES.get(this.biomeCategory);
+        BiomeData biomeData = null;
+        BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.BiomeCategory.MISSING;
+
+        if (this.generationSettings != null
+                && this.temperature != null
+                && this.mobSpawnSettings != null
+                && this.downfall != null) {
+            biomeCategory = BiomeRegistry.getBiomeCategory(this.generationSettings, this.temperature, this.mobSpawnSettings, this.temperatureModifier, this.downfall, this.precipitation);
+        }
+
+        if (biomeCategory != BiomeRegistry.BiomeCategory.MISSING) {
+            biomeData = BiomeRegistry.BIOMES.get(biomeCategory);
+        }
 
         if (biomeData != null) {
             this.temperature(biomeData.getTemperature(this.temperatureModifier, this.precipitation));
         }
-
+        else {
+            Homeostatic.LOGGER.warn("Not overriding biome %s", this.toString());
+        }
     }
 
 }

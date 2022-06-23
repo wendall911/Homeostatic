@@ -1,10 +1,7 @@
 package homeostatic.common.recipe;
 
-import com.google.gson.JsonObject;
-
 import com.mojang.datafixers.util.Pair;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +14,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
@@ -26,11 +22,7 @@ import homeostatic.Homeostatic;
 
 public class PurifiedLeatherFlask extends CustomRecipe {
 
-    public static final RecipeSerializer<PurifiedLeatherFlask> PURIFIED_LEATHER_FLASK_SERIALIZER = new PurifiedLeatherFlask.Serializer();
 
-    public static void init() {
-        PURIFIED_LEATHER_FLASK_SERIALIZER.setRegistryName(new ResourceLocation(Homeostatic.MODID + ":purified_leather_flask"));
-    }
 
     public PurifiedLeatherFlask(ResourceLocation loc) {
         super(loc);
@@ -68,7 +60,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return PURIFIED_LEATHER_FLASK_SERIALIZER;
+        return RecipeRegistry.PURIFIED_LEATHER_FLASK_SERIALIZER.get();
     }
 
     public Pair<ItemStack, ItemStack> checkContainer(CraftingContainer pContainer) {
@@ -78,7 +70,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
         for (int i = 0; i < pContainer.getContainerSize(); i++) {
             ItemStack ingredient = pContainer.getItem(i);
 
-            if (ingredient.getItem().getRegistryName().getPath().contains(HomeostaticItems.WATER_FILTER.getRegistryName().getPath())) {
+            if (ingredient.is(HomeostaticItems.WATER_FILTER)) {
                 filter = ingredient;
             }
             else if (ingredient.getItem() instanceof LeatherFlask) {
@@ -98,23 +90,6 @@ public class PurifiedLeatherFlask extends CustomRecipe {
         public static final Type INSTANCE = new Type();
 
         private Type() {}
-
-    }
-
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<PurifiedLeatherFlask> {
-
-        @Override
-        public PurifiedLeatherFlask fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-            return new PurifiedLeatherFlask(pRecipeId);
-        }
-
-        @Override
-        public PurifiedLeatherFlask fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            return new PurifiedLeatherFlask(pRecipeId);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, PurifiedLeatherFlask pRecipe) {}
 
     }
 

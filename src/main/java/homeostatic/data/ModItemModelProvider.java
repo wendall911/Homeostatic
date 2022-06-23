@@ -33,7 +33,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     private void build(ModelFile itemGenerated, Item item) {
-        String name = Objects.requireNonNull(item.getRegistryName()).getPath();
+        String name = Objects.requireNonNull(item.toString());
 
         getBuilder(name).parent(itemGenerated).texture("layer0", "item/" + name);
     }

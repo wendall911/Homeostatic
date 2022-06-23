@@ -24,10 +24,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        String fullName = HomeostaticBlocks.PURIFIED_WATER_FLUID.getName().getString();
+        String name = fullName.substring(fullName.lastIndexOf('.') + 1);
+
         ModelFile modelFile = models()
-                .withExistingParent(HomeostaticBlocks.PURIFIED_WATER_FLUID.getRegistryName().toString(), modLoc("block/purified_water_fluid"));
+                .withExistingParent(name, modLoc("block/purified_water_fluid"));
         BlockModelBuilder purifiedWater = models()
-                .withExistingParent(HomeostaticBlocks.PURIFIED_WATER_FLUID.getRegistryName().toString(), modLoc("block/purified_water_fluid"))
+                .withExistingParent(name, modLoc("block/purified_water_fluid"))
                 .texture("particle", modLoc("block/fluid/still_water"));
 
         getVariantBuilder(HomeostaticBlocks.PURIFIED_WATER_FLUID)

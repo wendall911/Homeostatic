@@ -1,16 +1,7 @@
 package homeostatic.proxy;
 
-import homeostatic.common.block.HomeostaticBlocks;
-import homeostatic.common.fluid.HomeostaticFluids;
-import homeostatic.common.item.HomeostaticItems;
-import homeostatic.common.recipe.PurifiedLeatherFlask;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.core.Registry;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,12 +9,17 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 
 import homeostatic.config.ConfigHandler;
 import homeostatic.common.block.BlockRegistry;
 import homeostatic.common.effect.HomeostaticEffects;
-import homeostatic.common.recipe.ArmorEnhancement;
+import homeostatic.common.block.HomeostaticBlocks;
+import homeostatic.common.fluid.HomeostaticFluids;
+import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.HomeostaticRecipes;
+import homeostatic.common.recipe.RecipeRegistry;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
 
@@ -52,25 +48,22 @@ public class CommonProxy {
         }
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
-        public static void registerMobEffects(RegistryEvent.Register<MobEffect> event) {
+        public static void registerEvent(RegisterEvent event) {
             IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-            bus.register(new HomeostaticEffects());
-        }
+            event.register(Registry.MOB_EFFECT_REGISTRY, er -> {
+                bus.register(new HomeostaticEffects());
+            });
+            event.register(Registry.ITEM_REGISTRY, HomeostaticItems::init);
+            event.register(Registry.BLOCK_REGISTRY, HomeostaticBlocks::init);
+            event.register(Registry.FLUID_REGISTRY, HomeostaticFluids::init);
+            event.register(ForgeRegistries.FLUID_TYPES.get().getRegistryKey(), HomeostaticFluids::initTypes);
 
-        @SubscribeEvent(priority = EventPriority.HIGHEST)
-        public static void registerItems(RegistryEvent.Register<Item> event) {
-            HomeostaticItems.init(event.getRegistry());
-        }
-
-        @SubscribeEvent(priority = EventPriority.HIGHEST)
-        public static void registerBlocks(RegistryEvent.Register<Block> event) {
-            HomeostaticBlocks.init(event.getRegistry());
-        }
-
-        @SubscribeEvent(priority = EventPriority.HIGHEST)
-        public static void registerFluids(RegistryEvent.Register<Fluid> event) {
-            HomeostaticFluids.init(event.getRegistry());
+            event.register(Registry.RECIPE_SERIALIZER_REGISTRY, rs -> {
+                RecipeRegistry.init();
+            });
+            //event.getForgeRegistry().register(new ResourceLocation(Homeostatic.MODID + ":armor_enhancement"), RecipeRegistry.ARMOR_ENHANCEMENT_SERIALIZER);
+            //event.getForgeRegistry().register(new ResourceLocation(Homeostatic.MODID + ":purified_leather_flask"), RecipeRegistry.PURIFIED_LEATHER_FLASK_SERIALIZER);
         }
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -79,14 +72,6 @@ public class CommonProxy {
 
             HomeostaticEffects.EFFECT_REGISTRY.register(bus);
             HomeostaticRecipes.RECIPE_REGISTRY.register(bus);
-            ArmorEnhancement.init();
-            PurifiedLeatherFlask.init();
-        }
-
-        @SubscribeEvent(priority = EventPriority.HIGHEST)
-        public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
-            event.getRegistry().register(ArmorEnhancement.ARMOR_ENHANCEMENT_SERIALIZER);
-            event.getRegistry().register(PurifiedLeatherFlask.PURIFIED_LEATHER_FLASK_SERIALIZER);
         }
 
     }

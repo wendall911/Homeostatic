@@ -9,14 +9,14 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -58,7 +58,7 @@ public class PlayerEventHandler {
             WetnessHelper.updateWetnessInfo(sp, 0.0F, true);
 
             sp.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
-                BlockPos pos = sp.eyeBlockPosition();
+                BlockPos pos = new BlockPos(sp.getEyePosition(1.0F));
                 Holder<Biome> biome = world.getBiome(pos);
                 EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
                 BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, data);
@@ -77,7 +77,7 @@ public class PlayerEventHandler {
             final Player player = event.getPlayer();
             final ResourceKey<Level> worldKey = event.getTo();
 
-            if (!worldKey.location().toString().contains(DimensionType.OVERWORLD_EFFECTS.toString())) {
+            if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
             }
         }
     }
@@ -104,7 +104,7 @@ public class PlayerEventHandler {
                 }
 
                 if (sp.tickCount % 16 == 0 || sp.tickCount % 60 == 0) {
-                    BlockPos pos = sp.eyeBlockPosition();
+                    BlockPos pos = new BlockPos(sp.getEyePosition(1.0F));;
                     Holder<Biome> biome = world.getBiome(pos);
                     EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
                     boolean updateCore = sp.tickCount % 60 == 0;
@@ -151,7 +151,7 @@ public class PlayerEventHandler {
             });
 
             sp.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
-                BlockPos pos = sp.eyeBlockPosition();
+                BlockPos pos = new BlockPos(sp.getEyePosition(1.0F));;
                 Holder<Biome> biome = world.getBiome(pos);
                 EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
                 BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, data);

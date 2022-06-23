@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 
@@ -30,15 +29,15 @@ public class TooltipEventHandler {
             CompoundTag tags = stack.getTag();
 
             if (tags.contains("insulation")) {
-                toolTip.add((new TranslatableComponent("tooltip.insulation")).withStyle(ChatFormatting.GRAY));
+                toolTip.add((Component.translatable("tooltip.insulation")).withStyle(ChatFormatting.GRAY));
             }
 
             if (tags.contains("waterproof")) {
-                toolTip.add((new TranslatableComponent("tooltip.waterproof")).withStyle(ChatFormatting.DARK_AQUA));
+                toolTip.add((Component.translatable("tooltip.waterproof")).withStyle(ChatFormatting.DARK_AQUA));
             }
 
             if (tags.contains("radiation_protection")) {
-                toolTip.add((new TranslatableComponent("tooltip.radiation_protection")).withStyle(ChatFormatting.GREEN));
+                toolTip.add((Component.translatable("tooltip.radiation_protection")).withStyle(ChatFormatting.GREEN));
             }
         }
     }

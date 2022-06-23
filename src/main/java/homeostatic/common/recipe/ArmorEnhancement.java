@@ -8,7 +8,6 @@ import com.mojang.datafixers.util.Pair;
 import java.util.List;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -20,20 +19,14 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import homeostatic.Homeostatic;
 import homeostatic.common.TagManager;
 
 public class ArmorEnhancement extends CustomRecipe {
 
-    public static final RecipeSerializer<ArmorEnhancement> ARMOR_ENHANCEMENT_SERIALIZER = new ArmorEnhancement.Serializer();
-
-    public static void init() {
-        ARMOR_ENHANCEMENT_SERIALIZER.setRegistryName(new ResourceLocation(Homeostatic.MODID + ":armor_enhancement"));
-    }
-    public ArmorEnhancement(ResourceLocation loc) {
-        super(loc);
+    public ArmorEnhancement(ResourceLocation resourceLocation) {
+        super(resourceLocation);
     }
 
     @Override
@@ -78,7 +71,7 @@ public class ArmorEnhancement extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ARMOR_ENHANCEMENT_SERIALIZER;
+        return RecipeRegistry.ARMOR_ENHANCEMENT_SERIALIZER.get();
     }
 
     public Pair<ItemStack, TagKey> checkContainer(CraftingContainer pContainer) {
@@ -124,23 +117,6 @@ public class ArmorEnhancement extends CustomRecipe {
         public static final Type INSTANCE = new Type();
 
         private Type() {}
-
-    }
-
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ArmorEnhancement> {
-
-        @Override
-        public ArmorEnhancement fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-            return new ArmorEnhancement(pRecipeId);
-        }
-
-        @Override
-        public ArmorEnhancement fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            return new ArmorEnhancement(pRecipeId);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, ArmorEnhancement pRecipe) {}
 
     }
 

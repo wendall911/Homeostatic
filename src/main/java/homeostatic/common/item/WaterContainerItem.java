@@ -11,8 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
@@ -103,7 +101,7 @@ public class WaterContainerItem extends ItemFluidContainer {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
-        TextComponent textComponent = new TextComponent(new TranslatableComponent("tooltip.water_container.empty").getString());
+        Component textComponent = Component.translatable("tooltip.water_container.empty");
         int amount = 0;
 
         super.appendHoverText(stack, level, components, tooltipFlag);
@@ -111,11 +109,11 @@ public class WaterContainerItem extends ItemFluidContainer {
         if (stack.getTagElement(FLUID_NBT_KEY) != null) {
             IFluidHandlerItem fluidHandlerItem = FluidUtil.getFluidHandler(stack).orElse(null);
 
-            textComponent = new TextComponent(fluidHandlerItem.getFluidInTank(0).getDisplayName().getString());
+            textComponent = Component.translatable(fluidHandlerItem.getFluidInTank(0).getDisplayName().getString());
             amount = fluidHandlerItem.getFluidInTank(0).getAmount();
         }
 
-        components.add(textComponent.append(String.format(": %d uses.", amount / 250)).setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)));
+        components.add(Component.translatable(textComponent.getString() + String.format(": %d uses.", amount / 250)).setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)));
     }
 
     @Override

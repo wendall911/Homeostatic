@@ -10,13 +10,16 @@ import homeostatic.util.WetnessHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.LevelData;
@@ -229,8 +232,7 @@ public class EnvironmentData {
     }
 
     private static double getMaxBiomeHumidity(Holder<Biome> biome) {
-        Biome.BiomeCategory biomeCategory = Biome.getBiomeCategory(biome);
-        BiomeData biomeData = BiomeRegistry.BIOMES.get(biomeCategory);
+        BiomeData biomeData =  BiomeRegistry.getDataForBiome(biome);
 
         return biomeData.getHumidity(biome);
     }
@@ -252,8 +254,7 @@ public class EnvironmentData {
     }
 
     private static float getDayNightOffset(ServerLevel world, Holder<Biome> biome, double relativeHumidity) {
-        Biome.BiomeCategory biomeCategory = Biome.getBiomeCategory(biome);
-        BiomeData biomeData = BiomeRegistry.BIOMES.get(biomeCategory);
+        BiomeData biomeData =  BiomeRegistry.getDataForBiome(biome);
         long time = (world.getDayTime() % 24000);
         float maxTemp = biomeData.getDayNightOffset(biome.value().getPrecipitation());
 
@@ -276,13 +277,12 @@ public class EnvironmentData {
     }
 
     private static float getSeasonAdjustedTemperature(ServerLevel world, Holder<Biome> biome, float biomeTemp) {
-        DimensionType dimensionType = world.dimensionType();
+        ResourceKey<Level> worldKey = world.dimension();
         boolean seasonEffects = BiomeConfig.enablesSeasonalEffects(biome);
 
         if (ModList.get().isLoaded("sereneseasons")) {
-            if (seasonEffects && !DimensionType.OVERWORLD_LOCATION.equals(dimensionType)) {
-                Biome.BiomeCategory biomeCategory = Biome.getBiomeCategory(biome);
-                BiomeData biomeData = BiomeRegistry.BIOMES.get(biomeCategory);
+            if (seasonEffects && worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
+                BiomeData biomeData =  BiomeRegistry.getDataForBiome(biome);
                 int season;
                 float lateSummerOffset = biomeData.MC_DEGREE * 5;
                 int subSeason = SeasonHelper.getSeasonState(world).getSubSeason().ordinal();
