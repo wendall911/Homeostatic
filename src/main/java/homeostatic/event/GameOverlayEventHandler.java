@@ -38,10 +38,10 @@ public class GameOverlayEventHandler {
         OVERLAY = OverlayRegistry.registerOverlayAbove(
             ForgeIngameGui.HUD_TEXT_ELEMENT,
             Homeostatic.MODID + ":overlay",
-            (matrix, partialTicks, width, height, height2) -> callRenderOverlay(partialTicks, width)
+            (matrix, partialTicks, width, height, height2) -> callRenderOverlay(partialTicks)
         );
 
-        HUD_OVERLAY = OverlayRegistry.registerOverlayTop("Water Level", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+        HUD_OVERLAY = OverlayRegistry.registerOverlayBottom("Water Level", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             boolean isMounted = minecraft.player.getVehicle() instanceof LivingEntity;
 
@@ -51,7 +51,7 @@ public class GameOverlayEventHandler {
         });
     }
 
-    public void callRenderOverlay(PoseStack matrix, float partialTicks) {
+    public void callRenderOverlay(PoseStack matrix) {
         if (enabled && ConfigHandler.Client.debugEnabled() && !Minecraft.getInstance().options.renderDebug) {
             overlayManager.renderOverlay(matrix);
         }
