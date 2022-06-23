@@ -47,7 +47,7 @@ public class WaterHelper {
 
             if (isDirty && Homeostatic.RANDOM.nextFloat() < ConfigHandler.Server.effectChance()) {
                 sp.addEffect(new MobEffectInstance(
-                        HomeostaticEffects.THIRST.get(),
+                        HomeostaticEffects.THIRST,
                         ConfigHandler.Server.effectDuration(),
                         ConfigHandler.Server.effectPotency(),
                         false, false, false));

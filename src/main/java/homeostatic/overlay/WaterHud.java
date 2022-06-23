@@ -36,7 +36,7 @@ public class WaterHud extends GuiComponent {
 
         RenderSystem.enableBlend();
         RenderSystem.setShaderTexture(0, WATER_BAR);
-        MobEffectInstance effectInstance = mc.player.getEffect(HomeostaticEffects.THIRST.get());
+        MobEffectInstance effectInstance = mc.player.getEffect(HomeostaticEffects.THIRST);
 
         if (hasAirBar(mc.player)){
             matrix.translate(0,-9,0);

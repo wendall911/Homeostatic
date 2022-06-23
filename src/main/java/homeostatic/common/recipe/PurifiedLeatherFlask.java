@@ -60,7 +60,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return RecipeRegistry.PURIFIED_LEATHER_FLASK_SERIALIZER.get();
+        return HomeostaticRecipes.PURIFIED_LEATHER_FLASK_SERIALIZER;
     }
 
     public Pair<ItemStack, ItemStack> checkContainer(CraftingContainer pContainer) {

@@ -71,7 +71,7 @@ public class ArmorEnhancement extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return RecipeRegistry.ARMOR_ENHANCEMENT_SERIALIZER.get();
+        return HomeostaticRecipes.ARMOR_ENHANCEMENT_SERIALIZER;
     }
 
     public Pair<ItemStack, TagKey> checkContainer(CraftingContainer pContainer) {
