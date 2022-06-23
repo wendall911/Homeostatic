@@ -13,5 +13,5 @@
   "item.homeostatic.leather_flask": "Leather Flask",
   "item.homeostatic.purified_water_bucket": "Purified Water Bucket",
   "item.homeostatic.water_filter": "Water Filter",
-  "fluid.homeostatic.purified_water": "Purified Water"
+  "fluid_type.homeostatic.purified_water_type": "Purified Water"
 }
