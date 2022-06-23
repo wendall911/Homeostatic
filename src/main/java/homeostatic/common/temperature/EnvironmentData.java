@@ -20,7 +20,6 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
@@ -277,10 +276,10 @@ public class EnvironmentData {
     }
 
     private static float getSeasonAdjustedTemperature(ServerLevel world, Holder<Biome> biome, float biomeTemp) {
-        ResourceKey<Level> worldKey = world.dimension();
-        boolean seasonEffects = BiomeConfig.enablesSeasonalEffects(biome);
-
         if (ModList.get().isLoaded("sereneseasons")) {
+            ResourceKey<Level> worldKey = world.dimension();
+            boolean seasonEffects = BiomeConfig.enablesSeasonalEffects(biome);
+
             if (seasonEffects && worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
                 BiomeData biomeData =  BiomeRegistry.getDataForBiome(biome);
                 int season;
