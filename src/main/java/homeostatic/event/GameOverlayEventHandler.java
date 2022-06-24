@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.IIngameOverlay;
@@ -44,9 +43,8 @@ public class GameOverlayEventHandler {
 
         WATER_LEVEL_OVERLAY = OverlayRegistry.registerOverlayBottom("Water Level", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
-            boolean isMounted = minecraft.player.getVehicle() instanceof LivingEntity;
 
-            if (!isMounted && !minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
+            if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
                 overlayManager.renderWaterOverlay(poseStack);
             }
         });

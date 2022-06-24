@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -38,7 +39,7 @@ public class WaterHud extends GuiComponent {
         RenderSystem.setShaderTexture(0, WATER_BAR);
         MobEffectInstance effectInstance = mc.player.getEffect(HomeostaticEffects.THIRST);
 
-        if (hasAirBar(mc.player)){
+        if (hasAirBar(player) || isRidingHighHealth(player)) {
             matrix.translate(0,-9,0);
         }
 
@@ -100,6 +101,16 @@ public class WaterHud extends GuiComponent {
         int airSupply = Math.min(player.getAirSupply(), maxAirSupply);
 
         return player.isEyeInFluid(FluidTags.WATER) || airSupply < maxAirSupply;
+    }
+
+    public static boolean isRidingHighHealth(Player player) {
+        final boolean isMounted = player.getVehicle() instanceof LivingEntity;
+
+        if (isMounted) {
+            return ((LivingEntity) player.getVehicle()).getMaxHealth() >= 22.0F;
+        }
+
+        return false;
     }
 
 }
