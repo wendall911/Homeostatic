@@ -21,7 +21,7 @@ A temperature and thirst mod that doesn't defy logic:
 
 Download latest (1.18.2):
 
-[![Download](https://curse.nikky.moe/api/img/634466?logo)](https://curse.nikky.moe/api/url/634466)
+[![Download](https://curse.nikky.moe/api/img/634466?logo)](https://curse.nikky.moe/api/url/634466?version=1.18.2)
 
 All Downloads:
 
