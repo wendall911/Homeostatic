@@ -19,9 +19,9 @@ A temperature and thirst mod that doesn't defy logic:
     - [Being wet](https://en.wikipedia.org/wiki/Hypothermia#Water_immersion) is really bad (unless you're overheated), it can causing rapid cooling.
   - Blocks that generate heat aren't measured in temperature, but rather the [thermal radiation](https://en.wikipedia.org/wiki/Thermal_radiation) they release, which affects how "hot" it is to be near these objects.
 
-Download latest (1.18.2):
+Download latest (1.19):
 
-[![Download](https://curse.nikky.moe/api/img/634466?logo)](https://curse.nikky.moe/api/url/634466)
+[![Download](https://curse.nikky.moe/api/img/634466?logo)](https://curse.nikky.moe/api/url/634466?version=1.19)
 
 All Downloads:
 
