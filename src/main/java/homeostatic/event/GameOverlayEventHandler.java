@@ -27,7 +27,8 @@ public class GameOverlayEventHandler {
     private static boolean enabled = false;
 
     private final IIngameOverlay OVERLAY;
-    private final IIngameOverlay HUD_OVERLAY;
+    private final IIngameOverlay WATER_LEVEL_OVERLAY;
+    private final IIngameOverlay TEMPERATURE_OVERLAY;
 
     static {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(INSTANCE::onLoadComplete);
@@ -41,12 +42,20 @@ public class GameOverlayEventHandler {
             (matrix, partialTicks, width, height, height2) -> callRenderOverlay(partialTicks)
         );
 
-        HUD_OVERLAY = OverlayRegistry.registerOverlayBottom("Water Level", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+        WATER_LEVEL_OVERLAY = OverlayRegistry.registerOverlayBottom("Water Level", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             boolean isMounted = minecraft.player.getVehicle() instanceof LivingEntity;
 
             if (!isMounted && !minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                overlayManager.renderHud(poseStack);
+                overlayManager.renderWaterOverlay(poseStack);
+            }
+        });
+
+        TEMPERATURE_OVERLAY = OverlayRegistry.registerOverlayTop("Temperature", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+            Minecraft minecraft = Minecraft.getInstance();
+
+            if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
+                overlayManager.renderTemperatureOverlay(poseStack);
             }
         });
     }
@@ -66,7 +75,8 @@ public class GameOverlayEventHandler {
         if (enabled && event.getConfig().getSpec() == ConfigHandler.Client.CONFIG_SPEC) {
             ConfigHandler.Client.init();
             OverlayRegistry.enableOverlay(OVERLAY, ConfigHandler.Client.debugEnabled());
-            OverlayRegistry.enableOverlay(HUD_OVERLAY, true);
+            OverlayRegistry.enableOverlay(WATER_LEVEL_OVERLAY, true);
+            OverlayRegistry.enableOverlay(TEMPERATURE_OVERLAY, true);
         }
     }
 

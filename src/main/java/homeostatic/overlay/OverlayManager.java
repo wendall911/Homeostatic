@@ -37,7 +37,7 @@ public class OverlayManager {
         }
     }
 
-    public void renderHud(PoseStack matrix) {
+    public void renderWaterOverlay(PoseStack matrix) {
         Minecraft mc = Minecraft.getInstance();
         BlockPos pos = Objects.requireNonNull(mc.getCameraEntity()).blockPosition();
 
@@ -49,6 +49,21 @@ public class OverlayManager {
 
             waterHud.render(matrix, mc, scaledWidth, scaledHeight);
             wetnessOverlay.render(mc, scaledWidth, scaledHeight);
+
+            matrix.popPose();
+        }
+    }
+
+    public void renderTemperatureOverlay(PoseStack matrix) {
+        Minecraft mc = Minecraft.getInstance();
+        BlockPos pos = Objects.requireNonNull(mc.getCameraEntity()).blockPosition();
+
+        if (mc.level != null && mc.level.isLoaded(pos)) {
+            int scaledWidth = mc.getWindow().getGuiScaledWidth();
+            int scaledHeight = mc.getWindow().getGuiScaledHeight();
+
+            matrix.pushPose();
+
             temperatureOverlay.render(matrix, mc, scaledWidth, scaledHeight);
 
             matrix.popPose();
