@@ -34,11 +34,10 @@ public class TemperatureOverlay extends GuiComponent {
 
         player.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
             int offsetX = scaledWidth / 2 + 95;
-            int offsetY = scaledHeight - 27;
+            int pY = scaledHeight - 27;
             float textScale = 0.5F;
             int textOffsetX = (int) (scaledWidth / textScale) / 2 + 189;
             int textOffsetY = (int) (scaledHeight / textScale) - 15;
-            int pY = offsetY;
             int pV = 0;
             int pU = 0;
             int pUOffset = 53;
@@ -56,12 +55,17 @@ public class TemperatureOverlay extends GuiComponent {
             }
 
             if (data.getCoreTemperature() > BodyTemperature.HIGH) {
-                float alpha = 0.33F + (data.getCoreTemperature() - BodyTemperature.HIGH);
-
                 OverlayHelper.renderTexture(HYPERTHERMIA_OVERLAY, scaledWidth, scaledHeight, 0.4F);
             }
-
-            this.blit(matrix, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT);
+            if (data.getCoreTemperature() > BodyTemperature.WARNING_HIGH) {
+                this.blit(matrix, offsetX, pY, pUOffset, pV + 26, ICON_WIDTH, ICON_HEIGHT);
+            }
+            else if (data.getCoreTemperature() < BodyTemperature.WARNING_LOW) {
+                this.blit(matrix, offsetX, pY, pUOffset, pV + 52, ICON_WIDTH, ICON_HEIGHT);
+            }
+            else {
+                this.blit(matrix, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT);
+            }
             this.blit(matrix, offsetX, pY, pUOffset + 13, pV + lineOffset, ICON_WIDTH, ICON_HEIGHT);
 
             matrix.scale(textScale, textScale, textScale);

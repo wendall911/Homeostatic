@@ -14,8 +14,10 @@ import homeostatic.util.WetnessHelper;
 public class BodyTemperature {
 
     public static final float LOW = 1.554216868F;
+    public static final float WARNING_LOW = 1.589879518F;
     public static final float NORMAL = 1.634457832F;
     public static final float HIGH = 1.799397591F;
+    public static final float WARNING_HIGH = 1.765963856F;
     public static final float SCALDING = 2.557228916F;
 
     private final EnvironmentData environmentData;
