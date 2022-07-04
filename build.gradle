@@ -194,6 +194,7 @@ curseforge {
                     optionalLibrary 'jei'
                     optionalLibrary 'simpletextoverlay'
                     optionalLibrary 'serene-seasons'
+                    optionalLibrary 'biomes-o-plenty'
                 }
             }
         }
