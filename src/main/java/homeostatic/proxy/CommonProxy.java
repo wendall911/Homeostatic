@@ -1,18 +1,28 @@
 package homeostatic.proxy;
 
+import biomesoplenty.api.biome.BOPBiomes;
+
+import java.util.function.Consumer;
+
 import net.minecraft.core.Registry;
 
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 
 import homeostatic.config.ConfigHandler;
+import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.block.BlockRegistry;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.block.HomeostaticBlocks;
@@ -33,6 +43,9 @@ public class CommonProxy {
         ConfigHandler.init();
         registerListeners(bus);
         BlockRegistry.init();
+        BiomeRegistry.init();
+
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::serverStart);
     }
 
     public void registerListeners(IEventBus bus) {
@@ -57,6 +70,27 @@ public class CommonProxy {
             event.register(Registry.RECIPE_SERIALIZER_REGISTRY, HomeostaticRecipes::init);
         }
 
+    }
+
+    public void serverStart(ServerStartedEvent event) {
+        if (ModList.get().isLoaded("biomesoplenty")) {
+            Registry<Biome> biomeRegistry = BuiltinRegistries.BIOME;
+
+            for (ResourceKey<Biome> biomeResourceKey : BOPBiomes.getAllBiomes()) {
+                String biomeName = biomeResourceKey.location().toString();
+                Biome biome = biomeRegistry.get(biomeResourceKey);
+                Consumer<String> error = x -> Homeostatic.LOGGER.error("error getting holder for %s", biomeName);
+                BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.getBiomeCategory(biomeRegistry.getOrCreateHolder(biomeResourceKey).getOrThrow(false, error));
+
+                Homeostatic.LOGGER.debug(
+                        "Biome: " + biomeName
+                                + "\npreciptitation=" + biome.getPrecipitation()
+                                + "\ntemperature=" + biome.getBaseTemperature()
+                                + "\ndownfall=" + biome.getDownfall()
+                                + "\nbiomeCategory=" + biomeCategory
+                );
+            }
+        }
     }
 
 }

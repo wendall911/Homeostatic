@@ -35,6 +35,15 @@ public class BiomeData {
         return temperature;
     }
 
+    public Biome.Precipitation getPrecipitation(Float temperature, Biome.Precipitation precipitation) {
+        // Fix for BOP SNOWY_CONIFEROUS_FOREST
+        if (temperature == -0.25F && precipitation == Biome.Precipitation.RAIN) {
+            return Biome.Precipitation.SNOW;
+        }
+
+        return precipitation;
+    }
+
     public float getRawTemperature() {
         return this.temperature;
     }
@@ -64,6 +73,16 @@ public class BiomeData {
         }
 
         return this.dayNightOffset;
+    }
+
+    @Override
+    public String toString() {
+        return "BiomeData{" +
+                "temperature=" + temperature +
+                ", humidity=" + humidity +
+                ", seasonVariation=" + seasonVariation +
+                ", dayNightOffset=" + dayNightOffset +
+                '}';
     }
 
 }

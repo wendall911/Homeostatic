@@ -26,6 +26,8 @@ public abstract class BiomeBuilderMixin {
 
     @Shadow public abstract BiomeBuilder temperature(float pTemperature);
 
+    @Shadow public abstract BiomeBuilder precipitation(Biome.Precipitation pPrecipitation);
+
     @Shadow @Nullable private Biome.Precipitation precipitation;
 
     @Shadow @Nullable private MobSpawnSettings mobSpawnSettings;
@@ -61,13 +63,18 @@ public abstract class BiomeBuilderMixin {
 
         if (biomeCategory != BiomeRegistry.BiomeCategory.MISSING) {
             biomeData = BiomeRegistry.BIOMES.get(biomeCategory);
+            Homeostatic.LOGGER.debug("Overriding biome %s\n%s\n%s", this.toString(), biomeCategory, biomeData);
+        }
+        else {
+            Homeostatic.LOGGER.debug("Missing biome data %s", this.toString());
         }
 
         if (biomeData != null) {
+            this.precipitation(biomeData.getPrecipitation(this.temperature, this.precipitation));
             this.temperature(biomeData.getTemperature(this.temperatureModifier, this.precipitation));
         }
         else {
-            Homeostatic.LOGGER.warn("Not overriding biome %s", this.toString());
+            Homeostatic.LOGGER.debug("Not overriding biome %s", this.toString());
         }
     }
 

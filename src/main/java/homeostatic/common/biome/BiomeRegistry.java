@@ -1,7 +1,11 @@
 package homeostatic.common.biome;
 
+import biomesoplenty.api.biome.BOPBiomes;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.AquaticPlacements;
@@ -9,17 +13,26 @@ import net.minecraft.data.worldgen.placement.CavePlacements;
 import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
 import net.minecraft.data.worldgen.placement.NetherPlacements;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 
+import net.minecraftforge.fml.ModList;
+
+import homeostatic.Homeostatic;
+
 public class BiomeRegistry {
 
     public static final Map<BiomeCategory, BiomeData> BIOMES = new HashMap<>();
+    private static final Map<ResourceKey<Biome>, BiomeCategory> BIOME_CATEGORY = new HashMap<>();
 
+    private static final BiomeData BOG = new BiomeData(0.351F, 60.0F, 40F, 10F);
     private static final BiomeData DEEP_COLD_OCEAN = new BiomeData(0.373F, 20.0F, 20F, 5F);
+    private static final BiomeData COLD_FOREST = new BiomeData(0.373F, 60.0F, 40F, 12F);
+    private static final BiomeData COLD_DESERT = new BiomeData(0.395F, 20.0F, 40F, 20F);
     private static final BiomeData COLD_OCEAN = new BiomeData(0.440F, 20.0F, 20F, 5F);
     private static final BiomeData ICY = new BiomeData(0.507F, 20.0F, 20F, 5F);
     private static final BiomeData TAIGA = new BiomeData(0.507F, 50.0F, 40F, 10F);
@@ -31,12 +44,16 @@ public class BiomeRegistry {
     private static final BiomeData LUKEWARM_OCEAN = new BiomeData(0.640F, 70.0F, 40F, 10F);
     private static final BiomeData BEACH = new BiomeData(0.663F, 70.0F, 40F, 10F);
     private static final BiomeData FOREST = new BiomeData(0.663F, 50.0F, 40F, 12F);
-    private static final BiomeData SWAMP = new BiomeData(0.663F, 90.0F, 40F, 12F);
     public static final BiomeData UNDERGROUND = new BiomeData(0.663F, 40.0F, 40F, 12F);
+    private static final BiomeData SWAMP = new BiomeData(0.685F, 90.0F, 40F, 12F);
     private static final BiomeData MUSHROOM = new BiomeData(0.685F, 70.0F, 40F, 12F);
     private static final BiomeData WARM_OCEAN = new BiomeData(0.730F, 70.0F, 40F, 10F);
     private static final BiomeData PLAINS = new BiomeData(0.774F, 60.0F, 40F, 15F);
+    private static final BiomeData LUSH_DESERT = new BiomeData(0.886F, 60.0F, 40F, 15F);
+    private static final BiomeData DRYLAND = new BiomeData(0.886F, 35.0F, 40F, 15F);
+    private static final BiomeData RAINFOREST = new BiomeData(0.886F, 95.0F, 40F, 15F);
     private static final BiomeData JUNGLE = new BiomeData(0.997F, 90.0F, 40F, 15F);
+    private static final BiomeData VOLCANIC = new BiomeData(1.04F, 35.0F, 40F, 15F);
     private static final BiomeData SAVANNA = new BiomeData(1.108F, 30.0F, 40F, 15F);
     private static final BiomeData MESA = new BiomeData(1.309F, 20.0F, 40F, 15F);
     private static final BiomeData DESERT = new BiomeData(1.354F, 20.0F, 40F, 20F);
@@ -46,12 +63,15 @@ public class BiomeRegistry {
 
     static {
         BIOMES.put(BiomeCategory.DEEP_COLD_OCEAN, DEEP_COLD_OCEAN);
+        BIOMES.put(BiomeCategory.COLD_DESERT, COLD_DESERT);
+        BIOMES.put(BiomeCategory.COLD_FOREST, COLD_FOREST);
         BIOMES.put(BiomeCategory.COLD_OCEAN, COLD_OCEAN);
         BIOMES.put(BiomeCategory.ICY, ICY);
         BIOMES.put(BiomeCategory.OCEAN, OCEAN);
         BIOMES.put(BiomeCategory.WARM_OCEAN, WARM_OCEAN);
         BIOMES.put(BiomeCategory.LUKEWARM_OCEAN, LUKEWARM_OCEAN);
         BIOMES.put(BiomeCategory.DEEP_LUKEWARM_OCEAN, DEEP_LUKEWARM_OCEAN);
+        BIOMES.put(BiomeCategory.BOG, BOG);
         BIOMES.put(BiomeCategory.RIVER, RIVER);
         BIOMES.put(BiomeCategory.TAIGA, TAIGA);
         BIOMES.put(BiomeCategory.EXTREME_HILLS, EXTREME_HILLS);
@@ -62,7 +82,11 @@ public class BiomeRegistry {
         BIOMES.put(BiomeCategory.UNDERGROUND, UNDERGROUND);
         BIOMES.put(BiomeCategory.MUSHROOM, MUSHROOM);
         BIOMES.put(BiomeCategory.PLAINS, PLAINS);
+        BIOMES.put(BiomeCategory.LUSH_DESERT, LUSH_DESERT);
+        BIOMES.put(BiomeCategory.DRYLAND, DRYLAND);
+        BIOMES.put(BiomeCategory.RAINFOREST, RAINFOREST);
         BIOMES.put(BiomeCategory.JUNGLE, JUNGLE);
+        BIOMES.put(BiomeCategory.VOLCANIC, VOLCANIC);
         BIOMES.put(BiomeCategory.SAVANNA, SAVANNA);
         BIOMES.put(BiomeCategory.MESA, MESA);
         BIOMES.put(BiomeCategory.DESERT, DESERT);
@@ -71,7 +95,7 @@ public class BiomeRegistry {
         BIOMES.put(BiomeCategory.NETHER, NETHER);
     }
 
-    public static enum BiomeCategory {
+    public enum BiomeCategory {
         ICY,
         OCEAN,
         WARM_OCEAN,
@@ -79,6 +103,9 @@ public class BiomeRegistry {
         DEEP_LUKEWARM_OCEAN,
         COLD_OCEAN,
         DEEP_COLD_OCEAN,
+        COLD_DESERT,
+        COLD_FOREST,
+        BOG,
         RIVER,
         TAIGA,
         EXTREME_HILLS,
@@ -89,7 +116,11 @@ public class BiomeRegistry {
         UNDERGROUND,
         MUSHROOM,
         PLAINS,
+        LUSH_DESERT,
+        DRYLAND,
+        RAINFOREST,
         JUNGLE,
+        VOLCANIC,
         SAVANNA,
         MESA,
         DESERT,
@@ -100,114 +131,7 @@ public class BiomeRegistry {
     }
 
     public static BiomeData getDataForBiome(Holder<Biome> biome) {
-        BiomeCategory biomeCategory = BiomeCategory.MISSING;
-
-        if (biome.is(Biomes.THE_VOID)) {
-            biomeCategory = BiomeCategory.NONE;
-        }
-        else if (biome.is(Biomes.PLAINS) || biome.is(Biomes.SUNFLOWER_PLAINS)) {
-            biomeCategory = BiomeCategory.PLAINS;
-        }
-        else if (biome.is(Biomes.SNOWY_PLAINS) || biome.is(Biomes.ICE_SPIKES)) {
-            biomeCategory = BiomeCategory.ICY;
-        }
-        else if (biome.is(Biomes.DESERT)) {
-            biomeCategory = BiomeCategory.DESERT;
-        }
-        else if (biome.is(Biomes.SWAMP) || biome.is(Biomes.MANGROVE_SWAMP)) {
-            biomeCategory = BiomeCategory.SWAMP;
-        }
-        else if (biome.is(Biomes.GROVE)
-                || biome.is(Biomes.BIRCH_FOREST)
-                || biome.is(Biomes.OLD_GROWTH_BIRCH_FOREST)
-                || biome.is(Biomes.DARK_FOREST)
-                || biome.is(Biomes.FOREST)
-                || biome.is(Biomes.FLOWER_FOREST)) {
-            biomeCategory = BiomeCategory.FOREST;
-        }
-        else if (biome.is(Biomes.OLD_GROWTH_PINE_TAIGA)
-                || biome.is(Biomes.TAIGA)
-                || biome.is(Biomes.SNOWY_TAIGA)
-                || biome.is(Biomes.OLD_GROWTH_SPRUCE_TAIGA)) {
-            biomeCategory = BiomeCategory.TAIGA;
-        }
-        else if (biome.is(Biomes.SAVANNA)
-                || biome.is(Biomes.SAVANNA_PLATEAU)
-                || biome.is(Biomes.WINDSWEPT_SAVANNA)) {
-            biomeCategory = BiomeCategory.SAVANNA;
-        }
-        else if (biome.is(Biomes.WINDSWEPT_HILLS)
-                || biome.is(Biomes.WINDSWEPT_GRAVELLY_HILLS)
-                || biome.is(Biomes.WINDSWEPT_FOREST)
-                || biome.is(Biomes.STONY_SHORE)) {
-            biomeCategory = BiomeCategory.EXTREME_HILLS;
-        }
-        else if (biome.is(Biomes.JUNGLE)
-                || biome.is(Biomes.SPARSE_JUNGLE)
-                || biome.is(Biomes.BAMBOO_JUNGLE)) {
-            biomeCategory = BiomeCategory.JUNGLE;
-        }
-        else if (biome.is(Biomes.BADLANDS)
-                || biome.is(Biomes.ERODED_BADLANDS)
-                || biome.is(Biomes.WOODED_BADLANDS)) {
-            biomeCategory = BiomeCategory.MESA;
-        }
-        else if (biome.is(Biomes.SNOWY_SLOPES)
-                || biome.is(Biomes.JAGGED_PEAKS)
-                || biome.is(Biomes.FROZEN_PEAKS)
-                || biome.is(Biomes.MEADOW)
-                || biome.is(Biomes.STONY_PEAKS)) {
-            biomeCategory = BiomeCategory.MOUNTAIN;
-        }
-        else if (biome.is(Biomes.RIVER) || biome.is(Biomes.FROZEN_RIVER)) {
-            biomeCategory = BiomeCategory.RIVER;
-        }
-        else if (biome.is(Biomes.BEACH) || biome.is(Biomes.SNOWY_BEACH)) {
-            biomeCategory = BiomeCategory.BEACH;
-        }
-        else if (biome.is(Biomes.WARM_OCEAN)) {
-            biomeCategory = BiomeCategory.WARM_OCEAN;
-        }
-        else if (biome.is(Biomes.LUKEWARM_OCEAN)) {
-            biomeCategory = BiomeCategory.LUKEWARM_OCEAN;
-        }
-        else if (biome.is(Biomes.DEEP_LUKEWARM_OCEAN)) {
-            biomeCategory = BiomeCategory.DEEP_LUKEWARM_OCEAN;
-        }
-        else if (biome.is(Biomes.DEEP_FROZEN_OCEAN)
-                || biome.is(Biomes.FROZEN_OCEAN)
-                || biome.is(Biomes.OCEAN)
-                || biome.is(Biomes.DEEP_OCEAN)) {
-            biomeCategory = BiomeCategory.OCEAN;
-        }
-        else if (biome.is(Biomes.COLD_OCEAN)) {
-            biomeCategory = BiomeCategory.COLD_OCEAN;
-        }
-        else if (biome.is(Biomes.DEEP_COLD_OCEAN)) {
-            biomeCategory = BiomeCategory.DEEP_COLD_OCEAN;
-        }
-        else if (biome.is(Biomes.MUSHROOM_FIELDS)) {
-            biomeCategory = BiomeCategory.MUSHROOM;
-        }
-        else if (biome.is(Biomes.DRIPSTONE_CAVES)
-                || biome.is(Biomes.DEEP_DARK)
-                || biome.is(Biomes.LUSH_CAVES)) {
-            biomeCategory = BiomeCategory.UNDERGROUND;
-        }
-        else if (biome.is(Biomes.NETHER_WASTES)
-                || biome.is(Biomes.WARPED_FOREST)
-                || biome.is(Biomes.CRIMSON_FOREST)
-                || biome.is(Biomes.SOUL_SAND_VALLEY)
-                || biome.is(Biomes.BASALT_DELTAS)) {
-            biomeCategory = BiomeCategory.NETHER;
-        }
-        else if (biome.is(Biomes.THE_END)
-                || biome.is(Biomes.END_HIGHLANDS)
-                || biome.is(Biomes.END_MIDLANDS)
-                || biome.is(Biomes.SMALL_END_ISLANDS)
-                || biome.is(Biomes.END_BARRENS)) {
-            biomeCategory = BiomeCategory.THEEND;
-        }
+        BiomeCategory biomeCategory = getBiomeCategory(biome);
 
         if (biomeCategory == BiomeCategory.MISSING) {
             // Set some defaults for MISSING
@@ -218,12 +142,170 @@ public class BiomeRegistry {
         }
     }
 
+    public static void init() {
+        BIOME_CATEGORY.put(Biomes.THE_VOID, BiomeCategory.NONE);
+        BIOME_CATEGORY.put(Biomes.PLAINS, BiomeCategory.PLAINS);
+        BIOME_CATEGORY.put(Biomes.SUNFLOWER_PLAINS, BiomeCategory.PLAINS);
+        BIOME_CATEGORY.put(Biomes.SNOWY_PLAINS, BiomeCategory.ICY);
+        BIOME_CATEGORY.put(Biomes.ICE_SPIKES, BiomeCategory.ICY);
+        BIOME_CATEGORY.put(Biomes.DESERT, BiomeCategory.DESERT);
+        BIOME_CATEGORY.put(Biomes.SWAMP, BiomeCategory.SWAMP);
+        BIOME_CATEGORY.put(Biomes.MANGROVE_SWAMP, BiomeCategory.SWAMP);
+        BIOME_CATEGORY.put(Biomes.GROVE, BiomeCategory.FOREST);
+        BIOME_CATEGORY.put(Biomes.BIRCH_FOREST, BiomeCategory.FOREST);
+        BIOME_CATEGORY.put(Biomes.OLD_GROWTH_BIRCH_FOREST, BiomeCategory.FOREST);
+        BIOME_CATEGORY.put(Biomes.DARK_FOREST, BiomeCategory.FOREST);
+        BIOME_CATEGORY.put(Biomes.FOREST, BiomeCategory.FOREST);
+        BIOME_CATEGORY.put(Biomes.FLOWER_FOREST, BiomeCategory.FOREST);
+        BIOME_CATEGORY.put(Biomes.OLD_GROWTH_PINE_TAIGA, BiomeCategory.TAIGA);
+        BIOME_CATEGORY.put(Biomes.TAIGA, BiomeCategory.TAIGA);
+        BIOME_CATEGORY.put(Biomes.SNOWY_TAIGA, BiomeCategory.TAIGA);
+        BIOME_CATEGORY.put(Biomes.OLD_GROWTH_SPRUCE_TAIGA, BiomeCategory.TAIGA);
+        BIOME_CATEGORY.put(Biomes.SAVANNA, BiomeCategory.SAVANNA);
+        BIOME_CATEGORY.put(Biomes.SAVANNA_PLATEAU, BiomeCategory.SAVANNA);
+        BIOME_CATEGORY.put(Biomes.WINDSWEPT_SAVANNA, BiomeCategory.SAVANNA);
+        BIOME_CATEGORY.put(Biomes.WINDSWEPT_HILLS, BiomeCategory.EXTREME_HILLS);
+        BIOME_CATEGORY.put(Biomes.WINDSWEPT_GRAVELLY_HILLS, BiomeCategory.EXTREME_HILLS);
+        BIOME_CATEGORY.put(Biomes.WINDSWEPT_FOREST, BiomeCategory.EXTREME_HILLS);
+        BIOME_CATEGORY.put(Biomes.STONY_SHORE, BiomeCategory.EXTREME_HILLS);
+        BIOME_CATEGORY.put(Biomes.JUNGLE, BiomeCategory.JUNGLE);
+        BIOME_CATEGORY.put(Biomes.SPARSE_JUNGLE, BiomeCategory.JUNGLE);
+        BIOME_CATEGORY.put(Biomes.BAMBOO_JUNGLE, BiomeCategory.JUNGLE);
+        BIOME_CATEGORY.put(Biomes.BADLANDS, BiomeCategory.MESA);
+        BIOME_CATEGORY.put(Biomes.ERODED_BADLANDS, BiomeCategory.MESA);
+        BIOME_CATEGORY.put(Biomes.WOODED_BADLANDS, BiomeCategory.MESA);
+        BIOME_CATEGORY.put(Biomes.SNOWY_SLOPES, BiomeCategory.MOUNTAIN);
+        BIOME_CATEGORY.put(Biomes.JAGGED_PEAKS, BiomeCategory.MOUNTAIN);
+        BIOME_CATEGORY.put(Biomes.FROZEN_PEAKS, BiomeCategory.MOUNTAIN);
+        BIOME_CATEGORY.put(Biomes.MEADOW, BiomeCategory.MOUNTAIN);
+        BIOME_CATEGORY.put(Biomes.STONY_PEAKS, BiomeCategory.MOUNTAIN);
+        BIOME_CATEGORY.put(Biomes.RIVER, BiomeCategory.RIVER);
+        BIOME_CATEGORY.put(Biomes.FROZEN_RIVER, BiomeCategory.RIVER);
+        BIOME_CATEGORY.put(Biomes.BEACH, BiomeCategory.BEACH);
+        BIOME_CATEGORY.put(Biomes.SNOWY_BEACH, BiomeCategory.BEACH);
+        BIOME_CATEGORY.put(Biomes.WARM_OCEAN, BiomeCategory.WARM_OCEAN);
+        BIOME_CATEGORY.put(Biomes.LUKEWARM_OCEAN, BiomeCategory.LUKEWARM_OCEAN);
+        BIOME_CATEGORY.put(Biomes.DEEP_LUKEWARM_OCEAN, BiomeCategory.DEEP_LUKEWARM_OCEAN);
+        BIOME_CATEGORY.put(Biomes.DEEP_FROZEN_OCEAN, BiomeCategory.OCEAN);
+        BIOME_CATEGORY.put(Biomes.FROZEN_OCEAN, BiomeCategory.OCEAN);
+        BIOME_CATEGORY.put(Biomes.OCEAN, BiomeCategory.OCEAN);
+        BIOME_CATEGORY.put(Biomes.DEEP_OCEAN, BiomeCategory.OCEAN);
+        BIOME_CATEGORY.put(Biomes.COLD_OCEAN, BiomeCategory.COLD_OCEAN);
+        BIOME_CATEGORY.put(Biomes.DEEP_COLD_OCEAN, BiomeCategory.DEEP_COLD_OCEAN);
+        BIOME_CATEGORY.put(Biomes.MUSHROOM_FIELDS, BiomeCategory.MUSHROOM);
+        BIOME_CATEGORY.put(Biomes.DRIPSTONE_CAVES, BiomeCategory.UNDERGROUND);
+        BIOME_CATEGORY.put(Biomes.DEEP_DARK, BiomeCategory.UNDERGROUND);
+        BIOME_CATEGORY.put(Biomes.LUSH_CAVES, BiomeCategory.UNDERGROUND);
+        BIOME_CATEGORY.put(Biomes.NETHER_WASTES, BiomeCategory.NETHER);
+        BIOME_CATEGORY.put(Biomes.WARPED_FOREST, BiomeCategory.NETHER);
+        BIOME_CATEGORY.put(Biomes.CRIMSON_FOREST, BiomeCategory.NETHER);
+        BIOME_CATEGORY.put(Biomes.SOUL_SAND_VALLEY, BiomeCategory.NETHER);
+        BIOME_CATEGORY.put(Biomes.BASALT_DELTAS, BiomeCategory.NETHER);
+        BIOME_CATEGORY.put(Biomes.THE_END, BiomeCategory.THEEND);
+        BIOME_CATEGORY.put(Biomes.END_HIGHLANDS, BiomeCategory.THEEND);
+        BIOME_CATEGORY.put(Biomes.END_MIDLANDS, BiomeCategory.THEEND);
+        BIOME_CATEGORY.put(Biomes.SMALL_END_ISLANDS, BiomeCategory.THEEND);
+        BIOME_CATEGORY.put(Biomes.END_BARRENS, BiomeCategory.THEEND);
+
+        // BOP
+        if (ModList.get().isLoaded("biomesoplenty")) {
+            BIOME_CATEGORY.put(BOPBiomes.SEASONAL_FOREST, BiomeCategory.COLD_FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.PUMPKIN_PATCH, BiomeCategory.COLD_FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.BOREAL_FOREST, BiomeCategory.COLD_FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.MARSH, BiomeCategory.SWAMP);
+            BIOME_CATEGORY.put(BOPBiomes.BAYOU, BiomeCategory.SWAMP);
+            BIOME_CATEGORY.put(BOPBiomes.FUNGAL_JUNGLE, BiomeCategory.SWAMP);
+            BIOME_CATEGORY.put(BOPBiomes.RAINBOW_HILLS, BiomeCategory.MOUNTAIN);
+            BIOME_CATEGORY.put(BOPBiomes.SNOWY_CONIFEROUS_FOREST, BiomeCategory.MOUNTAIN);
+            BIOME_CATEGORY.put(BOPBiomes.SNOWY_FIR_CLEARING, BiomeCategory.MOUNTAIN);
+            BIOME_CATEGORY.put(BOPBiomes.SNOWY_MAPLE_WOODS, BiomeCategory.MOUNTAIN);
+            BIOME_CATEGORY.put(BOPBiomes.FLOODPLAIN, BiomeCategory.RAINFOREST);
+            BIOME_CATEGORY.put(BOPBiomes.ROCKY_RAINFOREST, BiomeCategory.RAINFOREST);
+            BIOME_CATEGORY.put(BOPBiomes.RAINFOREST, BiomeCategory.RAINFOREST);
+            BIOME_CATEGORY.put(BOPBiomes.WETLAND, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.GRASSLAND, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.CLOVER_PATCH, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.MUSKEG, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.SHRUBLAND, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.ROCKY_SHRUBLAND, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.CHERRY_BLOSSOM_GROVE, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.BAMBOO_GROVE, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.FIELD, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.FORESTED_FIELD, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.LAVENDER_FIELD, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.LAVENDER_FOREST, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.ORCHARD, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.PASTURE, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.PRAIRIE, BiomeCategory.PLAINS);
+            BIOME_CATEGORY.put(BOPBiomes.FIR_CLEARING, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.CONIFEROUS_FOREST, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.OMINOUS_WOODS, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.ORIGIN_VALLEY, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.HIGHLAND_MOOR, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.HIGHLAND, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.CRAG, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.JADE_CLIFFS, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.MAPLE_WOODS, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.MYSTIC_GROVE, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.OLD_GROWTH_WOODLAND, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.REDWOOD_FOREST, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.WOODLAND, BiomeCategory.FOREST);
+            BIOME_CATEGORY.put(BOPBiomes.DRYLAND, BiomeCategory.DRYLAND);
+            BIOME_CATEGORY.put(BOPBiomes.COLD_DESERT, BiomeCategory.COLD_DESERT);
+            BIOME_CATEGORY.put(BOPBiomes.DUNE_BEACH, BiomeCategory.BEACH);
+            BIOME_CATEGORY.put(BOPBiomes.SCRUBLAND, BiomeCategory.SAVANNA);
+            BIOME_CATEGORY.put(BOPBiomes.WOODED_SCRUBLAND, BiomeCategory.SAVANNA);
+            BIOME_CATEGORY.put(BOPBiomes.BOG, BiomeCategory.BOG);
+            BIOME_CATEGORY.put(BOPBiomes.TUNDRA, BiomeCategory.BOG);
+            BIOME_CATEGORY.put(BOPBiomes.CRYSTALLINE_CHASM, BiomeCategory.NETHER);
+            BIOME_CATEGORY.put(BOPBiomes.ERUPTING_INFERNO, BiomeCategory.NETHER);
+            BIOME_CATEGORY.put(BOPBiomes.UNDERGROWTH, BiomeCategory.NETHER);
+            BIOME_CATEGORY.put(BOPBiomes.VISCERAL_HEAP, BiomeCategory.NETHER);
+            BIOME_CATEGORY.put(BOPBiomes.WITHERED_ABYSS, BiomeCategory.NETHER);
+            BIOME_CATEGORY.put(BOPBiomes.DEAD_FOREST, BiomeCategory.EXTREME_HILLS);
+            BIOME_CATEGORY.put(BOPBiomes.GLOWING_GROTTO, BiomeCategory.RIVER);
+            BIOME_CATEGORY.put(BOPBiomes.SPIDER_NEST, BiomeCategory.RIVER);
+            BIOME_CATEGORY.put(BOPBiomes.VOLCANO, BiomeCategory.VOLCANIC);
+            BIOME_CATEGORY.put(BOPBiomes.VOLCANIC_PLAINS, BiomeCategory.VOLCANIC);
+            BIOME_CATEGORY.put(BOPBiomes.OLD_GROWTH_DEAD_FOREST, BiomeCategory.TAIGA);
+            BIOME_CATEGORY.put(BOPBiomes.TROPICS, BiomeCategory.JUNGLE);
+            BIOME_CATEGORY.put(BOPBiomes.LUSH_DESERT, BiomeCategory.LUSH_DESERT);
+            BIOME_CATEGORY.put(BOPBiomes.LUSH_SAVANNA, BiomeCategory.LUSH_DESERT);
+            BIOME_CATEGORY.put(BOPBiomes.MEDITERRANEAN_FOREST, BiomeCategory.LUSH_DESERT);
+            BIOME_CATEGORY.put(BOPBiomes.WASTELAND, BiomeCategory.MESA); // Set as Nether temp
+            BIOME_CATEGORY.put(BOPBiomes.WOODED_WASTELAND, BiomeCategory.MESA); // Set as Nether temp
+        }
+    }
+
+    public static BiomeCategory getBiomeCategory(Holder<Biome> biome) {
+        try {
+            Optional<ResourceKey<Biome>> key = biome.unwrapKey();
+
+            if (key.isPresent()) {
+                return BIOME_CATEGORY.getOrDefault(key.get(), BiomeCategory.MISSING);
+            }
+        } catch (NoSuchElementException e) {
+            Homeostatic.LOGGER.debug("Unable to find biome for: %s", biome.toString());
+        }
+
+        return BiomeCategory.MISSING;
+    }
+
     public static BiomeCategory getBiomeCategory(BiomeGenerationSettings generationSettings, float temperature, MobSpawnSettings mobSpawnSettings, Biome.TemperatureModifier temperatureModifier, float downfall, Biome.Precipitation precipitation) {
         BiomeCategory biomeCategory = BiomeCategory.MISSING;
 
         if (temperature == -0.2F) {
             // GROVE
             biomeCategory = BiomeCategory.FOREST;
+        }
+        else if (temperature == -0.25F) {
+            // MUSKEG
+            if (downfall == 0.6F && precipitation == Biome.Precipitation.SNOW) {
+                biomeCategory = BiomeCategory.PLAINS;
+            } else {
+                // RAINBOW_HILLS SNOWY_CONIFEROUS_FOREST SNOWY_FIR_CLEARING SNOWY_MAPLE_WOODS
+                biomeCategory = BiomeCategory.MOUNTAIN;
+            }
         }
         else if (temperature == -0.3F) {
             // SNOWY_SLOPES
@@ -256,17 +338,51 @@ public class BiomeRegistry {
                 biomeCategory = BiomeCategory.RIVER;
             }
         }
-        else if (temperature == 0.25F) {
-            // TAIGA OLD_GROWTH_SPRUCE_TAIGA
-            biomeCategory = BiomeCategory.TAIGA;
-        }
         else if (temperature == 0.2F) {
-            // WINDSWEPT_HILLS WINDSWEPT_GRAVELLY_HILLS WINDSWEPT_FOREST STONY_SHORE
-            biomeCategory = BiomeCategory.EXTREME_HILLS;
+            if (downfall == 0.5F) {
+                // BOG TUNDRA
+                biomeCategory = BiomeCategory.BOG;
+            }
+            else {
+                // WINDSWEPT_HILLS WINDSWEPT_GRAVELLY_HILLS WINDSWEPT_FOREST STONY_SHORE DEAD_FOREST
+                biomeCategory = BiomeCategory.EXTREME_HILLS;
+            }
+        }
+        else if (temperature == 0.25F) {
+            if (generationSettings.hasFeature(VegetationPlacements.PATCH_GRASS_TAIGA_2.get())) {
+                // TAIGA
+                biomeCategory = BiomeCategory.TAIGA;
+            }
+            else if (generationSettings.hasFeature(VegetationPlacements.TREES_OLD_GROWTH_SPRUCE_TAIGA.get())) {
+                // OLD_GROWTH_SPRUCE_TAIGA
+                biomeCategory = BiomeCategory.TAIGA;
+            }
+            else if (downfall == 0.5F) {
+                // MAPLE_WOODS
+                biomeCategory = BiomeCategory.FOREST;
+            }
+            else if (downfall == 0.0F) {
+                // COLD_DESERT
+                biomeCategory = BiomeCategory.COLD_DESERT;
+            }
         }
         else if (temperature == 0.3F) {
-            // OLD_GROWTH_PINE_TAIGA
+            // OLD_GROWTH_PINE_TAIGA OLD_GROWTH_DEAD_FOREST
             biomeCategory = BiomeCategory.TAIGA;
+        }
+        else if (temperature == 0.4F) {
+            if (downfall == 0.7F) {
+                // FIELD FORESTED_FIELD
+                biomeCategory = BiomeCategory.PLAINS;
+            }
+            else {
+                // SEASONAL_FOREST PUMPKIN_PATCH BOREAL_FOREST
+                biomeCategory = BiomeCategory.COLD_FOREST;
+            }
+        }
+        else if (temperature == 0.45F) {
+            // CONIFEROUS_FOREST FIR_CLEARING
+            biomeCategory = BiomeCategory.FOREST;
         }
         else if (temperature == 0.5F) {
             if (temperatureModifier == Biome.TemperatureModifier.FROZEN
@@ -295,10 +411,6 @@ public class BiomeRegistry {
                 // DEEP_COLD_OCEAN
                 biomeCategory = BiomeCategory.DEEP_COLD_OCEAN;
             }
-            else if (downfall == 0.8F) {
-                // MEADOW
-                biomeCategory = BiomeCategory.MOUNTAIN;
-            }
             else if (generationSettings.hasFeature(MiscOverworldPlacements.VOID_START_PLATFORM.get())) {
                 // THE_VOID
                 biomeCategory = BiomeCategory.NONE;
@@ -308,8 +420,14 @@ public class BiomeRegistry {
                 biomeCategory = BiomeCategory.UNDERGROUND;
             }
             else if (precipitation == Biome.Precipitation.RAIN) {
-                // RIVER
-                biomeCategory = BiomeCategory.RIVER;
+                if (downfall == 0.8F) {
+                    // MEADOW
+                    biomeCategory = BiomeCategory.MOUNTAIN;
+                }
+                else if (downfall == 0.5F) {
+                    // RIVER SPIDER_NEST
+                    biomeCategory = BiomeCategory.RIVER;
+                }
             }
             else if (precipitation == Biome.Precipitation.NONE) {
                 // THEEND
@@ -317,17 +435,44 @@ public class BiomeRegistry {
             }
         }
         else if (temperature == 0.6F) {
-            // BIRCH_FOREST OLD_GROWTH_BIRCH_FOREST
-            biomeCategory = BiomeCategory.FOREST;
+            if (downfall == 0.7F) {
+                // WETLAND GRASSLAND CLOVER_PATCH
+                biomeCategory = BiomeCategory.PLAINS;
+            }
+            else if (downfall == 0.6F) {
+                // OMINOUS_WOODS ORIGIN_VALLEY HIGHLAND_MOOR HIGHLAND CRAG
+                // BIRCH_FOREST OLD_GROWTH_BIRCH_FOREST
+                biomeCategory = BiomeCategory.FOREST;
+            }
+            else if (downfall == 0.05F) {
+                // SHRUBLAND ROCKY_SHRUBLAND
+                biomeCategory = BiomeCategory.PLAINS;
+            }
+            else if (downfall == 0.9F) {
+                // CHERRY_BLOSSOM_GROVE BAMBOO_GROVE
+                biomeCategory = BiomeCategory.PLAINS;
+            }
+        }
+        else if (temperature == 0.65F) {
+            if (downfall == 0.7F) {
+                // MARSH
+                biomeCategory = BiomeCategory.SWAMP;
+            }
         }
         else if (temperature == 0.7F) {
             if (generationSettings.hasFeature(AquaticPlacements.SEAGRASS_SWAMP.get())) {
                 // SWAMP
                 biomeCategory = BiomeCategory.SWAMP;
             }
-            else {
-                // DARK_FOREST FOREST FLOWER_FOREST
-                biomeCategory = BiomeCategory.FOREST;
+            else if (precipitation == Biome.Precipitation.RAIN) {
+                if (downfall == 0.4F) {
+                    // DUNE_BEACH
+                    biomeCategory = BiomeCategory.BEACH;
+                }
+                else if (downfall == 0.8F) {
+                    // DARK_FOREST FOREST FLOWER_FOREST MYSTIC_GROVE
+                    biomeCategory = BiomeCategory.FOREST;
+                }
             }
         }
         else if (temperature == 0.8F) {
@@ -344,22 +489,76 @@ public class BiomeRegistry {
                 // DRIPSTONE_CAVES DEEP_DARK
                 biomeCategory = BiomeCategory.UNDERGROUND;
             }
-            else {
+            else if (generationSettings.hasFeature(VegetationPlacements.PATCH_SUNFLOWER.get())){
                 // PLAINS SUNFLOWER_PLAINS
                 biomeCategory = BiomeCategory.PLAINS;
             }
+            else if (precipitation == Biome.Precipitation.RAIN) {
+                if (downfall == 0.275F) {
+                    // MEDITERRANEAN_FOREST
+                    biomeCategory = BiomeCategory.LUSH_DESERT;
+                } else if (downfall == 0.4F || downfall == 0.3F) {
+                    // ORCHARD PASTURE PRAIRIE
+                    biomeCategory = BiomeCategory.PLAINS;
+                } else if (downfall == 0.5F || downfall == 0.6F || downfall == 0.85F) {
+                    // OLD_GROWTH_WOODLAND REDWOOD_FOREST WOODLAND JADE_CLIFFS WOODLAND
+                    biomeCategory = BiomeCategory.FOREST;
+                }
+                else if (downfall == 0.7F) {
+                    // LAVENDER_FIELDS LAVENDER_FOREST
+                    biomeCategory = BiomeCategory.PLAINS;
+                }
+            }
+        }
+        else if (temperature == 0.85F) {
+            // DRYLAND
+            biomeCategory = BiomeCategory.DRYLAND;
         }
         else if (temperature == 0.9F) {
-            // MUSHROOM_FIELDS
-            biomeCategory = BiomeCategory.MUSHROOM;
+            if (generationSettings.hasFeature(VegetationPlacements.MUSHROOM_ISLAND_VEGETATION.get())) {
+                // MUSHROOM_FIELDS
+                biomeCategory = BiomeCategory.MUSHROOM;
+            }
+            else if (precipitation == Biome.Precipitation.RAIN) {
+                if (downfall == 0.5F) {
+                    // LUSH_DESERT LUSH_SAVANNA
+                    biomeCategory = BiomeCategory.LUSH_DESERT;
+                }
+                else if (downfall == 0.9F) {
+                    // FUNGAL_JUNGLE
+                    biomeCategory = BiomeCategory.SWAMP;
+                }
+            }
         }
         else if (temperature == 0.95F) {
-            // JUNGLE SPARSE_JUNGLE BAMBOO_JUNGLE
-            biomeCategory = BiomeCategory.JUNGLE;
+            if (generationSettings.hasFeature(VegetationPlacements.PATCH_GRASS_JUNGLE.get())) {
+                // JUNGLE SPARSE_JUNGLE BAMBOO_JUNGLE
+                biomeCategory = BiomeCategory.JUNGLE;
+            }
+            else if (downfall == 0.9F) {
+                // BAYOU
+                biomeCategory = BiomeCategory.SWAMP;
+            }
+            else if (downfall == 1.0F) {
+                // TROPICS
+                biomeCategory = BiomeCategory.JUNGLE;
+            }
+            else if (downfall == 0.3F) {
+                // VOLCANO VOLCANIC_PLAINS
+                biomeCategory = BiomeCategory.VOLCANIC;
+            }
         }
         else if (temperature == 1.0F) {
             // STONY_PEAKS
             biomeCategory = BiomeCategory.MOUNTAIN;
+        }
+        else if (temperature == 1.1F) {
+            // SCRUBLAND WOODED_SCRUBLAND
+            biomeCategory = BiomeCategory.SAVANNA;
+        }
+        else if (temperature == 1.2F) {
+            // FLOODPLAIN RAINFOREST ROCKY_RAINFOREST
+            biomeCategory = BiomeCategory.RAINFOREST;
         }
         else if (temperature == 2.0F) {
             if (generationSettings.hasFeature(VegetationPlacements.TREES_WINDSWEPT_SAVANNA.get())
@@ -375,9 +574,13 @@ public class BiomeRegistry {
                 // NETHER
                 biomeCategory = BiomeCategory.NETHER;
             }
-            else {
+            else if (generationSettings.hasFeature(VegetationPlacements.PATCH_GRASS_BADLANDS.get())) {
                 // BADLANDS ERODED_BADLANDS WOODED_BADLANDS
                 biomeCategory = BiomeCategory.MESA;
+            }
+            else {
+                // CRYSTALLINE_CHASM ERUPTING_INFERNO UNDERGROWTH VISCERAL_HEAP WITHERED_ABYSS (WASTELAND WOODED_WASTELAND -- should be MESA)
+                biomeCategory = BiomeCategory.NETHER;
             }
         }
 
