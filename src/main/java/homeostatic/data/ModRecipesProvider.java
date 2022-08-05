@@ -13,7 +13,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluids;
 
-import net.minecraftforge.common.crafting.NBTIngredient;
+import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -68,15 +68,15 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_charcoal", has(Items.CHARCOAL))
                 .save(consumer);
 
-        AdvancedCookingRecipeBuilder.smelting(NBTIngredient.of(waterFilledLeatherFlask), NBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
+        AdvancedCookingRecipeBuilder.smelting(StrictNBTIngredient.of(waterFilledLeatherFlask), StrictNBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
                 .unlockedBy("has_leather_flask", has(leatherFlask))
                 .save(consumer, new ResourceLocation(Homeostatic.MODID, "furnace_purified_leather_flask"));
 
-        AdvancedCookingRecipeBuilder.campfireCooking(NBTIngredient.of(waterFilledLeatherFlask), NBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
+        AdvancedCookingRecipeBuilder.campfireCooking(StrictNBTIngredient.of(waterFilledLeatherFlask), StrictNBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
                 .unlockedBy("has_leather_flask", has(leatherFlask))
                 .save(consumer, new ResourceLocation(Homeostatic.MODID, "campfire_purified_leather_flask"));
 
-        AdvancedCookingRecipeBuilder.smoking(NBTIngredient.of(waterFilledLeatherFlask), NBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
+        AdvancedCookingRecipeBuilder.smoking(StrictNBTIngredient.of(waterFilledLeatherFlask), StrictNBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
                 .unlockedBy("has_leather_flask", has(leatherFlask))
                 .save(consumer, new ResourceLocation(Homeostatic.MODID, "smoking_purified_leather_flask"));
     }

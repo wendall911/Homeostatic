@@ -114,9 +114,9 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
     implementation fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
-    implementation fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
+    runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
     implementation fg.deobf("curse.maven:biomesoplenty-220318:${bop_version}")
-    implementation fg.deobf("curse.maven:terrablender-563928:${terrablender_version}")
+    runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_version}")
 }
 
 jar {
@@ -145,7 +145,7 @@ def replaceResources = tasks.register("replaceResources", Copy) {
 
     it.from(sourceSets.main.resources) {
         include "META-INF/mods.toml"
-        expand 'version': version, 'minecraft_version': minecraft_version, 'forge_version_range': forge_version_range, "loader_version": loader_version
+        expand 'version': version, 'minecraft_version_range': minecraft_version_range, 'forge_version_range': forge_version_range, "loader_version": loader_version
     }
     it.into "$buildDir/resources/main/"
 }
@@ -186,6 +186,7 @@ curseforge {
             id = project.hscurseId
             changelog = file('build/libs/' + project.getName() + '-' + version + '-changelog.txt')
             releaseType = cf_release_type
+            addGameVersion('Forge')
             addGameVersion(minecraft_version)
             mainArtifact(jar) {
                 relations {

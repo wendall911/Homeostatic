@@ -75,7 +75,7 @@ public class WaterContainerItem extends ItemFluidContainer {
         fluidHandlerItem.drain(250, IFluidHandler.FluidAction.EXECUTE);
         if (entity instanceof Player player) {
             if (fluidHandlerItem.getFluidInTank(0).isEmpty()) {
-                return getContainerItem(stack);
+                return getCraftingRemainingItem(stack);
             }
             else {
                 updateDamage(stack);
@@ -96,7 +96,7 @@ public class WaterContainerItem extends ItemFluidContainer {
 
     @Override
     public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundTag tag) {
-        return new FluidHandlerItemStack.SwapEmpty(stack, stack.getContainerItem(), this.capacity);
+        return new FluidHandlerItemStack.SwapEmpty(stack, stack.getCraftingRemainingItem(), this.capacity);
     }
 
     @Override

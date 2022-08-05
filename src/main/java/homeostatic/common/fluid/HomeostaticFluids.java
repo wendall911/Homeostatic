@@ -8,12 +8,11 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 
-import net.minecraftforge.client.IFluidTypeRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.SoundActions;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.RegisterEvent;
-import net.minecraftforge.registries.RegistryObject;
 
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.item.HomeostaticItems;
@@ -59,8 +58,8 @@ public final class HomeostaticFluids {
                 .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)) {
 
             @Override
-            public void initializeClient(Consumer<IFluidTypeRenderProperties> consumer) {
-                consumer.accept(new IFluidTypeRenderProperties() {
+            public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+                consumer.accept(new IClientFluidTypeExtensions() {
                     @Override
                     public ResourceLocation getStillTexture() {
                         return STILL_FLUID_TEXTURE;

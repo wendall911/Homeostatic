@@ -9,7 +9,7 @@ public class LeatherFlask extends WaterContainerItem {
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack stack) {
+    public ItemStack getCraftingRemainingItem(ItemStack stack) {
         return new ItemStack(HomeostaticItems.LEATHER_FLASK);
     }
 

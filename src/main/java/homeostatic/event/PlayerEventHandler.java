@@ -23,7 +23,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -47,7 +47,7 @@ import homeostatic.util.WetnessHelper;
 public class PlayerEventHandler {
 
     @SubscribeEvent
-    public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
+    public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
         final Player player = event.getEntity() instanceof Player ? (Player) event.getEntity() : null;
 
         if (player != null && !player.level.isClientSide) {
@@ -73,8 +73,8 @@ public class PlayerEventHandler {
 
     @SubscribeEvent
     public static void onPlayerChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        if (!event.getPlayer().level.isClientSide) {
-            final Player player = event.getPlayer();
+        if (!event.getEntity().level.isClientSide) {
+            final Player player = event.getEntity();
             final ResourceKey<Level> worldKey = event.getTo();
 
             if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
@@ -168,7 +168,7 @@ public class PlayerEventHandler {
 
     @SubscribeEvent
     public static void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
-        final Player player = event.getPlayer() instanceof Player ? (Player) event.getPlayer() : null;
+        final Player player = event.getEntity() != null ? (Player) event.getEntity() : null;
 
         if (player != null && player.level.isClientSide) {
             drinkWater(player, event);
@@ -177,7 +177,7 @@ public class PlayerEventHandler {
 
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        final Player player = event.getPlayer() instanceof Player ? (Player) event.getPlayer() : null;
+        final Player player = event.getEntity() != null ? (Player) event.getEntity() : null;
 
         if (player != null && player.level.isClientSide) {
             drinkWater(player, event);
@@ -191,7 +191,7 @@ public class PlayerEventHandler {
                 || player.getPose() != Pose.CROUCHING
                 || !player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) return;
 
-        final LevelAccessor level = event.getWorld();
+        final LevelAccessor level = event.getLevel();
         final HitResult hitresult = player.pick(2.0D, 0.0F, true);
         BlockPos pos = ((BlockHitResult)hitresult).getBlockPos();
 

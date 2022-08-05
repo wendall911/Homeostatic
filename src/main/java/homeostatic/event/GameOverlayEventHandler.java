@@ -1,13 +1,10 @@
 package homeostatic.event;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.IIngameOverlay;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -25,43 +22,34 @@ public class GameOverlayEventHandler {
 
     private static boolean enabled = false;
 
-    private final IIngameOverlay OVERLAY;
-    private final IIngameOverlay WATER_LEVEL_OVERLAY;
-    private final IIngameOverlay TEMPERATURE_OVERLAY;
+    private final IGuiOverlay OVERLAY;
+    private final IGuiOverlay WATER_LEVEL_OVERLAY;
+    private final IGuiOverlay TEMPERATURE_OVERLAY;
 
     static {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(INSTANCE::onLoadComplete);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(INSTANCE::onModConfigReloading);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(INSTANCE::onRegisterOverlays);
     }
 
     public GameOverlayEventHandler() {
-        OVERLAY = OverlayRegistry.registerOverlayAbove(
-            ForgeIngameGui.HUD_TEXT_ELEMENT,
-            Homeostatic.MODID + ":overlay",
-            (matrix, partialTicks, width, height, height2) -> callRenderOverlay(partialTicks)
-        );
+        OVERLAY = (gui, poseStack, partialTick, width, height) -> {
+            if (enabled && ConfigHandler.Client.debugEnabled() && !Minecraft.getInstance().options.renderDebug) {
+                overlayManager.renderOverlay(poseStack);
+            }
+        };
 
-        WATER_LEVEL_OVERLAY = OverlayRegistry.registerOverlayBottom("Water Level", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
-            Minecraft minecraft = Minecraft.getInstance();
-
-            if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
+        WATER_LEVEL_OVERLAY = (gui, poseStack, partialTick, width, height) -> {
+            if (!Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements()) {
                 overlayManager.renderWaterOverlay(poseStack);
             }
-        });
+        };
 
-        TEMPERATURE_OVERLAY = OverlayRegistry.registerOverlayTop("Temperature", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
-            Minecraft minecraft = Minecraft.getInstance();
-
-            if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
+        TEMPERATURE_OVERLAY = (gui, poseStack, partialTick, width, height) -> {
+            if (!Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements()) {
                 overlayManager.renderTemperatureOverlay(poseStack);
             }
-        });
-    }
-
-    public void callRenderOverlay(PoseStack matrix) {
-        if (enabled && ConfigHandler.Client.debugEnabled() && !Minecraft.getInstance().options.renderDebug) {
-            overlayManager.renderOverlay(matrix);
-        }
+        };
     }
 
     public void onLoadComplete(FMLLoadCompleteEvent event) {
@@ -72,10 +60,13 @@ public class GameOverlayEventHandler {
     public void onModConfigReloading(ModConfigEvent.Reloading event) {
         if (enabled && event.getConfig().getSpec() == ConfigHandler.Client.CONFIG_SPEC) {
             ConfigHandler.Client.init();
-            OverlayRegistry.enableOverlay(OVERLAY, ConfigHandler.Client.debugEnabled());
-            OverlayRegistry.enableOverlay(WATER_LEVEL_OVERLAY, true);
-            OverlayRegistry.enableOverlay(TEMPERATURE_OVERLAY, true);
         }
+    }
+
+    public void onRegisterOverlays(RegisterGuiOverlaysEvent event) {
+        event.registerAboveAll(Homeostatic.MODID + "_overlay", INSTANCE.OVERLAY);
+        event.registerBelowAll("water_level", INSTANCE.WATER_LEVEL_OVERLAY);
+        event.registerAboveAll("temperature", INSTANCE.TEMPERATURE_OVERLAY);
     }
 
 }
