@@ -187,7 +187,9 @@ curseforge {
             changelog = file('build/libs/' + project.getName() + '-' + version + '-changelog.txt')
             releaseType = cf_release_type
             addGameVersion('Forge')
-            addGameVersion(minecraft_version)
+            "${cf_versions}".split(',').each {
+                addGameVersion "${it}"
+            }
             mainArtifact(jar) {
                 relations {
                     optionalLibrary 'configured'
