@@ -264,4 +264,3 @@ task signJar(type: SignJar, dependsOn: jar) {
     inputFile = jar.archiveFile
     outputFile = jar.archiveFile
 }
-
