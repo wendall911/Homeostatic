@@ -6,6 +6,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeBuilder;
 
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -31,6 +32,8 @@ public abstract class BiomeBuilderMixin {
     @Shadow @Nullable private Biome.Precipitation precipitation;
 
     @Shadow @Nullable private MobSpawnSettings mobSpawnSettings;
+
+    @Shadow @Nullable private BiomeSpecialEffects specialEffects;
 
     @Shadow @Nullable private Float temperature;
 
@@ -58,7 +61,7 @@ public abstract class BiomeBuilderMixin {
                 && this.temperature != null
                 && this.mobSpawnSettings != null
                 && this.downfall != null) {
-            biomeCategory = BiomeRegistry.getBiomeCategory(this.generationSettings, this.temperature, this.mobSpawnSettings, this.temperatureModifier, this.downfall, this.precipitation);
+            biomeCategory = BiomeRegistry.getBiomeCategory(this.generationSettings, this.temperature, this.mobSpawnSettings, this.temperatureModifier, this.downfall, this.precipitation, this.specialEffects);
         }
 
         if (biomeCategory != BiomeRegistry.BiomeCategory.MISSING) {
