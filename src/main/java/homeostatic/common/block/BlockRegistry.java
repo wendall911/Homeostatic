@@ -6,6 +6,10 @@ import java.util.Map;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
+import net.minecraftforge.fml.ModList;
+
+import potionstudios.byg.common.block.BYGBlocks;
+
 public class BlockRegistry {
 
     public static final Map<Block, BlockRadiation> RADIATION_BLOCKS = new HashMap<>();
@@ -27,6 +31,14 @@ public class BlockRegistry {
         RADIATION_BLOCKS.put(Blocks.SOUL_WALL_TORCH, new BlockRadiation(525));
         RADIATION_BLOCKS.put(Blocks.LANTERN, new BlockRadiation(350));
         RADIATION_BLOCKS.put(Blocks.SOUL_LANTERN, new BlockRadiation(525));
+
+        if (ModList.get().isLoaded("byg")) {
+            RADIATION_BLOCKS.put(BYGBlocks.BORIC_CAMPFIRE.get(), new BlockRadiation(6250));
+            RADIATION_BLOCKS.put(BYGBlocks.CRYPTIC_CAMPFIRE.get(), new BlockRadiation(7250));
+            RADIATION_BLOCKS.put(BYGBlocks.BORIC_LANTERN.get(), new BlockRadiation(400));
+            RADIATION_BLOCKS.put(BYGBlocks.CRYPTIC_LANTERN.get(), new BlockRadiation(470));
+            RADIATION_BLOCKS.put(BYGBlocks.CRYPTIC_MAGMA_BLOCK.get(), new BlockRadiation(1200));
+        }
     }
 
 }
