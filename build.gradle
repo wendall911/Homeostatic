@@ -136,6 +136,19 @@ mixin {
     add sourceSets.main, "${modid}.refmap.json"
 }
 
+def updates = tasks.register("generateUpdates", Copy) {
+    it.outputs.upToDateWhen {
+        false
+    }
+
+    it.from("./files/templates/") {
+        include 'updates.json'
+        expand 'mod_version': mod_version
+    }
+
+    it.into 'files/'
+}
+
 def replaceResources = tasks.register("replaceResources", Copy) {
     it.outputs.upToDateWhen {
         false
@@ -153,6 +166,7 @@ processResources {
     exclude('META-INF/mods.toml')
     configure {
         finalizedBy(replaceResources)
+        finalizedBy(updates)
     }
 }
 
