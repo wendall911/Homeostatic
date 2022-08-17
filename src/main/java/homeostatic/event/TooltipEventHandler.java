@@ -28,15 +28,15 @@ public class TooltipEventHandler {
         if (stack.getItem() instanceof ArmorItem) {
             CompoundTag tags = stack.getTag();
 
-            if (tags.contains("insulation")) {
+            if (tags != null && tags.contains("insulation")) {
                 toolTip.add((Component.translatable("tooltip.insulation")).withStyle(ChatFormatting.GRAY));
             }
 
-            if (tags.contains("waterproof")) {
+            if (tags != null && tags.contains("waterproof")) {
                 toolTip.add((Component.translatable("tooltip.waterproof")).withStyle(ChatFormatting.DARK_AQUA));
             }
 
-            if (tags.contains("radiation_protection")) {
+            if (tags != null && tags.contains("radiation_protection")) {
                 toolTip.add((Component.translatable("tooltip.radiation_protection")).withStyle(ChatFormatting.GREEN));
             }
         }
