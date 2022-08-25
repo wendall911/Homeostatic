@@ -27,10 +27,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.ItemFluidContainer;
@@ -53,9 +53,9 @@ public class WaterContainerItem extends ItemFluidContainer {
         ItemStack stack = player.getItemInHand(hand);
         BlockHitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
         BlockPos pos = hitResult.getBlockPos();
-        IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+        IFluidHandlerItem fluidHandlerItem = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
 
-        if (fluidHandlerItem.getFluidInTank(0).isEmpty() || fluidHandlerItem.getFluidInTank(0).getFluid() == Fluids.WATER) {
+        if (fluidHandlerItem.getFluidInTank(0).isEmpty() || fluidHandlerItem.getFluidInTank(0).getFluid().isSame(Fluids.WATER)) {
             if (level.getFluidState(pos).getType() == Fluids.WATER) {
                 return InteractionResultHolder.success(getFilledItem(stack, player));
             }
@@ -70,7 +70,7 @@ public class WaterContainerItem extends ItemFluidContainer {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+        IFluidHandlerItem fluidHandlerItem = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
 
         fluidHandlerItem.drain(250, IFluidHandler.FluidAction.EXECUTE);
         if (entity instanceof Player player) {
@@ -131,7 +131,7 @@ public class WaterContainerItem extends ItemFluidContainer {
 
     public ItemStack getFilledItem(ItemStack stack, Player player) {
         ItemStack copy = stack.copy();
-        IFluidHandlerItem fluidHandlerItem = copy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+        IFluidHandlerItem fluidHandlerItem = copy.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
 
         player.playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
         player.awardStat(Stats.ITEM_USED.get(this));
@@ -144,14 +144,14 @@ public class WaterContainerItem extends ItemFluidContainer {
 
     public void updateDamage(ItemStack stack) {
         if (stack.isDamageableItem()) {
-            IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+            IFluidHandlerItem fluidHandlerItem = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
 
             stack.setDamageValue(Math.min(stack.getMaxDamage(), stack.getMaxDamage() - fluidHandlerItem.getFluidInTank(0).getAmount()));
         }
     }
 
     public boolean canDrink(ItemStack stack, Player player) {
-        IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+        IFluidHandlerItem fluidHandlerItem = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
 
         canDrink = !fluidHandlerItem.getFluidInTank(0).isEmpty() && fluidHandlerItem.getFluidInTank(0).getAmount() >= 250;
 

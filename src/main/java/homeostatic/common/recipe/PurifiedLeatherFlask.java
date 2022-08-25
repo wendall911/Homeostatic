@@ -10,15 +10,14 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.item.LeatherFlask;
-import homeostatic.Homeostatic;
 
 public class PurifiedLeatherFlask extends CustomRecipe {
 
@@ -41,7 +40,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
     public ItemStack assemble(CraftingContainer pContainer) {
         Pair<ItemStack, ItemStack> check = checkContainer(pContainer);
         ItemStack flaskCopy = check.getFirst().copy();
-        IFluidHandlerItem fluidHandlerItem = flaskCopy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+        IFluidHandlerItem fluidHandlerItem = flaskCopy.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
         int amount = fluidHandlerItem.getFluidInTank(0).getAmount();
 
         fluidHandlerItem.drain(amount, IFluidHandler.FluidAction.EXECUTE);
@@ -74,7 +73,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
                 filter = ingredient;
             }
             else if (ingredient.getItem() instanceof LeatherFlask) {
-                IFluidHandlerItem fluidHandlerItem = ingredient.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+                IFluidHandlerItem fluidHandlerItem = ingredient.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
 
                 if (fluidHandlerItem.getFluidInTank(0).getAmount() > 0) {
                     flask = ingredient;
