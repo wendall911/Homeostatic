@@ -52,7 +52,7 @@ repositories {
 }
 
 group = 'com.github.wendall911.homeostatic'
-version = "${minecraft_version}-${mod_version}"
+version = "${minecraft_short_version}-${minecraft_version}-${mod_version}"
 archivesBaseName = "${mod_name}"
 def modid = "${modid}"
 
