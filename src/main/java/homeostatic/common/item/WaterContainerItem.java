@@ -57,7 +57,7 @@ public class WaterContainerItem extends ItemFluidContainer {
         BlockPos pos = hitResult.getBlockPos();
         IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
 
-        if (fluidHandlerItem.getFluidInTank(0).isEmpty() || fluidHandlerItem.getFluidInTank(0).getFluid() == Fluids.WATER) {
+        if (fluidHandlerItem.getFluidInTank(0).isEmpty() || fluidHandlerItem.getFluidInTank(0).getFluid().isSame(Fluids.WATER)) {
             if (level.getFluidState(pos).getType() == Fluids.WATER) {
                 return InteractionResultHolder.success(getFilledItem(stack, player));
             }
