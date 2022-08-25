@@ -44,7 +44,6 @@ public class CommonProxy {
 
         ConfigHandler.init();
         registerListeners(bus);
-        BlockRegistry.init();
         BiomeRegistry.init();
 
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::serverStart);
@@ -68,13 +67,14 @@ public class CommonProxy {
             event.register(Registry.BLOCK_REGISTRY, HomeostaticBlocks::init);
             event.register(Registry.FLUID_REGISTRY, HomeostaticFluids::init);
             event.register(ForgeRegistries.FLUID_TYPES.get().getRegistryKey(), HomeostaticFluids::initTypes);
-
             event.register(Registry.RECIPE_SERIALIZER_REGISTRY, HomeostaticRecipes::init);
         }
 
     }
 
     public void serverStart(ServerStartedEvent event) {
+        BlockRegistry.init();
+
         if (ModList.get().isLoaded("biomesoplenty")) {
             for (ResourceKey<Biome> biomeResourceKey : BOPBiomes.getAllBiomes()) {
                 logBiomeInfo(biomeResourceKey);
