@@ -149,7 +149,12 @@ public final class ConfigHandler {
             "minecraft:nether_portal-350",
             "minecraft:torch-350",
             "minecraft:wall_torch-350",
-            "minecraft:lantern-350"
+            "minecraft:lantern-350",
+            "byg:cryptic_campfire-7250",
+            "byg:boric_campfire-6250",
+            "byg:cryptic_magma_block-1200",
+            "byg:boric_lantern-400",
+            "byg:cryptic_lantern-470"
         };
         private static final Predicate<Object> radiationBlocksValidator = s -> s instanceof String
                 && ((String) s).matches("[a-z]+[:]{1}[a-z_]+[-]{1}[0-9]{3,4}+");
