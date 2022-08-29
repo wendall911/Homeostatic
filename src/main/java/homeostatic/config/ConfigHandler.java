@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.List;
+import java.util.function.Supplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -28,7 +29,7 @@ public final class ConfigHandler {
 
     public static void init() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Client.CONFIG_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Server.CONFIG_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Common.CONFIG_SPEC);
     }
 
     public static final class Client {
@@ -122,24 +123,46 @@ public final class ConfigHandler {
 
     }
 
-    public static final class Server {
+    public static final class Common {
         public static final ForgeConfigSpec CONFIG_SPEC;
-        private static final Server CONFIG;
+        private static final Common CONFIG;
 
         private static IntValue DRINK_AMOUNT;
         private static DoubleValue DRINK_SATURATION;
         private static IntValue EFFECT_POTENCY;
         private static IntValue EFFECT_DURATION;
         private static DoubleValue EFFECT_CHANCE;
+        private static final List<String> RADIATION_BLOCKS_LIST = List.of("radiation_blocks");
+        private static final String[] radiationBlocksStrings = new String[] {
+            "minecraft:soul_campfire-8325",
+            "minecraft:campfire-5550",
+            "minecraft:soul_fire-1950",
+            "minecraft:blast_furnace-1800",
+            "minecraft:lava-1550",
+            "minecraft:fire-1300",
+            "minecraft:furnace-1300",
+            "minecraft:magma_block-1200",
+            "minecraft:smoker-1100",
+            "minecraft:soul_torch-525",
+            "minecraft:soul_wall_torch-525",
+            "minecraft:soul_lantern-525",
+            "minecraft:nether_portal-350",
+            "minecraft:torch-350",
+            "minecraft:wall_torch-350",
+            "minecraft:lantern-350"
+        };
+        private static final Predicate<Object> radiationBlocksValidator = s -> s instanceof String
+                && ((String) s).matches("[a-z]+[:]{1}[a-z_]+[-]{1}[0-9]{3,4}+");
+        private final ConfigValue<List<? extends String>> RADIATION_BLOCKS;
 
         static {
-            Pair<Server,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Server::new);
+            Pair<Common,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
 
             CONFIG_SPEC = specPair.getRight();
             CONFIG = specPair.getLeft();
         }
 
-        Server(ForgeConfigSpec.Builder builder) {
+        Common(ForgeConfigSpec.Builder builder) {
             DRINK_AMOUNT = builder
                 .comment("Amount of water that can drank per interaction in half shanks. Purified water is 3X. Default 1")
                 .defineInRange("DRINK_AMOUNT", 1, 1, 20);
@@ -155,6 +178,10 @@ public final class ConfigHandler {
             EFFECT_CHANCE = builder
                 .comment("Chance to give thirst status effect. Default 0.2")
                 .defineInRange("EFFECT_CHANCE", 0.2, 0.0, 1.0);
+            RADIATION_BLOCKS = builder
+                .comment("List of radiation generating blocks and the radiation output amount. Format modid:item-amount"
+                        + "[\"" + String.join("\", \"", radiationBlocksStrings) + "\"]")
+                .defineListAllowEmpty(RADIATION_BLOCKS_LIST, getFields(radiationBlocksStrings), radiationBlocksValidator);
         }
 
         public static int drinkAmount() {
@@ -179,6 +206,16 @@ public final class ConfigHandler {
             double chance = CONFIG.EFFECT_CHANCE.get();
 
             return (float) chance;
+        }
+
+        public static List<String> getRadiationBlocksData() {
+            List<String> blocks = (List<String>) CONFIG.RADIATION_BLOCKS.get();
+
+            return blocks;
+        }
+
+        private static Supplier<List<? extends String>> getFields(String[] strings) {
+            return () -> Arrays.asList(strings);
         }
 
     }
