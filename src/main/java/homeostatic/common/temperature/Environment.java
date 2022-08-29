@@ -4,6 +4,7 @@ import com.mojang.math.Vector3d;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import net.minecraft.core.BlockPos;
@@ -114,7 +115,7 @@ public class Environment {
 
                     // Only check up to three blocks up, and ignore radiation if fire resistance is active.
                     if (y <= 3 && effectInstance == null) {
-                        BlockRadiation blockRadiation = BlockRegistry.RADIATION_BLOCKS.get(state.getBlock());
+                        BlockRadiation blockRadiation = BlockRegistry.RADIATION_BLOCKS.get(Objects.requireNonNull(state.getBlock().getRegistryName()).toString());
 
                         if (blockRadiation != null) {
                             boolean hasRadiation = true;

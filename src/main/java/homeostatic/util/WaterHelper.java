@@ -45,11 +45,11 @@ public class WaterHelper {
                 data.increaseSaturationLevel();
             }
 
-            if (isDirty && Homeostatic.RANDOM.nextFloat() < ConfigHandler.Server.effectChance()) {
+            if (isDirty && Homeostatic.RANDOM.nextFloat() < ConfigHandler.Common.effectChance()) {
                 sp.addEffect(new MobEffectInstance(
                         HomeostaticEffects.THIRST.get(),
-                        ConfigHandler.Server.effectDuration(),
-                        ConfigHandler.Server.effectPotency(),
+                        ConfigHandler.Common.effectDuration(),
+                        ConfigHandler.Common.effectPotency(),
                         false, false, false));
             }
 
