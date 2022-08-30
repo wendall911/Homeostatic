@@ -5,13 +5,11 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import homeostatic.common.fluid.HomeostaticFluids;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -38,7 +36,6 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import static net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack.FLUID_NBT_KEY;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
-import homeostatic.util.WaterHelper;
 
 public class WaterContainerItem extends ItemFluidContainer {
 
@@ -79,15 +76,6 @@ public class WaterContainerItem extends ItemFluidContainer {
             }
             else {
                 updateDamage(stack);
-
-                if (!player.level.isClientSide) {
-                    if (fluidHandlerItem.getFluidInTank(0).getFluid() == Fluids.WATER) {
-                        WaterHelper.drinkWater((ServerPlayer) player, true, true);
-                    }
-                    else if (fluidHandlerItem.getFluidInTank(0).getFluid() == HomeostaticFluids.PURIFIED_WATER) {
-                        WaterHelper.drinkWater((ServerPlayer) player, false, true);
-                    }
-                }
             }
         }
 

@@ -46,11 +46,13 @@ public class WaterHelper {
             }
 
             if (isDirty && Homeostatic.RANDOM.nextFloat() < ConfigHandler.Common.effectChance()) {
-                sp.addEffect(new MobEffectInstance(
-                        HomeostaticEffects.THIRST,
-                        ConfigHandler.Common.effectDuration(),
-                        ConfigHandler.Common.effectPotency(),
-                        false, false, false));
+                if (!sp.hasEffect(HomeostaticEffects.THIRST)) {
+                    sp.addEffect(new MobEffectInstance(
+                            HomeostaticEffects.THIRST,
+                            ConfigHandler.Common.effectDuration(),
+                            ConfigHandler.Common.effectPotency(),
+                            false, false, false));
+                }
             }
 
             if (update) {
