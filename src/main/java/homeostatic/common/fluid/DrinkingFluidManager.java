@@ -30,7 +30,7 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
         super(GSON, "environment/fluids");
     }
 
-    public static JsonElement parseWaterItem(DrinkingFluid drinkingFluid) {
+    public static JsonElement parseDrinkingFluid(DrinkingFluid drinkingFluid) {
         return GSON.toJsonTree(drinkingFluid);
     }
 
