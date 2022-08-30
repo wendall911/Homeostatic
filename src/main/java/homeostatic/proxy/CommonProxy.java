@@ -37,7 +37,6 @@ public class CommonProxy {
 
         ConfigHandler.init();
         registerListeners(bus);
-        BlockRegistry.init();
     }
 
     public void registerListeners(IEventBus bus) {

@@ -43,15 +43,15 @@ public class Water {
     }
 
     public void increaseWaterLevel() {
-        this.waterLevel = Math.min(this.waterLevel + ConfigHandler.Common.drinkAmount(), WaterInfo.MAX_WATER_LEVEL);
+        this.waterLevel = Math.min(this.waterLevel + ConfigHandler.Server.drinkAmount(), WaterInfo.MAX_WATER_LEVEL);
     }
 
     public void increaseCleanWaterLevel() {
-        this.waterLevel = Math.min(this.waterLevel + (ConfigHandler.Common.drinkAmount() * 3), WaterInfo.MAX_WATER_LEVEL);
+        this.waterLevel = Math.min(this.waterLevel + (ConfigHandler.Server.drinkAmount() * 3), WaterInfo.MAX_WATER_LEVEL);
     }
 
     public void increaseSaturationLevel() {
-        this.waterSaturationLevel = Math.min(this.waterSaturationLevel + ConfigHandler.Common.drinkSaturation(), WaterInfo.MAX_SATURATION_LEVEL);
+        this.waterSaturationLevel = Math.min(this.waterSaturationLevel + ConfigHandler.Server.drinkSaturation(), WaterInfo.MAX_SATURATION_LEVEL);
     }
 
     public void setWaterSaturationLevel(float waterSaturationLevel) {
