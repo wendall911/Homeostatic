@@ -1,4 +1,4 @@
 {
-  "max_radiation": 1200.0,
-  "block": "minecraft:magma_block"
+  "block": "minecraft:magma_block",
+  "max_radiation": 1200.0
 }

@@ -1,4 +1,4 @@
 {
-  "max_radiation": 350.0,
-  "block": "minecraft:torch"
+  "block": "minecraft:torch",
+  "max_radiation": 350.0
 }

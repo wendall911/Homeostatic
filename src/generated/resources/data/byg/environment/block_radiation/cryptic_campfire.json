@@ -1,4 +1,4 @@
 {
-  "max_radiation": 7250.0,
-  "block": "byg:cryptic_campfire"
+  "block": "byg:cryptic_campfire",
+  "max_radiation": 7250.0
 }

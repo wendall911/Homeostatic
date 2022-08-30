@@ -1,4 +1,4 @@
 {
-  "max_radiation": 5550.0,
-  "block": "minecraft:campfire"
+  "block": "minecraft:campfire",
+  "max_radiation": 5550.0
 }

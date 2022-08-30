@@ -1,4 +1,4 @@
 {
-  "max_radiation": 525.0,
-  "block": "minecraft:soul_wall_torch"
+  "block": "minecraft:soul_wall_torch",
+  "max_radiation": 525.0
 }

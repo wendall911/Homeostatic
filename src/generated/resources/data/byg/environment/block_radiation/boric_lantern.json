@@ -1,4 +1,4 @@
 {
-  "max_radiation": 400.0,
-  "block": "byg:boric_lantern"
+  "block": "byg:boric_lantern",
+  "max_radiation": 400.0
 }

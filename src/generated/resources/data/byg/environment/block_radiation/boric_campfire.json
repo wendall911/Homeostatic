@@ -1,4 +1,4 @@
 {
-  "max_radiation": 6250.0,
-  "block": "byg:boric_campfire"
+  "block": "byg:boric_campfire",
+  "max_radiation": 6250.0
 }

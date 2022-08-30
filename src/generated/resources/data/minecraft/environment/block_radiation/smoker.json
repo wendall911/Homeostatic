@@ -1,4 +1,4 @@
 {
-  "max_radiation": 1100.0,
-  "block": "minecraft:smoker"
+  "block": "minecraft:smoker",
+  "max_radiation": 1100.0
 }
