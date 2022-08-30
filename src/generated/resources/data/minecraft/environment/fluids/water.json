@@ -1,0 +1,8 @@
+{
+  "amount": 3,
+  "effect_chance": 0.2,
+  "effect_duration": 200,
+  "effect_potency": 45,
+  "fluid": "minecraft:water",
+  "saturation": 0.0
+}
