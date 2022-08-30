@@ -31,7 +31,7 @@ public class DrinkingFluidsProvider implements DataProvider {
         this.modid = modid;
     }
 
-    protected void addWaterItems() {
+    protected void addDrinkingFluids() {
         add(Fluids.WATER.getRegistryName(), 3, 0.0F, 45, 200, 0.2F);
         add(HomeostaticFluids.PURIFIED_WATER.getRegistryName(), 9, 0.7F,  0, 0, 0.0F);
     }
@@ -42,23 +42,23 @@ public class DrinkingFluidsProvider implements DataProvider {
 
     @Override
     public String getName() {
-        return "Homeostatic - Water Items";
+        return "Homeostatic - Drinking Fluids";
     }
 
     @Override
     public void run(HashCache pCache) throws IOException {
-        addWaterItems();
+        addDrinkingFluids();
 
         Path output = dataGenerator.getOutputFolder();
 
         for (Map.Entry<ResourceLocation, DrinkingFluid> entry : DRINKING_FLUIDS.entrySet()) {
-            Path waterItemPath = getPath(output, entry.getKey());
+            Path drinkingFluidsPath = getPath(output, entry.getKey());
 
             try {
-                DataProvider.save(GSON, pCache, DrinkingFluidManager.parseWaterItem(entry.getValue()), waterItemPath);
+                DataProvider.save(GSON, pCache, DrinkingFluidManager.parseDrinkingFluid(entry.getValue()), drinkingFluidsPath);
             }
             catch (IOException e) {
-                Homeostatic.LOGGER.error("Couldn't save homeostatic water_items %s %s", waterItemPath, e);
+                Homeostatic.LOGGER.error("Couldn't save homeostatic drinking fluids %s %s", drinkingFluidsPath, e);
             }
         }
     }
