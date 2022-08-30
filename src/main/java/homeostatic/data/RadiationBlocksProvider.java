@@ -19,7 +19,7 @@ import homeostatic.common.block.BlockRadiation;
 import homeostatic.common.block.BlockRegistry;
 
 public class RadiationBlocksProvider implements DataProvider {
-    
+
     private final Map<ResourceLocation, BlockRadiation> RADIATION_MAP = new HashMap<>();
     private final DataGenerator dataGenerator;
     private final String modid;

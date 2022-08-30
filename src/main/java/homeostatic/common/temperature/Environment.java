@@ -103,7 +103,7 @@ public class Environment {
                         isUnderground = !world.canSeeSky(eyePos.offset(x, y, z).above());
                     }
 
-                    if ((x <= 5 && x >= -5) && (y <= 5) && (z <= 5 && z <= -5)) {
+                    if ((x <= 5 && x >= -5) && (y <= 5) && (z <= 5 && z >= -5)) {
                         totalBlocks++;
 
                         if (isWater) {
