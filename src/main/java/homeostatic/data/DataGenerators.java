@@ -25,6 +25,7 @@ public final class DataGenerators {
         gen.addProvider(true, new ModRecipesProvider(gen));
         gen.addProvider(true, new ModItemModelProvider(gen, existingFileHelper));
         gen.addProvider(true, new ModBlockStateProvider(gen, existingFileHelper));
+        gen.addProvider(true, new RadiationBlocksProvider(gen, Homeostatic.MODID));
     }
 
 }

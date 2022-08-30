@@ -25,7 +25,6 @@ import potionstudios.byg.reg.RegistryObject;
 
 import homeostatic.config.ConfigHandler;
 import homeostatic.common.biome.BiomeRegistry;
-import homeostatic.common.block.BlockRegistry;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.fluid.HomeostaticFluids;
@@ -73,8 +72,6 @@ public class CommonProxy {
     }
 
     public void serverStart(ServerStartedEvent event) {
-        BlockRegistry.init();
-
         if (ModList.get().isLoaded("biomesoplenty")) {
             for (ResourceKey<Biome> biomeResourceKey : BOPBiomes.getAllBiomes()) {
                 logBiomeInfo(biomeResourceKey);

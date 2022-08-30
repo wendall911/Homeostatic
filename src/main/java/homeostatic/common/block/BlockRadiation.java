@@ -1,6 +1,23 @@
 package homeostatic.common.block;
 
-public record BlockRadiation(double maxRadiation) {
+import java.lang.reflect.Type;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+
+public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
+
+    public ResourceLocation getLocation() {
+        return loc;
+    }
 
     public double getMaxRadiation() {
         return this.maxRadiation;
@@ -46,6 +63,27 @@ public record BlockRadiation(double maxRadiation) {
         }
 
         return Math.min(radiation, this.getMaxRadiation());
+    }
+
+    public static class Serializer implements JsonDeserializer<BlockRadiation>, JsonSerializer<BlockRadiation> {
+
+        @Override
+        public BlockRadiation deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
+
+            return new BlockRadiation(new ResourceLocation(json.get("block").getAsString()), json.get("max_radiation").getAsDouble());
+        }
+
+        @Override
+        public JsonElement serialize(BlockRadiation blockRadiation, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject json = new JsonObject();
+
+            json.addProperty("block", blockRadiation.getLocation().toString());
+            json.addProperty("max_radiation", blockRadiation.getMaxRadiation());
+
+            return json;
+        }
+
     }
 
 }

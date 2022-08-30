@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.List;
-import java.util.function.Supplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -29,7 +28,7 @@ public final class ConfigHandler {
 
     public static void init() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Client.CONFIG_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Common.CONFIG_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Server.CONFIG_SPEC);
     }
 
     public static final class Client {
@@ -60,26 +59,26 @@ public final class ConfigHandler {
 
         Client(ForgeConfigSpec.@NotNull Builder builder) {
             debugEnabled = builder
-                .comment("Show temperature debug info.")
-                .define("debugEnabled", false);
+                    .comment("Show temperature debug info.")
+                    .define("debugEnabled", false);
             useFahrenheit = builder
-                .comment("Use Fahrenheit, otherwise use Celcius.")
-                .define("useFahrenheit", true);
+                    .comment("Use Fahrenheit, otherwise use Celcius.")
+                    .define("useFahrenheit", true);
             position = builder
-                .comment("Position of debug info, one of: " + positions)
-                .defineInList("position", "TOPRIGHT", positions);
+                    .comment("Position of debug info, one of: " + positions)
+                    .defineInList("position", "TOPRIGHT", positions);
             offsetX = builder
-                .comment("X offset")
-                .defineInRange("offsetX", 3, -100, 100);
+                    .comment("X offset")
+                    .defineInRange("offsetX", 3, -100, 100);
             offsetY = builder
-                .comment("Y offset")
-                .defineInRange("offsetY", 3, -100, 100);
+                    .comment("Y offset")
+                    .defineInRange("offsetY", 3, -100, 100);
             scale = builder
-                .comment("The size of the text info (multiplier)")
-                .defineInRange("scale", 0.5, 0.5, 2.0);
+                    .comment("The size of the text info (multiplier)")
+                    .defineInRange("scale", 0.5, 0.5, 2.0);
             temperatureColorRange = builder
-                .comment("Temperature color range (Format (cold->hot): #3ab3da->#f9801d)")
-                .define("temperatureColorRange", "#3ab3da->#f9801d", hexRangeValidator);
+                    .comment("Temperature color range (Format (cold->hot): #3ab3da->#f9801d)")
+                    .define("temperatureColorRange", "#3ab3da->#f9801d", hexRangeValidator);
         }
 
         public static boolean debugEnabled() {
@@ -123,70 +122,39 @@ public final class ConfigHandler {
 
     }
 
-    public static final class Common {
+    public static final class Server {
         public static final ForgeConfigSpec CONFIG_SPEC;
-        private static final Common CONFIG;
+        private static final Server CONFIG;
 
         private static IntValue DRINK_AMOUNT;
         private static DoubleValue DRINK_SATURATION;
         private static IntValue EFFECT_POTENCY;
         private static IntValue EFFECT_DURATION;
         private static DoubleValue EFFECT_CHANCE;
-        private static final List<String> RADIATION_BLOCKS_LIST = List.of("radiation_blocks");
-        private static final String[] radiationBlocksStrings = new String[] {
-            "minecraft:soul_campfire-8325",
-            "minecraft:campfire-5550",
-            "minecraft:soul_fire-1950",
-            "minecraft:blast_furnace-1800",
-            "minecraft:lava-1550",
-            "minecraft:fire-1300",
-            "minecraft:furnace-1300",
-            "minecraft:magma_block-1200",
-            "minecraft:smoker-1100",
-            "minecraft:soul_torch-525",
-            "minecraft:soul_wall_torch-525",
-            "minecraft:soul_lantern-525",
-            "minecraft:nether_portal-350",
-            "minecraft:torch-350",
-            "minecraft:wall_torch-350",
-            "minecraft:lantern-350",
-            "byg:cryptic_campfire-7250",
-            "byg:boric_campfire-6250",
-            "byg:cryptic_magma_block-1200",
-            "byg:boric_lantern-400",
-            "byg:cryptic_lantern-470"
-        };
-        private static final Predicate<Object> radiationBlocksValidator = s -> s instanceof String
-                && ((String) s).matches("[a-z]+[:]{1}[a-z_]+[-]{1}[0-9]{3,4}+");
-        private final ConfigValue<List<? extends String>> RADIATION_BLOCKS;
 
         static {
-            Pair<Common,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+            Pair<Server,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Server::new);
 
             CONFIG_SPEC = specPair.getRight();
             CONFIG = specPair.getLeft();
         }
 
-        Common(ForgeConfigSpec.Builder builder) {
+        Server(ForgeConfigSpec.Builder builder) {
             DRINK_AMOUNT = builder
-                .comment("Amount of water that can drank per interaction in half shanks. Purified water is 3X. Default 1")
-                .defineInRange("DRINK_AMOUNT", 1, 1, 20);
+                    .comment("Amount of water that can drank per interaction in half shanks. Purified water is 3X. Default 1")
+                    .defineInRange("DRINK_AMOUNT", 1, 1, 20);
             DRINK_SATURATION = builder
-                .comment("Amount of saturation gained per drink of purified water. Default 0.7")
-                .defineInRange("DRINK_SATURATION", 0.7, 0.0, 20.0);
+                    .comment("Amount of saturation gained per drink of purified water. Default 0.7")
+                    .defineInRange("DRINK_SATURATION", 0.7, 0.0, 20.0);
             EFFECT_POTENCY = builder
-                .comment("Potency of thirst effect when drinking from an open water source. Default 25")
-                .defineInRange("EFFECT_POTENCY", 45, 1, 255);
+                    .comment("Potency of thirst effect when drinking from an open water source. Default 25")
+                    .defineInRange("EFFECT_POTENCY", 45, 1, 255);
             EFFECT_DURATION = builder
-                .comment("Duration of thirst effect in ticks (20/second). Default 200")
-                .defineInRange("EFFECT_DURATION", 200, 1, 6000);
+                    .comment("Duration of thirst effect in ticks (20/second). Default 200")
+                    .defineInRange("EFFECT_DURATION", 200, 1, 6000);
             EFFECT_CHANCE = builder
-                .comment("Chance to give thirst status effect. Default 0.2")
-                .defineInRange("EFFECT_CHANCE", 0.2, 0.0, 1.0);
-            RADIATION_BLOCKS = builder
-                .comment("List of radiation generating blocks and the radiation output amount. Format modid:item-amount"
-                        + "[\"" + String.join("\", \"", radiationBlocksStrings) + "\"]")
-                .defineListAllowEmpty(RADIATION_BLOCKS_LIST, getFields(radiationBlocksStrings), radiationBlocksValidator);
+                    .comment("Chance to give thirst status effect. Default 0.2")
+                    .defineInRange("EFFECT_CHANCE", 0.2, 0.0, 1.0);
         }
 
         public static int drinkAmount() {
@@ -211,16 +179,6 @@ public final class ConfigHandler {
             double chance = CONFIG.EFFECT_CHANCE.get();
 
             return (float) chance;
-        }
-
-        public static List<String> getRadiationBlocksData() {
-            List<String> blocks = (List<String>) CONFIG.RADIATION_BLOCKS.get();
-
-            return blocks;
-        }
-
-        private static Supplier<List<? extends String>> getFields(String[] strings) {
-            return () -> Arrays.asList(strings);
         }
 
     }
