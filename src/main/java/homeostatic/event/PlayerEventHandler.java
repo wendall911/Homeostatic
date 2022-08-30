@@ -1,8 +1,9 @@
 package homeostatic.event;
 
+import java.util.Objects;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -15,23 +16,25 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.Level;
-
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
+import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.common.temperature.EnvironmentData;
 import homeostatic.common.water.WaterInfo;
@@ -68,17 +71,6 @@ public class PlayerEventHandler {
                         new TemperatureData(environmentData.getLocalTemperature(), bodyTemperature)
                 );
             });
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        if (!event.getPlayer().level.isClientSide) {
-            final Player player = event.getPlayer();
-            final ResourceKey<Level> worldKey = event.getTo();
-
-            if (!worldKey.location().toString().contains(DimensionType.OVERWORLD_EFFECTS.toString())) {
-            }
         }
     }
 
@@ -133,8 +125,6 @@ public class PlayerEventHandler {
             final ServerPlayer sp = (ServerPlayer) player;
             ServerLevel world = sp.getLevel();
 
-            if (world == null) return;
-
             sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
                 WaterInfo waterInfo = new WaterInfo(
                         WaterInfo.MAX_WATER_LEVEL / 2,
@@ -168,7 +158,7 @@ public class PlayerEventHandler {
 
     @SubscribeEvent
     public static void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
-        final Player player = event.getPlayer() instanceof Player ? (Player) event.getPlayer() : null;
+        final Player player = event.getPlayer();
 
         if (player != null && player.level.isClientSide) {
             drinkWater(player, event);
@@ -177,10 +167,25 @@ public class PlayerEventHandler {
 
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        final Player player = event.getPlayer() instanceof Player ? (Player) event.getPlayer() : null;
+        final Player player = event.getPlayer();
 
         if (player != null && player.level.isClientSide) {
             drinkWater(player, event);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onFinishUsingItem(LivingEntityUseItemEvent.Finish event) {
+        if (event.getEntityLiving() instanceof Player player && !player.level.isClientSide) {
+            IFluidHandlerItem fluidHandlerItem = event.getItem().getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+
+            if (fluidHandlerItem != null) {
+                if (fluidHandlerItem.getFluidInTank(0).getFluid() == Fluids.WATER) {
+                    WaterHelper.drinkWater((ServerPlayer) player, true, true);
+                } else if (fluidHandlerItem.getFluidInTank(0).getFluid() == HomeostaticFluids.PURIFIED_WATER) {
+                    WaterHelper.drinkWater((ServerPlayer) player, false, true);
+                }
+            }
         }
     }
 
@@ -204,22 +209,6 @@ public class PlayerEventHandler {
                 }
             });
         }
-    }
-
-    private static HitResult getPlayerPOVHitResult(LevelAccessor pLevel, Player pPlayer, ClipContext.Fluid pFluidMode) {
-        final float xRot = pPlayer.getXRot();
-        final float yRot = pPlayer.getYRot();
-        final Vec3 eyePos = pPlayer.getEyePosition();
-        final float cosRotY = Mth.cos(-yRot * ((float)Math.PI / 180F) - (float)Math.PI);
-        final float sinRotY = Mth.sin(-yRot * ((float)Math.PI / 180F) - (float)Math.PI);
-        final float cosRotX = -Mth.cos(-xRot * ((float)Math.PI / 180F));
-        final float sinRotX = Mth.sin(-xRot * ((float)Math.PI / 180F));
-        final float pX = sinRotY * cosRotX;
-        final float pZ = cosRotY * cosRotX;
-        final double reach = pPlayer.getAttribute(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get()).getValue();
-        final Vec3 reachPos = eyePos.add((double)pX * reach, (double)sinRotX * reach, (double)pZ * reach);
-
-        return pLevel.clip(new ClipContext(eyePos, reachPos, ClipContext.Block.OUTLINE, pFluidMode, pPlayer));
     }
 
 }
