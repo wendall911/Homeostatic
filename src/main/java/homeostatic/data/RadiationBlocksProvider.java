@@ -5,18 +5,14 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 
 import homeostatic.Homeostatic;
 import homeostatic.common.block.BlockRadiation;
-import homeostatic.common.block.BlockRegistry;
+import homeostatic.common.block.BlockRadiationManager;
 
 public class RadiationBlocksProvider implements DataProvider {
 
@@ -74,7 +70,7 @@ public class RadiationBlocksProvider implements DataProvider {
             Path blockRadiationPath = getPath(output, entry.getKey());
 
             try {
-                DataProvider.saveStable(pOutput, BlockRegistry.parseBlockRadiation(entry.getValue()), blockRadiationPath);
+                DataProvider.saveStable(pOutput, BlockRadiationManager.parseBlockRadiation(entry.getValue()), blockRadiationPath);
             }
             catch (IOException e) {
                 Homeostatic.LOGGER.error("Couldn't save homeostatic block_radiation %s %s", blockRadiationPath, e);
