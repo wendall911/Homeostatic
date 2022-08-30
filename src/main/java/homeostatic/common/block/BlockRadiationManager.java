@@ -19,14 +19,14 @@ import net.minecraftforge.fml.common.Mod;
 import homeostatic.Homeostatic;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class BlockRegistry extends SimpleJsonResourceReloadListener {
+public class BlockRadiationManager extends SimpleJsonResourceReloadListener {
 
     public static final Map<ResourceLocation, BlockRadiation> RADIATION_BLOCKS = new HashMap<>();
 
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(BlockRadiation.class, new BlockRadiation.Serializer()).create();
-    private static BlockRegistry INSTANCE;
+    private static BlockRadiationManager INSTANCE;
 
-    public BlockRegistry() {
+    public BlockRadiationManager() {
         super(GSON, "environment/block_radiation");
     }
 
@@ -54,7 +54,7 @@ public class BlockRegistry extends SimpleJsonResourceReloadListener {
 
     @SubscribeEvent
     public static void onResourceReload(AddReloadListenerEvent event) {
-        event.addListener(INSTANCE = new BlockRegistry());
+        event.addListener(INSTANCE = new BlockRadiationManager());
     }
 
 }

@@ -20,7 +20,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import homeostatic.config.ConfigHandler;
-import homeostatic.common.block.BlockRegistry;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.recipe.ArmorEnhancement;
 import homeostatic.common.recipe.HomeostaticRecipes;

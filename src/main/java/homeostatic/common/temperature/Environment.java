@@ -24,7 +24,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
 import homeostatic.common.block.BlockRadiation;
-import homeostatic.common.block.BlockRegistry;
+import homeostatic.common.block.BlockRadiationManager;
 import homeostatic.util.VecMath;
 
 public class Environment {
@@ -114,7 +114,7 @@ public class Environment {
 
                     // Only check up to three blocks up, and ignore radiation if fire resistance is active.
                     if (y <= 3 && effectInstance == null) {
-                        BlockRadiation blockRadiation = BlockRegistry.RADIATION_BLOCKS.get(state.getBlock().getRegistryName());
+                        BlockRadiation blockRadiation = BlockRadiationManager.RADIATION_BLOCKS.get(state.getBlock().getRegistryName());
 
                         if (blockRadiation != null) {
                             boolean hasRadiation = true;
