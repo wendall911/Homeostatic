@@ -1,0 +1,13 @@
+// 1.19.2	2022-08-31T12:40:25.704507239	Homeostatic - Drinkable Items
+20e2e34483010348879afa4193428f9a0ca9e176 data/minecraft/environment/drinkable/apple.json
+6651eb057654ddbe28f53454950ac337628373cc data/minecraft/environment/drinkable/beetroot_soup.json
+47f97338993b5f49710ca87a5269f32522eb2572 data/minecraft/environment/drinkable/enchanted_golden_apple.json
+25fc5a2a42a8c9ffcd86b37984b594468c055c31 data/minecraft/environment/drinkable/glow_berries.json
+33d8fe93df2727ddc0e7c9c07fc70600a727f04c data/minecraft/environment/drinkable/golden_apple.json
+d8ffb2aae55c0bf8f6618902264674c6f55ba46d data/minecraft/environment/drinkable/honey_bottle.json
+8759066fcf940437276cf9c4e56043f126d79d34 data/minecraft/environment/drinkable/melon_slice.json
+9a80a935dec0b206c6b0ae35331ebfe4658dc92e data/minecraft/environment/drinkable/milk_bucket.json
+6e238b18022a66fc760e0e6572cc29903e361fba data/minecraft/environment/drinkable/mushroom_stew.json
+ef4683ed99114e75ff5b64523eff680fdc164daf data/minecraft/environment/drinkable/rabbit_stew.json
+fae331ba0d245caa73358cc697e198df3567ebfa data/minecraft/environment/drinkable/suspicious_stew.json
+db2d8e95f4a05fd1a5893b1033232e4d1547a55f data/minecraft/environment/drinkable/sweet_berries.json

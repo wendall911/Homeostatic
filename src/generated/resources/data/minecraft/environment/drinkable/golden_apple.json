@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:golden_apple",
+  "amount": 6,
+  "effect_chance": 0.0,
+  "effect_duration": 0,
+  "effect_potency": 0,
+  "saturation": 1.2
+}
