@@ -5,12 +5,9 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 
 import homeostatic.Homeostatic;
@@ -19,7 +16,6 @@ import homeostatic.common.item.DrinkableItemManager;
 
 public class DrinkableItemsProvider implements DataProvider {
 
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private final Map<ResourceLocation, DrinkableItem> DRINKABLE_ITEMS = new HashMap<>();
     private final DataGenerator dataGenerator;
     private final String modid;
@@ -55,7 +51,7 @@ public class DrinkableItemsProvider implements DataProvider {
     }
 
     @Override
-    public void run(HashCache pCache) throws IOException {
+    public void run(CachedOutput pOutput) throws IOException {
         addDrinkableItems();
 
         Path output = dataGenerator.getOutputFolder();
@@ -64,7 +60,7 @@ public class DrinkableItemsProvider implements DataProvider {
             Path drinkableItemsPath = getPath(output, entry.getKey());
 
             try {
-                DataProvider.save(GSON, pCache, DrinkableItemManager.parseDrinkableItem(entry.getValue()), drinkableItemsPath);
+                DataProvider.saveStable(pOutput, DrinkableItemManager.parseDrinkableItem(entry.getValue()), drinkableItemsPath);
             }
             catch (IOException e) {
                 Homeostatic.LOGGER.error("Couldn't save homeostatic drinkable items %s %s", drinkableItemsPath, e);
