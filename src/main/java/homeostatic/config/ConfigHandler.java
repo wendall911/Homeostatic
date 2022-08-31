@@ -28,7 +28,6 @@ public final class ConfigHandler {
 
     public static void init() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Client.CONFIG_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Server.CONFIG_SPEC);
     }
 
     public static final class Client {
@@ -118,67 +117,6 @@ public final class ConfigHandler {
 
             temperatureColorCold = ColorHelper.decode(temperatureColors[0]);
             temperatureColorHot = ColorHelper.decode(temperatureColors[1]);
-        }
-
-    }
-
-    public static final class Server {
-        public static final ForgeConfigSpec CONFIG_SPEC;
-        private static final Server CONFIG;
-
-        private static IntValue DRINK_AMOUNT;
-        private static DoubleValue DRINK_SATURATION;
-        private static IntValue EFFECT_POTENCY;
-        private static IntValue EFFECT_DURATION;
-        private static DoubleValue EFFECT_CHANCE;
-
-        static {
-            Pair<Server,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Server::new);
-
-            CONFIG_SPEC = specPair.getRight();
-            CONFIG = specPair.getLeft();
-        }
-
-        Server(ForgeConfigSpec.Builder builder) {
-            DRINK_AMOUNT = builder
-                    .comment("Amount of water that can drank per interaction in half shanks. Purified water is 3X. Default 1")
-                    .defineInRange("DRINK_AMOUNT", 1, 1, 20);
-            DRINK_SATURATION = builder
-                    .comment("Amount of saturation gained per drink of purified water. Default 0.7")
-                    .defineInRange("DRINK_SATURATION", 0.7, 0.0, 20.0);
-            EFFECT_POTENCY = builder
-                    .comment("Potency of thirst effect when drinking from an open water source. Default 25")
-                    .defineInRange("EFFECT_POTENCY", 45, 1, 255);
-            EFFECT_DURATION = builder
-                    .comment("Duration of thirst effect in ticks (20/second). Default 200")
-                    .defineInRange("EFFECT_DURATION", 200, 1, 6000);
-            EFFECT_CHANCE = builder
-                    .comment("Chance to give thirst status effect. Default 0.2")
-                    .defineInRange("EFFECT_CHANCE", 0.2, 0.0, 1.0);
-        }
-
-        public static int drinkAmount() {
-            return CONFIG.DRINK_AMOUNT.get();
-        }
-
-        public static float drinkSaturation() {
-            double hydration = CONFIG.DRINK_SATURATION.get();
-
-            return (float) hydration;
-        }
-
-        public static int effectPotency() {
-            return CONFIG.EFFECT_POTENCY.get();
-        }
-
-        public static int effectDuration() {
-            return CONFIG.EFFECT_DURATION.get();
-        }
-
-        public static float effectChance() {
-            double chance = CONFIG.EFFECT_CHANCE.get();
-
-            return (float) chance;
         }
 
     }
