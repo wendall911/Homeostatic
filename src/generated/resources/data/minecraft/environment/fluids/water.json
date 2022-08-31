@@ -1,13 +1,6 @@
 {
-<<<<<<< HEAD
-  "amount": 3,
-  "effect_chance": 0.2,
-=======
-  "fluid": "minecraft:water",
   "amount": 1,
-  "saturation": 0.0,
-  "effect_potency": 45,
->>>>>>> 00bbf3d (Update settings for purified_water and water.)
+  "effect_chance": 0.2,
   "effect_duration": 200,
   "effect_potency": 45,
   "fluid": "minecraft:water",

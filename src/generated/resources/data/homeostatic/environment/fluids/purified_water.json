@@ -1,13 +1,6 @@
 {
-<<<<<<< HEAD
-  "amount": 9,
-  "effect_chance": 0.0,
-=======
-  "fluid": "homeostatic:purified_water",
   "amount": 3,
-  "saturation": 0.7,
-  "effect_potency": 0,
->>>>>>> 00bbf3d (Update settings for purified_water and water.)
+  "effect_chance": 0.0,
   "effect_duration": 0,
   "effect_potency": 0,
   "fluid": "homeostatic:purified_water",
