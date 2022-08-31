@@ -23,7 +23,7 @@ public class DrinkWater implements IData {
         ServerPlayer sp = ctx.get().getSender();
 
         if (sp != null) {
-            WaterHelper.drinkWater(sp, true, false);
+            WaterHelper.drinkWater(sp);
         }
 
     }

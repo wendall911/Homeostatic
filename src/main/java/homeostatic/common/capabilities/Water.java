@@ -14,7 +14,6 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 import homeostatic.common.water.WaterInfo;
-import homeostatic.config.ConfigHandler;
 
 public class Water {
 
@@ -42,16 +41,12 @@ public class Water {
         this.waterLevel = waterLevel;
     }
 
-    public void increaseWaterLevel() {
-        this.waterLevel = Math.min(this.waterLevel + ConfigHandler.Server.drinkAmount(), WaterInfo.MAX_WATER_LEVEL);
+    public void increaseWaterLevel(int level) {
+        this.waterLevel = Math.min(this.waterLevel + level, WaterInfo.MAX_WATER_LEVEL);
     }
 
-    public void increaseCleanWaterLevel() {
-        this.waterLevel = Math.min(this.waterLevel + (ConfigHandler.Server.drinkAmount() * 3), WaterInfo.MAX_WATER_LEVEL);
-    }
-
-    public void increaseSaturationLevel() {
-        this.waterSaturationLevel = Math.min(this.waterSaturationLevel + ConfigHandler.Server.drinkSaturation(), WaterInfo.MAX_SATURATION_LEVEL);
+    public void increaseSaturationLevel(float level) {
+        this.waterSaturationLevel = Math.min(this.waterSaturationLevel + level, WaterInfo.MAX_SATURATION_LEVEL);
     }
 
     public void setWaterSaturationLevel(float waterSaturationLevel) {
