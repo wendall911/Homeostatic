@@ -21,8 +21,7 @@ import homeostatic.Homeostatic;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
 
-    public static final Map<ResourceLocation, DrinkingFluid> FLUIDS = new HashMap<>();
-
+    private static final Map<ResourceLocation, DrinkingFluid> FLUIDS = new HashMap<>();
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(DrinkingFluid.class, new DrinkingFluid.Serializer()).create();
     private static DrinkingFluidManager INSTANCE;
 
@@ -32,6 +31,10 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
 
     public static JsonElement parseDrinkingFluid(DrinkingFluid drinkingFluid) {
         return GSON.toJsonTree(drinkingFluid);
+    }
+
+    public static DrinkingFluid get(ResourceLocation loc) {
+        return FLUIDS.get(loc);
     }
 
     @Override
@@ -45,11 +48,11 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
                 FLUIDS.put(drinkingFluid.loc(), drinkingFluid);
             }
             catch (Exception e) {
-                Homeostatic.LOGGER.error("Couldn't parse water item %s %s", entry.getKey(), e);
+                Homeostatic.LOGGER.error("Couldn't parse drinking fluid %s %s", entry.getKey(), e);
             }
         }
 
-        Homeostatic.LOGGER.info("Loaded %d water items", FLUIDS.size());
+        Homeostatic.LOGGER.info("Loaded %d drinking fluids", FLUIDS.size());
     }
 
     @SubscribeEvent

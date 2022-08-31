@@ -13,7 +13,13 @@ import com.google.gson.JsonSerializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 
+import homeostatic.common.Hydration;
+
 public record DrinkingFluid(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
+
+    public static Hydration getHydration(DrinkingFluid fluid) {
+        return new Hydration(fluid.amount(), fluid.saturation(), fluid.potency(), fluid.duration(), fluid.chance());
+    }
 
     public static class Serializer implements JsonDeserializer<DrinkingFluid>, JsonSerializer<DrinkingFluid> {
 
