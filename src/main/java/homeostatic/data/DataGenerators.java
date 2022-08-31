@@ -27,6 +27,7 @@ public final class DataGenerators {
         gen.addProvider(new ModBlockStateProvider(gen, existingFileHelper));
         gen.addProvider(new RadiationBlocksProvider(gen, Homeostatic.MODID));
         gen.addProvider(new DrinkingFluidsProvider(gen, Homeostatic.MODID));
+        gen.addProvider(new DrinkableItemsProvider(gen, Homeostatic.MODID));
     }
 
 }
