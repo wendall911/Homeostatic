@@ -12,7 +12,7 @@ import homeostatic.util.OverlayHelper;
 
 public class WetnessOverlay extends GuiComponent {
 
-    public final static ResourceLocation WETNESS_OVERLAY = new ResourceLocation(Homeostatic.MODID, "textures/gui/wetness.png");
+    public final static ResourceLocation WETNESS_OVERLAY = Homeostatic.loc("textures/gui/wetness.png");
 
     public WetnessOverlay() {}
 

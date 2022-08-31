@@ -8,6 +8,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import homeostatic.data.integration.ModIntegration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
@@ -30,8 +31,8 @@ public class DrinkingFluidsProvider implements DataProvider {
     }
 
     protected void addDrinkingFluids() {
-        add(new ResourceLocation("minecraft", "water"), 1, 0.0F, 45, 200, 0.2F);
-        add(new ResourceLocation(Homeostatic.MODID, "purified_water"), 3, 0.7F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("water"), 1, 0.0F, 45, 200, 0.2F);
+        add(Homeostatic.loc("purified_water"), 3, 0.7F,  0, 0, 0.0F);
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {

@@ -13,7 +13,7 @@ import net.minecraft.world.item.Items;
 
 public class ArmorEnhancementCatetory implements IRecipeCategory<ArmorEnhancement> {
 
-    public static final ResourceLocation UID = new ResourceLocation(Homeostatic.MODID, "armor_enhancement");
+    public static final ResourceLocation UID = Homeostatic.loc("armor_enhancement");
 
     private final IDrawable icon;
 

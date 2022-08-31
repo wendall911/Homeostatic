@@ -19,7 +19,7 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(Homeostatic.MODID, "jei_plugin");
+        return Homeostatic.loc("jei_plugin");
     }
 
     @Override

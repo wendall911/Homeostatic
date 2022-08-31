@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import homeostatic.common.block.BlockRadiationManager;
+import homeostatic.data.integration.ModIntegration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
@@ -30,29 +31,29 @@ public class RadiationBlocksProvider implements DataProvider {
     }
 
     protected void registerRadiationBlocks() {
-        add(new ResourceLocation("minecraft", "soul_campfire"), 8325);
-        add(new ResourceLocation("minecraft", "campfire"), 5550);
-        add(new ResourceLocation("minecraft", "soul_fire"), 1950);
-        add(new ResourceLocation("minecraft", "blast_furnace"), 1800);
-        add(new ResourceLocation("minecraft", "lava"), 1550);
-        add(new ResourceLocation("minecraft", "fire"), 1300);
-        add(new ResourceLocation("minecraft", "furnace"), 1300);
-        add(new ResourceLocation("minecraft", "magma_block"), 1200);
-        add(new ResourceLocation("minecraft", "smoker"), 1100);
-        add(new ResourceLocation("minecraft", "soul_torch"), 525);
-        add(new ResourceLocation("minecraft", "soul_wall_torch"), 525);
-        add(new ResourceLocation("minecraft", "soul_lantern"), 525);
-        add(new ResourceLocation("minecraft", "nether_portal"), 350);
-        add(new ResourceLocation("minecraft", "torch"), 350);
-        add(new ResourceLocation("minecraft", "wall_torch"), 350);
-        add(new ResourceLocation("minecraft", "lantern"), 350);
+        add(ModIntegration.mcLoc("soul_campfire"), 8325);
+        add(ModIntegration.mcLoc("campfire"), 5550);
+        add(ModIntegration.mcLoc("soul_fire"), 1950);
+        add(ModIntegration.mcLoc("blast_furnace"), 1800);
+        add(ModIntegration.mcLoc("lava"), 1550);
+        add(ModIntegration.mcLoc("fire"), 1300);
+        add(ModIntegration.mcLoc("furnace"), 1300);
+        add(ModIntegration.mcLoc("magma_block"), 1200);
+        add(ModIntegration.mcLoc("smoker"), 1100);
+        add(ModIntegration.mcLoc("soul_torch"), 525);
+        add(ModIntegration.mcLoc("soul_wall_torch"), 525);
+        add(ModIntegration.mcLoc("soul_lantern"), 525);
+        add(ModIntegration.mcLoc("nether_portal"), 350);
+        add(ModIntegration.mcLoc("torch"), 350);
+        add(ModIntegration.mcLoc("wall_torch"), 350);
+        add(ModIntegration.mcLoc("lantern"), 350);
 
         // Oh The Biomes You'll Go
-        add(new ResourceLocation("byg", "cryptic_campfire"), 7250);
-        add(new ResourceLocation("byg", "boric_campfire"), 6250);
-        add(new ResourceLocation("byg", "cryptic_magma_block"), 1200);
-        add(new ResourceLocation("byg", "boric_lantern"), 400);
-        add(new ResourceLocation("byg", "cryptic_lantern"), 470);
+        add(ModIntegration.bygLoc("cryptic_campfire"), 7250);
+        add(ModIntegration.bygLoc("boric_campfire"), 6250);
+        add(ModIntegration.bygLoc("cryptic_magma_block"), 1200);
+        add(ModIntegration.bygLoc("boric_lantern"), 400);
+        add(ModIntegration.bygLoc("cryptic_lantern"), 470);
     }
 
     protected void add(ResourceLocation loc, double maxRadiation) {

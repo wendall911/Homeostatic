@@ -24,7 +24,7 @@ public class HomeostaticBlocks {
     }
 
     public static LiquidBlock registerBlock(String name, LiquidBlock block) {
-        Block blockConfigured = (block).setRegistryName(new ResourceLocation(Homeostatic.MODID, name));
+        Block blockConfigured = (block).setRegistryName(Homeostatic.loc(name));
 
         BLOCK_REGISTRY.register(blockConfigured);
 

@@ -21,15 +21,15 @@ public class CapabilityEventHandler {
     public static void addCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player && !(event.getObject() instanceof FakePlayer)) {
             event.addCapability(
-                new ResourceLocation(Homeostatic.MODID, "temperature"),
+                Homeostatic.loc("temperature"),
                 new Temperature.Provider()
             );
             event.addCapability(
-                new ResourceLocation(Homeostatic.MODID, "water"),
+                Homeostatic.loc("water"),
                 new Water.Provider()
             );
             event.addCapability(
-                new ResourceLocation(Homeostatic.MODID, "wetness"),
+                Homeostatic.loc("wetness"),
                 new Wetness.Provider()
             );
         }

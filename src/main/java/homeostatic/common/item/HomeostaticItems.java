@@ -36,7 +36,7 @@ public final class HomeostaticItems {
     }
 
     public static Item registerItem(String name, Item item) {
-        Item itemConfigured = item.setRegistryName(new ResourceLocation(Homeostatic.MODID, name));
+        Item itemConfigured = item.setRegistryName(Homeostatic.loc(name));
 
         ITEM_REGISTRY.register(itemConfigured);
 
