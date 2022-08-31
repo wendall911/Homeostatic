@@ -1,8 +1,8 @@
 {
-  "type": "minecraft:carrot",
-  "amount": 1,
+  "type": "croptopia:cherry_pie",
+  "amount": 3,
   "effect_chance": 0.0,
   "effect_duration": 0,
   "effect_potency": 0,
-  "saturation": 0.1
+  "saturation": 1.2
 }
