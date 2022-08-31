@@ -26,8 +26,8 @@ public class DrinkingFluidsProvider implements DataProvider {
     }
 
     protected void addDrinkingFluids() {
-        add(new ResourceLocation("minecraft", "water"), 3, 0.0F, 45, 200, 0.2F);
-        add(new ResourceLocation(Homeostatic.MODID, "purified_water"), 9, 0.7F,  0, 0, 0.0F);
+        add(new ResourceLocation("minecraft", "water"), 1, 0.0F, 45, 200, 0.2F);
+        add(new ResourceLocation(Homeostatic.MODID, "purified_water"), 3, 0.7F,  0, 0, 0.0F);
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
