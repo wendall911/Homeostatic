@@ -1,6 +1,6 @@
 {
   "fluid": "minecraft:water",
-  "amount": 3,
+  "amount": 1,
   "saturation": 0.0,
   "effect_potency": 45,
   "effect_duration": 200,
