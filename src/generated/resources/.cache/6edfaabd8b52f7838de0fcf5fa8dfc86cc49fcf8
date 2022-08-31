@@ -1,4 +1,18 @@
-// 1.19.2	2022-08-31T12:40:25.704507239	Homeostatic - Drinkable Items
+// 1.19.2	2022-08-31T14:40:39.382467872	Homeostatic - Drinkable Items
+8cee0d705f68f0307523f5570bca57b6692a2499 data/byg/environment/drinkable/aloe_vera_juice.json
+06c691acd849e92531ecbe9f233de4ca7866f268 data/byg/environment/drinkable/baobab_fruit.json
+69d38e286d83fc456431182b2c2ec4ab95baf48f data/byg/environment/drinkable/blueberries.json
+3e77cf8e858a2792cb67d026add1629f323be369 data/byg/environment/drinkable/blueberry_pie.json
+ab9037ff75c1c9e379c17c516a56c19b15b863f4 data/byg/environment/drinkable/cooked_white_puffball_cap.json
+92db4a7a32673f69aaf85949917554e2104b2977 data/byg/environment/drinkable/crimson_berries.json
+86cac2382627d3189e6622f11713dd379da7bed9 data/byg/environment/drinkable/crimson_berry_pie.json
+ca700f0d180aa4de7d229f724183a74c85f18347 data/byg/environment/drinkable/green_apple.json
+a77bec69014438a8c1a223562b8ae85d192ab129 data/byg/environment/drinkable/green_apple_pie.json
+6f5567eb2d0d5a1af36774c68c5f98239d0de58f data/byg/environment/drinkable/holly_berries.json
+e1e4dd98099f2d9b540e1593259237ff240412bc data/byg/environment/drinkable/nightshade_berries.json
+7ca41f4d628f973b14cbf54f124327474aaaffd8 data/byg/environment/drinkable/nightshade_berry_pie.json
+233b4db15d70efc55cd6b0e182f62e3f41fe9358 data/byg/environment/drinkable/white_puffball_cap.json
+dbe615e0e7101b5177b50d7fbf37d41dc58f8e5e data/byg/environment/drinkable/white_puffball_stew.json
 20e2e34483010348879afa4193428f9a0ca9e176 data/minecraft/environment/drinkable/apple.json
 6651eb057654ddbe28f53454950ac337628373cc data/minecraft/environment/drinkable/beetroot_soup.json
 47f97338993b5f49710ca87a5269f32522eb2572 data/minecraft/environment/drinkable/enchanted_golden_apple.json
