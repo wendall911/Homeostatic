@@ -44,6 +44,22 @@ public class DrinkableItemsProvider implements DataProvider {
         add(ModIntegration.mcLoc("melon_slice"), 2, 0.6F,  0, 0, 0.0F);
         add(ModIntegration.mcLoc("apple"), 2, 0.6F,  0, 0, 0.0F);
         add(ModIntegration.mcLoc("suspicious_stew"), 1, 0.0F, 45, 200, 0.3F);
+
+        // Oh The Biomes You'll Go
+        add(ModIntegration.bygLoc("holly_berries"), 1, 0.0F, 45, 200, 0.5F);
+        add(ModIntegration.bygLoc("nightshade_berries"), 2, 0.3F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("blueberries"), 2, 0.3F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("crimson_berries"), 1, 0.0F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("nightshade_berry_pie"), 3, 0.6F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("blueberry_pie"), 3, 0.6F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("crimson_berry_pie"), 2, 0.0F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("baobab_fruit"), 2, 0.6F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("green_apple"), 2, 0.6F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("green_apple_pie"), 3, 1.2F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("aloe_vera_juice"), 4, 1.0F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("white_puffball_cap"), 1, 0.0F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("cooked_white_puffball_cap"), 1, 0.0F,  0, 0, 0.0F);
+        add(ModIntegration.bygLoc("white_puffball_stew"), 2, 0.0F,  0, 0, 0.0F);
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
