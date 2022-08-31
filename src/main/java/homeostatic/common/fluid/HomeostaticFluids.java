@@ -27,8 +27,8 @@ public final class HomeostaticFluids {
     public static FlowingFluid PURIFIED_WATER;
     public static FlowingFluid PURIFIED_WATER_FLOWING;
 
-    public static final ResourceLocation STILL_FLUID_TEXTURE = new ResourceLocation(Homeostatic.MODID, "block/fluid/still_water");
-    public static final ResourceLocation FLOWING_FLUID_TEXTURE = new ResourceLocation(Homeostatic.MODID, "block/fluid/flowing_water");
+    public static final ResourceLocation STILL_FLUID_TEXTURE = Homeostatic.loc("block/fluid/still_water");
+    public static final ResourceLocation FLOWING_FLUID_TEXTURE = Homeostatic.loc("block/fluid/flowing_water");
 
     public static ForgeFlowingFluid.Properties fluidProperties() {
         return new ForgeFlowingFluid.Properties(

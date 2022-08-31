@@ -13,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import homeostatic.Homeostatic;
 import homeostatic.common.item.DrinkableItem;
 import homeostatic.common.item.DrinkableItemManager;
+import homeostatic.data.integration.ModIntegration;
 
 public class DrinkableItemsProvider implements DataProvider {
 
@@ -27,18 +28,18 @@ public class DrinkableItemsProvider implements DataProvider {
 
     protected void addDrinkableItems() {
         // Minecraft
-        add(mcLoc("honey_bottle"), 4, 1.0F,  0, 0, 0.0F);
-        add(mcLoc("milk_bucket"), 9, 2.1F,  0, 0, 0.0F);
-        add(mcLoc("enchanted_golden_apple"), 9, 2.1F,  0, 0, 0.0F);
-        add(mcLoc("golden_apple"), 6, 1.2F,  0, 0, 0.0F);
-        add(mcLoc("beetroot_soup"), 3, 0.7F,  0, 0, 0.0F);
-        add(mcLoc("mushroom_stew"), 3, 0.7F,  0, 0, 0.0F);
-        add(mcLoc("rabbit_stew"), 3, 0.7F,  0, 0, 0.0F);
-        add(mcLoc("glow_berries"), 2, 0.3F,  0, 0, 0.0F);
-        add(mcLoc("sweet_berries"), 2, 0.3F,  0, 0, 0.0F);
-        add(mcLoc("melon_slice"), 2, 0.6F,  0, 0, 0.0F);
-        add(mcLoc("apple"), 2, 0.6F,  0, 0, 0.0F);
-        add(mcLoc("suspicious_stew"), 1, 0.0F, 45, 200, 0.3F);
+        add(ModIntegration.mcLoc("honey_bottle"), 4, 1.0F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("milk_bucket"), 9, 2.1F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("enchanted_golden_apple"), 9, 2.1F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("golden_apple"), 6, 1.2F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("beetroot_soup"), 3, 0.7F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("mushroom_stew"), 3, 0.7F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("rabbit_stew"), 3, 0.7F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("glow_berries"), 2, 0.3F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("sweet_berries"), 2, 0.3F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("melon_slice"), 2, 0.6F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("apple"), 2, 0.6F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("suspicious_stew"), 1, 0.0F, 45, 200, 0.3F);
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
@@ -70,10 +71,6 @@ public class DrinkableItemsProvider implements DataProvider {
 
     private static Path getPath(Path output, ResourceLocation loc) {
         return output.resolve("data/" + loc.getNamespace() + "/environment/drinkable/" + loc.getPath() + ".json");
-    }
-
-    private static ResourceLocation mcLoc(String path) {
-        return new ResourceLocation("minecraft", path);
     }
 
 }

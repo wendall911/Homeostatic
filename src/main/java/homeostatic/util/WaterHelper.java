@@ -16,6 +16,7 @@ import homeostatic.common.item.DrinkableItem;
 import homeostatic.common.item.DrinkableItemManager;
 import homeostatic.common.water.WaterInfo;
 import homeostatic.common.Hydration;
+import homeostatic.data.integration.ModIntegration;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
 import homeostatic.network.WaterData;
@@ -94,15 +95,15 @@ public class WaterHelper {
     }
 
     public static void drinkCleanWaterItem(ServerPlayer sp, boolean update) {
-        ResourceLocation air = new ResourceLocation("minecraft", "air");
-        ResourceLocation water = new ResourceLocation(Homeostatic.MODID, "purified_water");
+        ResourceLocation air = ModIntegration.mcLoc("air");
+        ResourceLocation water = Homeostatic.loc("purified_water");
 
         drink(sp, air, water, update);
     }
 
     public static void drinkDirtyWaterItem(ServerPlayer sp, boolean update) {
-        ResourceLocation air = new ResourceLocation("minecraft", "air");
-        ResourceLocation water = new ResourceLocation("minecraft", "water");
+        ResourceLocation air = ModIntegration.mcLoc("air");
+        ResourceLocation water = ModIntegration.mcLoc("water");
 
         drink(sp, air, water, update);
     }

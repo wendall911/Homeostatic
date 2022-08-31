@@ -2,6 +2,7 @@ package homeostatic;
 
 import java.util.Random;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 
@@ -23,6 +24,10 @@ public class Homeostatic {
     public Homeostatic() {
         PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
         PROXY.start();
+    }
+
+    public static ResourceLocation loc(String path) {
+        return new ResourceLocation(MODID, path);
     }
 
 }

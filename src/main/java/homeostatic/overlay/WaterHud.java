@@ -24,7 +24,7 @@ import homeostatic.Homeostatic;
 public class WaterHud extends GuiComponent {
 
     protected static int tickCount = 0;
-    public final static ResourceLocation WATER_BAR = new ResourceLocation(Homeostatic.MODID, "textures/gui/icons.png");
+    public final static ResourceLocation WATER_BAR = Homeostatic.loc("textures/gui/icons.png");
     protected final static int BAR_WIDTH = 9;
     protected final static int BAR_HEIGHT = 9;
 

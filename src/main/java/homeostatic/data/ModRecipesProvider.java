@@ -70,15 +70,15 @@ public class ModRecipesProvider extends RecipeProvider {
 
         AdvancedCookingRecipeBuilder.smelting(StrictNBTIngredient.of(waterFilledLeatherFlask), StrictNBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
                 .unlockedBy("has_leather_flask", has(leatherFlask))
-                .save(consumer, new ResourceLocation(Homeostatic.MODID, "furnace_purified_leather_flask"));
+                .save(consumer, Homeostatic.loc("furnace_purified_leather_flask"));
 
         AdvancedCookingRecipeBuilder.campfireCooking(StrictNBTIngredient.of(waterFilledLeatherFlask), StrictNBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
                 .unlockedBy("has_leather_flask", has(leatherFlask))
-                .save(consumer, new ResourceLocation(Homeostatic.MODID, "campfire_purified_leather_flask"));
+                .save(consumer, Homeostatic.loc("campfire_purified_leather_flask"));
 
         AdvancedCookingRecipeBuilder.smoking(StrictNBTIngredient.of(waterFilledLeatherFlask), StrictNBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
                 .unlockedBy("has_leather_flask", has(leatherFlask))
-                .save(consumer, new ResourceLocation(Homeostatic.MODID, "smoking_purified_leather_flask"));
+                .save(consumer, Homeostatic.loc("smoking_purified_leather_flask"));
     }
 
 }

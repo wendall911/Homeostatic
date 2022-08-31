@@ -33,6 +33,6 @@ public final class TagManager {
     }
 
     public static ResourceLocation identifier(String path) {
-        return new ResourceLocation(Homeostatic.MODID, path);
+        return Homeostatic.loc(path);
     }
 }

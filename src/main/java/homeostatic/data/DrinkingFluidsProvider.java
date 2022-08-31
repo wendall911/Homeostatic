@@ -13,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import homeostatic.Homeostatic;
 import homeostatic.common.fluid.DrinkingFluid;
 import homeostatic.common.fluid.DrinkingFluidManager;
+import homeostatic.data.integration.ModIntegration;
 
 public class DrinkingFluidsProvider implements DataProvider {
 
@@ -26,8 +27,8 @@ public class DrinkingFluidsProvider implements DataProvider {
     }
 
     protected void addDrinkingFluids() {
-        add(new ResourceLocation("minecraft", "water"), 1, 0.0F, 45, 200, 0.2F);
-        add(new ResourceLocation(Homeostatic.MODID, "purified_water"), 3, 0.7F,  0, 0, 0.0F);
+        add(ModIntegration.mcLoc("water"), 1, 0.0F, 45, 200, 0.2F);
+        add(Homeostatic.loc("purified_water"), 3, 0.7F,  0, 0, 0.0F);
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
