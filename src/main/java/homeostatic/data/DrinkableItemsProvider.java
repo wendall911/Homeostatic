@@ -257,6 +257,7 @@ public class DrinkableItemsProvider implements DataProvider {
         addSoup(ModIntegration.fdLoc("vegetable_soup"));
         addSoup(ModIntegration.fdLoc("pumpkin_soup"));
         addSoup(ModIntegration.fdLoc("chicken_soup"));
+        addSoup(ModIntegration.fdLoc("beef_stew"));
 
         // Dishes
         addMeal(ModIntegration.fdLoc("cabbage_rolls"));
