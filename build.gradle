@@ -123,6 +123,8 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:farmers_delight-398521:3834150")
     //runtimeOnly fg.deobf("curse.maven:xerca-341575:3937763")
     //runtimeOnly fg.deobf("curse.maven:morecraft-59648:3831598")
+    //runtimeOnly fg.deobf("curse.maven:sophisticated_core-618298:3960016")
+    //runtimeOnly fg.deobf("curse.maven:sophisticated_backpacks-422301:3960033")
 }
 
 jar {
@@ -219,6 +221,7 @@ curseforge {
                     optionalLibrary 'farmers-delight'
                     optionalLibrary 'xercamod'
                     optionalLibrary 'kitteh6660s-morecraft'
+                    optionalLibrary 'sophisticated-backpacks'
                 }
             }
         }
