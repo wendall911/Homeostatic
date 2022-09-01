@@ -443,6 +443,28 @@ public class DrinkableItemsProvider implements DataProvider {
 
         // Special
         add(ModIntegration.xercaLoc("item_honeyberry_yoghurt"), 8, 2.6F,  0, 0, 0.0F);
+
+        // Morecraft
+        // Stew and Soups
+        addSoup(ModIntegration.morecraftLoc("dragon_stew"));
+        addSoup(ModIntegration.morecraftLoc("beef_stew"));
+        addSoup(ModIntegration.morecraftLoc("pork_stew"));
+        addSoup(ModIntegration.morecraftLoc("mutton_stew"));
+        addSoup(ModIntegration.morecraftLoc("chevon_stew"));
+        addSoup(ModIntegration.morecraftLoc("chicken_stew"));
+        addSoup(ModIntegration.morecraftLoc("fish_stew"));
+        addSoup(ModIntegration.morecraftLoc("spider_stew"));
+
+        // Nether
+        add(ModIntegration.morecraftLoc("nether_apple"), 1, 0.0F, 45, 200, 0.2F);
+
+        // Cake
+        addCake(ModIntegration.morecraftLoc("cake_slice"));
+
+        // Pie
+        addPie(ModIntegration.morecraftLoc("sweetberry_pie"));
+        addPie(ModIntegration.morecraftLoc("nether_apple_pie"));
+        addPie(ModIntegration.morecraftLoc("apple_pie"));
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
