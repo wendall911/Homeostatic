@@ -477,7 +477,6 @@ public class DrinkableItemsProvider implements DataProvider {
         addFruit(ModIntegration.ecoLoc("cooked_prickly_pear"));
         addFruit(ModIntegration.ecoLoc("prickly_pear"));
         addSoup(ModIntegration.ecoLoc("tropical_stew"));
-        addFruit(ModIntegration.ecoLoc("coconut_slice"));
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
