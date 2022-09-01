@@ -274,6 +274,179 @@ public class DrinkableItemsProvider implements DataProvider {
         add(ModIntegration.fdLoc("fruit_salad"), 12, 1.8F,  0, 0, 0.0F);
         add(ModIntegration.fdLoc("stuffed_pumpkin"), 8, 0.6F,  0, 0, 0.0F);
         add(ModIntegration.fdLoc("stuffed_potato"), 8, 0.9F,  0, 0, 0.0F);
+
+        // Xerca
+        // Drinks
+        addDrink(ModIntegration.xercaLoc("item_glass_of_milk"));
+        addDrink(ModIntegration.xercaLoc("soda"));
+        addDrink(ModIntegration.xercaLoc("item_ice_tea"));
+        addDrink(ModIntegration.xercaLoc("item_tomato_juice"));
+        addDrink(ModIntegration.xercaLoc("item_carrot_juice"));
+        addDrink(ModIntegration.xercaLoc("item_wheat_juice"));
+        addDrink(ModIntegration.xercaLoc("sweet_berry_juice"));
+        addDrink(ModIntegration.xercaLoc("item_apple_juice"));
+        addDrink(ModIntegration.xercaLoc("item_melon_juice"));
+        addDrink(ModIntegration.xercaLoc("item_pumpkin_juice"));
+        addDrink(ModIntegration.xercaLoc("cola"));
+        addDrink(ModIntegration.xercaLoc("sake"));
+        addDrink(ModIntegration.xercaLoc("item_full_teacup_0"));
+        addDrink(ModIntegration.xercaLoc("item_full_teacup_6"));
+        addDrink(ModIntegration.xercaLoc("item_full_teacup_5"));
+        addDrink(ModIntegration.xercaLoc("item_full_teacup_4"));
+        addDrink(ModIntegration.xercaLoc("item_full_teacup_3"));
+        addDrink(ModIntegration.xercaLoc("item_full_teacup_2"));
+        addDrink(ModIntegration.xercaLoc("item_full_teacup_1"));
+
+        // Dirty Water
+        add(ModIntegration.xercaLoc("item_glass_of_water"), 1, 0.0F, 45, 200, 0.2F);
+
+        // Meal
+        addMeal(ModIntegration.xercaLoc("item_shish_kebab"));
+        addMeal(ModIntegration.xercaLoc("raw_shish_kebab"));
+        addMeal(ModIntegration.xercaLoc("item_chubby_doner"));
+
+        // Pizza
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_meat_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_chicken"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_meat_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_chicken_chicken"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_fish_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_chicken_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_fish_meat"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_fish_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_fish_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_meat_meat"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_fish_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_meat_meat_meat"));
+        addVeggie(ModIntegration.xercaLoc("pizza"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_mushroom_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_meat_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_meat_meat"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_fish_fish"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_mushroom_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_meat_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_meat_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_mushroom_mushroom_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_pepperoni_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_meat_meat_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_mushroom_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_meat_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_mushroom_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_fish_meat"));
+        addVeggie(ModIntegration.xercaLoc("pizza_meat_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_meat"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_fish_meat"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_fish_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("item_alexander"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_meat_mushroom_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_meat_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_mushroom_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_meat_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_meat_meat"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_meat_meat"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_chicken"));
+        addVeggie(ModIntegration.xercaLoc("pizza_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_mushroom_mushroom_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_mushroom_mushroom_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_chicken_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_mushroom_mushroom_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_fish_fish"));
+        addVeggie(ModIntegration.xercaLoc("pizza_meat_meat_meat"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_mushroom_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_fish"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_meat"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_mushroom_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_chicken_fish"));
+        addVeggie(ModIntegration.xercaLoc("pizza_meat_meat_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_mushroom_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_mushroom_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_meat"));
+        addVeggie(ModIntegration.xercaLoc("pizza_pepperoni_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_fish"));
+        addVeggie(ModIntegration.xercaLoc("pizza_meat_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_fish_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_fish_meat"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_meat_meat"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_chicken_meat"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_meat_mushroom_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_fish_fish"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_fish"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_meat_meat"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_meat_meat_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_fish_fish"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_mushroom_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_meat"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_meat_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_meat_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_meat_meat_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_meat_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_chicken_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_chicken_fish"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_mushroom_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_meat_mushroom_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_meat"));
+        addVeggie(ModIntegration.xercaLoc("pizza_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_fish_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_fish_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_fish_mushroom"));
+        addVeggie(ModIntegration.xercaLoc("pizza_mushroom_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_fish"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_chicken_chicken"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_fish_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_mushroom_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_mushroom_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_chicken_meat"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_pepperoni_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_chicken_meat_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("raw_pizza_chicken_chicken_pepperoni"));
+        addVeggie(ModIntegration.xercaLoc("pizza_meat"));
+        addVeggie(ModIntegration.xercaLoc("pizza_meat_mushroom_pepperoni"));
+
+        // Cake
+        addCake(ModIntegration.xercaLoc("item_apple_cupcake"));
+        addCake(ModIntegration.xercaLoc("sweet_berry_cupcake_fancy"));
+        addCake(ModIntegration.xercaLoc("item_fancy_apple_cupcake"));
+        addCake(ModIntegration.xercaLoc("glowberry_cupcake"));
+        addCake(ModIntegration.xercaLoc("item_cocoa_cupcake"));
+        addCake(ModIntegration.xercaLoc("item_golden_cupcake"));
+        addCake(ModIntegration.xercaLoc("item_melon_cupcake"));
+        addCake(ModIntegration.xercaLoc("item_honey_cupcake"));
+        addCake(ModIntegration.xercaLoc("sweet_berry_cupcake"));
+        addCake(ModIntegration.xercaLoc("item_carrot_cupcake"));
+        addCake(ModIntegration.xercaLoc("item_pumpkin_cupcake"));
+
+        // Veggies
+        addVeggie(ModIntegration.xercaLoc("item_tomato_slices"));
+        addVeggie(ModIntegration.xercaLoc("item_potato_slices"));
+        addVeggie(ModIntegration.xercaLoc("item_potato_fries"));
+
+        // Pudding
+        add(ModIntegration.xercaLoc("rice_pudding"), 4, 0.6F,  0, 0, 0.0F);
+        add(ModIntegration.xercaLoc("baked_rice_pudding"), 3, 0.2F,  0, 0, 0.0F);
+
+        // Yoghurt
+        add(ModIntegration.xercaLoc("item_yoghurt"), 4, 0.6F,  0, 0, 0.0F);
+
+        // Special
+        add(ModIntegration.xercaLoc("item_honeyberry_yoghurt"), 8, 2.6F,  0, 0, 0.0F);
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
