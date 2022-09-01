@@ -120,6 +120,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_version}")
     //runtimeOnly fg.deobf("curse.maven:croptopia-415438:3947784")
     //runtimeOnly fg.deobf("curse.maven:farmers_delight-398521:3916069")
+    //runtimeOnly fg.deobf("curse.maven:xerca-341575:3947222")
 }
 
 jar {
@@ -218,6 +219,7 @@ curseforge {
                     optionalLibrary 'oh-the-biomes-youll-go'
                     optionalLibrary 'croptopia'
                     optionalLibrary 'farmers-delight'
+                    optionalLibrary 'xercamod'
                 }
             }
         }
