@@ -472,6 +472,12 @@ public class DrinkableItemsProvider implements DataProvider {
         addPie(ModIntegration.morecraftLoc("sweetberry_pie"));
         addPie(ModIntegration.morecraftLoc("nether_apple_pie"));
         addPie(ModIntegration.morecraftLoc("apple_pie"));
+
+        // Ecologics
+        addFruit(ModIntegration.ecoLoc("cooked_prickly_pear"));
+        addFruit(ModIntegration.ecoLoc("prickly_pear"));
+        addSoup(ModIntegration.ecoLoc("tropical_stew"));
+        addFruit(ModIntegration.ecoLoc("coconut_slice"));
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
