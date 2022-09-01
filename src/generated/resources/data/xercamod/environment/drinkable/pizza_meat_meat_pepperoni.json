@@ -1,0 +1,8 @@
+{
+  "type": "xercamod:pizza_meat_meat_pepperoni",
+  "amount": 1,
+  "effect_chance": 0.0,
+  "effect_duration": 0,
+  "effect_potency": 0,
+  "saturation": 0.1
+}
