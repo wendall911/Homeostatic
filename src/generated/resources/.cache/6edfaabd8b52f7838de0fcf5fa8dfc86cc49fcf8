@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-01T09:54:13.72552811	Homeostatic - Drinkable Items
+// 1.19.2	2022-09-01T12:22:04.29985159	Homeostatic - Drinkable Items
 8cee0d705f68f0307523f5570bca57b6692a2499 data/byg/environment/drinkable/aloe_vera_juice.json
 06c691acd849e92531ecbe9f233de4ca7866f268 data/byg/environment/drinkable/baobab_fruit.json
 69d38e286d83fc456431182b2c2ec4ab95baf48f data/byg/environment/drinkable/blueberries.json
@@ -199,6 +199,19 @@ d8ffb2aae55c0bf8f6618902264674c6f55ba46d data/minecraft/environment/drinkable/ho
 ef4683ed99114e75ff5b64523eff680fdc164daf data/minecraft/environment/drinkable/rabbit_stew.json
 fae331ba0d245caa73358cc697e198df3567ebfa data/minecraft/environment/drinkable/suspicious_stew.json
 db2d8e95f4a05fd1a5893b1033232e4d1547a55f data/minecraft/environment/drinkable/sweet_berries.json
+39b412c830ed15fda100100d077700756189f9e7 data/morecraft/environment/drinkable/apple_pie.json
+876fe2d39b2e5006bbb886f3ab4a07083bfd2bb4 data/morecraft/environment/drinkable/beef_stew.json
+c302e5b33afe77423b224da9f020f0f8d5b28a7f data/morecraft/environment/drinkable/cake_slice.json
+509b7ad2bacb22235e41c9f66b7b584ca6e7e1de data/morecraft/environment/drinkable/chevon_stew.json
+a5bfe14afec0d4a39e8411ed8ec81b6d695784e5 data/morecraft/environment/drinkable/chicken_stew.json
+76a1a0c27c8c6ebc260351a6f0e2019faff1e835 data/morecraft/environment/drinkable/dragon_stew.json
+c69d8b0d127921a3c54d69415b9b11d86d914a6a data/morecraft/environment/drinkable/fish_stew.json
+9b1cfd68d55ac0c4d24643f19297b25d5761ae66 data/morecraft/environment/drinkable/mutton_stew.json
+26e7e07b04fe0189a586517a3b3521b5b92df88d data/morecraft/environment/drinkable/nether_apple.json
+7da6d47c22a886dbd3708d99d6073df50bd29dfd data/morecraft/environment/drinkable/nether_apple_pie.json
+83ddb3899f91d05af50ba94b90a8f65447cb539e data/morecraft/environment/drinkable/pork_stew.json
+532cfcbd0aebf5662aefd2dc203d2cb3dafe5d12 data/morecraft/environment/drinkable/spider_stew.json
+6626893527a5d54170e5fbde50693253c31bbae7 data/morecraft/environment/drinkable/sweetberry_pie.json
 12a16e762ccf511aed5ab35abeb9d9144fd53c61 data/xercamod/environment/drinkable/baked_rice_pudding.json
 1b4ff37c48eec9c37fb80380aac1a86267c92794 data/xercamod/environment/drinkable/cola.json
 e0588fd5931d6ab6a595c4959805e4123a55c134 data/xercamod/environment/drinkable/glowberry_cupcake.json
