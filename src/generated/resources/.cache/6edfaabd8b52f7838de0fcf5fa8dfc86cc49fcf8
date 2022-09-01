@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-01T12:22:04.29985159	Homeostatic - Drinkable Items
+// 1.19.2	2022-09-01T12:39:58.950839026	Homeostatic - Drinkable Items
 8cee0d705f68f0307523f5570bca57b6692a2499 data/byg/environment/drinkable/aloe_vera_juice.json
 06c691acd849e92531ecbe9f233de4ca7866f268 data/byg/environment/drinkable/baobab_fruit.json
 69d38e286d83fc456431182b2c2ec4ab95baf48f data/byg/environment/drinkable/blueberries.json
@@ -183,13 +183,16 @@ d14e6e33c0127f52b9c4791be7606db453eeaebc data/farmersdelight/environment/drinkab
 1edbe4a7ccfb53f7028245b0b44426306735b085 data/farmersdelight/environment/drinkable/wild_potatoes.json
 d4eb680932f5e3a389d620dbfc1532f9e50a0776 data/farmersdelight/environment/drinkable/wild_tomatoes.json
 20e2e34483010348879afa4193428f9a0ca9e176 data/minecraft/environment/drinkable/apple.json
+6437e808d9849b0f13d6ee910f70402d86eeae60 data/minecraft/environment/drinkable/baked_potato.json
 fad2db1f9aaa41128111609f91010273cf0c5049 data/minecraft/environment/drinkable/beetroot.json
 6651eb057654ddbe28f53454950ac337628373cc data/minecraft/environment/drinkable/beetroot_soup.json
 4d187d1dc6b8985fac756f6669815d8e4b4b97d3 data/minecraft/environment/drinkable/cake.json
 b4969eff571a5e343933e2d9b0841b2c5e5296b6 data/minecraft/environment/drinkable/carrot.json
 47f97338993b5f49710ca87a5269f32522eb2572 data/minecraft/environment/drinkable/enchanted_golden_apple.json
+cfe5bda9419716460577329f5bee236a9ea925ea data/minecraft/environment/drinkable/glistering_melon_slice.json
 25fc5a2a42a8c9ffcd86b37984b594468c055c31 data/minecraft/environment/drinkable/glow_berries.json
 33d8fe93df2727ddc0e7c9c07fc70600a727f04c data/minecraft/environment/drinkable/golden_apple.json
+56fe826e364eaed38e191dadfa8b64815c33bf6a data/minecraft/environment/drinkable/golden_carrot.json
 d8ffb2aae55c0bf8f6618902264674c6f55ba46d data/minecraft/environment/drinkable/honey_bottle.json
 8759066fcf940437276cf9c4e56043f126d79d34 data/minecraft/environment/drinkable/melon_slice.json
 9a80a935dec0b206c6b0ae35331ebfe4658dc92e data/minecraft/environment/drinkable/milk_bucket.json
