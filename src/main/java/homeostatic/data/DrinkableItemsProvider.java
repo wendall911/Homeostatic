@@ -48,6 +48,7 @@ public class DrinkableItemsProvider implements DataProvider {
         addVeggie(ModIntegration.mcLoc("beetroot"));
         addVeggie(ModIntegration.mcLoc("carrot"));
         addVeggie(ModIntegration.mcLoc("potato"));
+        addCake(ModIntegration.mcLoc("cake"));
 
         // Oh The Biomes You'll Go
         add(ModIntegration.bygLoc("holly_berries"), 1, 0.0F, 45, 200, 0.5F);
@@ -321,6 +322,10 @@ public class DrinkableItemsProvider implements DataProvider {
 
     protected void addMeal(ResourceLocation loc) {
         add(loc, 2, 0.6F,  0, 0, 0.0F);
+    }
+
+    protected void addCake(ResourceLocation loc) {
+        add(loc, 2, 0.2F,  0, 0, 0.0F);
     }
 
     @Override
