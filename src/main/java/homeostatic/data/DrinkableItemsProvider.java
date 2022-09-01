@@ -218,6 +218,56 @@ public class DrinkableItemsProvider implements DataProvider {
         addMeal(ModIntegration.croptopiaLoc("salsa"));
         addMeal(ModIntegration.croptopiaLoc("trifle"));
         addMeal(ModIntegration.croptopiaLoc("tofu_and_dumplings"));
+
+        // Farmer's Delight
+        // Drinks
+        addDrink(ModIntegration.fdLoc("hot_cocoa"));
+        addDrink(ModIntegration.fdLoc("melon_juice"));
+        addDrink(ModIntegration.fdLoc("milk_bottle"));
+        addDrink(ModIntegration.fdLoc("apple_cider"));
+
+        // Veggies
+        addVeggie(ModIntegration.fdLoc("mixed_salad"));
+        addVeggie(ModIntegration.fdLoc("cabbage"));
+        addVeggie(ModIntegration.fdLoc("onion"));
+        addVeggie(ModIntegration.fdLoc("wild_beetroots"));
+        addVeggie(ModIntegration.fdLoc("tomato_sauce"));
+        addVeggie(ModIntegration.fdLoc("wild_cabbages"));
+        addVeggie(ModIntegration.fdLoc("wild_potatoes"));
+        addVeggie(ModIntegration.fdLoc("wild_onions"));
+        addVeggie(ModIntegration.fdLoc("cabbage_leaf"));
+        addVeggie(ModIntegration.fdLoc("wild_carrots"));
+        addVeggie(ModIntegration.fdLoc("pumpkin_slice"));
+        addVeggie(ModIntegration.fdLoc("wild_tomatoes"));
+        addVeggie(ModIntegration.fdLoc("tomato"));
+
+        // Pie
+        addPie(ModIntegration.fdLoc("apple_pie_slice"));
+        addPie(ModIntegration.fdLoc("sweet_berry_cheesecake_slice"));
+        addPie(ModIntegration.fdLoc("chocolate_pie_slice"));
+        addPie(ModIntegration.fdLoc("cake_slice"));
+
+        // Icecream
+        addIcecream(ModIntegration.fdLoc("melon_popsicle"));
+
+        // Soups and Stews
+        addSoup(ModIntegration.fdLoc("noodle_soup"));
+        addSoup(ModIntegration.fdLoc("baked_cod_stew"));
+        addSoup(ModIntegration.fdLoc("fish_stew"));
+        addSoup(ModIntegration.fdLoc("vegetable_soup"));
+        addSoup(ModIntegration.fdLoc("pumpkin_soup"));
+        addSoup(ModIntegration.fdLoc("chicken_soup"));
+
+        // Dishes
+        addMeal(ModIntegration.fdLoc("cabbage_rolls"));
+        addMeal(ModIntegration.fdLoc("dumplings"));
+        addMeal(ModIntegration.fdLoc("shepherds_pie"));
+        addMeal(ModIntegration.fdLoc("steak_and_potatoes"));
+
+        // Fruit Salad
+        add(ModIntegration.fdLoc("fruit_salad"), 12, 1.8F,  0, 0, 0.0F);
+        add(ModIntegration.fdLoc("stuffed_pumpkin"), 8, 0.6F,  0, 0, 0.0F);
+        add(ModIntegration.fdLoc("stuffed_potato"), 8, 0.9F,  0, 0, 0.0F);
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
