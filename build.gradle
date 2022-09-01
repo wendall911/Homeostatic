@@ -121,6 +121,7 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:croptopia-415438:3947784")
     //runtimeOnly fg.deobf("curse.maven:farmers_delight-398521:3916069")
     //runtimeOnly fg.deobf("curse.maven:xerca-341575:3947222")
+    //runtimeOnly fg.deobf("curse.maven:morecraft-59648:3874944")
 }
 
 jar {
@@ -220,6 +221,7 @@ curseforge {
                     optionalLibrary 'croptopia'
                     optionalLibrary 'farmers-delight'
                     optionalLibrary 'xercamod'
+                    optionalLibrary 'kitteh6660s-morecraft'
                 }
             }
         }
