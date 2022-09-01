@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-01T12:39:58.950839026	Homeostatic - Drinkable Items
+// 1.19.2	2022-09-01T13:06:38.590858745	Homeostatic - Drinkable Items
 8cee0d705f68f0307523f5570bca57b6692a2499 data/byg/environment/drinkable/aloe_vera_juice.json
 06c691acd849e92531ecbe9f233de4ca7866f268 data/byg/environment/drinkable/baobab_fruit.json
 69d38e286d83fc456431182b2c2ec4ab95baf48f data/byg/environment/drinkable/blueberries.json
@@ -146,6 +146,9 @@ ea4466118a1f257e2814ab43bf29ed216266ac23 data/croptopia/environment/drinkable/to
 edb6ed0df46334b3a2ba5d09856439b091c0611f data/croptopia/environment/drinkable/yam_jam.json
 300ed37c45d643faec4e3543e7de925204e08c41 data/croptopia/environment/drinkable/yoghurt.json
 fb8b2af7b95e4dc4ecb185b5a2566a37a32b403e data/croptopia/environment/drinkable/zucchini.json
+6cb44030db23685c3e82372dcb1a9811c39d49ca data/ecologics/environment/drinkable/cooked_prickly_pear.json
+634bace92394ea4d98e698151d0a5206acc7ad41 data/ecologics/environment/drinkable/prickly_pear.json
+7aff89b911918888b92724a3e7d6f7cfb8dc9a8c data/ecologics/environment/drinkable/tropical_stew.json
 0fd4a3f9a647683a1b05a661a22c92a66e2ecd48 data/farmersdelight/environment/drinkable/apple_cider.json
 fd68766153e3d414907dd3c0210d019d244b3b98 data/farmersdelight/environment/drinkable/apple_pie_slice.json
 c2d4cce86f8cc19e01b1492724345f4cb1d4a1e4 data/farmersdelight/environment/drinkable/baked_cod_stew.json
