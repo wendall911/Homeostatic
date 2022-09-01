@@ -121,6 +121,7 @@ dependencies {
     //implementation fg.deobf("curse.maven:botania-225643:3755269")
     //runtimeOnly fg.deobf("curse.maven:croptopia-415438:3947782")
     //runtimeOnly fg.deobf("curse.maven:farmers_delight-398521:3834150")
+    //runtimeOnly fg.deobf("curse.maven:xerca-341575:3937763")
 }
 
 jar {
@@ -215,6 +216,7 @@ curseforge {
                     optionalLibrary 'oh-the-biomes-youll-go'
                     optionalLibrary 'croptopia'
                     optionalLibrary 'farmers-delight'
+                    optionalLibrary 'xercamod'
                 }
             }
         }
