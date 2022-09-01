@@ -45,6 +45,9 @@ public class DrinkableItemsProvider implements DataProvider {
         addVeggie(ModIntegration.mcLoc("carrot"));
         addVeggie(ModIntegration.mcLoc("potato"));
         addCake(ModIntegration.mcLoc("cake"));
+        addVeggie(ModIntegration.mcLoc("baked_potato"));
+        addVeggie(ModIntegration.mcLoc("golden_carrot"));
+        addFruit(ModIntegration.mcLoc("glistering_melon_slice"));
 
         // Oh The Biomes You'll Go
         add(ModIntegration.bygLoc("holly_berries"), 1, 0.0F, 45, 200, 0.5F);
