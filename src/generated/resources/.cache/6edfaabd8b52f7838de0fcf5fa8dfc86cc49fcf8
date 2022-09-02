@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-01T13:06:38.590858745	Homeostatic - Drinkable Items
+// 1.19.2	2022-09-02T07:13:15.603882213	Homeostatic - Drinkable Items
 8cee0d705f68f0307523f5570bca57b6692a2499 data/byg/environment/drinkable/aloe_vera_juice.json
 06c691acd849e92531ecbe9f233de4ca7866f268 data/byg/environment/drinkable/baobab_fruit.json
 69d38e286d83fc456431182b2c2ec4ab95baf48f data/byg/environment/drinkable/blueberries.json
@@ -219,6 +219,7 @@ c69d8b0d127921a3c54d69415b9b11d86d914a6a data/morecraft/environment/drinkable/fi
 532cfcbd0aebf5662aefd2dc203d2cb3dafe5d12 data/morecraft/environment/drinkable/spider_stew.json
 6626893527a5d54170e5fbde50693253c31bbae7 data/morecraft/environment/drinkable/sweetberry_pie.json
 12a16e762ccf511aed5ab35abeb9d9144fd53c61 data/xercamod/environment/drinkable/baked_rice_pudding.json
+678d7f4af4dff25974d41f93979a3493e55bea43 data/xercamod/environment/drinkable/carbonated_water.json
 1b4ff37c48eec9c37fb80380aac1a86267c92794 data/xercamod/environment/drinkable/cola.json
 e0588fd5931d6ab6a595c4959805e4123a55c134 data/xercamod/environment/drinkable/glowberry_cupcake.json
 ae19b8a9b18c0ac56c9dc6816f80f8a38f9c4666 data/xercamod/environment/drinkable/item_alexander.json
