@@ -295,6 +295,7 @@ public class DrinkableItemsProvider implements DataProvider {
         addDrink(ModIntegration.xercaLoc("item_full_teacup_3"));
         addDrink(ModIntegration.xercaLoc("item_full_teacup_2"));
         addDrink(ModIntegration.xercaLoc("item_full_teacup_1"));
+        addDrink(ModIntegration.xercaLoc("carbonated_water"));
 
         // Dirty Water
         add(ModIntegration.xercaLoc("item_glass_of_water"), 1, 0.0F, 45, 200, 0.2F);
