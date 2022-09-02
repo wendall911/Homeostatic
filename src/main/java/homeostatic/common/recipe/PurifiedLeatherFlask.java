@@ -40,6 +40,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
     public ItemStack assemble(CraftingContainer pContainer) {
         Pair<ItemStack, ItemStack> check = checkContainer(pContainer);
         ItemStack flaskCopy = check.getFirst().copy();
+        @SuppressWarnings("removal")
         IFluidHandlerItem fluidHandlerItem = flaskCopy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
         int amount = fluidHandlerItem.getFluidInTank(0).getAmount();
 
@@ -73,6 +74,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
                 filter = ingredient;
             }
             else if (ingredient.getItem() instanceof LeatherFlask) {
+                @SuppressWarnings("removal")
                 IFluidHandlerItem fluidHandlerItem = ingredient.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
 
                 if (fluidHandlerItem.getFluidInTank(0).getAmount() > 0) {

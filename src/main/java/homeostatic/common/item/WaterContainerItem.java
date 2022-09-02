@@ -50,6 +50,7 @@ public class WaterContainerItem extends ItemFluidContainer {
         ItemStack stack = player.getItemInHand(hand);
         BlockHitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
         BlockPos pos = hitResult.getBlockPos();
+        @SuppressWarnings("removal")
         IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
 
         if (fluidHandlerItem.getFluidInTank(0).isEmpty() || fluidHandlerItem.getFluidInTank(0).getFluid().isSame(Fluids.WATER)) {
@@ -67,6 +68,7 @@ public class WaterContainerItem extends ItemFluidContainer {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+        @SuppressWarnings("removal")
         IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
 
         fluidHandlerItem.drain(250, IFluidHandler.FluidAction.EXECUTE);
@@ -119,6 +121,7 @@ public class WaterContainerItem extends ItemFluidContainer {
 
     public ItemStack getFilledItem(ItemStack stack, Player player) {
         ItemStack copy = stack.copy();
+        @SuppressWarnings("removal")
         IFluidHandlerItem fluidHandlerItem = copy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
 
         player.playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
@@ -132,6 +135,7 @@ public class WaterContainerItem extends ItemFluidContainer {
 
     public void updateDamage(ItemStack stack) {
         if (stack.isDamageableItem()) {
+            @SuppressWarnings("removal")
             IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
 
             stack.setDamageValue(Math.min(stack.getMaxDamage(), stack.getMaxDamage() - fluidHandlerItem.getFluidInTank(0).getAmount()));
@@ -139,6 +143,7 @@ public class WaterContainerItem extends ItemFluidContainer {
     }
 
     public boolean canDrink(ItemStack stack, Player player) {
+        @SuppressWarnings("removal")
         IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
 
         canDrink = !fluidHandlerItem.getFluidInTank(0).isEmpty() && fluidHandlerItem.getFluidInTank(0).getAmount() >= 250;

@@ -191,6 +191,7 @@ public class PlayerEventHandler {
                 }
             }
             else {
+                @SuppressWarnings("removal")
                 IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
                 ResourceLocation loc = Registry.ITEM.getKey(stack.getItem());
                 ResourceLocation fluidLoc = null;
