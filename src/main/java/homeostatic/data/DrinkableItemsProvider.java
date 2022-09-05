@@ -478,6 +478,11 @@ public class DrinkableItemsProvider implements DataProvider {
         addFruit(ModIntegration.ecoLoc("cooked_prickly_pear"));
         addFruit(ModIntegration.ecoLoc("prickly_pear"));
         addSoup(ModIntegration.ecoLoc("tropical_stew"));
+
+        // Ars Nouveau
+        addBerries(ModIntegration.arsLoc("source_berry"));
+        addBerries(ModIntegration.arsLoc("source_berry_roll"));
+        add(ModIntegration.arsLoc("source_berry_pie"), 6, 0.9F,  0, 0, 0.0F);
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {

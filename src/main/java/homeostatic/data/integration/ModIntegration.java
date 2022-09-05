@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ModIntegration {
 
+    public static final String ARS_MODID = "ars_nouveau";
     public static final String BYG_MODID = "byg";
     public static final String CROPTOPIA_MODID = "croptopia";
     public static final String ECO_MODID = "ecologics";
@@ -11,6 +12,10 @@ public class ModIntegration {
     public static final String MC_MODID = "minecraft";
     public static final String MORECRAFT_MODID = "morecraft";
     public static final String XERCA_MODID = "xercamod";
+
+    public static ResourceLocation arsLoc(String path) {
+        return new ResourceLocation(ARS_MODID, path);
+    }
 
     public static ResourceLocation bygLoc(String path) {
         return new ResourceLocation(BYG_MODID, path);
