@@ -11,6 +11,7 @@ public class ModIntegration {
     public static final String FD_MODID = "farmersdelight";
     public static final String MC_MODID = "minecraft";
     public static final String MORECRAFT_MODID = "morecraft";
+    public static final String SPROUT_MODID = "sprout";
     public static final String XERCA_MODID = "xercamod";
 
     public static ResourceLocation arsLoc(String path) {
@@ -35,6 +36,10 @@ public class ModIntegration {
 
     public static ResourceLocation mcLoc(String path) {
         return new ResourceLocation(MC_MODID, path);
+    }
+
+    public static ResourceLocation sproutLoc(String path) {
+        return new ResourceLocation(SPROUT_MODID, path);
     }
 
     public static ResourceLocation morecraftLoc(String path) {
