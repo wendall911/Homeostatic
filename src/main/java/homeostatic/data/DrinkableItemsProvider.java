@@ -490,6 +490,7 @@ public class DrinkableItemsProvider implements DataProvider {
         addPie(ModIntegration.sproutLoc("pbj"));
         addVeggie(ModIntegration.sproutLoc("peanut_butter_cookie"));
         addPie(ModIntegration.sproutLoc("glow_berry_pie"));
+        addPie(ModIntegration.sproutLoc("sweet_berry_pie"));
         addVeggie(ModIntegration.sproutLoc("water_sausage"));
         addPie(ModIntegration.sproutLoc("apple_pie"));
         addFruit(ModIntegration.sproutLoc("candy_apple"));
