@@ -479,6 +479,17 @@ public class DrinkableItemsProvider implements DataProvider {
         addBerries(ModIntegration.arsLoc("source_berry"));
         addBerries(ModIntegration.arsLoc("source_berry_roll"));
         add(ModIntegration.arsLoc("source_berry_pie"), 6, 0.9F,  0, 0, 0.0F);
+
+        // Sprout
+        addVeggie(ModIntegration.sproutLoc("peanut_butter"));
+        addJam(ModIntegration.sproutLoc("sweet_berry_jam"));
+        addPie(ModIntegration.sproutLoc("pbj"));
+        addVeggie(ModIntegration.sproutLoc("peanut_butter_cookie"));
+        addPie(ModIntegration.sproutLoc("glow_berry_pie"));
+        addVeggie(ModIntegration.sproutLoc("water_sausage"));
+        addPie(ModIntegration.sproutLoc("apple_pie"));
+        addFruit(ModIntegration.sproutLoc("candy_apple"));
+        add(ModIntegration.sproutLoc("golden_candy_apple"), 6, 1.2F,  0, 0, 0.0F);
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
