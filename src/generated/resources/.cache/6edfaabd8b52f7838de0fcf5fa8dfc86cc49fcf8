@@ -1,4 +1,7 @@
-// 1.19.2	2022-09-02T07:13:15.603882213	Homeostatic - Drinkable Items
+// 1.19.2	2022-09-05T09:48:21.926358122	Homeostatic - Drinkable Items
+dd31e2162505e7f74edc09619424947b86771a4b data/ars_nouveau/environment/drinkable/source_berry.json
+f39e9c3ba761a2e69111a35e7b18329de92c80b9 data/ars_nouveau/environment/drinkable/source_berry_pie.json
+0fd136bf3723eca9a1a53a333495ab3f6169df05 data/ars_nouveau/environment/drinkable/source_berry_roll.json
 8cee0d705f68f0307523f5570bca57b6692a2499 data/byg/environment/drinkable/aloe_vera_juice.json
 06c691acd849e92531ecbe9f233de4ca7866f268 data/byg/environment/drinkable/baobab_fruit.json
 69d38e286d83fc456431182b2c2ec4ab95baf48f data/byg/environment/drinkable/blueberries.json
@@ -218,6 +221,16 @@ c69d8b0d127921a3c54d69415b9b11d86d914a6a data/morecraft/environment/drinkable/fi
 83ddb3899f91d05af50ba94b90a8f65447cb539e data/morecraft/environment/drinkable/pork_stew.json
 532cfcbd0aebf5662aefd2dc203d2cb3dafe5d12 data/morecraft/environment/drinkable/spider_stew.json
 6626893527a5d54170e5fbde50693253c31bbae7 data/morecraft/environment/drinkable/sweetberry_pie.json
+6e4f1499811488fd37a59c202c5f7da27a3782a2 data/sprout/environment/drinkable/apple_pie.json
+30a9c76bce2183fc145fb20b711618899d43f239 data/sprout/environment/drinkable/candy_apple.json
+70a8b598d5ddd5bd0163447e9ca56f88d9953179 data/sprout/environment/drinkable/glow_berry_pie.json
+4be3dff494e4379153250e520046af6bb2ad51bd data/sprout/environment/drinkable/golden_candy_apple.json
+de29dd6de37f18291a1e42ae7b5de68db580e921 data/sprout/environment/drinkable/pbj.json
+ed0a19bac6823e0992cedb8c1d37752a22b2caf4 data/sprout/environment/drinkable/peanut_butter.json
+41099d2211b2cea6d4428faa833d5ba6d1de6f4b data/sprout/environment/drinkable/peanut_butter_cookie.json
+98f2437947c26c7debe0bf1e4a59fa8ac0796e24 data/sprout/environment/drinkable/sweet_berry_jam.json
+f2c6ac2676b4f9732aa04045bfc625d33a7dd588 data/sprout/environment/drinkable/sweet_berry_pie.json
+57f6e16bad52ae145853da2f1152206535edaa1a data/sprout/environment/drinkable/water_sausage.json
 12a16e762ccf511aed5ab35abeb9d9144fd53c61 data/xercamod/environment/drinkable/baked_rice_pudding.json
 678d7f4af4dff25974d41f93979a3493e55bea43 data/xercamod/environment/drinkable/carbonated_water.json
 1b4ff37c48eec9c37fb80380aac1a86267c92794 data/xercamod/environment/drinkable/cola.json
