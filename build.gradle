@@ -129,6 +129,9 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:sophisticated_core-618298:3960016")
     //runtimeOnly fg.deobf("curse.maven:sophisticated_backpacks-422301:3960033")
     //runtimeOnly fg.deobf("curse.maven:ecologics-570463:3939725")
+    //runtimeOnly fg.deobf("curse.maven:geckolib-388172:3950251")
+    //runtimeOnly fg.deobf("curse.maven:sprout-565856:3788680")
+    //runtimeOnly fg.deobf("curse.maven:arsnouveau-401955:3950802")
 }
 
 jar {
@@ -227,6 +230,8 @@ curseforge {
                     optionalLibrary 'kitteh6660s-morecraft'
                     optionalLibrary 'sophisticated-backpacks'
                     optionalLibrary 'ecologics'
+                    optionalLibrary 'ars-nouveau'
+                    optionalLibrary 'sprout'
                 }
             }
         }
