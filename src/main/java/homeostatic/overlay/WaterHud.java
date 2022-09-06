@@ -1,10 +1,12 @@
 package homeostatic.overlay;
 
+import javax.annotation.Nullable;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -21,7 +23,7 @@ import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.Homeostatic;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Homeostatic.MODID)
-public class WaterHud extends GuiComponent {
+public class WaterHud extends Overlay {
 
     protected static int tickCount = 0;
     public final static ResourceLocation WATER_BAR = Homeostatic.loc("textures/gui/icons.png");
@@ -30,7 +32,8 @@ public class WaterHud extends GuiComponent {
 
     public WaterHud() {}
 
-    public void render(PoseStack matrix, Minecraft mc, int scaledWidth, int scaledHeight) {
+    @Override
+    public void render(PoseStack matrix, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
 
         if (player == null) return;

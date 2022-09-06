@@ -14,12 +14,15 @@ import homeostatic.util.FontHelper;
 import homeostatic.util.TempHelper;
 import static homeostatic.util.TempHelper.TemperatureDirection;
 
-public class TemperatureInfo {
+public class TemperatureInfo extends Overlay {
 
     public TemperatureInfo() {}
 
-    public void renderText(PoseStack matrix, Minecraft mc, BlockPos pos, int scaledWidth, int scaledHeight) {
+    @Override
+    public void render(PoseStack matrix, Minecraft mc, BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
+
+        if (player == null) return;
 
         player.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
             TemperatureDirection skinTemperatureDirection = TempHelper.getSkinTemperatureDirection(

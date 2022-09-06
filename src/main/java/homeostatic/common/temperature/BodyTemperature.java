@@ -18,6 +18,7 @@ public class BodyTemperature {
     public static final float NORMAL = 1.634457832F;
     public static final float HIGH = 1.799397591F;
     public static final float WARNING_HIGH = 1.765963856F;
+    public static final float SCALDING_WARNING = 2.222891566F;
     public static final float SCALDING = 2.557228916F;
 
     private final EnvironmentData environmentData;
