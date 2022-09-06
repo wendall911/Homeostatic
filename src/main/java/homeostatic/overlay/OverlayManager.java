@@ -16,58 +16,53 @@ public class OverlayManager {
     public final WetnessOverlay wetnessOverlay = new WetnessOverlay();
     public final TemperatureOverlay temperatureOverlay = new TemperatureOverlay();
     public final TemperatureInfo temperatureInfo = new TemperatureInfo();
+    public final EnhancedVisualsOverlay enhancedVisualsOverlay = new EnhancedVisualsOverlay();
 
     private OverlayManager() {}
 
-    public void renderOverlay(PoseStack matrix) {
+    public void render(PoseStack matrix, Overlay overlay, boolean scaled) {
         Minecraft mc = Minecraft.getInstance();
         BlockPos pos = Objects.requireNonNull(mc.getCameraEntity()).blockPosition();
+        int scaledWidth;
+        int scaledHeight;
 
         if (mc.level != null && mc.level.isLoaded(pos)) {
-            float scale = (float) ConfigHandler.Client.scale();
-            int scaledWidth = (int) (mc.getWindow().getGuiScaledWidth() / scale);
-            int scaledHeight = (int) (mc.getWindow().getGuiScaledHeight() / scale);
+            if (scaled) {
+                float scale = (float) ConfigHandler.Client.scale();
+                scaledWidth = (int) (mc.getWindow().getGuiScaledWidth() / scale);
+                scaledHeight = (int) (mc.getWindow().getGuiScaledHeight() / scale);
 
-            matrix.pushPose();
-            matrix.scale(scale, scale, scale);
+                matrix.pushPose();
+                matrix.scale(scale, scale, scale);
+            }
+            else {
+                scaledWidth = mc.getWindow().getGuiScaledWidth();
+                scaledHeight = mc.getWindow().getGuiScaledHeight();
+                matrix.pushPose();
+            }
 
-            temperatureInfo.renderText(matrix, mc, pos, scaledWidth, scaledHeight);
+            overlay.render(matrix, mc, pos, scaledWidth, scaledHeight);
 
             matrix.popPose();
         }
+
+    }
+
+    public void renderOverlay(PoseStack matrix) {
+        render(matrix, temperatureInfo, true);
     }
 
     public void renderWaterOverlay(PoseStack matrix) {
-        Minecraft mc = Minecraft.getInstance();
-        BlockPos pos = Objects.requireNonNull(mc.getCameraEntity()).blockPosition();
-
-        if (mc.level != null && mc.level.isLoaded(pos)) {
-            int scaledWidth = mc.getWindow().getGuiScaledWidth();
-            int scaledHeight = mc.getWindow().getGuiScaledHeight();
-
-            matrix.pushPose();
-
-            waterHud.render(matrix, mc, scaledWidth, scaledHeight);
-            wetnessOverlay.render(mc, scaledWidth, scaledHeight);
-
-            matrix.popPose();
-        }
+        render(matrix, waterHud, false);
+        render(matrix, wetnessOverlay, false);
     }
 
     public void renderTemperatureOverlay(PoseStack matrix) {
-        Minecraft mc = Minecraft.getInstance();
-        BlockPos pos = Objects.requireNonNull(mc.getCameraEntity()).blockPosition();
+        render(matrix, temperatureOverlay, false);
+    }
 
-        if (mc.level != null && mc.level.isLoaded(pos)) {
-            int scaledWidth = mc.getWindow().getGuiScaledWidth();
-            int scaledHeight = mc.getWindow().getGuiScaledHeight();
-
-            matrix.pushPose();
-
-            temperatureOverlay.render(matrix, mc, scaledWidth, scaledHeight);
-
-            matrix.popPose();
-        }
+    public void renderEnhancedVisualsOverlay(PoseStack matrix) {
+        render(matrix, enhancedVisualsOverlay, false);
     }
 
 }
