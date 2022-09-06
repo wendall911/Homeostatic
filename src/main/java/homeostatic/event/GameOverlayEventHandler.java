@@ -28,6 +28,7 @@ public class GameOverlayEventHandler {
     private final IIngameOverlay OVERLAY;
     private final IIngameOverlay WATER_LEVEL_OVERLAY;
     private final IIngameOverlay TEMPERATURE_OVERLAY;
+    private final IIngameOverlay ENHANCED_VISUALS_OVERLAY;
 
     static {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(INSTANCE::onLoadComplete);
@@ -56,6 +57,14 @@ public class GameOverlayEventHandler {
                 overlayManager.renderTemperatureOverlay(poseStack);
             }
         });
+
+        ENHANCED_VISUALS_OVERLAY = OverlayRegistry.registerOverlayBottom("Enhanced Visuals", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+            Minecraft minecraft = Minecraft.getInstance();
+
+            if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
+                overlayManager.renderEnhancedVisualsOverlay(poseStack);
+            }
+        });
     }
 
     public void callRenderOverlay(PoseStack matrix) {
@@ -75,6 +84,7 @@ public class GameOverlayEventHandler {
             OverlayRegistry.enableOverlay(OVERLAY, ConfigHandler.Client.debugEnabled());
             OverlayRegistry.enableOverlay(WATER_LEVEL_OVERLAY, true);
             OverlayRegistry.enableOverlay(TEMPERATURE_OVERLAY, true);
+            OverlayRegistry.enableOverlay(ENHANCED_VISUALS_OVERLAY, true);
         }
     }
 
