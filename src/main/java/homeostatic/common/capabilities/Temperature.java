@@ -89,7 +89,7 @@ public class Temperature {
             player.hurt(new DamageSource("hyperthermia").bypassArmor().bypassMagic(), amount);
         }
         if (this.skinTemperature > BodyTemperature.SCALDING) {
-            float amount = (1.0F + (this.skinTemperature - BodyTemperature.SCALDING)) * 0.35F;
+            float amount = (1.0F + (this.skinTemperature - BodyTemperature.SCALDING)) * 0.25F;
 
             player.hurt(new DamageSource("heat").bypassArmor().bypassMagic(), amount);
         }
