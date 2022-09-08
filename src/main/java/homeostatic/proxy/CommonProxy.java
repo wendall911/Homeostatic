@@ -1,15 +1,11 @@
 package homeostatic.proxy;
 
-import homeostatic.common.block.HomeostaticBlocks;
-import homeostatic.common.fluid.HomeostaticFluids;
-import homeostatic.common.item.HomeostaticItems;
-import homeostatic.common.recipe.PurifiedLeatherFlask;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
+
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,9 +16,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import homeostatic.config.ConfigHandler;
+import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.effect.HomeostaticEffects;
+import homeostatic.common.fluid.HomeostaticFluids;
+import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.ArmorEnhancement;
 import homeostatic.common.recipe.HomeostaticRecipes;
+import homeostatic.common.recipe.PurifiedLeatherFlask;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
 
