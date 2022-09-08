@@ -30,6 +30,7 @@ import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.HomeostaticRecipes;
+import homeostatic.common.recipe.PurifiedLeatherFlask;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
 

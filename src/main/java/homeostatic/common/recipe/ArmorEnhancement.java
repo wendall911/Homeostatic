@@ -1,11 +1,11 @@
 package homeostatic.common.recipe;
 
+import java.util.List;
+
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 
 import com.mojang.datafixers.util.Pair;
-
-import java.util.List;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -19,9 +19,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-
-import homeostatic.Homeostatic;
 import homeostatic.common.TagManager;
+import homeostatic.Homeostatic;
 
 public class ArmorEnhancement extends CustomRecipe {
 
