@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
@@ -21,14 +22,15 @@ import net.minecraftforge.fml.common.Mod;
 import homeostatic.common.capabilities.CapabilityRegistry;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.Homeostatic;
+import homeostatic.util.WaterHelper;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Homeostatic.MODID)
 public class WaterHud extends Overlay {
 
     protected static int tickCount = 0;
     public final static ResourceLocation WATER_BAR = Homeostatic.loc("textures/gui/icons.png");
-    protected final static int BAR_WIDTH = 9;
-    protected final static int BAR_HEIGHT = 9;
+    public final static int BAR_WIDTH = 9;
+    public final static int BAR_HEIGHT = 9;
 
     public WaterHud() {}
 
@@ -37,6 +39,8 @@ public class WaterHud extends Overlay {
         final Player player = mc.player;
 
         if (player == null) return;
+
+        final Gui gui = mc.gui;
 
         RenderSystem.enableBlend();
         RenderSystem.setShaderTexture(0, WATER_BAR);
@@ -49,44 +53,8 @@ public class WaterHud extends Overlay {
         player.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
             final int waterLevel = data.getWaterLevel();
             final float waterSaturationLevel = data.getWaterSaturationLevel();
-            int offsetX = scaledWidth / 2 + 91;
-            int offsetY = scaledHeight - 50;
-            int pY = offsetY;
-            int pV = 0;
-            int pU = 0;
-            int pUOffset = 0;
 
-            if (effectInstance != null) {
-                pU += 18;
-                pUOffset += 9;
-            }
-
-            for (int i = 0; i < 10; ++i) {
-                int pX = offsetX - i * 8 - 9;
-                this.blit(matrix, pX, pY, pUOffset + 36, pV, BAR_WIDTH, BAR_HEIGHT);
-
-                if (waterSaturationLevel <= 0.0F && tickCount % (waterLevel * 3 + 1) == 0) {
-                    pY = offsetY + (Homeostatic.RANDOM.nextInt(3) - 1);
-                }
-
-                if (i * 2 + 1 < waterLevel) {
-                    this.blit(matrix, pX, pY, pU, pV, BAR_WIDTH, BAR_HEIGHT);
-                }
-                
-                if (i * 2 + 1 == waterLevel) {
-                    this.blit(matrix, pX, pY, pU + 9, pV, BAR_WIDTH, BAR_HEIGHT);
-                }
-
-                if (i * 2 + 1 < waterSaturationLevel) {
-                    this.blit(matrix, pX, pY - 1, pU, pV + 9, 9, 9);
-                    this.blit(matrix, pX, pY + 1, pU + 9, pV + 9, 9, 9);
-                }
-
-                if (i * 2 + 1 == waterSaturationLevel) {
-                    this.blit(matrix, pX, pY, pU, pV + 9, 9, 9);
-                }
-            }
-
+            WaterHelper.drawWaterBar(scaledWidth, scaledHeight, effectInstance, gui, matrix, waterSaturationLevel, waterLevel, tickCount);
         });
 
     }
