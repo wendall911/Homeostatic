@@ -126,6 +126,7 @@ public class WaterHelper {
             }
         }
         else {
+            @SuppressWarnings("removal")
             IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
             item = Registry.ITEM.getKey(stack.getItem());
 

@@ -55,7 +55,7 @@ public class HydrationOverlay extends Overlay {
         RenderSystem.setShaderTexture(0, WaterHud.WATER_BAR);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        MobEffectInstance effectInstance = mc.player.getEffect(HomeostaticEffects.THIRST.get());
+        MobEffectInstance effectInstance = mc.player.getEffect(HomeostaticEffects.THIRST);
 
         if (WaterHud.hasAirBar(player) || WaterHud.isRidingHighHealth(player)) {
             matrix.translate(0,-9,0);
