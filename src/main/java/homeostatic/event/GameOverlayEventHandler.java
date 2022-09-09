@@ -29,6 +29,7 @@ public class GameOverlayEventHandler {
     private final IIngameOverlay WATER_LEVEL_OVERLAY;
     private final IIngameOverlay TEMPERATURE_OVERLAY;
     private final IIngameOverlay ENHANCED_VISUALS_OVERLAY;
+    private final IIngameOverlay HYDRATION_OVERLAY;
 
     static {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(INSTANCE::onLoadComplete);
@@ -65,6 +66,14 @@ public class GameOverlayEventHandler {
                 overlayManager.renderEnhancedVisualsOverlay(poseStack);
             }
         });
+
+        HYDRATION_OVERLAY = OverlayRegistry.registerOverlayTop("Hydration", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+            Minecraft minecraft = Minecraft.getInstance();
+
+            if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
+                overlayManager.renderHydrationOverlay(poseStack);
+            }
+        });
     }
 
     public void callRenderOverlay(PoseStack matrix) {
@@ -85,6 +94,7 @@ public class GameOverlayEventHandler {
             OverlayRegistry.enableOverlay(WATER_LEVEL_OVERLAY, true);
             OverlayRegistry.enableOverlay(TEMPERATURE_OVERLAY, true);
             OverlayRegistry.enableOverlay(ENHANCED_VISUALS_OVERLAY, true);
+            OverlayRegistry.enableOverlay(HYDRATION_OVERLAY, true);
         }
     }
 

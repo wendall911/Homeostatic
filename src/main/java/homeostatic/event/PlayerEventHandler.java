@@ -2,8 +2,6 @@ package homeostatic.event;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -13,8 +11,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.material.Fluids;
@@ -28,8 +24,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
 
@@ -179,28 +173,7 @@ public class PlayerEventHandler {
             ItemStack stack = event.getItem();
             ServerPlayer sp = (ServerPlayer) player;
 
-            if (stack.getItem() instanceof PotionItem) {
-                ResourceLocation water = Registry.POTION.getKey(Potions.WATER);
-                String potion = stack.getOrCreateTag().getString("Potion");
-
-                if (!potion.contentEquals(water.toString())) {
-                    WaterHelper.drinkCleanWaterItem(sp, true);
-                }
-                else {
-                    WaterHelper.drinkDirtyWaterItem(sp, true);
-                }
-            }
-            else {
-                IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
-                ResourceLocation loc = Registry.ITEM.getKey(stack.getItem());
-                ResourceLocation fluidLoc = null;
-
-                if (fluidHandlerItem != null) {
-                    fluidLoc = Registry.FLUID.getKey(fluidHandlerItem.getFluidInTank(0).getFluid());
-                }
-
-                WaterHelper.drink(sp, loc, fluidLoc);
-            }
+            WaterHelper.drink(sp, stack, true);
         }
     }
 

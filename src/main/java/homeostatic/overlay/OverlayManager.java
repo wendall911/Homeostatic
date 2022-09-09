@@ -17,6 +17,7 @@ public class OverlayManager {
     public final TemperatureOverlay temperatureOverlay = new TemperatureOverlay();
     public final TemperatureInfo temperatureInfo = new TemperatureInfo();
     public final EnhancedVisualsOverlay enhancedVisualsOverlay = new EnhancedVisualsOverlay();
+    public final HydrationOverlay hydrationOverlay = new HydrationOverlay();
 
     private OverlayManager() {}
 
@@ -63,6 +64,10 @@ public class OverlayManager {
 
     public void renderEnhancedVisualsOverlay(PoseStack matrix) {
         render(matrix, enhancedVisualsOverlay, false);
+    }
+
+    public void renderHydrationOverlay(PoseStack matrix) {
+        render(matrix, hydrationOverlay, false);
     }
 
 }
