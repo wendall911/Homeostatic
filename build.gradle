@@ -235,6 +235,7 @@ curseforge {
                     optionalLibrary 'ecologics'
                     optionalLibrary 'ars-nouveau'
                     optionalLibrary 'sprout'
+                    optionalLibrary 'create-cafe'
                 }
             }
         }
