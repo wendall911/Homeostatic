@@ -6,6 +6,7 @@ public class ModIntegration {
 
     public static final String ARS_MODID = "ars_nouveau";
     public static final String BYG_MODID = "byg";
+    public static final String CC_MODID = "createcafe";
     public static final String CROPTOPIA_MODID = "croptopia";
     public static final String ECO_MODID = "ecologics";
     public static final String FD_MODID = "farmersdelight";
@@ -20,6 +21,10 @@ public class ModIntegration {
 
     public static ResourceLocation bygLoc(String path) {
         return new ResourceLocation(BYG_MODID, path);
+    }
+
+    public static ResourceLocation ccLoc(String path) {
+        return new ResourceLocation(CC_MODID, path);
     }
 
     public static ResourceLocation croptopiaLoc(String path) {

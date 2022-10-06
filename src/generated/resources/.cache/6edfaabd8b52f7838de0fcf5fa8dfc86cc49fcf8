@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-05T09:48:21.926358122	Homeostatic - Drinkable Items
+// 1.19.2	2022-10-06T13:32:57.169887988	Homeostatic - Drinkable Items
 dd31e2162505e7f74edc09619424947b86771a4b data/ars_nouveau/environment/drinkable/source_berry.json
 f39e9c3ba761a2e69111a35e7b18329de92c80b9 data/ars_nouveau/environment/drinkable/source_berry_pie.json
 0fd136bf3723eca9a1a53a333495ab3f6169df05 data/ars_nouveau/environment/drinkable/source_berry_roll.json
@@ -16,6 +16,16 @@ e1e4dd98099f2d9b540e1593259237ff240412bc data/byg/environment/drinkable/nightsha
 9f0a25269678d94b74dce07678117015cb4176e8 data/byg/environment/drinkable/nightshade_berry_pie.json
 233b4db15d70efc55cd6b0e182f62e3f41fe9358 data/byg/environment/drinkable/white_puffball_cap.json
 dbe615e0e7101b5177b50d7fbf37d41dc58f8e5e data/byg/environment/drinkable/white_puffball_stew.json
+278c700816537f5069aac59dc6bdaefe02d4f7ce data/createcafe/environment/drinkable/aloe_milk_tea.json
+b4305ba4a0f46c152bc3fa7fc0b24a579fb62760 data/createcafe/environment/drinkable/apple_milk_tea.json
+0d6c557bf79c3b34ab4c76746a08ce8c50960a7b data/createcafe/environment/drinkable/blueberry_milk_tea.json
+1f2ce00bd56ebc8986ecd469d3f237c66bb29dda data/createcafe/environment/drinkable/cassava_root.json
+afa695290a76be4a32bb044ba1a85db61f9b896d data/createcafe/environment/drinkable/lavender_milk_tea.json
+b8df125b54decb8ea29e4b8693035c275fc33a51 data/createcafe/environment/drinkable/oreo.json
+43d30a39d6098d7637e8b2de37b25c68b7f9758d data/createcafe/environment/drinkable/oreo_milk_tea.json
+fef27607ec3227ed76d13fcc9567c493e7e53157 data/createcafe/environment/drinkable/pumpkin_milk_tea.json
+54d03f81d3fa5236b2afefe9ed0a380e5abb0eb7 data/createcafe/environment/drinkable/sweetberry_milk_tea.json
+be9ced595afa33111e5b6ee58aec1c03fdab7bc1 data/createcafe/environment/drinkable/watermelon_milk_tea.json
 35806429dd21c42080e3854dc24b9caae14f7435 data/croptopia/environment/drinkable/ajvar.json
 a3cdf55a6ec68881661ef6d77cd52d68ef8a1f58 data/croptopia/environment/drinkable/anchovy_pizza.json
 be7455edcac6a74c98a0aa7fed3145f951eac8b6 data/croptopia/environment/drinkable/apple_juice.json
