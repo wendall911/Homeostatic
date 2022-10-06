@@ -499,13 +499,13 @@ public class DrinkableItemsProvider implements DataProvider {
         //Create Cafe
         addCake(ModIntegration.ccLoc("oreo"));
         addVeggie(ModIntegration.ccLoc("cassava_root"));
+        addFruit(ModIntegration.ccLoc("blood_orange"));
+        addFruit(ModIntegration.ccLoc("mana_berries"));
         addDrink(ModIntegration.ccLoc("apple_milk_tea"));
-        addDrink(ModIntegration.ccLoc("aloe_milk_tea"));
-        addDrink(ModIntegration.ccLoc("blueberry_milk_tea"));
-        addDrink(ModIntegration.ccLoc("lavender_milk_tea"));
         addDrink(ModIntegration.ccLoc("oreo_milk_tea"));
         addDrink(ModIntegration.ccLoc("pumpkin_milk_tea"));
         addDrink(ModIntegration.ccLoc("sweetberry_milk_tea"));
+        addDrink(ModIntegration.ccLoc("yucca_milk_tea"));
         addDrink(ModIntegration.ccLoc("watermelon_milk_tea"));
     }
 

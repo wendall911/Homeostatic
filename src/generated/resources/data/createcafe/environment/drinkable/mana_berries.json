@@ -1,7 +1,7 @@
 {
-  "type": "createcafe:cassava_root",
-  "amount": 1,
-  "saturation": 0.1,
+  "type": "createcafe:mana_berries",
+  "amount": 2,
+  "saturation": 0.6,
   "effect_potency": 0,
   "effect_duration": 0,
   "effect_chance": 0.0
