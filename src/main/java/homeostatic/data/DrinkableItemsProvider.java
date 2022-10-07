@@ -492,17 +492,50 @@ public class DrinkableItemsProvider implements DataProvider {
         addFruit(ModIntegration.sproutLoc("candy_apple"));
         add(ModIntegration.sproutLoc("golden_candy_apple"), 6, 1.2F,  0, 0, 0.0F);
 
-        //Create Cafe
+        // Create Cafe
         addCake(ModIntegration.ccLoc("oreo"));
         addVeggie(ModIntegration.ccLoc("cassava_root"));
-        addDrink(ModIntegration.ccLoc("apple_milk_tea"));
         addDrink(ModIntegration.ccLoc("aloe_milk_tea"));
+        addDrink(ModIntegration.ccLoc("apple_milk_tea"));
+        addDrink(ModIntegration.ccLoc("apricot_milk_tea"));
+        addDrink(ModIntegration.ccLoc("avocado_milk_tea"));
+        addDrink(ModIntegration.ccLoc("banana_milk_tea"));
+        addDrink(ModIntegration.ccLoc("blackberry_milk_tea"));
         addDrink(ModIntegration.ccLoc("blueberry_milk_tea"));
+        addDrink(ModIntegration.ccLoc("cherry_milk_tea"));
+        addDrink(ModIntegration.ccLoc("citron_milk_tea"));
+        addDrink(ModIntegration.ccLoc("coconut_milk_tea"));
+        addDrink(ModIntegration.ccLoc("dragonfruit_milk_tea"));
+        addDrink(ModIntegration.ccLoc("fig_milk_tea"));
+        addDrink(ModIntegration.ccLoc("grape_milk_tea"));
+        addDrink(ModIntegration.ccLoc("grapefruit_milk_tea"));
+        addDrink(ModIntegration.ccLoc("kiwi_milk_tea"));
         addDrink(ModIntegration.ccLoc("lavender_milk_tea"));
+        addDrink(ModIntegration.ccLoc("lemmon_milk_tea"));
+        addDrink(ModIntegration.ccLoc("lime_milk_tea"));
+        addDrink(ModIntegration.ccLoc("mandarin_milk_tea"));
+        addDrink(ModIntegration.ccLoc("mango_milk_tea"));
         addDrink(ModIntegration.ccLoc("oreo_milk_tea"));
+        addDrink(ModIntegration.ccLoc("orange_milk_tea"));
+        addDrink(ModIntegration.ccLoc("peach_milk_tea"));
+        addDrink(ModIntegration.ccLoc("persimmon_milk_tea"));
+        addDrink(ModIntegration.ccLoc("pineapple_milk_tea"));
+        addDrink(ModIntegration.ccLoc("plum_milk_tea"));
+        addDrink(ModIntegration.ccLoc("pomello_milk_tea"));
         addDrink(ModIntegration.ccLoc("pumpkin_milk_tea"));
+        addDrink(ModIntegration.ccLoc("raspberry_milk_tea"));
+        addDrink(ModIntegration.ccLoc("redlove_milk_tea"));
+        addDrink(ModIntegration.ccLoc("strawberry_milk_tea"));
         addDrink(ModIntegration.ccLoc("sweetberry_milk_tea"));
+        addDrink(ModIntegration.ccLoc("vanilla_milk_tea"));
         addDrink(ModIntegration.ccLoc("watermelon_milk_tea"));
+
+        // Fruit Trees
+        addSpecialCake(ModIntegration.ftLoc("grapefruit_panna_cotta"));
+        addSpecialCake(ModIntegration.ftLoc("donauwelle"));
+        add(ModIntegration.ftLoc("honey_pomelo_tea"), 6, 0.9F,  0, 0, 0.0F);
+        add(ModIntegration.ftLoc("rice_with_fruits"), 6, 0.9F,  0, 0, 0.0F);
+        addMeal(ModIntegration.ftLoc("lemon_roast_chicken"));
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
