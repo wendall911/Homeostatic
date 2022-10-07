@@ -133,6 +133,8 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:arsnouveau-401955:3950796")
     //runtimeOnly fg.deobf("curse.maven:create-328085:4011414")
     //runtimeOnly fg.deobf("curse.maven:create_cafe-542235:4012312")
+    //runtimeOnly fg.deobf("curse.maven:kiwi-303657:3974084")
+    //runtimeOnly fg.deobf("curse.maven:fruittrees-355467:3990227")
 }
 
 jar {
@@ -238,6 +240,7 @@ curseforge {
                     optionalLibrary 'ars-nouveau'
                     optionalLibrary 'sprout'
                     optionalLibrary 'create-cafe'
+                    optionalLibrary 'fruit-trees'
                 }
             }
         }
