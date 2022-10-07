@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.alchemy.Potions;
 
@@ -55,12 +56,12 @@ public class WaterHelper {
         drink(sp, getItemHydration(stack), update);
     }
 
-    public static void drink(ServerPlayer sp, ResourceLocation item, @Nullable ResourceLocation fluid) {
-        drink(sp, item, fluid, true);
+    public static void drink(ServerPlayer sp, ItemStack stack, @Nullable ResourceLocation fluid) {
+        drink(sp, stack, fluid, true);
     }
 
-    public static void drink(ServerPlayer sp, ResourceLocation item, @Nullable ResourceLocation fluid, boolean update) {
-        drink(sp, getItemHydration(item, fluid), update);
+    public static void drink(ServerPlayer sp, ItemStack stack, @Nullable ResourceLocation fluid, boolean update) {
+        drink(sp, getItemHydration(stack, fluid), update);
     }
 
     public static void drink(ServerPlayer sp, @Nullable Hydration hydration, boolean update) {
@@ -95,8 +96,8 @@ public class WaterHelper {
         }
     }
 
-    public static Hydration getItemHydration(ResourceLocation item, @Nullable ResourceLocation fluid) {
-        DrinkableItem drinkableItem = DrinkableItemManager.get(item);
+    public static Hydration getItemHydration(ItemStack stack, @Nullable ResourceLocation fluid) {
+        DrinkableItem drinkableItem = DrinkableItemManager.get(stack);
         DrinkingFluid drinkingFluid = fluid != null ? DrinkingFluidManager.get(fluid) : null;
         Hydration hydration = null;
 
@@ -110,13 +111,12 @@ public class WaterHelper {
     }
 
     public static Hydration getItemHydration(ItemStack stack) {
-        ResourceLocation item;
         ResourceLocation fluid = null;
 
         if (stack.getItem() instanceof PotionItem) {
             ResourceLocation water = Registry.POTION.getKey(Potions.WATER);
             String potion = stack.getOrCreateTag().getString("Potion");
-            item = ModIntegration.mcLoc("air");
+            stack = new ItemStack(Items.AIR);
 
             if (!potion.contentEquals(water.toString())) {
                 fluid = Homeostatic.loc("purified_water");
@@ -127,14 +127,13 @@ public class WaterHelper {
         }
         else {
             IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
-            item = Registry.ITEM.getKey(stack.getItem());
 
             if (fluidHandlerItem != null) {
                 fluid = Registry.FLUID.getKey(fluidHandlerItem.getFluidInTank(0).getFluid());
             }
         }
 
-        return getItemHydration(item, fluid);
+        return getItemHydration(stack, fluid);
     }
 
     public static void drinkWater(ServerPlayer sp) {
@@ -142,14 +141,14 @@ public class WaterHelper {
     }
 
     public static void drinkCleanWaterItem(ServerPlayer sp, boolean update) {
-        ResourceLocation air = ModIntegration.mcLoc("air");
+        ItemStack air = new ItemStack(Items.AIR);
         ResourceLocation water = Homeostatic.loc("purified_water");
 
         drink(sp, air, water, update);
     }
 
     public static void drinkDirtyWaterItem(ServerPlayer sp, boolean update) {
-        ResourceLocation air = ModIntegration.mcLoc("air");
+        ItemStack air = new ItemStack(Items.AIR);
         ResourceLocation water = ModIntegration.mcLoc("water");
 
         drink(sp, air, water, update);

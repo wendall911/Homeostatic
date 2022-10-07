@@ -2,16 +2,21 @@ package homeostatic.common.item;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
+import homeostatic.common.TagManager;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +30,8 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(DrinkableItem.class, new DrinkableItem.Serializer()).create();
     private static DrinkableItemManager INSTANCE;
 
+    private static final DrinkableItem FRUIT = new DrinkableItem(new ResourceLocation("forge:fruits"), 2, 0.6F, 0, 0, 0.0F);
+
     public DrinkableItemManager() {
         super(GSON, "environment/drinkable");
     }
@@ -33,8 +40,18 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
         return GSON.toJsonTree(drinkableItem);
     }
 
-    public static DrinkableItem get(ResourceLocation loc) {
-        return ITEMS.get(loc);
+    public static DrinkableItem get(ItemStack stack) {
+        ResourceLocation loc = Registry.ITEM.getKey(stack.getItem());
+        DrinkableItem drinkableItem = ITEMS.get(loc);
+
+        if (drinkableItem != null) {
+            return drinkableItem;
+        }
+        else if(stack.is(TagManager.Items.FRUITS)) {
+            return FRUIT;
+        }
+
+        return null;
     }
 
     @Override
