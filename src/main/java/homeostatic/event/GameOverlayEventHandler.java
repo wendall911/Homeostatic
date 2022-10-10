@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -36,33 +35,35 @@ public class GameOverlayEventHandler {
     }
 
     public GameOverlayEventHandler() {
+        Minecraft mc = Minecraft.getInstance();
+
         OVERLAY = (gui, poseStack, partialTick, width, height) -> {
-            if (enabled && ConfigHandler.Client.debugEnabled() && !Minecraft.getInstance().options.renderDebug) {
+            if (enabled && ConfigHandler.Client.debugEnabled() && !mc.options.renderDebug) {
                 overlayManager.renderOverlay(poseStack);
             }
         };
 
         WATER_LEVEL_OVERLAY = (gui, poseStack, partialTick, width, height) -> {
-            if (!Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements()) {
-                overlayManager.renderWaterOverlay(poseStack);
+            if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
+                overlayManager.renderWaterOverlay(poseStack, gui.rightHeight);
             }
         };
 
         TEMPERATURE_OVERLAY = (gui, poseStack, partialTick, width, height) -> {
-            if (!Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements()) {
+            if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
                 overlayManager.renderTemperatureOverlay(poseStack);
             }
         };
 
         ENHANCED_VISUALS_OVERLAY = (gui, poseStack, partialTick, width, height) -> {
-            if (!Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements()) {
+            if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
                 overlayManager.renderEnhancedVisualsOverlay(poseStack);
             }
         };
 
         HYDRATION_OVERLAY = (gui, poseStack, partialTick, width, height) -> {
-            if (!Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements()) {
-                overlayManager.renderHydrationOverlay(poseStack);
+            if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
+                overlayManager.renderHydrationOverlay(poseStack, gui.rightHeight);
             }
         };
     }
@@ -79,8 +80,8 @@ public class GameOverlayEventHandler {
     }
 
     public void onRegisterOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAboveAll(Homeostatic.MODID + "_overlay", INSTANCE.OVERLAY);
-        event.registerBelow(VanillaGuiOverlay.FOOD_LEVEL.id(), "water_level", INSTANCE.WATER_LEVEL_OVERLAY);
+        event.registerAboveAll("overlay", INSTANCE.OVERLAY);
+        event.registerAboveAll("water_level", INSTANCE.WATER_LEVEL_OVERLAY);
         event.registerAboveAll("temperature", INSTANCE.TEMPERATURE_OVERLAY);
         event.registerBelowAll("visuals", INSTANCE.ENHANCED_VISUALS_OVERLAY);
         event.registerAboveAll("hydration", INSTANCE.HYDRATION_OVERLAY);

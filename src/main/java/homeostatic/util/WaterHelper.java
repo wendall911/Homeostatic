@@ -157,7 +157,7 @@ public class WaterHelper {
 
     public static void drawWaterBar(int scaledWidth, int scaledHeight, MobEffectInstance effectInstance, Gui gui, PoseStack matrix, float waterSaturationLevel, int waterLevel, int tickCount) {
         int offsetX = scaledWidth / 2 + 91;
-        int offsetY = scaledHeight - 50;
+        int offsetY = scaledHeight;
         int pY = offsetY;
         int pV = 0;
         int pU = 0;
