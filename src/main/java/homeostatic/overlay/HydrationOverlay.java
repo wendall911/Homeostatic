@@ -57,10 +57,6 @@ public class HydrationOverlay extends Overlay {
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         MobEffectInstance effectInstance = mc.player.getEffect(HomeostaticEffects.THIRST.get());
 
-        if (WaterHud.hasAirBar(player) || WaterHud.isRidingHighHealth(player)) {
-            matrix.translate(0,-9,0);
-        }
-
         player.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
             final int waterLevel = data.getWaterLevel() + hydration.amount();
             final float waterSaturationLevel = data.getWaterSaturationLevel() + hydration.saturation();

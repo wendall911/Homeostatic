@@ -1,8 +1,8 @@
 package homeostatic.overlay;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import java.util.Objects;
+
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -21,7 +21,7 @@ public class OverlayManager {
 
     private OverlayManager() {}
 
-    public void render(PoseStack matrix, Overlay overlay, boolean scaled) {
+    public void render(PoseStack matrix, Overlay overlay, boolean scaled, int rightHeight) {
         Minecraft mc = Minecraft.getInstance();
         BlockPos pos = Objects.requireNonNull(mc.getCameraEntity()).blockPosition();
         int scaledWidth;
@@ -38,7 +38,7 @@ public class OverlayManager {
             }
             else {
                 scaledWidth = mc.getWindow().getGuiScaledWidth();
-                scaledHeight = mc.getWindow().getGuiScaledHeight();
+                scaledHeight = mc.getWindow().getGuiScaledHeight() - rightHeight;
                 matrix.pushPose();
             }
 
@@ -50,24 +50,24 @@ public class OverlayManager {
     }
 
     public void renderOverlay(PoseStack matrix) {
-        render(matrix, temperatureInfo, true);
+        render(matrix, temperatureInfo, true, 0);
     }
 
-    public void renderWaterOverlay(PoseStack matrix) {
-        render(matrix, waterHud, false);
-        render(matrix, wetnessOverlay, false);
+    public void renderWaterOverlay(PoseStack matrix, int rightHeight) {
+        render(matrix, waterHud, false, rightHeight);
+        render(matrix, wetnessOverlay, false, 0);
     }
 
     public void renderTemperatureOverlay(PoseStack matrix) {
-        render(matrix, temperatureOverlay, false);
+        render(matrix, temperatureOverlay, false, 0);
     }
 
     public void renderEnhancedVisualsOverlay(PoseStack matrix) {
-        render(matrix, enhancedVisualsOverlay, false);
+        render(matrix, enhancedVisualsOverlay, false, 0);
     }
 
-    public void renderHydrationOverlay(PoseStack matrix) {
-        render(matrix, hydrationOverlay, false);
+    public void renderHydrationOverlay(PoseStack matrix, int rightHeight) {
+        render(matrix, hydrationOverlay, false, rightHeight);
     }
 
 }

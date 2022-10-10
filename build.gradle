@@ -135,6 +135,8 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:create-328085:4007544")
     //runtimeOnly fg.deobf("curse.maven:flywheel-486392:3934664")
     //runtimeOnly fg.deobf("curse.maven:create_cafe-542235:3995985")
+    //runtimeOnly fg.deobf("curse.maven:puzzleslib-495476:3804332")
+    //runtimeOnly fg.deobf("curse.maven:leavemybarsalone-281715:3671258")
 }
 
 jar {
@@ -237,6 +239,7 @@ curseforge {
                     optionalLibrary 'sprout'
                     optionalLibrary 'create-cafe'
                     optionalLibrary 'fruit-trees'
+                    optionalLibrary 'leave-my-bars-alone'
                 }
             }
         }

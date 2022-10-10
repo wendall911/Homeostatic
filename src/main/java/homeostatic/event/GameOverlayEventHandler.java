@@ -43,11 +43,11 @@ public class GameOverlayEventHandler {
             (matrix, partialTicks, width, height, height2) -> callRenderOverlay(partialTicks)
         );
 
-        WATER_LEVEL_OVERLAY = OverlayRegistry.registerOverlayBottom("Water Level", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+        WATER_LEVEL_OVERLAY = OverlayRegistry.registerOverlayTop("Water Level", (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
 
             if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                overlayManager.renderWaterOverlay(poseStack);
+                overlayManager.renderWaterOverlay(poseStack, gui.right_height);
             }
         });
 
@@ -71,7 +71,7 @@ public class GameOverlayEventHandler {
             Minecraft minecraft = Minecraft.getInstance();
 
             if (!minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                overlayManager.renderHydrationOverlay(poseStack);
+                overlayManager.renderHydrationOverlay(poseStack, gui.right_height);
             }
         });
     }
