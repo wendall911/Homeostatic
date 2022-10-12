@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:wool"
+    "#minecraft:wool",
+    {
+      "id": "alexsmobs:bear_fur",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:bison_fur",
+      "required": false
+    }
   ]
 }
