@@ -28,7 +28,7 @@ public final class HomeostaticItems {
 
         PURIFIED_WATER_BUCKET = registerItem(
                 "purified_water_bucket",
-                new BucketItem(() -> HomeostaticFluids.PURIFIED_WATER, new Item.Properties().tab(CreativeTabs.ITEM_TAB_GROUP)));
+                new BucketItem(() -> HomeostaticFluids.PURIFIED_WATER, new Item.Properties().stacksTo(1).tab(CreativeTabs.ITEM_TAB_GROUP)));
 
         WATER_FILTER = registerItem(
                 "water_filter",

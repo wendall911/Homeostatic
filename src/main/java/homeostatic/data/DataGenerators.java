@@ -7,6 +7,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
+import homeostatic.data.integration.create.FillingRecipeProvider;
+import homeostatic.data.integration.create.MixingRecipeProvider;
 import homeostatic.Homeostatic;
 
 @Mod.EventBusSubscriber(modid = Homeostatic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -22,12 +24,15 @@ public final class DataGenerators {
 
         gen.addProvider(blockTags);
         gen.addProvider(new ModItemTagsProvider(gen, blockTags, existingFileHelper));
+        gen.addProvider(new ModFluidTagsProvider(gen, existingFileHelper));
         gen.addProvider(new ModRecipesProvider(gen));
         gen.addProvider(new ModItemModelProvider(gen, existingFileHelper));
         gen.addProvider(new ModBlockStateProvider(gen, existingFileHelper));
         gen.addProvider(new RadiationBlocksProvider(gen, Homeostatic.MODID));
         gen.addProvider(new DrinkingFluidsProvider(gen, Homeostatic.MODID));
         gen.addProvider(new DrinkableItemsProvider(gen, Homeostatic.MODID));
+        gen.addProvider(new MixingRecipeProvider(gen));
+        gen.addProvider(new FillingRecipeProvider(gen));
     }
 
 }

@@ -2,11 +2,12 @@ package homeostatic.data;
 
 import java.util.function.Consumer;
 
+import homeostatic.util.WaterHelper;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -40,14 +41,8 @@ public class ModRecipesProvider extends RecipeProvider {
     protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
         ItemLike leatherFlask = HomeostaticItems.LEATHER_FLASK;
         ItemLike waterFilter = HomeostaticItems.WATER_FILTER;
-        ItemStack waterFilledLeatherFlask = new ItemStack(leatherFlask);
-        IFluidHandlerItem fluidHandlerItem = FluidUtil.getFluidHandler(waterFilledLeatherFlask).orElse(null);
-        ItemStack cleanWaterFilledLeatherFlask = new ItemStack(leatherFlask);
-        IFluidHandlerItem cleanFluidHandlerItem = FluidUtil.getFluidHandler(cleanWaterFilledLeatherFlask).orElse(null);
-
-        fluidHandlerItem.fill(new FluidStack(Fluids.WATER, fluidHandlerItem.getTankCapacity(0)), IFluidHandler.FluidAction.EXECUTE);
-        cleanFluidHandlerItem.fill(new FluidStack(HomeostaticFluids.PURIFIED_WATER, cleanFluidHandlerItem.getTankCapacity(0)), IFluidHandler.FluidAction.EXECUTE);
-        ItemLike cleanWaterFlask = cleanWaterFilledLeatherFlask.getItem();
+        ItemStack waterFilledLeatherFlask = WaterHelper.getFilledItem(new ItemStack(leatherFlask), Fluids.WATER, 5000);
+        ItemStack cleanWaterFilledLeatherFlask = WaterHelper.getFilledItem(new ItemStack(leatherFlask), HomeostaticFluids.PURIFIED_WATER, 5000);
 
         ShapedRecipeBuilder.shaped(leatherFlask)
                 .define('S', Items.STRING)

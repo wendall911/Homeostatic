@@ -13,8 +13,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
 
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.network.PacketDistributor;
 
@@ -96,8 +100,8 @@ public class WaterHelper {
         }
     }
 
-    public static Hydration getItemHydration(ItemStack stack, @Nullable ResourceLocation fluid) {
-        DrinkableItem drinkableItem = DrinkableItemManager.get(stack);
+    public static Hydration getItemHydration(@Nullable ItemStack stack, @Nullable ResourceLocation fluid) {
+        DrinkableItem drinkableItem = stack != null ? DrinkableItemManager.get(stack) : null;
         DrinkingFluid drinkingFluid = fluid != null ? DrinkingFluidManager.get(fluid) : null;
         Hydration hydration = null;
 
@@ -126,7 +130,7 @@ public class WaterHelper {
             }
         }
         else {
-            IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+            IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
 
             if (fluidHandlerItem != null) {
                 fluid = Registry.FLUID.getKey(fluidHandlerItem.getFluidInTank(0).getFluid());
@@ -136,15 +140,14 @@ public class WaterHelper {
         return getItemHydration(stack, fluid);
     }
 
-    public static void drinkWater(ServerPlayer sp) {
-        drinkDirtyWaterItem(sp, false);
+    public static Hydration getFluidHydration(Fluid fluid) {
+        ResourceLocation fluidKey = Registry.FLUID.getKey(fluid);
+
+        return getItemHydration(null, fluidKey);
     }
 
-    public static void drinkCleanWaterItem(ServerPlayer sp, boolean update) {
-        ItemStack air = new ItemStack(Items.AIR);
-        ResourceLocation water = Homeostatic.loc("purified_water");
-
-        drink(sp, air, water, update);
+    public static void drinkWater(ServerPlayer sp) {
+        drinkDirtyWaterItem(sp, false);
     }
 
     public static void drinkDirtyWaterItem(ServerPlayer sp, boolean update) {
@@ -191,6 +194,30 @@ public class WaterHelper {
             if (i * 2 + 1 == waterSaturationLevel) {
                 gui.blit(matrix, pX, pY, pU, pV + 9, 9, 9);
             }
+        }
+    }
+
+    public static ItemStack getFilledItem(ItemStack stack, Fluid fluid, int amount) {
+        ItemStack copy = stack.copy();
+        IFluidHandlerItem fluidHandlerItem = copy.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
+
+        fluidHandlerItem.fill(new FluidStack(fluid, amount), IFluidHandler.FluidAction.EXECUTE);
+        updateDamage(copy);
+
+        return copy;
+    }
+
+    public static ItemStack getFilledItem(ItemStack stack, ResourceLocation key, int amount) {
+        Fluid fluid = Registry.FLUID.get(key);
+
+        return getFilledItem(stack, fluid, amount);
+    }
+
+    public static void updateDamage(ItemStack stack) {
+        if (stack.isDamageableItem()) {
+            IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
+
+            stack.setDamageValue(Math.min(stack.getMaxDamage(), stack.getMaxDamage() - fluidHandlerItem.getFluidInTank(0).getAmount()));
         }
     }
 

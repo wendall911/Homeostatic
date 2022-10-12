@@ -24,20 +24,21 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.ItemFluidContainer;
-import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import static net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack.FLUID_NBT_KEY;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
+import homeostatic.util.WaterHelper;
 
 public class WaterContainerItem extends ItemFluidContainer {
 
@@ -52,15 +53,25 @@ public class WaterContainerItem extends ItemFluidContainer {
         ItemStack stack = player.getItemInHand(hand);
         BlockHitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
         BlockPos pos = hitResult.getBlockPos();
-        IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+        BlockState blockState = level.getBlockState(pos);
+        Fluid targetFluid = blockState.getFluidState().getType();
+        IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
+        boolean isEmpty = fluidHandlerItem.getFluidInTank(0).isEmpty();
 
-        if (fluidHandlerItem.getFluidInTank(0).isEmpty() || fluidHandlerItem.getFluidInTank(0).getFluid().isSame(Fluids.WATER)) {
-            if (level.getFluidState(pos).getType() == Fluids.WATER) {
-                return InteractionResultHolder.success(getFilledItem(stack, player));
+        if ((isEmpty || fluidHandlerItem.getFluidInTank(0).getFluid().isSame(targetFluid)) && fluidHandlerItem.getFluidInTank(0).getAmount() != capacity) {
+            if (targetFluid == Fluids.WATER) {
+                return InteractionResultHolder.success(getFilledItem(stack, player, targetFluid, capacity));
+            }
+            else if (WaterHelper.getFluidHydration(targetFluid) != null) {
+                if (blockState.getBlock() instanceof BucketPickup bucketPickup) {
+                    if (!bucketPickup.pickupBlock(level, pos, blockState).isEmpty()) {
+                        return InteractionResultHolder.success(getFilledItem(stack, player, targetFluid, 1000));
+                    }
+                }
             }
         }
 
-        if (canDrink(stack, player)) {
+        if (!isEmpty && canDrink(stack, player, fluidHandlerItem.getFluidInTank(0).getFluid())) {
             return ItemUtils.startUsingInstantly(level, player, hand);
         }
 
@@ -69,7 +80,7 @@ public class WaterContainerItem extends ItemFluidContainer {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+        IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
 
         fluidHandlerItem.drain(250, IFluidHandler.FluidAction.EXECUTE);
         if (entity instanceof Player player) {
@@ -77,7 +88,7 @@ public class WaterContainerItem extends ItemFluidContainer {
                 return getContainerItem(stack);
             }
             else {
-                updateDamage(stack);
+                WaterHelper.updateDamage(stack);
             }
         }
 
@@ -86,7 +97,7 @@ public class WaterContainerItem extends ItemFluidContainer {
 
     @Override
     public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundTag tag) {
-        return new FluidHandlerItemStack.SwapEmpty(stack, stack.getContainerItem(), this.capacity);
+        return new FluidHandlerItem(stack, capacity);
     }
 
     @Override
@@ -119,31 +130,20 @@ public class WaterContainerItem extends ItemFluidContainer {
         return UseAnim.DRINK;
     }
 
-    public ItemStack getFilledItem(ItemStack stack, Player player) {
-        ItemStack copy = stack.copy();
-        IFluidHandlerItem fluidHandlerItem = copy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+    public ItemStack getFilledItem(ItemStack stack, Player player, Fluid fluid, int amount) {
+        ItemStack copy = WaterHelper.getFilledItem(stack, fluid, amount);
 
         player.playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
         player.awardStat(Stats.ITEM_USED.get(this));
 
-        fluidHandlerItem.fill(new FluidStack(Fluids.WATER, capacity), IFluidHandler.FluidAction.EXECUTE);
-        updateDamage(copy);
-
         return copy;
     }
 
-    public void updateDamage(ItemStack stack) {
-        if (stack.isDamageableItem()) {
-            IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+    public boolean canDrink(ItemStack stack, Player player, Fluid fluid) {
+        IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
 
-            stack.setDamageValue(Math.min(stack.getMaxDamage(), stack.getMaxDamage() - fluidHandlerItem.getFluidInTank(0).getAmount()));
-        }
-    }
-
-    public boolean canDrink(ItemStack stack, Player player) {
-        IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
-
-        canDrink = !fluidHandlerItem.getFluidInTank(0).isEmpty() && fluidHandlerItem.getFluidInTank(0).getAmount() >= 250;
+        canDrink = WaterHelper.getFluidHydration(fluid) != null && !fluidHandlerItem.getFluidInTank(0).isEmpty()
+                && fluidHandlerItem.getFluidInTank(0).getAmount() >= 250;
 
         player.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
             canDrink = canDrink && data.getWaterLevel() < 20;
