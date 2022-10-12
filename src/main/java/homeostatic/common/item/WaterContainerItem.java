@@ -63,7 +63,7 @@ public class WaterContainerItem extends ItemFluidContainer {
             else if (WaterHelper.getFluidHydration(targetFluid) != null) {
                 if (blockState.getBlock() instanceof BucketPickup bucketPickup) {
                     if (!bucketPickup.pickupBlock(level, pos, blockState).isEmpty()) {
-                        return InteractionResultHolder.success(getFilledItem(stack, player, targetFluid, 1000));
+                        return InteractionResultHolder.success(getFilledItem(stack, player, targetFluid, capacity));
                     }
                 }
             }
