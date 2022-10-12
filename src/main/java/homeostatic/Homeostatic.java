@@ -20,7 +20,7 @@ public class Homeostatic {
     public static final Logger LOGGER = LogManager.getFormatterLogger(MODID);
     public static final Random RANDOM = new Random();
     public static CommonProxy PROXY;
-    public static boolean DATA_GEN = System.getenv("DATAGEN") != null && System.getenv("DATA_GEN").contains("all");
+    public static boolean DATA_GEN = System.getenv("DATA_GEN") != null && System.getenv("DATA_GEN").contains("all");
 
     public Homeostatic() {
         PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
