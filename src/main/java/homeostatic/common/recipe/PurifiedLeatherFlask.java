@@ -11,17 +11,15 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
+import homeostatic.common.capabilities.CapabilityRegistry;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.item.LeatherFlask;
 
 public class PurifiedLeatherFlask extends CustomRecipe {
-
-
 
     public PurifiedLeatherFlask(ResourceLocation loc) {
         super(loc);
@@ -40,8 +38,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
     public ItemStack assemble(CraftingContainer pContainer) {
         Pair<ItemStack, ItemStack> check = checkContainer(pContainer);
         ItemStack flaskCopy = check.getFirst().copy();
-        @SuppressWarnings("removal")
-        IFluidHandlerItem fluidHandlerItem = flaskCopy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+        IFluidHandlerItem fluidHandlerItem = flaskCopy.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
         int amount = fluidHandlerItem.getFluidInTank(0).getAmount();
 
         fluidHandlerItem.drain(amount, IFluidHandler.FluidAction.EXECUTE);
@@ -74,8 +71,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
                 filter = ingredient;
             }
             else if (ingredient.getItem() instanceof LeatherFlask) {
-                @SuppressWarnings("removal")
-                IFluidHandlerItem fluidHandlerItem = ingredient.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+                IFluidHandlerItem fluidHandlerItem = ingredient.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
 
                 if (fluidHandlerItem.getFluidInTank(0).getAmount() > 0) {
                     flask = ingredient;

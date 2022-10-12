@@ -2,14 +2,10 @@ package homeostatic.overlay;
 
 import java.util.Objects;
 
-import javax.annotation.Nullable;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-
-import net.minecraftforge.client.gui.overlay.ForgeGui;
 
 import homeostatic.config.ConfigHandler;
 

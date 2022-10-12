@@ -1,5 +1,6 @@
 package homeostatic.data;
 
+import homeostatic.data.integration.ModIntegration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -24,13 +25,18 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     @Override
     protected void addTags() {
         this.tag(TagManager.Items.INSULATION)
-            .addTag(ItemTags.WOOL);
+            .addTag(ItemTags.WOOL)
+            .addOptional(ModIntegration.alexLoc("bear_fur"))
+            .addOptional(ModIntegration.alexLoc("bison_fur"));
 
         this.tag(TagManager.Items.WATERPROOF)
+            .addOptional(ModIntegration.ieLoc("duroplast"))
             .addTag(ItemTags.CANDLES);
 
         this.tag(TagManager.Items.RADIATION_PROTECTION)
-            .addTag(ItemTags.CRIMSON_STEMS);
+            .addTag(ItemTags.CRIMSON_STEMS)
+            .addOptionalTag(ModIntegration.bygLoc("embur_logs"))
+            .addOptional(ModIntegration.alexLoc("cockroach_wing"));
     }
 
 }

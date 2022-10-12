@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ModIntegration {
 
+    public static final String ALEX_MODID = "alexsmobs";
     public static final String ARS_MODID = "ars_nouveau";
     public static final String BYG_MODID = "byg";
     public static final String CC_MODID = "createcafe";
@@ -11,10 +12,15 @@ public class ModIntegration {
     public static final String ECO_MODID = "ecologics";
     public static final String FD_MODID = "farmersdelight";
     public static final String FT_MODID = "fruittrees";
+    public static final String IE_MODID = "immersiveengineering";
     public static final String MC_MODID = "minecraft";
     public static final String MORECRAFT_MODID = "morecraft";
     public static final String SPROUT_MODID = "sprout";
     public static final String XERCA_MODID = "xercamod";
+
+    public static ResourceLocation alexLoc(String path) {
+        return new ResourceLocation(ALEX_MODID, path);
+    }
 
     public static ResourceLocation arsLoc(String path) {
         return new ResourceLocation(ARS_MODID, path);
@@ -42,6 +48,10 @@ public class ModIntegration {
 
     public static ResourceLocation ftLoc(String path) {
         return new ResourceLocation(FT_MODID, path);
+    }
+
+    public static ResourceLocation ieLoc(String path) {
+        return new ResourceLocation(IE_MODID, path);
     }
 
     public static ResourceLocation mcLoc(String path) {
