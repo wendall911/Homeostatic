@@ -1,5 +1,13 @@
 {
   "values": [
-    "#minecraft:crimson_stems"
+    "#minecraft:crimson_stems",
+    {
+      "id": "#byg:embur_logs",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:cockroach_wing",
+      "required": false
+    }
   ]
 }
