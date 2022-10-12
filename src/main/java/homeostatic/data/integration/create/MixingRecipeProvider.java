@@ -21,8 +21,8 @@ public class MixingRecipeProvider extends ProcessingRecipeGen {
     }
 
     private void createRecipes() {
-        create(loc("purified_water"), b -> b.require(Fluids.WATER, 250)
-            .output(HomeostaticFluids.PURIFIED_WATER, 250)
+        create(loc("purified_water"), b -> b.require(Fluids.WATER, 1000)
+            .output(HomeostaticFluids.PURIFIED_WATER, 1000)
             .requiresHeat(HeatCondition.HEATED));
     }
 
