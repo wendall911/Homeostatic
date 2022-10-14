@@ -1,0 +1,8 @@
+#!/bin/bash
+
+rm build/libs/*
+./gradlew build || exit 1
+rm run/server/mods/Homeostatic*
+cp build/libs/*.jar run/server/mods/
+cd run/server/
+./run.sh nogui
