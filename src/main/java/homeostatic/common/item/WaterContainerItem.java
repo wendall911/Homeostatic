@@ -1,6 +1,7 @@
 package homeostatic.common.item;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -40,23 +42,22 @@ import homeostatic.util.WaterHelper;
 
 public class WaterContainerItem extends ItemFluidContainer {
 
-    boolean canDrink = false;
-
     public WaterContainerItem(Properties properties, int capacity) {
         super(properties.durability(capacity), capacity);
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public @Nonnull InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         BlockHitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
         BlockPos pos = hitResult.getBlockPos();
         BlockState blockState = level.getBlockState(pos);
         Fluid targetFluid = blockState.getFluidState().getType();
         IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
-        boolean isEmpty = fluidHandlerItem.getFluidInTank(0).isEmpty();
+        FluidStack fluidStack = fluidHandlerItem.getFluidInTank(0);
+        boolean isEmpty = fluidStack.isEmpty();
 
-        if ((isEmpty || fluidHandlerItem.getFluidInTank(0).getFluid().isSame(targetFluid)) && fluidHandlerItem.getFluidInTank(0).getAmount() != capacity) {
+        if ((isEmpty || fluidStack.getFluid().isSame(targetFluid)) && fluidStack.getAmount() != capacity) {
             if (targetFluid == Fluids.WATER) {
                 return InteractionResultHolder.success(getFilledItem(stack, player, targetFluid, capacity));
             }
@@ -69,7 +70,7 @@ public class WaterContainerItem extends ItemFluidContainer {
             }
         }
 
-        if (!isEmpty && canDrink(stack, player, fluidHandlerItem.getFluidInTank(0).getFluid())) {
+        if (!isEmpty && canDrink(player, fluidStack)) {
             return ItemUtils.startUsingInstantly(level, player, hand);
         }
 
@@ -77,7 +78,7 @@ public class WaterContainerItem extends ItemFluidContainer {
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+    public @Nonnull ItemStack finishUsingItem(ItemStack stack, @Nonnull Level level, @Nonnull LivingEntity entity) {
         IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
 
         fluidHandlerItem.drain(250, IFluidHandler.FluidAction.EXECUTE);
@@ -99,7 +100,7 @@ public class WaterContainerItem extends ItemFluidContainer {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
+    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level level, @Nonnull List<Component> components, @Nonnull TooltipFlag tooltipFlag) {
         Component textComponent = Component.translatable("tooltip.water_container.empty");
         int amount = 0;
 
@@ -117,15 +118,17 @@ public class WaterContainerItem extends ItemFluidContainer {
     }
 
     @Override
-    public boolean isEnchantable(ItemStack stack) {
+    public boolean isEnchantable(@Nonnull ItemStack stack) {
         return false;
     }
 
-    public int getUseDuration(ItemStack stack) {
-        return canDrink ? 32 : 0;
+    @Override
+    public int getUseDuration(@Nonnull ItemStack stack) {
+        return 32;
     }
 
-    public UseAnim getUseAnimation(ItemStack stack) {
+    @Override
+    public @Nonnull UseAnim getUseAnimation(@Nonnull ItemStack stack) {
         return UseAnim.DRINK;
     }
 
@@ -138,17 +141,14 @@ public class WaterContainerItem extends ItemFluidContainer {
         return copy;
     }
 
-    public boolean canDrink(ItemStack stack, Player player, Fluid fluid) {
-        IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
-
-        canDrink = WaterHelper.getFluidHydration(fluid) != null && !fluidHandlerItem.getFluidInTank(0).isEmpty()
-                && fluidHandlerItem.getFluidInTank(0).getAmount() >= 250;
+    public boolean canDrink(Player player, FluidStack fluidStack) {
+        AtomicBoolean canDrink = new AtomicBoolean(WaterHelper.getFluidHydration(fluidStack.getFluid()) != null && fluidStack.getAmount() >= 250);
 
         player.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
-            canDrink = canDrink && data.getWaterLevel() < 20;
+            canDrink.set(canDrink.get() && data.getWaterLevel() < 20);
         });
 
-        return canDrink;
+        return canDrink.get();
     }
 
 }
