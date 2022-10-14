@@ -78,9 +78,7 @@ public class PlayerEventHandler {
             ServerLevel world = sp.getLevel();
             ProfilerFiller profilerfiller = world.getProfiler();
 
-            sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
-                data.checkWaterLevel(sp);
-            });
+            sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> data.checkWaterLevel(sp));
 
             profilerfiller.push("tempCalc");
             sp.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
@@ -89,7 +87,7 @@ public class PlayerEventHandler {
                 }
 
                 if (sp.tickCount % 16 == 0 || sp.tickCount % 60 == 0) {
-                    BlockPos pos = new BlockPos(sp.getEyePosition(1.0F));;
+                    BlockPos pos = new BlockPos(sp.getEyePosition(1.0F));
                     Holder<Biome> biome = world.getBiome(pos);
                     EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
                     boolean updateCore = sp.tickCount % 60 == 0;
@@ -112,7 +110,7 @@ public class PlayerEventHandler {
     public static void onPlayerRespawn(PlayerEvent.Clone event) {
         if (!event.isWasDeath()) return;
 
-        final Player player = event.getEntity() instanceof Player ? (Player) event.getEntity() : null;
+        final Player player = event.getEntity() != null ? event.getEntity() : null;
 
         if (player != null && !player.level.isClientSide) {
             final ServerPlayer sp = (ServerPlayer) player;
@@ -134,7 +132,7 @@ public class PlayerEventHandler {
             });
 
             sp.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
-                BlockPos pos = new BlockPos(sp.getEyePosition(1.0F));;
+                BlockPos pos = new BlockPos(sp.getEyePosition(1.0F));
                 Holder<Biome> biome = world.getBiome(pos);
                 EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
                 BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, data);

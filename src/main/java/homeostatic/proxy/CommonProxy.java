@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
+
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartedEvent;
@@ -30,7 +31,6 @@ import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.HomeostaticRecipes;
-import homeostatic.common.recipe.PurifiedLeatherFlask;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
 
