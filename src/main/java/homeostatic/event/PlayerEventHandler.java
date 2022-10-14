@@ -78,9 +78,7 @@ public class PlayerEventHandler {
             ServerLevel world = sp.getLevel();
             ProfilerFiller profilerfiller = world.getProfiler();
 
-            sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
-                data.checkWaterLevel(sp);
-            });
+            sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> data.checkWaterLevel(sp));
 
             profilerfiller.push("tempCalc");
             sp.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
@@ -112,7 +110,7 @@ public class PlayerEventHandler {
     public static void onPlayerRespawn(PlayerEvent.Clone event) {
         if (!event.isWasDeath()) return;
 
-        final Player player = event.getEntity() instanceof Player ? (Player) event.getEntity() : null;
+        final Player player = event.getEntity() != null ? (Player) event.getEntity() : null;
 
         if (player != null && !player.level.isClientSide) {
             final ServerPlayer sp = (ServerPlayer) player;
