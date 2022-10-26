@@ -36,6 +36,7 @@ public final class ConfigHandler {
         private static final Client CONFIG;
 
         private static final List<String> positions = Arrays.asList("TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT");
+        private static final List<String> hudOptions = Arrays.asList("CENTER_GLOBE", "RIGHT_THERMOMETER");
         private static Color temperatureColorCold = ColorHelper.decode("#3ab3da");
         private static Color temperatureColorHot = ColorHelper.decode("#f9801d");
         private static final Predicate<Object> hexRangeValidator = s -> s instanceof String
@@ -44,6 +45,7 @@ public final class ConfigHandler {
         public final BooleanValue debugEnabled;
         public final BooleanValue useFahrenheit;
         public final ConfigValue<String> position;
+        public final ConfigValue<String> hudOption;
         public final IntValue offsetX;
         public final IntValue offsetY;
         public final DoubleValue scale;
@@ -78,6 +80,9 @@ public final class ConfigHandler {
             temperatureColorRange = builder
                     .comment("Temperature color range (Format (cold->hot): #3ab3da->#f9801d)")
                     .define("temperatureColorRange", "#3ab3da->#f9801d", hexRangeValidator);
+            hudOption = builder
+                    .comment("Select which hud element to display for body and area temperature. One of: " + hudOptions)
+                    .defineInList("hudOption", "CENTER_GLOBE", hudOptions);
         }
 
         public static boolean debugEnabled() {
@@ -110,6 +115,10 @@ public final class ConfigHandler {
 
         public static Color temperatureColorHot() {
             return temperatureColorHot;
+        }
+
+        public static String hudOption() {
+            return CONFIG.hudOption.get();
         }
 
         public static void init() {

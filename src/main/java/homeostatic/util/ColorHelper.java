@@ -8,11 +8,22 @@ import homeostatic.config.ConfigHandler;
 
 public class ColorHelper {
 
-    private static final Color neutral = ColorHelper.decode("#f9ffff");
+    public static final Color neutral = ColorHelper.decode("#d9d8d4");
 
     public static int getTemperatureColor(float temperature) {
         Color hot = ConfigHandler.Client.temperatureColorHot();
         Color cold = ConfigHandler.Client.temperatureColorCold();
+
+        return getTemperatureColorFromRange(temperature, hot, cold);
+    }
+
+    public static int getGlobeTemperatureColor(float temperature) {
+        Color color = decode("#999999");
+        return getTemperatureColorFromRange(temperature, color, color);
+    }
+
+    public static int getTemperatureColorFromRange(float temperature, Color hot, Color cold) {
+
         int step;
 
         if (temperature > BodyTemperature.NORMAL) {
