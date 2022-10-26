@@ -5,6 +5,7 @@ import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
 import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo;
 
+import homeostatic.data.integration.ModIntegration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.material.Fluids;
 
@@ -23,7 +24,9 @@ public class MixingRecipeProvider extends ProcessingRecipeGen {
     private void createRecipes() {
         create(loc("purified_water"), b -> b.require(Fluids.WATER, 1000)
             .output(HomeostaticFluids.PURIFIED_WATER, 1000)
-            .requiresHeat(HeatCondition.HEATED));
+            .requiresHeat(HeatCondition.HEATED)
+            .whenModLoaded(ModIntegration.CREATE_MODID)
+        );
     }
 
     @Override
