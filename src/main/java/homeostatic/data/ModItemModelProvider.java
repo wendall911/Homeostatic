@@ -30,6 +30,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         build(itemGenerated, HomeostaticItems.LEATHER_FLASK);
         build(itemGenerated, HomeostaticItems.PURIFIED_WATER_BUCKET);
         build(itemGenerated, HomeostaticItems.WATER_FILTER);
+        build(itemGenerated, HomeostaticItems.BOOK);
     }
 
     private void build(ModelFile itemGenerated, Item item) {

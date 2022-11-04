@@ -14,6 +14,7 @@ public final class HomeostaticItems {
     public static Item LEATHER_FLASK;
     public static Item PURIFIED_WATER_BUCKET;
     public static Item WATER_FILTER;
+    public static Item BOOK;
 
     public static void init(RegisterEvent.RegisterHelper<Item> registryHelper) {
         ITEM_REGISTRY = registryHelper;
@@ -29,6 +30,11 @@ public final class HomeostaticItems {
         WATER_FILTER = registerItem(
                 "water_filter",
                 new Item(new Item.Properties().tab(CreativeTabs.ITEM_TAB_GROUP)));
+
+        BOOK = registerItem(
+          "book",
+          new HomeostaticBook(new Item.Properties().tab(CreativeTabs.ITEM_TAB_GROUP), "book")
+        );
     }
 
     public static Item registerItem(String name, Item item) {

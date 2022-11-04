@@ -16,6 +16,7 @@ public class ModIntegration {
     public static final String IE_MODID = "immersiveengineering";
     public static final String MC_MODID = "minecraft";
     public static final String MORECRAFT_MODID = "morecraft";
+    public static final String PATCHOULI_MODID = "patchouli";
     public static final String SPROUT_MODID = "sprout";
     public static final String XERCA_MODID = "xercamod";
 
