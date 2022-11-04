@@ -258,6 +258,7 @@ curseforge {
                     optionalLibrary 'fruit-trees'
                     optionalLibrary 'leave-my-bars-alone'
                     optionalLibrary 'create'
+                    optionalLibrary 'patchouli'
                 }
             }
         }
