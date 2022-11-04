@@ -55,6 +55,10 @@ public class OverlayManager {
     }
 
     public void renderWaterOverlay(PoseStack matrix, int rightHeight) {
+        if (ConfigHandler.Client.forceWaterBarPosition()) {
+            rightHeight = 0;
+        }
+
         render(matrix, waterHud, false, rightHeight);
         render(matrix, wetnessOverlay, false, 0);
     }

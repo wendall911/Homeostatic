@@ -56,6 +56,10 @@ public final class ConfigHandler {
         public final IntValue globeOffsetX;
         public final IntValue globeOffsetY;
         public final IntValue globeTextOffsetY;
+        public final BooleanValue forceWaterBarPosition;
+        public final ConfigValue<String> waterBarPosition;
+        public final IntValue waterBarOffsetX;
+        public final IntValue waterBarOffsetY;
 
         static {
             Pair<Client,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Client::new);
@@ -87,7 +91,7 @@ public final class ConfigHandler {
                     .comment("Select which hud element to display for body and area temperature. One of: " + temperatureHudOptions)
                     .defineInList("temperatureHudOption", "CENTER_GLOBE", temperatureHudOptions);
             thermometerPosition = builder
-                    .comment("Position of the RIGHT_THERMOMETER HUD position if enabled, one of: " + positions)
+                    .comment("Position of the RIGHT_THERMOMETER HUD if enabled, one of: " + positions)
                     .defineInList("thermometerPosition", "BOTTOMRIGHT", positions);
             thermometerOffsetX = builder
                     .comment("RIGHT_THERMOMETER HUD X offset")
@@ -99,7 +103,7 @@ public final class ConfigHandler {
                     .comment("RIGHT_THERMOMETER HUD Y offset")
                     .defineInRange("thermometerTextOffsetY", 15, -500, 500);
             globePosition = builder
-                    .comment("Position of the CENTER_GLOBE HUD position if enabled, one of: " + positions)
+                    .comment("Position of the CENTER_GLOBE HUD if enabled, one of: " + positions)
                     .defineInList("globePosition", "BOTTOMCENTER", positions);
             globeOffsetX = builder
                     .comment("CENTER_GLOBE HUD X offset")
@@ -110,6 +114,18 @@ public final class ConfigHandler {
             globeTextOffsetY = builder
                     .comment("CENTER_GLOBE HUD Y offset")
                     .defineInRange("globeTextOffsetY", 90, -500, 500);
+            forceWaterBarPosition = builder
+                    .comment("Set to true to force position of the water bar.")
+                    .define("forceWaterBarPosition", false);
+            waterBarPosition = builder
+                    .comment("Position of the Water Bar HUD if forceWaterBarPosition is true, one of: " + positions)
+                    .defineInList("waterBarPosition", "BOTTOMCENTER", positions);
+            waterBarOffsetX = builder
+                    .comment("Water Bar HUD X offset")
+                    .defineInRange("waterBarOffsetX", 96, -500, 500);
+            waterBarOffsetY = builder
+                    .comment("Water Bar HUD Y offset")
+                    .defineInRange("waterBarOffsetY", 50, -500, 500);
         }
 
         public static boolean useFahrenheit() {
@@ -174,6 +190,22 @@ public final class ConfigHandler {
 
         public static int globeTextOffsetY() {
             return CONFIG.globeTextOffsetY.get();
+        }
+
+        public static boolean forceWaterBarPosition() {
+            return CONFIG.forceWaterBarPosition.get();
+        }
+
+        public static String waterBarPosition() {
+            return CONFIG.waterBarPosition.get();
+        }
+
+        public static int waterBarOffsetX() {
+            return CONFIG.waterBarOffsetX.get();
+        }
+
+        public static int waterBarOffsetY() {
+            return CONFIG.waterBarOffsetY.get();
         }
 
         public static void init() {

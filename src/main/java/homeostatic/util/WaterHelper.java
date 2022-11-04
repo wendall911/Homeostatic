@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import homeostatic.config.ConfigHandler;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -158,12 +159,23 @@ public class WaterHelper {
     }
 
     public static void drawWaterBar(int scaledWidth, int scaledHeight, MobEffectInstance effectInstance, Gui gui, PoseStack matrix, float waterSaturationLevel, int waterLevel, int tickCount) {
-        int offsetX = scaledWidth / 2 + 91;
-        int offsetY = scaledHeight;
-        int pY = offsetY;
+        int offsetX;
+        int offsetY;
         int pV = 0;
         int pU = 0;
         int pUOffset = 0;
+
+        if (ConfigHandler.Client.forceWaterBarPosition()) {
+            offsetX = Alignment.getX(ConfigHandler.Client.globePosition(), scaledWidth, 9,
+                    ConfigHandler.Client.waterBarOffsetX());
+            offsetY = Alignment.getY(ConfigHandler.Client.waterBarPosition(), scaledHeight, ConfigHandler.Client.waterBarOffsetY());
+        }
+        else {
+            offsetX = scaledWidth / 2 + 91;
+            offsetY = scaledHeight;
+        }
+
+        int pY = offsetY;
 
         if (effectInstance != null) {
             pU += 18;
