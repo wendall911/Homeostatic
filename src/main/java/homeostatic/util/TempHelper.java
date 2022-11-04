@@ -1,6 +1,7 @@
 package homeostatic.util;
 
-import homeostatic.Homeostatic;
+import net.minecraft.util.Tuple;
+
 import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.common.temperature.Environment;
 
@@ -150,6 +151,49 @@ public class TempHelper {
         double blackGlobeTemp = (0.01498 * radiation) + (1.184 * dryTempC) - (0.0789 * (relativeHumidity / 100)) - 2.739;
 
         return convertTemp(blackGlobeTemp, false);
+    }
+
+    public static Tuple<TemperatureRange, Integer> getLocalTemperatureRangeStep(float temperature) {
+        Tuple<TemperatureRange, Integer> rangeStep = new Tuple<>(TemperatureRange.COLD, 17);
+
+        if (temperature > Environment.PARITY) {
+            if (temperature < Environment.EXTREME_HEAT) {
+                rangeStep.setB((int) Math.floor((temperature - Environment.PARITY) / 0.0905F));
+            }
+
+            rangeStep.setA(TemperatureRange.HOT);
+        }
+        else {
+            if (temperature > Environment.EXTREME_COLD) {
+                rangeStep.setB((int) Math.floor((Environment.PARITY - temperature) / 4.0F));
+            }
+        }
+
+        return rangeStep;
+    }
+
+    public static Tuple<TemperatureRange, Integer> getBodyTemperatureRangeStep(float temperature) {
+        Tuple<TemperatureRange, Integer> rangeStep = new Tuple<>(TemperatureRange.COLD, 17);
+
+        if (temperature > BodyTemperature.NORMAL) {
+            if (temperature < BodyTemperature.HIGH) {
+                rangeStep.setB((int) Math.floor((temperature - BodyTemperature.NORMAL) / 0.0103F));
+            }
+
+            rangeStep.setA(TemperatureRange.HOT);
+        }
+        else {
+            if (temperature > BodyTemperature.LOW) {
+                rangeStep.setB((int) Math.floor((BodyTemperature.NORMAL - temperature) / 0.005F));
+            }
+        }
+
+        return rangeStep;
+    }
+
+    public enum TemperatureRange {
+        HOT,
+        COLD
     }
 
 }

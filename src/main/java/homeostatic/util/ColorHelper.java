@@ -2,75 +2,59 @@ package homeostatic.util;
 
 import java.awt.Color;
 
-import homeostatic.common.temperature.BodyTemperature;
-import homeostatic.common.temperature.Environment;
+import net.minecraft.util.Tuple;
+
 import homeostatic.config.ConfigHandler;
+import homeostatic.util.TempHelper.TemperatureRange;
 
 public class ColorHelper {
 
     public static final Color neutral = ColorHelper.decode("#d9d8d4");
 
-    public static int getTemperatureColor(float temperature) {
+    public static int getTemperatureColor(Tuple<TemperatureRange, Integer> rangeStep) {
         Color hot = ConfigHandler.Client.temperatureColorHot();
         Color cold = ConfigHandler.Client.temperatureColorCold();
 
-        return getTemperatureColorFromRange(temperature, hot, cold);
+        return getTemperatureColorFromRange(rangeStep, hot, cold, false);
     }
 
-    public static int getGlobeTemperatureColor(float temperature) {
-        Color color = decode("#999999");
-        return getTemperatureColorFromRange(temperature, color, color);
+    public static int getGlobeTemperatureColor(Tuple<TemperatureRange, Integer> rangeStep) {
+        Color color = decode("#FFFFFF");
+
+        return getTemperatureColorFromRange(rangeStep, color, color, true);
     }
 
-    public static int getTemperatureColorFromRange(float temperature, Color hot, Color cold) {
+    public static int getTemperatureColorFromRange(Tuple<TemperatureRange, Integer> rangeStep, Color hot, Color cold, boolean invert) {
+        TempHelper.TemperatureRange range = rangeStep.getA();
+        Color stepColor;
 
-        int step;
-
-        if (temperature > BodyTemperature.NORMAL) {
-            if (temperature > BodyTemperature.HIGH) {
-                step = 16;
-            }
-            else {
-                step = (int) Math.floor((temperature - BodyTemperature.NORMAL) / 0.0103F);
-            }
-
-            return getRangeColor(neutral, hot, 16, step);
+        if (range == TemperatureRange.HOT) {
+            stepColor = hot;
         }
         else {
-            if (temperature < BodyTemperature.LOW) {
-                step = 16;
-            }
-            else {
-                step = (int) Math.floor((BodyTemperature.NORMAL - temperature) / 0.005F);
-            }
-            return getRangeColor(neutral, cold, 16, step);
+            stepColor = cold;
+        }
+
+        if (invert) {
+            return getRangeColor(stepColor, neutral, 18, rangeStep.getB() + 1);
+        }
+        else {
+            return getRangeColor(neutral, stepColor, 18, rangeStep.getB() + 1);
         }
     }
 
-    public static int getLocalTemperatureColor(float temperature) {
-        Color hot = ConfigHandler.Client.temperatureColorHot();
-        Color cold = ConfigHandler.Client.temperatureColorCold();
-        int step;
+    public static int getLocalTemperatureColor(Tuple<TemperatureRange, Integer> rangeStep) {
+        TempHelper.TemperatureRange range = rangeStep.getA();
+        Color tempColor;
 
-        if (temperature > Environment.PARITY) {
-            if (temperature > Environment.EXTREME_HEAT) {
-                step = 16;
-            }
-            else {
-                step = (int) Math.floor((temperature - Environment.PARITY) / 0.0905F);
-            }
-
-            return getRangeColor(neutral, hot, 16, step);
+        if (range == TemperatureRange.COLD) {
+            tempColor = ConfigHandler.Client.temperatureColorCold();
         }
         else {
-            if (temperature < Environment.EXTREME_COLD) {
-                step = 16;
-            }
-            else {
-                step = (int) Math.floor((Environment.PARITY - temperature) / 4.0F);
-            }
-            return getRangeColor(neutral, cold, 16, step);
+            tempColor = ConfigHandler.Client.temperatureColorHot();
         }
+
+        return getRangeColor(neutral, tempColor, 18, rangeStep.getB() + 1);
     }
 
     public static Color decode(String color) {

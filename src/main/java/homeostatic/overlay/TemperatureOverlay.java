@@ -5,9 +5,11 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import homeostatic.util.Alignment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
@@ -35,56 +37,58 @@ public class TemperatureOverlay extends Overlay {
         RenderSystem.setShaderTexture(0, ICONS);
 
         player.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
-            int offsetX = scaledWidth / 2 + 95;
-            int pY = scaledHeight - 27;
+            int offsetX = Alignment.getX(ConfigHandler.Client.thermometerPosition(), scaledWidth, ICON_WIDTH,
+                    ConfigHandler.Client.thermometerOffsetX());
+            int pY = Alignment.getY(ConfigHandler.Client.thermometerPosition(), scaledHeight,
+                    ConfigHandler.Client.thermometerOffsetY());
             float textScale = 0.5F;
-            int textOffsetX = (int) (scaledWidth / textScale) / 2 + 189;
-            int textOffsetY = (int) (scaledHeight / textScale) - 15;
-            int pV = 0;
-            int pU = 0;
-            int pUOffset = 53;
-            int lineOffset = getTempLineOffset(data.getCoreTemperature());
             TempHelper.TemperatureDirection coreTemperatureDirection = TempHelper.getCoreTemperatureDirection(
                     data.getLastSkinTemperature(), data.getCoreTemperature(), data.getSkinTemperature());
             String coreIcon = TemperatureInfo.getDirectionIcon(coreTemperatureDirection);
             String coreTempSmall = String.format("%.1f°%s", TempHelper.convertMcTemp(data.getCoreTemperature(), ConfigHandler.Client.useFahrenheit()), coreIcon);
             String localTemp = String.format("%.0f°", TempHelper.convertMcTemp(data.getLocalTemperature(), ConfigHandler.Client.useFahrenheit()));
+            int textOffsetX = Alignment.getIconTextX(ConfigHandler.Client.thermometerPosition(), scaledWidth,
+                    mc.font.width(coreTempSmall), ConfigHandler.Client.thermometerOffsetX(), textScale, ICON_WIDTH);
+            int textOffsetY = Alignment.getIconTextY(ConfigHandler.Client.thermometerPosition(), scaledHeight,
+                    ConfigHandler.Client.thermometerTextOffsetY(), textScale);
+            int pV = 0;
+            int pUOffset = 53;
+
+            Tuple<TempHelper.TemperatureRange, Integer> localRangeStep = TempHelper.getLocalTemperatureRangeStep(data.getLocalTemperature());
+            Tuple<TempHelper.TemperatureRange, Integer> coreRangeStep = TempHelper.getBodyTemperatureRangeStep(data.getCoreTemperature());
+            int lineOffset = getTempLineOffset(coreRangeStep);
 
             if (data.getCoreTemperature() > BodyTemperature.WARNING_HIGH) {
-                this.blit(matrix, offsetX, pY, pUOffset, pV + 26, ICON_WIDTH, ICON_HEIGHT);
+                this.blit(matrix, offsetX, pY, pUOffset, pV + ICON_HEIGHT, ICON_WIDTH, ICON_HEIGHT);
             }
             else if (data.getCoreTemperature() < BodyTemperature.WARNING_LOW) {
-                this.blit(matrix, offsetX, pY, pUOffset, pV + 52, ICON_WIDTH, ICON_HEIGHT);
+                this.blit(matrix, offsetX, pY, pUOffset, pV + ICON_HEIGHT * 2, ICON_WIDTH, ICON_HEIGHT);
             }
             else {
                 this.blit(matrix, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT);
             }
-            this.blit(matrix, offsetX, pY, pUOffset + 13, pV + lineOffset, ICON_WIDTH, ICON_HEIGHT);
+            this.blit(matrix, offsetX, pY, pUOffset + ICON_WIDTH, pV + lineOffset, ICON_WIDTH, ICON_HEIGHT);
 
-            matrix.scale(textScale, textScale, textScale);
-            mc.font.drawShadow(matrix, localTemp, (textOffsetX + 23) - mc.font.width(localTemp), textOffsetY - 50, ColorHelper.getLocalTemperatureColor(data.getLocalTemperature()));
-            mc.font.drawShadow(matrix, coreTempSmall, textOffsetX, textOffsetY, ColorHelper.getTemperatureColor(data.getCoreTemperature()));
+            if (ConfigHandler.Common.showTemperatureValues()) {
+                matrix.scale(textScale, textScale, textScale);
+
+                mc.font.drawShadow(matrix, localTemp, (textOffsetX + 23) - mc.font.width(localTemp),
+                        textOffsetY - 50, ColorHelper.getLocalTemperatureColor(localRangeStep));
+                mc.font.drawShadow(matrix, coreTempSmall, textOffsetX, textOffsetY, ColorHelper.getTemperatureColor(coreRangeStep));
+            }
         });
     }
 
-    private int getTempLineOffset(float coreTemp) {
+    private int getTempLineOffset(Tuple<TempHelper.TemperatureRange, Integer> rangeStep) {
         int offset;
+        TempHelper.TemperatureRange range = rangeStep.getA();
+        int step = rangeStep.getB() / 2;
 
-        if (coreTemp <= BodyTemperature.NORMAL) {
-            if (coreTemp <= BodyTemperature.LOW) {
-                offset = 1;
-            }
-            else {
-                offset = Math.round((coreTemp - BodyTemperature.LOW) / 0.011462F);
-            }
+        if (range == TempHelper.TemperatureRange.COLD) {
+            offset = Math.max(7 - step, 1);
         }
         else {
-            if (coreTemp >= BodyTemperature.HIGH) {
-                offset = 15;
-            }
-            else {
-                offset = 15 - Math.round((BodyTemperature.HIGH - coreTemp) / 0.020617F);
-            }
+            offset = Math.min(8 + step, 15);
         }
 
         return offset;

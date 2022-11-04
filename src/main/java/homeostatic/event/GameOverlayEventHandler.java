@@ -38,7 +38,7 @@ public class GameOverlayEventHandler {
         Minecraft mc = Minecraft.getInstance();
 
         OVERLAY = (gui, poseStack, partialTick, width, height) -> {
-            if (enabled && ConfigHandler.Client.debugEnabled() && !mc.options.renderDebug) {
+            if (enabled && ConfigHandler.Common.debugEnabled() && !mc.options.renderDebug) {
                 overlayManager.renderOverlay(poseStack);
             }
         };
