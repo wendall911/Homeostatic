@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "modid": "patchouli",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "group": "books",
+  "ingredients": [
+    {
+      "item": "minecraft:dirt"
+    }
+  ],
+  "result": {
+    "item": "homeostatic:book"
+  }
+}
