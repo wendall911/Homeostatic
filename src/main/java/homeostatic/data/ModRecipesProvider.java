@@ -2,29 +2,38 @@ package homeostatic.data;
 
 import java.util.function.Consumer;
 
-import homeostatic.util.WaterHelper;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.tags.FluidTags;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluids;
 
+<<<<<<< HEAD
 import net.minecraftforge.common.crafting.NBTIngredient;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+=======
+import net.minecraftforge.common.crafting.StrictNBTIngredient;
+import net.minecraftforge.common.crafting.conditions.ICondition;
+import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
+>>>>>>> bfc8503 (Add Homeostatic book.)
 
 import org.jetbrains.annotations.NotNull;
 
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.fluid.HomeostaticFluids;
-import homeostatic.Homeostatic;
+import homeostatic.data.integration.ConsumerWrapperBuilder;
+import homeostatic.data.integration.ModIntegration;
+import homeostatic.util.WaterHelper;
+
+import static homeostatic.Homeostatic.loc;
 
 public class ModRecipesProvider extends RecipeProvider {
 
@@ -63,17 +72,39 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_charcoal", has(Items.CHARCOAL))
                 .save(consumer);
 
+<<<<<<< HEAD
         AdvancedCookingRecipeBuilder.smelting(NBTIngredient.of(waterFilledLeatherFlask), NBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
+=======
+        Consumer<FinishedRecipe> wrapped = withCondition(consumer, new ModLoadedCondition(ModIntegration.PATCHOULI_MODID));
+
+        ShapelessRecipeBuilder.shapeless(HomeostaticItems.BOOK)
+                .requires(Items.DIRT)
+                .group("books")
+                .unlockedBy("has_dirt", has(Items.DIRT))
+                .save(wrapped, loc("book_from_dirt"));
+
+        AdvancedCookingRecipeBuilder.smelting(StrictNBTIngredient.of(waterFilledLeatherFlask), StrictNBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
+>>>>>>> bfc8503 (Add Homeostatic book.)
                 .unlockedBy("has_leather_flask", has(leatherFlask))
-                .save(consumer, Homeostatic.loc("furnace_purified_leather_flask"));
+                .save(consumer, loc("furnace_purified_leather_flask"));
 
         AdvancedCookingRecipeBuilder.campfireCooking(NBTIngredient.of(waterFilledLeatherFlask), NBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
                 .unlockedBy("has_leather_flask", has(leatherFlask))
-                .save(consumer, Homeostatic.loc("campfire_purified_leather_flask"));
+                .save(consumer, loc("campfire_purified_leather_flask"));
 
         AdvancedCookingRecipeBuilder.smoking(NBTIngredient.of(waterFilledLeatherFlask), NBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
                 .unlockedBy("has_leather_flask", has(leatherFlask))
-                .save(consumer, Homeostatic.loc("smoking_purified_leather_flask"));
+                .save(consumer, loc("smoking_purified_leather_flask"));
+    }
+
+    private static Consumer<FinishedRecipe> withCondition(Consumer<FinishedRecipe> consumer, ICondition... conditions) {
+        ConsumerWrapperBuilder builder = ConsumerWrapperBuilder.wrap();
+
+        for (ICondition condition : conditions) {
+            builder.addCondition(condition);
+        }
+
+        return builder.build(consumer);
     }
 
 }

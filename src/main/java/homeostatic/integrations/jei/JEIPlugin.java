@@ -1,5 +1,6 @@
 package homeostatic.integrations.jei;
 
+import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,19 +8,26 @@ import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import homeostatic.common.fluid.HomeostaticFluids;
+import homeostatic.common.item.HomeostaticItems;
+import homeostatic.util.WaterHelper;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
 import static net.minecraft.world.item.crafting.RecipeType.CRAFTING;
 
 import homeostatic.common.recipe.ArmorEnhancement;
 import homeostatic.Homeostatic;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 
 @JeiPlugin
 public class JEIPlugin implements IModPlugin {
@@ -37,6 +45,7 @@ public class JEIPlugin implements IModPlugin {
         List<CraftingRecipe> armorEnhancementRecipes = addArmorCraftingRecipes(allCraftingRecipes);
 
         registration.addRecipes(RecipeTypes.CRAFTING, armorEnhancementRecipes);
+        registration.addRecipes(RecipeTypes.CRAFTING, getFilterCraftingRecipes());
     }
 
     private static List<CraftingRecipe> addArmorCraftingRecipes(List<CraftingRecipe> allCraftingRecipes) {
@@ -64,6 +73,21 @@ public class JEIPlugin implements IModPlugin {
                 }
             })
             .toList();
+    }
+
+    private static List<CraftingRecipe> getFilterCraftingRecipes() {
+        List<CraftingRecipe> recipes = new ArrayList<>();
+        Ingredient ingredient = Ingredient.of(HomeostaticItems.WATER_FILTER);
+        ItemStack leatherFlaskBase = new ItemStack(HomeostaticItems.LEATHER_FLASK);
+        ItemStack leatherFlask = WaterHelper.getFilledItem(leatherFlaskBase, HomeostaticFluids.PURIFIED_WATER, 5000);
+        String group = "jei.flask.filter";
+
+        Ingredient baseFlaskIngredient = Ingredient.of(leatherFlaskBase.getItem());
+        NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseFlaskIngredient, ingredient);
+
+        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".purified_leather_flask"), group, leatherFlask, recipeInputs));
+
+        return recipes;
     }
 
 }

@@ -9,6 +9,7 @@ import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 import homeostatic.data.integration.create.FillingRecipeProvider;
 import homeostatic.data.integration.create.MixingRecipeProvider;
+import homeostatic.data.integration.patchouli.ModBookProvider;
 import homeostatic.Homeostatic;
 
 @Mod.EventBusSubscriber(modid = Homeostatic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -33,6 +34,8 @@ public final class DataGenerators {
         gen.addProvider(new DrinkableItemsProvider(gen, Homeostatic.MODID));
         gen.addProvider(new MixingRecipeProvider(gen));
         gen.addProvider(new FillingRecipeProvider(gen));
+        gen.addProvider(new ModBookProvider(gen));
+        gen.addProvider(new ModLanguageProvider(gen));
     }
 
 }

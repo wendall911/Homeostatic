@@ -35,6 +35,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
         this.tag(TagManager.Items.RADIATION_PROTECTION)
             .addTag(ItemTags.CRIMSON_STEMS)
+            .addTag(ItemTags.WARPED_STEMS)
             .addOptionalTag(ModIntegration.bygLoc("embur_logs"))
             .addOptional(ModIntegration.alexLoc("cockroach_wing"));
     }
