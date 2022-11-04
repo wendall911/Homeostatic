@@ -77,7 +77,7 @@ public class GameOverlayEventHandler {
     }
 
     public void callRenderOverlay(PoseStack matrix) {
-        if (enabled && ConfigHandler.Client.debugEnabled() && !Minecraft.getInstance().options.renderDebug) {
+        if (enabled && ConfigHandler.Common.debugEnabled() && !Minecraft.getInstance().options.renderDebug) {
             overlayManager.renderOverlay(matrix);
         }
     }
@@ -90,7 +90,7 @@ public class GameOverlayEventHandler {
     public void onModConfigReloading(ModConfigEvent.Reloading event) {
         if (enabled && event.getConfig().getSpec() == ConfigHandler.Client.CONFIG_SPEC) {
             ConfigHandler.Client.init();
-            OverlayRegistry.enableOverlay(OVERLAY, ConfigHandler.Client.debugEnabled());
+            OverlayRegistry.enableOverlay(OVERLAY, ConfigHandler.Common.debugEnabled());
             OverlayRegistry.enableOverlay(WATER_LEVEL_OVERLAY, true);
             OverlayRegistry.enableOverlay(TEMPERATURE_OVERLAY, true);
             OverlayRegistry.enableOverlay(ENHANCED_VISUALS_OVERLAY, true);
