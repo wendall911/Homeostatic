@@ -49,6 +49,11 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        // Patchouli && Provider
+        name = "Blame Jared"
+        url = "https://maven.blamejared.com"
+    }
 }
 
 group = 'com.github.wendall911.homeostatic'
@@ -113,6 +118,8 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
     compileOnly fg.deobf("curse.maven:create-328085:4007544")
     implementation fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
+    implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+    implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
 
     if (System.getenv('DATA_GEN') != null) {
         runtimeOnly fg.deobf("curse.maven:create-328085:4007544")

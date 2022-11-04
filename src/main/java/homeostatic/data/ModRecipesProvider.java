@@ -2,6 +2,8 @@ package homeostatic.data;
 
 import java.util.function.Consumer;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -13,19 +15,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluids;
 
-<<<<<<< HEAD
 import net.minecraftforge.common.crafting.NBTIngredient;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-=======
-import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
->>>>>>> bfc8503 (Add Homeostatic book.)
-
-import org.jetbrains.annotations.NotNull;
 
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.fluid.HomeostaticFluids;
@@ -47,7 +39,7 @@ public class ModRecipesProvider extends RecipeProvider {
     }
 
     @Override
-    protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+    protected void buildCraftingRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
         ItemLike leatherFlask = HomeostaticItems.LEATHER_FLASK;
         ItemLike waterFilter = HomeostaticItems.WATER_FILTER;
         ItemStack waterFilledLeatherFlask = WaterHelper.getFilledItem(new ItemStack(leatherFlask), Fluids.WATER, 5000);
@@ -72,9 +64,6 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_charcoal", has(Items.CHARCOAL))
                 .save(consumer);
 
-<<<<<<< HEAD
-        AdvancedCookingRecipeBuilder.smelting(NBTIngredient.of(waterFilledLeatherFlask), NBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
-=======
         Consumer<FinishedRecipe> wrapped = withCondition(consumer, new ModLoadedCondition(ModIntegration.PATCHOULI_MODID));
 
         ShapelessRecipeBuilder.shapeless(HomeostaticItems.BOOK)
@@ -83,8 +72,7 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_dirt", has(Items.DIRT))
                 .save(wrapped, loc("book_from_dirt"));
 
-        AdvancedCookingRecipeBuilder.smelting(StrictNBTIngredient.of(waterFilledLeatherFlask), StrictNBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
->>>>>>> bfc8503 (Add Homeostatic book.)
+        AdvancedCookingRecipeBuilder.smelting(NBTIngredient.of(waterFilledLeatherFlask), NBTIngredient.of(cleanWaterFilledLeatherFlask), 0.15F, 200)
                 .unlockedBy("has_leather_flask", has(leatherFlask))
                 .save(consumer, loc("furnace_purified_leather_flask"));
 
