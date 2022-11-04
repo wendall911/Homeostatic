@@ -4,6 +4,7 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
 import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo;
 
+import homeostatic.data.integration.ModIntegration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
@@ -33,7 +34,8 @@ public class FillingRecipeProvider extends ProcessingRecipeGen {
     private void createFlaskRecipe(String id, TagKey<Fluid> key, ResourceLocation fluid) {
         create(loc(id), b -> b.require(key, 1000)
             .require(HomeostaticItems.LEATHER_FLASK)
-            .output(WaterHelper.getFilledItem(new ItemStack(HomeostaticItems.LEATHER_FLASK), fluid, 5000)));
+            .output(WaterHelper.getFilledItem(new ItemStack(HomeostaticItems.LEATHER_FLASK), fluid, 5000))
+            .whenModLoaded(ModIntegration.CREATE_MODID));
     }
 
     @Override

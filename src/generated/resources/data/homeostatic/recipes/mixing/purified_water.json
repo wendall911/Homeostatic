@@ -13,5 +13,11 @@
       "amount": 1000
     }
   ],
-  "heatRequirement": "heated"
+  "heatRequirement": "heated",
+  "conditions": [
+    {
+      "modid": "create",
+      "type": "forge:mod_loaded"
+    }
+  ]
 }
