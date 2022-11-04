@@ -1,6 +1,7 @@
 {
   "values": [
     "#minecraft:crimson_stems",
+    "#minecraft:warped_stems",
     {
       "id": "#byg:embur_logs",
       "required": false

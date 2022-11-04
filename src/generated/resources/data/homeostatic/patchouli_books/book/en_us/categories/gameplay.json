@@ -1,0 +1,6 @@
+{
+  "description": "info.homeostatic.book.gameplay.desc",
+  "icon": "minecraft:iron_sword{\"Damage\":0}",
+  "name": "info.homeostatic.book.gameplay.name",
+  "sortnum": -1
+}

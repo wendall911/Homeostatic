@@ -1,0 +1,20 @@
+{
+  "category": "homeostatic:gameplay",
+  "icon": "minecraft:campfire",
+  "name": "info.homeostatic.book.gameplay.environment.name",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "homeostatic:textures/gui/book/normal_outside.png"
+      ],
+      "text": "info.homeostatic.book.gameplay.environment.intro",
+      "title": "info.homeostatic.book.gameplay.environment.title"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.homeostatic.book.gameplay.environment.details"
+    }
+  ],
+  "sortnum": -1
+}

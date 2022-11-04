@@ -1,0 +1,44 @@
+{
+  "category": "homeostatic:gameplay",
+  "icon": "homeostatic:leather_flask{\"Damage\":0}",
+  "name": "info.homeostatic.book.gameplay.hydration.name",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "homeostatic:textures/gui/book/water_bar.png"
+      ],
+      "text": "info.homeostatic.book.gameplay.hydration.intro",
+      "title": "info.homeostatic.book.gameplay.hydration.title"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.homeostatic.book.gameplay.hydration.details"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "homeostatic:leather_flask",
+      "text": "info.homeostatic.book.gameplay.hydration.leather_flask.text",
+      "title": "info.homeostatic.book.gameplay.hydration.leather_flask.title"
+    },
+    {
+      "type": "patchouli:smelting",
+      "recipe": "homeostatic:furnace_purified_leather_flask",
+      "text": "info.homeostatic.book.gameplay.hydration.leather_flask.smelting.text",
+      "title": "info.homeostatic.book.gameplay.hydration.leather_flask.smelting.title"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "homeostatic:water_filter",
+      "text": "info.homeostatic.book.gameplay.hydration.water_filter.text",
+      "title": "info.homeostatic.book.gameplay.hydration.water_filter.title"
+    },
+    {
+      "type": "homeostatic:custom_crafting",
+      "recipe": "homeostatic:filtered_water_flask",
+      "text": "info.homeostatic.book.gameplay.hydration.leather_flask_water_filter.text",
+      "title": "info.homeostatic.book.gameplay.hydration.leather_flask_water_filter.title"
+    }
+  ],
+  "sortnum": 1
+}
