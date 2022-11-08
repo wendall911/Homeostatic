@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.material.Fluids;
@@ -50,6 +51,8 @@ public class PlayerEventHandler {
             final ServerPlayer sp = (ServerPlayer) player;
             ServerLevel world = sp.getLevel();
 
+            if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
+
             WaterHelper.updateWaterInfo(sp, 0.0F);
             WetnessHelper.updateWetnessInfo(sp, 0.0F, true);
 
@@ -74,6 +77,8 @@ public class PlayerEventHandler {
 
         if (!event.player.getLevel().isClientSide()) {
             final ServerPlayer sp = (ServerPlayer) event.player;
+
+            if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
 
             ServerLevel world = sp.getLevel();
             ProfilerFiller profilerfiller = world.getProfiler();
@@ -115,6 +120,8 @@ public class PlayerEventHandler {
         if (player != null && !player.level.isClientSide) {
             final ServerPlayer sp = (ServerPlayer) player;
             ServerLevel world = sp.getLevel();
+
+            if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
 
             sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
                 WaterInfo waterInfo = new WaterInfo(
