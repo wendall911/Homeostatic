@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
@@ -40,6 +41,8 @@ import homeostatic.overlay.WaterHud;
 public class WaterHelper {
 
     public static void updateWaterInfo(ServerPlayer sp, float sweatLevel) {
+        if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
+
         sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
             WaterInfo waterInfo = new WaterInfo(
                 data.getWaterLevel(),

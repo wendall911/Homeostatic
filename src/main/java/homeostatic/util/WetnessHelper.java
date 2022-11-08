@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 
+import net.minecraft.world.level.GameType;
 import net.minecraftforge.network.PacketDistributor;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
@@ -15,6 +16,8 @@ import homeostatic.network.WetnessData;
 public class WetnessHelper {
 
     public static void updateWetnessInfo(ServerPlayer sp, float moistureLevel, boolean increase) {
+        if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
+
         sp.getCapability(CapabilityRegistry.WETNESS_CAPABILITY).ifPresent(data -> {
             WetnessInfo wetnessInfo = new WetnessInfo(
                 data.getWetnessLevel(),
