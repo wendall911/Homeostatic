@@ -73,18 +73,25 @@ public class WaterHelper {
         if (hydration != null) {
             sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
                 boolean isDirty = hydration.duration() > 0;
+                float chance = hydration.chance();
 
                 data.increaseWaterLevel(hydration.amount());
                 data.increaseSaturationLevel(hydration.saturation());
 
-                if (isDirty && Homeostatic.RANDOM.nextFloat() < hydration.chance()) {
-                    if (!sp.hasEffect(HomeostaticEffects.THIRST.get())) {
-                        sp.addEffect(new MobEffectInstance(
-                                HomeostaticEffects.THIRST.get(),
-                                hydration.duration(),
-                                hydration.potency(),
-                                false, false, false));
-                    }
+                // Reduce change of getting more thirst effect if player already has the effect
+                if (!sp.hasEffect(HomeostaticEffects.THIRST.get())) {
+                    chance = chance * 0.5F;
+                }
+
+                if (isDirty && Homeostatic.RANDOM.nextFloat() < chance) {
+                    sp.addEffect(new MobEffectInstance(
+                        HomeostaticEffects.THIRST.get(),
+                        hydration.duration(),
+                        hydration.potency(),
+                        false,
+                        false,
+                        false
+                    ));
                 }
 
                 if (update) {
