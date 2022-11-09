@@ -44,18 +44,29 @@ public class TemperatureOverlay extends Overlay {
             float textScale = 0.5F;
             TempHelper.TemperatureDirection coreTemperatureDirection = TempHelper.getCoreTemperatureDirection(
                     data.getLastSkinTemperature(), data.getCoreTemperature(), data.getSkinTemperature());
-            String coreIcon = TemperatureInfo.getDirectionIcon(coreTemperatureDirection);
-            String coreTempSmall = String.format("%.1f°%s", TempHelper.convertMcTemp(data.getCoreTemperature(), ConfigHandler.Client.useFahrenheit()), coreIcon);
-            String localTemp = String.format("%.0f°", TempHelper.convertMcTemp(data.getLocalTemperature(), ConfigHandler.Client.useFahrenheit()));
+            TempHelper.TemperatureDirection skinTemperatureDirection = TempHelper.getSkinTemperatureDirection(
+                    data.getLocalTemperature(), data.getSkinTemperature());
+            String coreDirection = TemperatureInfo.getDirectionIcon(coreTemperatureDirection);
+            String skinDirection = TemperatureInfo.getDirectionIcon(skinTemperatureDirection);
+            String coreTempFormat = ConfigHandler.Client.showDegreeSymbol() ? "%.1f°" : "%.1f";
+            String localTempFormat = ConfigHandler.Client.showDegreeSymbol() ? "%.0f°" : "%.0f";
+            String coreTempSmall = String.format(coreTempFormat, TempHelper.convertMcTemp(data.getCoreTemperature(), ConfigHandler.Client.useFahrenheit()));
+            String localTemp = String.format(localTempFormat, TempHelper.convertMcTemp(data.getLocalTemperature(), ConfigHandler.Client.useFahrenheit()));
             int textOffsetX = Alignment.getIconTextX(ConfigHandler.Client.thermometerPosition(), scaledWidth,
                     mc.font.width(coreTempSmall), ConfigHandler.Client.thermometerOffsetX(), textScale, ICON_WIDTH);
+            int localTextOffsetX = Alignment.getIconTextX(ConfigHandler.Client.thermometerPosition(), scaledWidth,
+                    mc.font.width(localTemp), ConfigHandler.Client.thermometerOffsetX(), textScale, ICON_WIDTH);
             int textOffsetY = Alignment.getIconTextY(ConfigHandler.Client.thermometerPosition(), scaledHeight,
                     ConfigHandler.Client.thermometerTextOffsetY(), textScale);
+            int directionOffsetX = Alignment.getIconTextX(ConfigHandler.Client.thermometerPosition(), scaledWidth,
+                    mc.font.width(coreDirection), ConfigHandler.Client.thermometerOffsetX(), textScale, ICON_WIDTH);
             int pV = 0;
             int pUOffset = 53;
 
             Tuple<TempHelper.TemperatureRange, Integer> localRangeStep = TempHelper.getLocalTemperatureRangeStep(data.getLocalTemperature());
             Tuple<TempHelper.TemperatureRange, Integer> coreRangeStep = TempHelper.getBodyTemperatureRangeStep(data.getCoreTemperature());
+            Tuple<TempHelper.TemperatureRange, Integer> skinRangeStep =
+                    TempHelper.getBodyTemperatureRangeStep(data.getSkinTemperature());
             int lineOffset = getTempLineOffset(coreRangeStep);
 
             if (data.getCoreTemperature() > BodyTemperature.WARNING_HIGH) {
@@ -72,7 +83,13 @@ public class TemperatureOverlay extends Overlay {
             if (ConfigHandler.Common.showTemperatureValues()) {
                 matrix.scale(textScale, textScale, textScale);
 
-                mc.font.drawShadow(matrix, localTemp, (textOffsetX + 23) - mc.font.width(localTemp),
+                if (ConfigHandler.Client.showThermometerRateChangeSymbols()) {
+                    mc.font.drawShadow(matrix, coreDirection, directionOffsetX - 8,
+                            textOffsetY - 15, ColorHelper.getLocalTemperatureColor(coreRangeStep));
+                    mc.font.drawShadow(matrix, skinDirection, directionOffsetX + 8,
+                            textOffsetY - 15, ColorHelper.getLocalTemperatureColor(skinRangeStep));
+                }
+                mc.font.drawShadow(matrix, localTemp, localTextOffsetX,
                         textOffsetY - 50, ColorHelper.getLocalTemperatureColor(localRangeStep));
                 mc.font.drawShadow(matrix, coreTempSmall, textOffsetX, textOffsetY, ColorHelper.getTemperatureColor(coreRangeStep));
             }
