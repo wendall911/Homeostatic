@@ -45,13 +45,11 @@ public class TemperatureGlobeOverlay extends Overlay {
             int pV;
             int localPV;
             int pUOffset = 80; // sprite X offset
-
-            TempHelper.TemperatureDirection coreTemperatureDirection = TempHelper.getCoreTemperatureDirection(
-                    data.getLastSkinTemperature(), data.getCoreTemperature(), data.getSkinTemperature());
-            String coreIcon = TemperatureInfo.getDirectionIcon(coreTemperatureDirection);
-            String coreTempSmall = String.format("%.1f°%s", TempHelper.convertMcTemp(data.getCoreTemperature(),
-                    ConfigHandler.Client.useFahrenheit()), coreIcon);
-            String localTemp = String.format("%.0f°", TempHelper.convertMcTemp(data.getLocalTemperature(),
+            String coreTempFormat = ConfigHandler.Client.showDegreeSymbol() ? "%.1f°" : "%.1f";
+            String localTempFormat = ConfigHandler.Client.showDegreeSymbol() ? "%.0f°" : "%.0f";
+            String coreTempSmall = String.format(coreTempFormat, TempHelper.convertMcTemp(data.getCoreTemperature(),
+                    ConfigHandler.Client.useFahrenheit()));
+            String localTemp = String.format(localTempFormat, TempHelper.convertMcTemp(data.getLocalTemperature(),
                     ConfigHandler.Client.useFahrenheit()));
 
             int coreOffsetX = Alignment.getIconTextX(ConfigHandler.Client.globePosition(), scaledWidth,
@@ -69,8 +67,8 @@ public class TemperatureGlobeOverlay extends Overlay {
             if (ConfigHandler.Common.showTemperatureValues()) {
                 matrix.scale(textScale, textScale, textScale);
 
-                mc.font.drawShadow(matrix, localTemp, localOffsetX, textOffsetY - 19, ColorHelper.getLocalTemperatureColor(localRangeStep));
-                mc.font.drawShadow(matrix, coreTempSmall, coreOffsetX, textOffsetY, ColorHelper.getGlobeTemperatureColor(coreRangeStep));
+                mc.font.drawShadow(matrix, localTemp, localOffsetX - 1, textOffsetY - 19, ColorHelper.getLocalTemperatureColor(localRangeStep));
+                mc.font.drawShadow(matrix, coreTempSmall, coreOffsetX - 1, textOffsetY, ColorHelper.getGlobeTemperatureColor(coreRangeStep));
             }
         });
     }

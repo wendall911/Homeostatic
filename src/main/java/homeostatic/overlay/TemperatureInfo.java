@@ -68,9 +68,9 @@ public class TemperatureInfo extends Overlay {
 
     public static String getDirectionIcon(TemperatureDirection direction) {
         return switch(direction) {
-            case COOLING -> "↓";
+            case COOLING -> "↧";
             case COOLING_RAPIDLY -> "⇊";
-            case WARMING -> "↑";
+            case WARMING -> "↥";
             case WARMING_RAPIDLY -> "⇈";
             case NONE -> "·";
             case COOLING_NORMALLY -> "ˬ";

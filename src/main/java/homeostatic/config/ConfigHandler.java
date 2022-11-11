@@ -42,6 +42,7 @@ public final class ConfigHandler {
                 && ((String) s).matches("#[a-zA-Z\\d]{6}->#[a-zA-Z\\d]{6}");
 
         public final BooleanValue useFahrenheit;
+        public final BooleanValue showDegreeSymbol;
         public final ConfigValue<String> debugPosition;
         public final IntValue debugOffsetX;
         public final IntValue debugOffsetY;
@@ -52,6 +53,7 @@ public final class ConfigHandler {
         public final IntValue thermometerOffsetX;
         public final IntValue thermometerOffsetY;
         public final IntValue thermometerTextOffsetY;
+        public final BooleanValue showThermometerRateChangeSymbols;
         public final ConfigValue<String> globePosition;
         public final IntValue globeOffsetX;
         public final IntValue globeOffsetY;
@@ -72,6 +74,9 @@ public final class ConfigHandler {
             useFahrenheit = builder
                     .comment("Use Fahrenheit, otherwise use Celcius.")
                     .define("useFahrenheit", true);
+            showDegreeSymbol = builder
+                    .comment("Show degree symbol next to temperature value.")
+                    .define("showDegreeSymbol", true);
             debugPosition = builder
                     .comment("Position of debug info, one of: " + positions)
                     .defineInList("position", "TOPRIGHT", positions);
@@ -102,6 +107,9 @@ public final class ConfigHandler {
             thermometerTextOffsetY = builder
                     .comment("RIGHT_THERMOMETER HUD Y offset")
                     .defineInRange("thermometerTextOffsetY", 15, -500, 500);
+            showThermometerRateChangeSymbols = builder
+                    .comment("Show rate change symbols to left/right of thermometer. Left is core temp, right is skin temperature.")
+                    .define("showThermometerRateChangeSymbols", true);
             globePosition = builder
                     .comment("Position of the CENTER_GLOBE HUD if enabled, one of: " + positions)
                     .defineInList("globePosition", "BOTTOMCENTER", positions);
@@ -130,6 +138,10 @@ public final class ConfigHandler {
 
         public static boolean useFahrenheit() {
             return CONFIG.useFahrenheit.get();
+        }
+
+        public static boolean showDegreeSymbol() {
+            return CONFIG.showDegreeSymbol.get();
         }
 
         public static String debugPosition() {
@@ -174,6 +186,10 @@ public final class ConfigHandler {
 
         public static int thermometerTextOffsetY() {
             return CONFIG.thermometerTextOffsetY.get();
+        }
+
+        public static boolean showThermometerRateChangeSymbols() {
+            return CONFIG.showThermometerRateChangeSymbols.get();
         }
 
         public static String globePosition() {
