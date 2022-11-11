@@ -57,9 +57,11 @@
   "item.homeostatic.book": "Homeostatic Tome",
   "item.homeostatic.leather_flask": "Leather Flask",
   "item.homeostatic.purified_water_bucket": "Purified Water Bucket",
+  "item.homeostatic.thermometer": "Thermometer",
   "item.homeostatic.water_filter": "Water Filter",
   "tooltip.insulation": "Insulation",
   "tooltip.radiation_protection": "Radiation Protection",
+  "tooltip.thermometer": "Thermovision",
   "tooltip.water_container.empty": "Empty",
   "tooltip.waterproof": "Waterproof"
 }
