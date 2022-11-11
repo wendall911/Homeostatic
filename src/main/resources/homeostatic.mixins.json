@@ -6,7 +6,8 @@
   "mixins": [
     "BiomeBuilderMixin",
     "ServerLevelAccessor",
-    "CakeBlockMixin"
+    "CakeBlockMixin",
+    "RecipeProviderAccessor"
   ],
   "client": [],
   "injectors": {
