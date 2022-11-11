@@ -1,7 +1,8 @@
-package homeostatic.data;
+package homeostatic.data.recipe;
 
 import java.util.function.Consumer;
 
+import homeostatic.data.AdvancedCookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -62,6 +63,16 @@ public class ModRecipesProvider extends RecipeProvider {
                 .pattern("C")
                 .pattern("P")
                 .unlockedBy("has_charcoal", has(Items.CHARCOAL))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(HomeostaticItems.THERMOMETER)
+                .define('N', Items.IRON_NUGGET)
+                .define('D', Items.REDSTONE)
+                .define('I', Items.IRON_INGOT)
+                .pattern("N")
+                .pattern("D")
+                .pattern("I")
+                .unlockedBy("has_redstone", has(Items.REDSTONE))
                 .save(consumer);
 
         Consumer<FinishedRecipe> wrapped = withCondition(consumer, new ModLoadedCondition(ModIntegration.PATCHOULI_MODID));

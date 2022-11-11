@@ -12,6 +12,9 @@ import homeostatic.data.integration.create.MixingRecipeProvider;
 import homeostatic.data.integration.patchouli.ModBookProvider;
 import homeostatic.Homeostatic;
 
+import homeostatic.data.recipe.ModRecipesProvider;
+import homeostatic.data.recipe.SpecialRecipeProvider;
+
 @Mod.EventBusSubscriber(modid = Homeostatic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class DataGenerators {
 
@@ -36,6 +39,7 @@ public final class DataGenerators {
         gen.addProvider(true, new FillingRecipeProvider(gen));
         gen.addProvider(true, new ModBookProvider(gen));
         gen.addProvider(true, new ModLanguageProvider(gen));
+        gen.addProvider(true, new SpecialRecipeProvider(gen));
     }
 
 }

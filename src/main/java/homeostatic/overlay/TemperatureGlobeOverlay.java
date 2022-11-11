@@ -18,6 +18,8 @@ import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
 import homeostatic.util.TempHelper;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class TemperatureGlobeOverlay extends Overlay {
 
     public final static ResourceLocation ICONS = Homeostatic.loc("textures/gui/icons.png");
@@ -52,6 +54,7 @@ public class TemperatureGlobeOverlay extends Overlay {
             String localTemp = String.format(localTempFormat, TempHelper.convertMcTemp(data.getLocalTemperature(),
                     ConfigHandler.Client.useFahrenheit()));
 
+            AtomicBoolean showTemperature = new AtomicBoolean(ConfigHandler.Common.showTemperatureValues());
             int coreOffsetX = Alignment.getIconTextX(ConfigHandler.Client.globePosition(), scaledWidth,
                     mc.font.width(coreTempSmall), ConfigHandler.Client.globeOffsetX(), textScale, ICON_WIDTH);
             int localOffsetX = Alignment.getIconTextX(ConfigHandler.Client.globePosition(), scaledWidth,
@@ -64,12 +67,19 @@ public class TemperatureGlobeOverlay extends Overlay {
             this.blit(matrix, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT);
             this.blit(matrix, offsetX, pY, pUOffset + ICON_WIDTH, localPV, ICON_WIDTH, ICON_HEIGHT);
 
-            if (ConfigHandler.Common.showTemperatureValues()) {
+            if (ConfigHandler.Common.requireThermometer()) {
+                player.getCapability(CapabilityRegistry.THERMOMETER_CAPABILITY).ifPresent(thermometer -> {
+                    showTemperature.set(thermometer.hasThermometer());
+                });
+            }
+
+            if (showTemperature.get()) {
                 matrix.scale(textScale, textScale, textScale);
 
                 mc.font.drawShadow(matrix, localTemp, localOffsetX - 1, textOffsetY - 19, ColorHelper.getLocalTemperatureColor(localRangeStep));
                 mc.font.drawShadow(matrix, coreTempSmall, coreOffsetX - 1, textOffsetY, ColorHelper.getGlobeTemperatureColor(coreRangeStep));
             }
+
         });
     }
 

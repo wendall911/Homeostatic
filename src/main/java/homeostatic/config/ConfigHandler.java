@@ -240,6 +240,7 @@ public final class ConfigHandler {
 
         public final BooleanValue debugEnabled;
         public final BooleanValue showTemperatureValues;
+        public final BooleanValue requireThermometer;
 
         static {
             Pair<Common,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
@@ -258,6 +259,10 @@ public final class ConfigHandler {
                 .comment("Show temperature values in HUD.")
                 .define("showTemperatureValues", true);
 
+            requireThermometer = builder
+                    .comment("Require thermometer helmet enhancement to display temperature values.")
+                    .define("requireThermometer", false);
+
         }
 
         public static boolean debugEnabled() {
@@ -266,6 +271,10 @@ public final class ConfigHandler {
 
         public static boolean showTemperatureValues() {
             return CONFIG.showTemperatureValues.get();
+        }
+
+        public static boolean requireThermometer() {
+            return CONFIG.requireThermometer.get();
         }
 
     }

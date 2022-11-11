@@ -95,8 +95,6 @@ public class Water {
         @Nonnull
         @Override
         public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-            if (cap == null) return LazyOptional.empty();
-
             return CapabilityRegistry.WATER_CAPABILITY.orEmpty(cap, handler);
         }
 
