@@ -64,6 +64,13 @@
     },
     {
       "type": "homeostatic:custom_crafting",
+      "anchor": "remove_insulation",
+      "recipe": "homeostatic:remove_insulation",
+      "title": "info.homeostatic.book.gameplay.body_temp.remove_insulation.title",
+      "text": "info.homeostatic.book.gameplay.body_temp.remove_insulation.text"
+    },
+    {
+      "type": "homeostatic:custom_crafting",
       "anchor": "radiation_protection",
       "recipe": "homeostatic:radiation_protection",
       "title": "info.homeostatic.book.gameplay.body_temp.radiation_protection.title",
@@ -71,10 +78,24 @@
     },
     {
       "type": "homeostatic:custom_crafting",
+      "anchor": "remove_radiation_protection",
+      "recipe": "homeostatic:remove_radiation_protection",
+      "title": "info.homeostatic.book.gameplay.body_temp.remove_radiation_protection.title",
+      "text": "info.homeostatic.book.gameplay.body_temp.remove_radiation_protection.text"
+    },
+    {
+      "type": "homeostatic:custom_crafting",
       "anchor": "waterproofing",
       "recipe": "homeostatic:waterproof",
       "title": "info.homeostatic.book.gameplay.body_temp.waterproof.title",
       "text": "info.homeostatic.book.gameplay.body_temp.waterproof.text"
+    },
+    {
+      "type": "homeostatic:custom_crafting",
+      "anchor": "remove_waterproofing",
+      "recipe": "homeostatic:remove_waterproof",
+      "title": "info.homeostatic.book.gameplay.body_temp.remove_waterproof.title",
+      "text": "info.homeostatic.book.gameplay.body_temp.remove_waterproof.text"
     }
   ],
   "sortnum": 0
