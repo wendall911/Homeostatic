@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.common.util.FakePlayer;
 
 import homeostatic.common.capabilities.Temperature;
+import homeostatic.common.capabilities.Thermometer;
 import homeostatic.common.capabilities.Water;
 import homeostatic.common.capabilities.Wetness;
 import homeostatic.Homeostatic;
@@ -30,6 +31,10 @@ public class CapabilityEventHandler {
             event.addCapability(
                 Homeostatic.loc("wetness"),
                 new Wetness.Provider()
+            );
+            event.addCapability(
+                Homeostatic.loc("thermometer"),
+                new Thermometer.Provider()
             );
         }
     }

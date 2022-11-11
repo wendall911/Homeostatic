@@ -1,13 +1,18 @@
 package homeostatic.event;
 
+import homeostatic.common.temperature.ThermometerInfo;
+import homeostatic.config.ConfigHandler;
+import homeostatic.network.ThermometerData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,6 +26,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -202,6 +208,32 @@ public class PlayerEventHandler {
                 }
             });
         }
+    }
+
+    @SubscribeEvent
+    public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
+        if (ConfigHandler.Common.showTemperatureValues() && ConfigHandler.Common.requireThermometer()) {
+            if (event.getEntity() instanceof Player player && !player.level.isClientSide && event.getSlot() == EquipmentSlot.HEAD) {
+                final ServerPlayer sp = (ServerPlayer) player;
+
+                sp.getCapability(CapabilityRegistry.THERMOMETER_CAPABILITY).ifPresent(data -> {
+                    ItemStack equippedHelmet = event.getTo();
+                    boolean equippedHasThermometer = hasThermometer(equippedHelmet);
+                    ThermometerInfo info = new ThermometerInfo(equippedHasThermometer);
+
+                    NetworkHandler.INSTANCE.send(
+                            PacketDistributor.PLAYER.with(() -> sp),
+                            new ThermometerData(info)
+                    );
+                });
+            }
+        }
+    }
+
+    private static boolean hasThermometer(ItemStack helmet) {
+        CompoundTag tag = helmet.getOrCreateTag();
+
+        return tag.contains("thermometer");
     }
 
 }

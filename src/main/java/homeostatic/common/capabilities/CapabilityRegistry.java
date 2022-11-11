@@ -16,6 +16,7 @@ public class CapabilityRegistry {
     public static final Capability<Temperature> TEMPERATURE_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<Water> WATER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<Wetness> WETNESS_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    public static final Capability<Thermometer> THERMOMETER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<IFluidHandlerItem> FLUID_ITEM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
     @SubscribeEvent
@@ -23,6 +24,7 @@ public class CapabilityRegistry {
         event.register(Temperature.class);
         event.register(Water.class);
         event.register(Wetness.class);
+        event.register(Thermometer.class);
     }
 
 }

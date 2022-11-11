@@ -3,7 +3,6 @@ package homeostatic.network;
 import java.util.function.Function;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -28,6 +27,7 @@ public final class NetworkHandler {
         registerMessage(id++, WaterData.class, WaterData::new);
         registerMessage(id++, DrinkWater.class, DrinkWater::new);
         registerMessage(id++, WetnessData.class, WetnessData::new);
+        registerMessage(id++, ThermometerData.class, ThermometerData::new);
     }
 
     private static <T extends IData> void registerMessage(int idx, Class<T> type, Function<FriendlyByteBuf, T> decoder) {

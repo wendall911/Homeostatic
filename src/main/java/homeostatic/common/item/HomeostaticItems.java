@@ -18,6 +18,7 @@ public final class HomeostaticItems {
     public static Item PURIFIED_WATER_BUCKET;
     public static Item WATER_FILTER;
     public static Item BOOK;
+    public static Item THERMOMETER;
 
 
     public static void init(IForgeRegistry<Item> registry) {
@@ -39,6 +40,10 @@ public final class HomeostaticItems {
           "book",
           new HomeostaticBook(new Item.Properties().tab(CreativeTabs.ITEM_TAB_GROUP), "book")
         );
+
+        THERMOMETER = registerItem(
+                "thermometer",
+                new Item(new Item.Properties().tab(CreativeTabs.ITEM_TAB_GROUP)));
     }
 
     public static Item registerItem(String name, Item item) {

@@ -3,7 +3,6 @@ package homeostatic.common.recipe;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.google.gson.JsonObject;
 
 import com.mojang.datafixers.util.Pair;
 
@@ -17,13 +16,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import homeostatic.common.TagManager;
-import homeostatic.Homeostatic;
 
 public class ArmorEnhancement extends CustomRecipe {
 
@@ -51,7 +48,7 @@ public class ArmorEnhancement extends CustomRecipe {
         Pair<ItemStack, TagKey> check = checkContainer(pContainer);
         ItemStack armorCopy = check.getFirst().copy();
         TagKey tagKey = check.getSecond();
-        CompoundTag tags = armorCopy.getTag();
+        CompoundTag tags = armorCopy.getOrCreateTag();
 
         if (tagKey == TagManager.Items.INSULATION) {
             if (!tags.contains("insulation")) {
@@ -118,14 +115,6 @@ public class ArmorEnhancement extends CustomRecipe {
         }
 
         return Pair.of(armor, tagKey);
-    }
-
-    public static class Type implements RecipeType<ArmorEnhancement> {
-
-        public static final Type INSTANCE = new Type();
-
-        private Type() {}
-
     }
 
     public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ArmorEnhancement> {

@@ -26,35 +26,35 @@ public final class ArmorEnhancementRecipeMaker {
         Ingredient radiation = Ingredient.of(TagManager.Items.RADIATION_PROTECTION);
 
         Registry.ITEM.stream()
-            .filter(ArmorItem.class::isInstance)
-            .forEach(armorItem -> {
-                Ingredient baseArmorIngredient = Ingredient.of(((ArmorItem) armorItem).asItem());
-                ItemStack woolArmorStack = new ItemStack(armorItem);
-                ItemStack waterproofArmorStack = new ItemStack(armorItem);
-                ItemStack radiationArmorStack = new ItemStack(armorItem);
-                CompoundTag woolArmorStackTag = woolArmorStack.getTag();
-                CompoundTag waterproofArmorStackTag = waterproofArmorStack.getTag();
-                CompoundTag radiationArmorStackTag = radiationArmorStack.getTag();
-                NonNullList<Ingredient> insulatedInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, wool, wool, wool);
-                NonNullList<Ingredient> waterproofInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, waterproof, waterproof, waterproof);
-                NonNullList<Ingredient> radiationInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, radiation, radiation, radiation);
+                .filter(ArmorItem.class::isInstance)
+                .forEach(armorItem -> {
+                    Ingredient baseArmorIngredient = Ingredient.of(armorItem.asItem());
+                    ItemStack woolArmorStack = new ItemStack(armorItem);
+                    ItemStack waterproofArmorStack = new ItemStack(armorItem);
+                    ItemStack radiationArmorStack = new ItemStack(armorItem);
+                    CompoundTag woolArmorStackTag = woolArmorStack.getTag();
+                    CompoundTag waterproofArmorStackTag = waterproofArmorStack.getTag();
+                    CompoundTag radiationArmorStackTag = radiationArmorStack.getTag();
+                    NonNullList<Ingredient> insulatedInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, wool, wool, wool);
+                    NonNullList<Ingredient> waterproofInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, waterproof, waterproof, waterproof);
+                    NonNullList<Ingredient> radiationInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, radiation, radiation, radiation);
 
-                if (woolArmorStackTag != null ) {
-                    woolArmorStackTag.putBoolean("insulation", true);
-                    recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".insulated"), group, woolArmorStack, insulatedInputs));
-                }
+                    if (woolArmorStackTag != null) {
+                        woolArmorStackTag.putBoolean("insulation", true);
+                        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".insulated"), group, woolArmorStack, insulatedInputs));
+                    }
 
-                if (waterproofArmorStackTag != null) {
-                    waterproofArmorStackTag.putBoolean("waterproof", true);
-                    recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".waterproof"), group, waterproofArmorStack, waterproofInputs));
+                    if (waterproofArmorStackTag != null) {
+                        waterproofArmorStackTag.putBoolean("waterproof", true);
+                        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".waterproof"), group, waterproofArmorStack, waterproofInputs));
 
-                }
+                    }
 
-                if (radiationArmorStackTag != null) {
-                    radiationArmorStackTag.putBoolean("radiation_protection", true);
-                    recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".radiation_resistance"), group, radiationArmorStack, radiationInputs));
-                }
-            });
+                    if (radiationArmorStackTag != null) {
+                        radiationArmorStackTag.putBoolean("radiation_protection", true);
+                        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".radiation_resistance"), group, radiationArmorStack, radiationInputs));
+                    }
+                });
 
         return recipes;
     }

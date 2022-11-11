@@ -25,10 +25,12 @@ public class ModLanguageProvider extends LanguageProvider {
         addTooltip("waterproof", "Waterproof");
         addTooltip("radiation_protection", "Radiation Protection");
         addTooltip("water_container.empty", "Empty");
+        addTooltip("thermometer", "Thermovision");
         addItem("book", "Homeostatic Tome");
         addItem("leather_flask", "Leather Flask");
         addItem("purified_water_bucket", "Purified Water Bucket");
         addItem("water_filter", "Water Filter");
+        addItem("thermometer", "Thermometer");
         addFluid("purified_water_type", "Purified Water");
         addBookEntry("intro", "Temperature and hydration dynamics that don't defy logic...$(br)" +
                 "$(li)The $(l:homeostatic:education/environment)environment$() has temperature that is affected by " +

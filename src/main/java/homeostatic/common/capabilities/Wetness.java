@@ -67,8 +67,6 @@ public class Wetness {
         @Nonnull
         @Override
         public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-            if (cap == null) return LazyOptional.empty();
-
             return CapabilityRegistry.WETNESS_CAPABILITY.orEmpty(cap, handler);
         }
 

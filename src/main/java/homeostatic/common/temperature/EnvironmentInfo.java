@@ -10,7 +10,6 @@ public record EnvironmentInfo(boolean isUnderground, boolean isSheltered, double
         return waterVolume;
     }
 
-
     public String toString() {
         return "isUnderground: " + isUnderground + " isSheltered: " + isSheltered
                 + " radiation: " + radiation + " waterVolume: " + waterVolume;

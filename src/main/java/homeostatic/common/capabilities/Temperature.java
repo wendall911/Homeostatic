@@ -109,8 +109,6 @@ public class Temperature {
         @Nonnull
         @Override
         public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-            if (cap == null) return LazyOptional.empty();
-
             return CapabilityRegistry.TEMPERATURE_CAPABILITY.orEmpty(cap, handler);
         }
 

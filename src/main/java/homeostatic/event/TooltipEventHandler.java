@@ -40,6 +40,10 @@ public class TooltipEventHandler {
             if (tags != null && tags.contains("radiation_protection")) {
                 toolTip.add((new TranslatableComponent("tooltip.radiation_protection")).withStyle(ChatFormatting.GREEN));
             }
+
+            if (tags != null && tags.contains("thermometer")) {
+                toolTip.add((Component.translatable("tooltip.thermometer")).withStyle(ChatFormatting.GOLD));
+            }
         }
     }
 
