@@ -1,8 +1,9 @@
-// 1.19.2	2022-10-26T13:46:02.942245462	Homeostatic - Recipes
+// 1.19.2	2022-11-09T11:36:56.265710217	Homeostatic - Recipes
 39f7c33262c33d44c3175407e8efa859981eb09d data/homeostatic/advancements/recipes/campfire_purified_leather_flask.json
 b3bc433034153947241281848bf19fb055dfcd3e data/homeostatic/advancements/recipes/furnace_purified_leather_flask.json
 10fcb7f0ee5d2ae897a1a0111878617d5de4d485 data/homeostatic/advancements/recipes/homeostatic.items/book_from_dirt.json
 ac9af132493f0befbf0d0ee3a287de4fbf3ef8c9 data/homeostatic/advancements/recipes/homeostatic.items/leather_flask.json
+943c859d2eb94b620b2865378027cdf0466b6d6c data/homeostatic/advancements/recipes/homeostatic.items/thermometer.json
 01517eb0595c948c38ae9131da3292102dc79ef8 data/homeostatic/advancements/recipes/homeostatic.items/water_filter.json
 79f21c4cdd7a7ba5eb6531a2bde55282f35e5aec data/homeostatic/advancements/recipes/smoking_purified_leather_flask.json
 2dac9ec92e51caf542b778bff4c8f8b936d507b3 data/homeostatic/recipes/book_from_dirt.json
@@ -10,4 +11,5 @@ ac9af132493f0befbf0d0ee3a287de4fbf3ef8c9 data/homeostatic/advancements/recipes/h
 08a22cb366d41b794b1d687473bfd9c94ec40966 data/homeostatic/recipes/furnace_purified_leather_flask.json
 bcea88dd25381d01d14195dd42cdc35c472d6bc2 data/homeostatic/recipes/leather_flask.json
 86e2e6e5ff7d1e5d5e9cecccb7c0160d70be69f5 data/homeostatic/recipes/smoking_purified_leather_flask.json
+7a39ce0e9633dbba40d19a41f4ef54f57b65631e data/homeostatic/recipes/thermometer.json
 8ffe75a3ae8df809d46ee686aa5942568598a143 data/homeostatic/recipes/water_filter.json
