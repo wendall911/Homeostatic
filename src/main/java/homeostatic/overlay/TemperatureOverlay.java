@@ -1,11 +1,12 @@
 package homeostatic.overlay;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import homeostatic.util.Alignment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -16,6 +17,7 @@ import homeostatic.common.capabilities.CapabilityRegistry;
 import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
+import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
 import homeostatic.util.TempHelper;
 
@@ -68,6 +70,7 @@ public class TemperatureOverlay extends Overlay {
             Tuple<TempHelper.TemperatureRange, Integer> skinRangeStep =
                     TempHelper.getBodyTemperatureRangeStep(data.getSkinTemperature());
             int lineOffset = getTempLineOffset(coreRangeStep);
+            AtomicBoolean showTemperature = new AtomicBoolean(ConfigHandler.Common.showTemperatureValues());
 
             if (data.getCoreTemperature() > BodyTemperature.WARNING_HIGH) {
                 this.blit(matrix, offsetX, pY, pUOffset, pV + ICON_HEIGHT, ICON_WIDTH, ICON_HEIGHT);
@@ -80,15 +83,22 @@ public class TemperatureOverlay extends Overlay {
             }
             this.blit(matrix, offsetX, pY, pUOffset + ICON_WIDTH, pV + lineOffset, ICON_WIDTH, ICON_HEIGHT);
 
-            if (ConfigHandler.Common.showTemperatureValues()) {
-                matrix.scale(textScale, textScale, textScale);
+            if (ConfigHandler.Common.requireThermometer()) {
+                player.getCapability(CapabilityRegistry.THERMOMETER_CAPABILITY).ifPresent(thermometer -> {
+                    showTemperature.set(thermometer.hasThermometer());
+                });
+            }
 
-                if (ConfigHandler.Client.showThermometerRateChangeSymbols()) {
-                    mc.font.drawShadow(matrix, coreDirection, directionOffsetX - 8,
-                            textOffsetY - 15, ColorHelper.getLocalTemperatureColor(coreRangeStep));
-                    mc.font.drawShadow(matrix, skinDirection, directionOffsetX + 8,
-                            textOffsetY - 15, ColorHelper.getLocalTemperatureColor(skinRangeStep));
-                }
+            matrix.scale(textScale, textScale, textScale);
+
+            if (ConfigHandler.Client.showThermometerRateChangeSymbols()) {
+                mc.font.drawShadow(matrix, coreDirection, directionOffsetX - 8,
+                        textOffsetY - 15, ColorHelper.getLocalTemperatureColor(coreRangeStep));
+                mc.font.drawShadow(matrix, skinDirection, directionOffsetX + 8,
+                        textOffsetY - 15, ColorHelper.getLocalTemperatureColor(skinRangeStep));
+            }
+
+            if (showTemperature.get()) {
                 mc.font.drawShadow(matrix, localTemp, localTextOffsetX,
                         textOffsetY - 50, ColorHelper.getLocalTemperatureColor(localRangeStep));
                 mc.font.drawShadow(matrix, coreTempSmall, textOffsetX, textOffsetY, ColorHelper.getTemperatureColor(coreRangeStep));
