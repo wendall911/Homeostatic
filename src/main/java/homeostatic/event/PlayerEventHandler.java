@@ -1,8 +1,5 @@
 package homeostatic.event;
 
-import homeostatic.common.temperature.ThermometerInfo;
-import homeostatic.config.ConfigHandler;
-import homeostatic.network.ThermometerData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
@@ -37,7 +34,10 @@ import net.minecraftforge.network.PacketDistributor;
 import homeostatic.common.capabilities.CapabilityRegistry;
 import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.common.temperature.EnvironmentData;
+import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.common.water.WaterInfo;
+import homeostatic.config.ConfigHandler;
+import homeostatic.network.ThermometerData;
 import homeostatic.Homeostatic;
 import homeostatic.network.DrinkWater;
 import homeostatic.network.NetworkHandler;

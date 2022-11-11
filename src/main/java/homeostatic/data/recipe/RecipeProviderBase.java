@@ -10,21 +10,15 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.Registry;
-import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.HashCache;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
-import net.minecraft.world.level.ItemLike;
 
 import homeostatic.mixin.RecipeProviderAccessor;
 
@@ -39,30 +33,19 @@ public abstract class RecipeProviderBase implements DataProvider {
     }
 
     @Override
-    public void run(@Nonnull CachedOutput cache) throws IllegalStateException {
+    public void run(@Nonnull HashCache cache) throws IllegalStateException {
         Path path = this.generator.getOutputFolder();
         Set<ResourceLocation> recipes = Sets.newHashSet();
 
         registerRecipes((provider) -> {
             if (recipes.add(provider.getId())) {
-                JsonObject advancement = provider.serializeAdvancement();
+                RecipeProviderAccessor.callSaveRecipe(cache, provider.serializeRecipe(),
+                    path.resolve("data/" + provider.getId().getNamespace() + "/recipes/" + provider.getId().getPath() + ".json"));
+                JsonObject json = provider.serializeAdvancement();
 
-                RecipeProviderAccessor.callSaveRecipe(cache, provider.serializeRecipe(), path.resolve(
-                        "data/"
-                        + provider.getId().getNamespace()
-                        + "/recipes/"
-                        + provider.getId().getPath()
-                        + ".json"
-                ));
-
-                if (advancement != null) {
-                    saveRecipeAdvancement(this.generator, cache, advancement, path.resolve(
-                        "data/"
-                        + provider.getId().getNamespace()
-                        + "/advancements/"
-                        + provider.getAdvancementId().getPath()
-                        + ".json"
-                    ));
+                if (json != null) {
+                    saveRecipeAdvancement(generator, cache, json,
+                        path.resolve("data/" + provider.getId().getNamespace() + "/advancements/" + provider.getAdvancementId().getPath() + ".json"));
                 }
             }
             else {
@@ -73,16 +56,8 @@ public abstract class RecipeProviderBase implements DataProvider {
 
     protected abstract void registerRecipes(Consumer<FinishedRecipe> consumer);
 
-    public static void saveRecipeAdvancement(DataGenerator gen, CachedOutput cache, JsonObject json, Path path) {
+    public static void saveRecipeAdvancement(DataGenerator gen, HashCache cache, JsonObject json, Path path) {
         ((RecipeProviderAccessor) new RecipeProvider(gen)).callSaveRecipeAdvancement(cache, json, path);
-    }
-
-    public static InventoryChangeTrigger.TriggerInstance conditionsFromItem(ItemLike item) {
-        return RecipeProviderAccessor.homeostatic_condition(ItemPredicate.Builder.item().of(item).build());
-    }
-
-    public static InventoryChangeTrigger.TriggerInstance conditionsFromTag(TagKey<Item> key) {
-        return RecipeProviderAccessor.homeostatic_condition(ItemPredicate.Builder.item().of(key).build());
     }
 
     protected static void specialRecipe(Consumer<FinishedRecipe> consumer, SimpleRecipeSerializer<?> serializer) {

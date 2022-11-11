@@ -1,5 +1,6 @@
 package homeostatic.proxy;
 
+import homeostatic.common.recipe.HelmetThermometer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -79,12 +80,14 @@ public class CommonProxy {
             HomeostaticRecipes.RECIPE_REGISTRY.register(bus);
             ArmorEnhancement.init();
             PurifiedLeatherFlask.init();
+            HelmetThermometer.init();
         }
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
             event.getRegistry().register(ArmorEnhancement.ARMOR_ENHANCEMENT_SERIALIZER);
             event.getRegistry().register(PurifiedLeatherFlask.PURIFIED_LEATHER_FLASK_SERIALIZER);
+            event.getRegistry().register(HelmetThermometer.HELMET_THERMOMETER_SERIALIZER);
         }
 
     }

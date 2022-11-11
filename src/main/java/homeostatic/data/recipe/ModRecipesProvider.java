@@ -21,6 +21,7 @@ import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.fluid.HomeostaticFluids;
+import homeostatic.data.AdvancedCookingRecipeBuilder;
 import homeostatic.data.integration.ConsumerWrapperBuilder;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.util.WaterHelper;

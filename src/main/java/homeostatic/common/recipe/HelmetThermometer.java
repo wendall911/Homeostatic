@@ -12,11 +12,19 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.Level;
 
 import homeostatic.common.item.HomeostaticItems;
+import homeostatic.Homeostatic;
 
 public class HelmetThermometer extends CustomRecipe {
+
+    public static final SimpleRecipeSerializer<HelmetThermometer> HELMET_THERMOMETER_SERIALIZER = new SimpleRecipeSerializer<>(HelmetThermometer::new);
+
+    public static void init() {
+        HELMET_THERMOMETER_SERIALIZER.setRegistryName(new ResourceLocation(Homeostatic.MODID, "helmet_thermometer"));
+    }
 
     public HelmetThermometer(ResourceLocation resourceLocation) {
         super(resourceLocation);
@@ -46,7 +54,7 @@ public class HelmetThermometer extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return HomeostaticRecipes.HELMET_THERMOMETER_SERIALIZER;
+        return HELMET_THERMOMETER_SERIALIZER;
     }
 
     public ItemStack checkContainer(CraftingContainer pContainer) {

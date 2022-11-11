@@ -1,22 +1,19 @@
 package homeostatic.common.recipe;
 
-import com.google.gson.JsonObject;
-
 import com.mojang.datafixers.util.Pair;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.Level;
 
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
 import homeostatic.common.fluid.HomeostaticFluids;
@@ -26,10 +23,10 @@ import homeostatic.Homeostatic;
 
 public class PurifiedLeatherFlask extends CustomRecipe {
 
-    public static final RecipeSerializer<PurifiedLeatherFlask> PURIFIED_LEATHER_FLASK_SERIALIZER = new PurifiedLeatherFlask.Serializer();
+    public static final SimpleRecipeSerializer<PurifiedLeatherFlask> PURIFIED_LEATHER_FLASK_SERIALIZER = new SimpleRecipeSerializer<>(PurifiedLeatherFlask::new);
 
     public static void init() {
-        PURIFIED_LEATHER_FLASK_SERIALIZER.setRegistryName(new ResourceLocation(Homeostatic.MODID + ":purified_leather_flask"));
+        PURIFIED_LEATHER_FLASK_SERIALIZER.setRegistryName(new ResourceLocation(Homeostatic.MODID, "purified_leather_flask"));
     }
 
     public PurifiedLeatherFlask(ResourceLocation loc) {
@@ -98,23 +95,6 @@ public class PurifiedLeatherFlask extends CustomRecipe {
         public static final Type INSTANCE = new Type();
 
         private Type() {}
-
-    }
-
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<PurifiedLeatherFlask> {
-
-        @Override
-        public PurifiedLeatherFlask fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-            return new PurifiedLeatherFlask(pRecipeId);
-        }
-
-        @Override
-        public PurifiedLeatherFlask fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-            return new PurifiedLeatherFlask(pRecipeId);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, PurifiedLeatherFlask pRecipe) {}
 
     }
 

@@ -42,7 +42,7 @@ public class TooltipEventHandler {
             }
 
             if (tags != null && tags.contains("thermometer")) {
-                toolTip.add((Component.translatable("tooltip.thermometer")).withStyle(ChatFormatting.GOLD));
+                toolTip.add((new TranslatableComponent("tooltip.thermometer")).withStyle(ChatFormatting.GOLD));
             }
         }
     }
