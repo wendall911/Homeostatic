@@ -96,14 +96,26 @@ public class ModBookProvider extends PatchouliBookProvider {
             .setAnchor("insulation")
             .setTitle(prefix("gameplay.body_temp.insulation.title"))
             .setText(prefix("gameplay.body_temp.insulation.text")).build()
+        .addPage(new CustomRecipePageBuilder(loc("remove_insulation"), gameplayBodyTempEntry))
+            .setAnchor("remove_insulation")
+            .setTitle(prefix("gameplay.body_temp.remove_insulation.title"))
+            .setText(prefix("gameplay.body_temp.remove_insulation.text")).build()
         .addPage(new CustomRecipePageBuilder(loc("radiation_protection"), gameplayBodyTempEntry))
             .setAnchor("radiation_protection")
             .setTitle(prefix("gameplay.body_temp.radiation_protection.title"))
             .setText(prefix("gameplay.body_temp.radiation_protection.text")).build()
+        .addPage(new CustomRecipePageBuilder(loc("remove_radiation_protection"), gameplayBodyTempEntry))
+            .setAnchor("remove_radiation_protection")
+            .setTitle(prefix("gameplay.body_temp.remove_radiation_protection.title"))
+            .setText(prefix("gameplay.body_temp.remove_radiation_protection.text")).build()
         .addPage(new CustomRecipePageBuilder(loc("waterproof"), gameplayBodyTempEntry))
             .setAnchor("waterproofing")
             .setTitle(prefix("gameplay.body_temp.waterproof.title"))
-            .setText(prefix("gameplay.body_temp.waterproof.text")).build();
+            .setText(prefix("gameplay.body_temp.waterproof.text")).build()
+        .addPage(new CustomRecipePageBuilder(loc("remove_waterproof"), gameplayBodyTempEntry))
+            .setAnchor("remove_waterproofing")
+            .setTitle(prefix("gameplay.body_temp.remove_waterproof.title"))
+            .setText(prefix("gameplay.body_temp.remove_waterproof.text")).build();
 
         EntryBuilder gameplayHydrationEntry = category.addEntry(
             "gameplay/hydration",

@@ -19,6 +19,7 @@ public class SpecialRecipeProvider extends RecipeProviderBase {
         specialRecipe(consumer, (SimpleRecipeSerializer<?>) HomeostaticRecipes.ARMOR_ENHANCEMENT_SERIALIZER);
         specialRecipe(consumer, (SimpleRecipeSerializer<?>) HomeostaticRecipes.PURIFIED_LEATHER_FLASK_SERIALIZER);
         specialRecipe(consumer, (SimpleRecipeSerializer<?>) HomeostaticRecipes.HELMET_THERMOMETER_SERIALIZER);
+        specialRecipe(consumer, (SimpleRecipeSerializer<?>) HomeostaticRecipes.REMOVE_ARMOR_ENHANCEMENT_SERIALIZER);
     }
 
     @Override

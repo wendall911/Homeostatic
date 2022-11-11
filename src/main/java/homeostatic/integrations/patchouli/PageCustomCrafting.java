@@ -39,6 +39,7 @@ public class PageCustomCrafting extends PageCrafting {
 		ItemStack leatherFlaskBase = null;
 		ItemStack leatherFlask = null;
 		ShapelessRecipe customRecipe = null;
+		boolean removalRecipe = false;
 
 		if (loc != null) {
 			String recipe = loc.getPath();
@@ -51,12 +52,28 @@ public class PageCustomCrafting extends PageCrafting {
 					armorStackTag = armorStack.getOrCreateTag();
 					armorStackTag.putBoolean("insulation", true);
 				}
+				case "remove_insulation" -> {
+					ingredient = Ingredient.of(Items.SHEARS);
+					armorStackBase = new ItemStack(Items.LEATHER_BOOTS);
+					armorStack = armorStackBase.copy();
+					armorStackTag = armorStackBase.getOrCreateTag();
+					armorStackTag.putBoolean("insulation", true);
+					removalRecipe = true;
+				}
 				case "waterproof" -> {
 					ingredient = Ingredient.of(TagManager.Items.WATERPROOF);
 					armorStackBase = new ItemStack(Items.LEATHER_HELMET);
 					armorStack = armorStackBase.copy();
 					armorStackTag = armorStack.getOrCreateTag();
 					armorStackTag.putBoolean("waterproof", true);
+				}
+				case "remove_waterproof" -> {
+					ingredient = Ingredient.of(Items.LAVA_BUCKET);
+					armorStackBase = new ItemStack(Items.LEATHER_HELMET);
+					armorStack = armorStackBase.copy();
+					armorStackTag = armorStackBase.getOrCreateTag();
+					armorStackTag.putBoolean("waterproof", true);
+					removalRecipe = true;
 				}
 				case "radiation_protection" -> {
 					ingredient = Ingredient.of(TagManager.Items.RADIATION_PROTECTION);
@@ -65,6 +82,14 @@ public class PageCustomCrafting extends PageCrafting {
 					armorStackTag = armorStack.getOrCreateTag();
 					armorStackTag.putBoolean("radiation_protection", true);
 				}
+				case "remove_radiation_protection" -> {
+					ingredient = Ingredient.of(Items.WATER_BUCKET);
+					armorStackBase = new ItemStack(Items.LEATHER_CHESTPLATE);
+					armorStack = armorStackBase.copy();
+					armorStackTag = armorStackBase.getOrCreateTag();
+					armorStackTag.putBoolean("radiation_protection", true);
+					removalRecipe = true;
+				}
 				case "filtered_water_flask" -> {
 					ingredient = Ingredient.of(HomeostaticItems.WATER_FILTER);
 					leatherFlaskBase = new ItemStack(HomeostaticItems.LEATHER_FLASK);
@@ -72,8 +97,15 @@ public class PageCustomCrafting extends PageCrafting {
 				}
 			}
 			if (armorStackBase != null) {
-				Ingredient baseArmorIngredient = Ingredient.of(armorStackBase.getItem());
-				NonNullList<Ingredient> armorInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, ingredient, Ingredient.EMPTY, ingredient, ingredient);
+				Ingredient baseArmorIngredient = Ingredient.of(armorStackBase);
+				NonNullList<Ingredient> armorInputs;
+
+				if (removalRecipe) {
+					armorInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, ingredient);
+				}
+				else {
+					armorInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, ingredient, Ingredient.EMPTY, ingredient, ingredient);
+				}
 
 				customRecipe = new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, recipe), "armor.enhancement", armorStack, armorInputs);
 			}

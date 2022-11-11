@@ -98,13 +98,22 @@ public class ModLanguageProvider extends LanguageProvider {
         addBookEntry("gameplay.body_temp.insulation.title", "Insulation");
         addBookEntry("gameplay.body_temp.insulation.text", "Any armor piece can be insulated. The more " +
                 "pieces that are insulated, the better the player is insulated. See JEI/REI for recipes.");
+        addBookEntry("gameplay.body_temp.remove_insulation.title", "Remove Insulation");
+        addBookEntry("gameplay.body_temp.remove_insulation.text", "Insulation can be removed from any armor " +
+                "piece. Recipe does not appear in JEI/REI.");
         addBookEntry("gameplay.body_temp.radiation_protection.title", "Radiation Protection");
         addBookEntry("gameplay.body_temp.radiation_protection.text", "Any armor piece can have radiation " +
                 "protection added. Add to multiple pieces to achieve maximum protection.$(br)" +
                 "Addionally, fire resistance fully protects the player from radiation sources.");
+        addBookEntry("gameplay.body_temp.remove_radiation_protection.title", "Remove Radiation Protection");
+        addBookEntry("gameplay.body_temp.remove_radiation_protection.text", "Radiation protection can be " +
+                "removed from any armor piece. Recipe does not appear in JEI/REI.");
         addBookEntry("gameplay.body_temp.waterproof.title", "Waterproofing");
         addBookEntry("gameplay.body_temp.waterproof.text", "Waterproofing can be added to any armor piece. " +
                 "Add to multiple pieces to increase protection.");
+        addBookEntry("gameplay.body_temp.remove_waterproof.title", "Waterproofing");
+        addBookEntry("gameplay.body_temp.remove_waterproof.text", "Waterproofing can be removed from any armor " +
+                "piece. Recipe does not appear in JEI/REI.");
         addBookEntry("gameplay.hydration.name", "Hydration/Thirst");
         addBookEntry("gameplay.hydration.title", "Hydration HUD");
         addBookEntry("gameplay.hydration.intro", "The arrow above points to the hydration bar. " +
