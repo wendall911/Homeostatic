@@ -1,6 +1,5 @@
 package homeostatic.proxy;
 
-import homeostatic.common.recipe.HelmetThermometer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -22,8 +21,10 @@ import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.ArmorEnhancement;
+import homeostatic.common.recipe.HelmetThermometer;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.common.recipe.PurifiedLeatherFlask;
+import homeostatic.common.recipe.RemoveArmorEnhancement;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
 
@@ -81,6 +82,7 @@ public class CommonProxy {
             ArmorEnhancement.init();
             PurifiedLeatherFlask.init();
             HelmetThermometer.init();
+            RemoveArmorEnhancement.init();
         }
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -88,6 +90,7 @@ public class CommonProxy {
             event.getRegistry().register(ArmorEnhancement.ARMOR_ENHANCEMENT_SERIALIZER);
             event.getRegistry().register(PurifiedLeatherFlask.PURIFIED_LEATHER_FLASK_SERIALIZER);
             event.getRegistry().register(HelmetThermometer.HELMET_THERMOMETER_SERIALIZER);
+            event.getRegistry().register(RemoveArmorEnhancement.REMOVE_ARMOR_ENHANCEMENT_SERIALIZER);
         }
 
     }
