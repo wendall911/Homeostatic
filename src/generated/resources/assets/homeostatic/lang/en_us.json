@@ -1,4 +1,7 @@
 {
+  "itemGroup.homeostatic.items": "Homeostatic",
+  "effect.homeostatic.thirst": "Thirst",
+  "block.homeostatic.purified_water_fluid": "Purified Water",
   "death.attack.dehydration": "%1$s turned into dead dried %1$s",
   "death.attack.dehydration.player": "%1$s turned into dead dried %1$s whilst fighting %2$s",
   "death.attack.heat": "%1$s died of scalding",
