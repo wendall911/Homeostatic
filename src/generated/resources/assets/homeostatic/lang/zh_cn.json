@@ -1,5 +1,5 @@
 {
-  "itemGroup.homeostatic.items": "Homeostatic",
+  "itemGroup.homeostatic.items": "稳态",
   "effect.homeostatic.thirst": "脱水",
   "block.homeostatic.purified_water_fluid": "纯净水",
   "death.attack.dehydration": "%1$s 变成了干巴的 %1$s",
