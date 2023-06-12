@@ -29,9 +29,9 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
    private final Advancement.Builder advancement = Advancement.Builder.advancement();
    @Nullable
    private String group;
-   private final SimpleCookingSerializer<?> serializer;
+   private final RecipeSerializer<?> serializer;
 
-   private AdvancedCookingRecipeBuilder(Ingredient pResult, Ingredient pIngredient, float pExperience, int pCookingTime, SimpleCookingSerializer<?> pSerializer) {
+   private AdvancedCookingRecipeBuilder(Ingredient pResult, Ingredient pIngredient, float pExperience, int pCookingTime, RecipeSerializer<?> pSerializer) {
       this.result = pResult;
       this.ingredient = pIngredient;
       this.experience = pExperience;
@@ -39,24 +39,24 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
       this.serializer = pSerializer;
    }
 
-   public static AdvancedCookingRecipeBuilder cooking(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime, SimpleCookingSerializer<?> pSerializer) {
+   public static AdvancedCookingRecipeBuilder cooking(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime, RecipeSerializer<?> pSerializer) {
       return new AdvancedCookingRecipeBuilder(pResult, pIngredient, pExperience, pCookingTime, pSerializer);
    }
 
    public static AdvancedCookingRecipeBuilder campfireCooking(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
-      return cooking(pIngredient, pResult, pExperience, pCookingTime, RecipeSerializer.CAMPFIRE_COOKING_RECIPE);
+      return cooking(pIngredient, pResult, pExperience, pCookingTime, SimpleCookingSerializer.CAMPFIRE_COOKING_RECIPE);
    }
 
    public static AdvancedCookingRecipeBuilder blasting(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
-      return cooking(pIngredient, pResult, pExperience, pCookingTime, RecipeSerializer.BLASTING_RECIPE);
+      return cooking(pIngredient, pResult, pExperience, pCookingTime, SimpleCookingSerializer.BLASTING_RECIPE);
    }
 
    public static AdvancedCookingRecipeBuilder smelting(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
-      return cooking(pIngredient, pResult, pExperience, pCookingTime, RecipeSerializer.SMELTING_RECIPE);
+      return cooking(pIngredient, pResult, pExperience, pCookingTime, SimpleCookingSerializer.SMELTING_RECIPE);
    }
 
    public static AdvancedCookingRecipeBuilder smoking(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
-      return cooking(pIngredient, pResult, pExperience, pCookingTime, RecipeSerializer.SMOKING_RECIPE);
+      return cooking(pIngredient, pResult, pExperience, pCookingTime, SimpleCookingSerializer.SMOKING_RECIPE);
    }
 
    public AdvancedCookingRecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {
@@ -76,7 +76,7 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
    public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pRecipeId) {
       this.ensureValid(pRecipeId);
       this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
-      pFinishedRecipeConsumer.accept(new AdvancedCookingRecipeBuilder.Result(pRecipeId, this.group == null ? "" : this.group, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement, new ResourceLocation(pRecipeId.getNamespace(), "recipes/" + pRecipeId.getPath()), this.serializer));
+      pFinishedRecipeConsumer.accept(new AdvancedCookingRecipeBuilder.Result(pRecipeId, this.group == null ? "" : this.group, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement, new ResourceLocation(pRecipeId.getNamespace(), "recipes/" + pRecipeId.getPath()), (RecipeSerializer<? extends AbstractCookingRecipe>) this.serializer));
    }
 
    private void ensureValid(ResourceLocation pId) {

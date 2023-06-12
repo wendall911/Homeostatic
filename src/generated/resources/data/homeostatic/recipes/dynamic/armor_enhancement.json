@@ -1,3 +1,4 @@
 {
-  "type": "homeostatic:armor_enhancement"
+  "type": "homeostatic:armor_enhancement",
+  "category": "misc"
 }

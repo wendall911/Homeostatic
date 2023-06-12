@@ -2,7 +2,7 @@ package homeostatic.data;
 
 import java.util.Objects;
 
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -14,8 +14,8 @@ import homeostatic.Homeostatic;
 
 public class ModItemModelProvider extends ItemModelProvider {
 
-    public ModItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, Homeostatic.MODID, existingFileHelper);
+    public ModItemModelProvider(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
+        super(packOutput, Homeostatic.MODID, existingFileHelper);
     }
 
     @Override

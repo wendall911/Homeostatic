@@ -4,9 +4,8 @@ import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import homeostatic.config.ConfigHandler;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -15,8 +14,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.GameType;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 
 import net.minecraftforge.fluids.FluidStack;
@@ -32,6 +29,7 @@ import homeostatic.common.item.DrinkableItem;
 import homeostatic.common.item.DrinkableItemManager;
 import homeostatic.common.water.WaterInfo;
 import homeostatic.common.Hydration;
+import homeostatic.config.ConfigHandler;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
@@ -129,7 +127,7 @@ public class WaterHelper {
         ResourceLocation fluid = null;
 
         if (stack.getItem() instanceof PotionItem) {
-            ResourceLocation water = Registry.POTION.getKey(Potions.WATER);
+            ResourceLocation water = RegistryHelper.getRegistry(Registries.POTION).getKey(Potions.WATER);
             String potion = stack.getOrCreateTag().getString("Potion");
             stack = new ItemStack(Items.AIR);
 
@@ -144,7 +142,7 @@ public class WaterHelper {
             IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
 
             if (fluidHandlerItem != null) {
-                fluid = Registry.FLUID.getKey(fluidHandlerItem.getFluidInTank(0).getFluid());
+                fluid = RegistryHelper.getRegistry(Registries.FLUID).getKey(fluidHandlerItem.getFluidInTank(0).getFluid());
             }
         }
 
@@ -152,7 +150,7 @@ public class WaterHelper {
     }
 
     public static Hydration getFluidHydration(Fluid fluid) {
-        ResourceLocation fluidKey = Registry.FLUID.getKey(fluid);
+        ResourceLocation fluidKey = RegistryHelper.getRegistry(Registries.FLUID).getKey(fluid);
 
         return getItemHydration(null, fluidKey);
     }
@@ -230,7 +228,7 @@ public class WaterHelper {
     }
 
     public static ItemStack getFilledItem(ItemStack stack, ResourceLocation key, int amount) {
-        Fluid fluid = Registry.FLUID.get(key);
+        Fluid fluid = RegistryHelper.getRegistry(Registries.FLUID).get(key);
 
         return getFilledItem(stack, fluid, amount);
     }

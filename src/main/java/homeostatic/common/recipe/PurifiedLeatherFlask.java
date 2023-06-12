@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -21,8 +22,8 @@ import homeostatic.common.item.LeatherFlask;
 
 public class PurifiedLeatherFlask extends CustomRecipe {
 
-    public PurifiedLeatherFlask(ResourceLocation loc) {
-        super(loc);
+    public PurifiedLeatherFlask(ResourceLocation loc, CraftingBookCategory category) {
+        super(loc, category);
     }
 
     @Override

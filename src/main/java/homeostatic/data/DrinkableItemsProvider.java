@@ -1,16 +1,18 @@
 package homeostatic.data;
 
-import java.io.IOException;
-import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 
-import homeostatic.Homeostatic;
 import homeostatic.common.item.DrinkableItem;
 import homeostatic.common.item.DrinkableItemManager;
 import homeostatic.data.integration.ModIntegration;
@@ -18,12 +20,10 @@ import homeostatic.data.integration.ModIntegration;
 public class DrinkableItemsProvider implements DataProvider {
 
     private final Map<ResourceLocation, DrinkableItem> DRINKABLE_ITEMS = new HashMap<>();
-    private final DataGenerator dataGenerator;
-    private final String modid;
+    private final PackOutput packOutput;
 
-    public DrinkableItemsProvider(DataGenerator dataGenerator, String modid) {
-        this.dataGenerator = dataGenerator;
-        this.modid = modid;
+    public DrinkableItemsProvider(@NotNull final PackOutput packOutput) {
+        this.packOutput = packOutput;
     }
 
     protected void addDrinkableItems() {
@@ -596,25 +596,25 @@ public class DrinkableItemsProvider implements DataProvider {
     }
 
     @Override
-    public void run(CachedOutput pOutput) throws IOException {
+    @NotNull
+    public CompletableFuture<?> run(@NotNull CachedOutput cache) throws IllegalStateException {
+        List<CompletableFuture<?>> recipeList = new ArrayList<>();
+
         addDrinkableItems();
 
-        Path output = dataGenerator.getOutputFolder();
-
         for (Map.Entry<ResourceLocation, DrinkableItem> entry : DRINKABLE_ITEMS.entrySet()) {
-            Path drinkableItemsPath = getPath(output, entry.getKey());
+            PackOutput.PathProvider pathProvider = getPath(entry.getKey());
 
-            try {
-                DataProvider.saveStable(pOutput, DrinkableItemManager.parseDrinkableItem(entry.getValue()), drinkableItemsPath);
-            }
-            catch (IOException e) {
-                Homeostatic.LOGGER.error("Couldn't save homeostatic drinkable items %s %s", drinkableItemsPath, e);
-            }
+            recipeList.add(DataProvider.saveStable(cache,
+                    DrinkableItemManager.parseDrinkableItem(entry.getValue()),
+                    pathProvider.json(entry.getKey())));
         }
+
+        return CompletableFuture.allOf(recipeList.toArray(CompletableFuture[]::new));
     }
 
-    private static Path getPath(Path output, ResourceLocation loc) {
-        return output.resolve("data/" + loc.getNamespace() + "/environment/drinkable/" + loc.getPath() + ".json");
+    private PackOutput.PathProvider getPath(ResourceLocation loc) {
+        return this.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "environment/drinkable/");
     }
 
 }

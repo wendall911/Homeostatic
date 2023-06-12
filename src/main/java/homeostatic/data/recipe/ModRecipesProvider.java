@@ -2,10 +2,11 @@ package homeostatic.data.recipe;
 
 import java.util.function.Consumer;
 
-import homeostatic.data.AdvancedCookingRecipeBuilder;
-import net.minecraft.data.DataGenerator;
+import org.jetbrains.annotations.NotNull;
+
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.ItemTags;
@@ -18,20 +19,19 @@ import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 
-import org.jetbrains.annotations.NotNull;
-
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.fluid.HomeostaticFluids;
+import homeostatic.data.AdvancedCookingRecipeBuilder;
 import homeostatic.data.integration.ConsumerWrapperBuilder;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.util.WaterHelper;
 
 import static homeostatic.Homeostatic.loc;
 
-public class ModRecipesProvider extends RecipeProvider {
+public class ModRecipesProvider extends RecipeProviderBase {
 
-    public ModRecipesProvider(DataGenerator pGenerator) {
-        super(pGenerator);
+    public ModRecipesProvider(@NotNull final PackOutput packOutput) {
+        super(packOutput);
     }
 
     @Override
@@ -40,13 +40,13 @@ public class ModRecipesProvider extends RecipeProvider {
     }
 
     @Override
-    protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+    protected void registerRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
         ItemLike leatherFlask = HomeostaticItems.LEATHER_FLASK;
         ItemLike waterFilter = HomeostaticItems.WATER_FILTER;
         ItemStack waterFilledLeatherFlask = WaterHelper.getFilledItem(new ItemStack(leatherFlask), Fluids.WATER, 5000);
         ItemStack cleanWaterFilledLeatherFlask = WaterHelper.getFilledItem(new ItemStack(leatherFlask), HomeostaticFluids.PURIFIED_WATER, 5000);
 
-        ShapedRecipeBuilder.shaped(leatherFlask)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,leatherFlask)
                 .define('S', Items.STRING)
                 .define('L', Items.LEATHER)
                 .define('P', ItemTags.PLANKS)
@@ -56,7 +56,7 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_leather", has(Items.LEATHER))
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(waterFilter)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,waterFilter)
                 .define('P', Items.PAPER)
                 .define('C', Items.CHARCOAL)
                 .pattern("P")
@@ -65,7 +65,7 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_charcoal", has(Items.CHARCOAL))
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(HomeostaticItems.THERMOMETER)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HomeostaticItems.THERMOMETER)
                 .define('N', Items.IRON_NUGGET)
                 .define('D', Items.REDSTONE)
                 .define('I', Items.IRON_INGOT)
@@ -77,7 +77,7 @@ public class ModRecipesProvider extends RecipeProvider {
 
         Consumer<FinishedRecipe> wrapped = withCondition(consumer, new ModLoadedCondition(ModIntegration.PATCHOULI_MODID));
 
-        ShapelessRecipeBuilder.shapeless(HomeostaticItems.BOOK)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HomeostaticItems.BOOK)
                 .requires(Items.DIRT)
                 .group("books")
                 .unlockedBy("has_dirt", has(Items.DIRT))

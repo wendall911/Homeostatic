@@ -22,24 +22,24 @@ public final class HomeostaticItems {
 
         LEATHER_FLASK = registerItem(
                 "leather_flask",
-                new LeatherFlask(new Item.Properties().stacksTo(1).setNoRepair().tab(CreativeTabs.ITEM_TAB_GROUP), 5000));
+                new LeatherFlask(new Item.Properties().stacksTo(1).setNoRepair(), 5000));
 
         PURIFIED_WATER_BUCKET = registerItem(
                 "purified_water_bucket",
-                new BucketItem(HomeostaticFluids.PURIFIED_WATER, new Item.Properties().stacksTo(1).tab(CreativeTabs.ITEM_TAB_GROUP)));
+                new BucketItem(HomeostaticFluids.PURIFIED_WATER, new Item.Properties().stacksTo(1)));
 
         WATER_FILTER = registerItem(
                 "water_filter",
-                new Item(new Item.Properties().tab(CreativeTabs.ITEM_TAB_GROUP)));
+                new Item(new Item.Properties()));
 
         BOOK = registerItem(
           "book",
-          new HomeostaticBook(new Item.Properties().tab(CreativeTabs.ITEM_TAB_GROUP), "book")
+          new HomeostaticBook(new Item.Properties(), "book")
         );
 
         THERMOMETER = registerItem(
                 "thermometer",
-                new Item(new Item.Properties().tab(CreativeTabs.ITEM_TAB_GROUP)));
+                new Item(new Item.Properties()));
     }
 
     public static Item registerItem(String name, Item item) {

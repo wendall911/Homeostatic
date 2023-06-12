@@ -1,13 +1,14 @@
 package homeostatic.common.temperature;
 
-import com.mojang.math.Vector3d;
+import homeostatic.util.RegistryHelper;
+import net.minecraft.core.registries.Registries;
+import org.joml.Vector3d;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -115,7 +116,7 @@ public class Environment {
 
                     // Only check up to three blocks up, and ignore radiation if fire resistance is active.
                     if (y <= 3 && effectInstance == null) {
-                        BlockRadiation blockRadiation = BlockRadiationManager.RADIATION_BLOCKS.get(Registry.BLOCK.getKey(state.getBlock()));
+                        BlockRadiation blockRadiation = BlockRadiationManager.RADIATION_BLOCKS.get(RegistryHelper.getRegistry(Registries.BLOCK).getKey(state.getBlock()));
 
                         if (blockRadiation != null) {
                             boolean hasRadiation = true;

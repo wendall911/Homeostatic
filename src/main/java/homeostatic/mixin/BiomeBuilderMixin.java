@@ -57,6 +57,10 @@ public abstract class BiomeBuilderMixin {
         BiomeData biomeData = null;
         BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.BiomeCategory.MISSING;
 
+        if (Homeostatic.DATA_GEN) {
+            return;
+        }
+
         if (this.generationSettings != null
                 && this.temperature != null
                 && this.mobSpawnSettings != null

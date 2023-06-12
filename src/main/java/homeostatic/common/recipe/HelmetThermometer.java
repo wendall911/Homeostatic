@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -18,8 +19,8 @@ import homeostatic.common.item.HomeostaticItems;
 
 public class HelmetThermometer extends CustomRecipe {
 
-    public HelmetThermometer(ResourceLocation resourceLocation) {
-        super(resourceLocation);
+    public HelmetThermometer(ResourceLocation resourceLocation, CraftingBookCategory category) {
+        super(resourceLocation, category);
     }
 
     @Override

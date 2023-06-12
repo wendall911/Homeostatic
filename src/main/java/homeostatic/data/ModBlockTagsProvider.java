@@ -1,16 +1,21 @@
 package homeostatic.data;
 
-import homeostatic.Homeostatic;
+import java.util.concurrent.CompletableFuture;
 
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.world.level.block.Block;
 
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-public class ModBlockTagsProvider extends BlockTagsProvider {
+import homeostatic.Homeostatic;
 
-    public ModBlockTagsProvider(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper) {
-        super(dataGenerator, Homeostatic.MODID, existingFileHelper);
+public class ModBlockTagsProvider extends IntrinsicHolderTagsProvider<Block> {
+
+    public ModBlockTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
+        super(packOutput, Registries.BLOCK, lookupProvider, (block) -> block.builtInRegistryHolder().key(), Homeostatic.MODID, helper);
     }
 
     @Override
@@ -19,7 +24,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.Provider provider) {
     }
 
 }

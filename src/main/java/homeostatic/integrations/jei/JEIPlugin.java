@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import homeostatic.config.ConfigHandler;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -20,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -31,6 +31,7 @@ import homeostatic.common.recipe.ArmorEnhancement;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.HelmetThermometer;
+import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
 import homeostatic.util.WaterHelper;
 
@@ -99,7 +100,7 @@ public class JEIPlugin implements IModPlugin {
         Ingredient baseFlaskIngredient = Ingredient.of(leatherFlaskBase.getItem());
         NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseFlaskIngredient, ingredient);
 
-        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".purified_leather_flask"), group, leatherFlask, recipeInputs));
+        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".purified_leather_flask"), group, CraftingBookCategory.MISC, leatherFlask, recipeInputs));
 
         return recipes;
     }

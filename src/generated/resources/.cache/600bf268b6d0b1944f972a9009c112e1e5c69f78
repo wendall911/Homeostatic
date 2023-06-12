@@ -1,5 +1,5 @@
-// 1.19.2	2022-11-11T09:20:08.806407093	Homeostatic - Custom Recipes
-c9a5d685902426c8494d94c7a81d73bd07835e24 data/homeostatic/recipes/dynamic/armor_enhancement.json
-73dffd461e59abc3fb790efd67f66a3e1d4acd90 data/homeostatic/recipes/dynamic/helmet_thermometer.json
-73119a4074d74bac48410e9fd86dcba1d478351c data/homeostatic/recipes/dynamic/purified_leather_flask.json
-af8aad28fcf2686f797ba131d4174647f1de96ff data/homeostatic/recipes/dynamic/remove_armor_enhancement.json
+// 1.19.3	2023-06-12T14:25:16.490240715	Homeostatic - Custom Recipes
+ae589b605a3ba892c795c6fc52d462322215dd38 data/homeostatic/recipes/dynamic/armor_enhancement.json
+4da804113deb8fdde788eb3ee581e63b522518e3 data/homeostatic/recipes/dynamic/helmet_thermometer.json
+91a69d88126e404924393814d4ce8be185ddaf09 data/homeostatic/recipes/dynamic/purified_leather_flask.json
+bb81e15f8e1fe47d7278b44dbc8ba6df7eab693f data/homeostatic/recipes/dynamic/remove_armor_enhancement.json

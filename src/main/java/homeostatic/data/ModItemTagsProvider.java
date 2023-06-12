@@ -1,20 +1,22 @@
 package homeostatic.data;
 
-import homeostatic.data.integration.ModIntegration;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import java.util.concurrent.CompletableFuture;
+
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import homeostatic.common.TagManager;
+import homeostatic.data.integration.ModIntegration;
 import homeostatic.Homeostatic;
 
 public class ModItemTagsProvider extends ItemTagsProvider {
 
-    ModItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagsProvider, ExistingFileHelper existingFileHelper) {
-        super(dataGenerator, blockTagsProvider, Homeostatic.MODID, existingFileHelper);
+    ModItemTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ModBlockTagsProvider blockTagsProvider, ExistingFileHelper helper) {
+        super(packOutput, lookupProvider, blockTagsProvider, Homeostatic.MODID, helper);
     }
 
     @Override
@@ -23,7 +25,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.Provider provider) {
         this.tag(TagManager.Items.INSULATION)
             .addTag(ItemTags.WOOL)
             .addOptional(ModIntegration.alexLoc("bear_fur"))

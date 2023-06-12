@@ -1,3 +1,4 @@
 {
-  "type": "homeostatic:remove_armor_enhancement"
+  "type": "homeostatic:remove_armor_enhancement",
+  "category": "misc"
 }

@@ -2,7 +2,9 @@ package homeostatic.data.integration.patchouli;
 
 import java.util.function.Consumer;
 
-import net.minecraft.data.DataGenerator;
+import org.jetbrains.annotations.NotNull;
+
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -23,8 +25,8 @@ public class ModBookProvider extends PatchouliBookProvider {
     private int categorySortNum = -1;
     private int entrySortNum = -1;
 
-    public ModBookProvider(DataGenerator gen) {
-        super(gen, Homeostatic.MODID, "en_us");
+    public ModBookProvider(@NotNull final PackOutput packOutput) {
+        super(packOutput, Homeostatic.MODID, "en_us");
     }
 
     @Override

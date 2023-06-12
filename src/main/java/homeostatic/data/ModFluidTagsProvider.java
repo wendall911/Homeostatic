@@ -1,8 +1,11 @@
 package homeostatic.data;
 
-import javax.annotation.Nullable;
+import java.util.concurrent.CompletableFuture;
 
-import net.minecraft.data.DataGenerator;
+import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -12,8 +15,8 @@ import homeostatic.common.fluid.HomeostaticFluids;
 
 public class ModFluidTagsProvider extends FluidTagsProvider {
 
-    public ModFluidTagsProvider(DataGenerator pGenerator, @Nullable ExistingFileHelper existingFileHelper) {
-        super(pGenerator, Homeostatic.MODID, existingFileHelper);
+    public ModFluidTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper helper) {
+        super(packOutput, lookupProvider, Homeostatic.MODID, helper);
     }
 
     @Override
@@ -22,7 +25,7 @@ public class ModFluidTagsProvider extends FluidTagsProvider {
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.Provider provider) {
         this.tag(TagManager.Fluids.PURIFIED_WATER)
             .add(HomeostaticFluids.PURIFIED_WATER);
     }

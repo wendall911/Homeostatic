@@ -7,8 +7,8 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import homeostatic.data.integration.create.FillingRecipeProvider;
-import homeostatic.data.integration.create.MixingRecipeProvider;
+//import homeostatic.data.integration.create.FillingRecipeProvider;
+//import homeostatic.data.integration.create.MixingRecipeProvider;
 import homeostatic.data.integration.patchouli.ModBookProvider;
 import homeostatic.Homeostatic;
 
@@ -24,22 +24,25 @@ public final class DataGenerators {
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-        ModBlockTagsProvider blockTags = new ModBlockTagsProvider(gen, existingFileHelper);
+        ModBlockTagsProvider blockTags = new ModBlockTagsProvider(gen.getPackOutput(), event.getLookupProvider(), existingFileHelper);
 
-        gen.addProvider(true, blockTags);
-        gen.addProvider(true, new ModItemTagsProvider(gen, blockTags, existingFileHelper));
-        gen.addProvider(true, new ModFluidTagsProvider(gen, existingFileHelper));
-        gen.addProvider(true, new ModRecipesProvider(gen));
-        gen.addProvider(true, new ModItemModelProvider(gen, existingFileHelper));
-        gen.addProvider(true, new ModBlockStateProvider(gen, existingFileHelper));
-        gen.addProvider(true, new RadiationBlocksProvider(gen, Homeostatic.MODID));
-        gen.addProvider(true, new DrinkingFluidsProvider(gen, Homeostatic.MODID));
-        gen.addProvider(true, new DrinkableItemsProvider(gen, Homeostatic.MODID));
-        gen.addProvider(true, new MixingRecipeProvider(gen));
-        gen.addProvider(true, new FillingRecipeProvider(gen));
-        gen.addProvider(true, new ModBookProvider(gen));
-        gen.addProvider(true, new ModLanguageProvider(gen));
-        gen.addProvider(true, new SpecialRecipeProvider(gen));
+        gen.addProvider(event.includeServer(), blockTags);
+        gen.addProvider(event.includeServer(), new ModItemTagsProvider(gen.getPackOutput(), event.getLookupProvider(), blockTags, existingFileHelper));
+        gen.addProvider(event.includeServer(), new ModFluidTagsProvider(gen.getPackOutput(), event.getLookupProvider(), existingFileHelper));
+        gen.addProvider(event.includeServer(), new ModRecipesProvider(gen.getPackOutput()));
+        gen.addProvider(event.includeClient(), new ModItemModelProvider(gen.getPackOutput(), existingFileHelper));
+        gen.addProvider(event.includeClient(), new ModBlockStateProvider(gen.getPackOutput(), existingFileHelper));
+        gen.addProvider(event.includeServer(), new RadiationBlocksProvider(gen.getPackOutput()));
+        gen.addProvider(event.includeServer(), new DrinkingFluidsProvider(gen.getPackOutput()));
+        gen.addProvider(event.includeServer(), new DrinkableItemsProvider(gen.getPackOutput()));
+        // TODO Add for Create 1.19.3/4 once released
+        /*
+        gen.addProvider(event.includeServer(), new MixingRecipeProvider(gen.getPackOutput()));
+        gen.addProvider(event.includeServer(), new FillingRecipeProvider(gen.getPackOutput()));
+         */
+        gen.addProvider(event.includeServer(), new ModBookProvider(gen.getPackOutput()));
+        gen.addProvider(event.includeClient(), new ModLanguageProvider(gen.getPackOutput()));
+        gen.addProvider(event.includeServer(), new SpecialRecipeProvider(gen.getPackOutput()));
     }
 
 }

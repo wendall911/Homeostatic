@@ -1,8 +1,7 @@
 package homeostatic.common.recipe;
 
 import net.minecraft.world.item.crafting.RecipeSerializer;
-
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 
 import net.minecraftforge.registries.RegisterEvent;
 
@@ -14,10 +13,10 @@ public class HomeostaticRecipes {
     public static RecipeSerializer<RemoveArmorEnhancement> REMOVE_ARMOR_ENHANCEMENT_SERIALIZER;
 
     public static void init(RegisterEvent.RegisterHelper<RecipeSerializer<?>> registerHelper) {
-        ARMOR_ENHANCEMENT_SERIALIZER = new SimpleRecipeSerializer<>(ArmorEnhancement::new);
-        PURIFIED_LEATHER_FLASK_SERIALIZER = new SimpleRecipeSerializer<>(PurifiedLeatherFlask::new);
-        HELMET_THERMOMETER_SERIALIZER = new SimpleRecipeSerializer<>(HelmetThermometer::new);
-        REMOVE_ARMOR_ENHANCEMENT_SERIALIZER = new SimpleRecipeSerializer<>(RemoveArmorEnhancement::new);
+        ARMOR_ENHANCEMENT_SERIALIZER = new SimpleCraftingRecipeSerializer<>(ArmorEnhancement::new);
+        PURIFIED_LEATHER_FLASK_SERIALIZER = new SimpleCraftingRecipeSerializer<>(PurifiedLeatherFlask::new);
+        HELMET_THERMOMETER_SERIALIZER = new SimpleCraftingRecipeSerializer<>(HelmetThermometer::new);
+        REMOVE_ARMOR_ENHANCEMENT_SERIALIZER = new SimpleCraftingRecipeSerializer<>(RemoveArmorEnhancement::new);
 
         registerHelper.register("armor_enhancement", ARMOR_ENHANCEMENT_SERIALIZER);
         registerHelper.register("purified_leather_flask", PURIFIED_LEATHER_FLASK_SERIALIZER);

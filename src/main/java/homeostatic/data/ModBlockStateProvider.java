@@ -1,20 +1,19 @@
 package homeostatic.data;
 
-import homeostatic.common.block.HomeostaticBlocks;
-import net.minecraft.data.DataGenerator;
-
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.Homeostatic;
 
 public class ModBlockStateProvider extends BlockStateProvider {
 
-    public ModBlockStateProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, Homeostatic.MODID, existingFileHelper);
+    public ModBlockStateProvider(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
+        super(packOutput, Homeostatic.MODID, existingFileHelper);
     }
 
     @Override

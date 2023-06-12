@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
@@ -107,13 +108,13 @@ public class PageCustomCrafting extends PageCrafting {
 					armorInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, ingredient, Ingredient.EMPTY, ingredient, ingredient);
 				}
 
-				customRecipe = new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, recipe), "armor.enhancement", armorStack, armorInputs);
+				customRecipe = new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, recipe), "armor.enhancement", CraftingBookCategory.EQUIPMENT, armorStack, armorInputs);
 			}
 			else if (leatherFlask != null) {
 				Ingredient baseFlaskIngredient = Ingredient.of(leatherFlaskBase.getItem());
 				NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseFlaskIngredient, ingredient);
 
-				customRecipe = new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, recipe), "flask.filter", leatherFlask, recipeInputs);
+				customRecipe = new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, recipe), "flask.filter", CraftingBookCategory.MISC, leatherFlask, recipeInputs);
 			}
 		}
 

@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -21,8 +22,8 @@ import homeostatic.common.TagManager;
 
 public class ArmorEnhancement extends CustomRecipe {
 
-    public ArmorEnhancement(ResourceLocation resourceLocation) {
-        super(resourceLocation);
+    public ArmorEnhancement(ResourceLocation resourceLocation, CraftingBookCategory category) {
+        super(resourceLocation, category);
     }
 
     @Override

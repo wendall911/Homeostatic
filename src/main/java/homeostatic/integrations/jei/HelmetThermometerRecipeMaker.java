@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 
 import homeostatic.Homeostatic;
 import homeostatic.common.item.HomeostaticItems;
+import homeostatic.util.RegistryHelper;
 
 public final class HelmetThermometerRecipeMaker {
 
@@ -24,7 +26,7 @@ public final class HelmetThermometerRecipeMaker {
         List<CraftingRecipe> recipes = new ArrayList<>();
         Ingredient thermometer = Ingredient.of(HomeostaticItems.THERMOMETER);
 
-        Registry.ITEM.stream()
+        RegistryHelper.getRegistry(Registries.ITEM).stream()
                 .filter(ArmorItem.class::isInstance)
                 .filter(armorItem -> ((ArmorItem) armorItem).getSlot() == EquipmentSlot.HEAD)
                 .forEach(armorItem -> {
@@ -34,7 +36,7 @@ public final class HelmetThermometerRecipeMaker {
                     NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, thermometer);
 
                     tag.putBoolean("thermometer", true);
-                    recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".thermometer"), group, armorStack, recipeInputs));
+                    recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".thermometer"), group, CraftingBookCategory.EQUIPMENT, armorStack, recipeInputs));
                 });
 
         return recipes;

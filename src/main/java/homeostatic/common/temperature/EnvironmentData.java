@@ -4,12 +4,9 @@ import java.util.ArrayList;
 
 import com.mojang.datafixers.util.Pair;
 
-import homeostatic.common.biome.BiomeData;
-import homeostatic.common.biome.BiomeRegistry;
-import homeostatic.util.WetnessHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,11 +24,13 @@ import net.minecraft.world.level.storage.ServerLevelData;
 import net.minecraftforge.fml.ModList;
 
 import sereneseasons.api.season.SeasonHelper;
-import sereneseasons.config.BiomeConfig;
+import sereneseasons.config.ServerConfig;
 
-import homeostatic.Homeostatic;
+import homeostatic.common.biome.BiomeData;
+import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.util.TempHelper;
+import homeostatic.util.WetnessHelper;
 
 public class EnvironmentData {
 
@@ -62,7 +61,7 @@ public class EnvironmentData {
         boolean isUnderground = envData.isUnderground();
         boolean isSheltered = envData.isSheltered();
         double waterVolume = envData.getWaterVolume();
-        Holder<Biome> lushBiome = world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getHolderOrThrow(Biomes.LUSH_CAVES);
+        Holder<Biome> lushBiome = world.registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(Biomes.LUSH_CAVES);
 
         this.envRadiation = envData.getRadiation();
         this.isPartialSubmersion = !sp.isUnderWater() && sp.isInWater() && sp.isInWaterRainOrBubble();
@@ -231,7 +230,7 @@ public class EnvironmentData {
     }
 
     private static double getMaxBiomeHumidity(Holder<Biome> biome) {
-        BiomeData biomeData =  BiomeRegistry.getDataForBiome(biome);
+        BiomeData biomeData = BiomeRegistry.getDataForBiome(biome);
 
         return biomeData.getHumidity(biome);
     }
@@ -278,7 +277,7 @@ public class EnvironmentData {
     private static float getSeasonAdjustedTemperature(ServerLevel world, Holder<Biome> biome, float biomeTemp) {
         if (ModList.get().isLoaded("sereneseasons")) {
             ResourceKey<Level> worldKey = world.dimension();
-            boolean seasonEffects = BiomeConfig.enablesSeasonalEffects(biome);
+            boolean seasonEffects = ServerConfig.isDimensionWhitelisted(world.dimension());
 
             if (seasonEffects && worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
                 BiomeData biomeData =  BiomeRegistry.getDataForBiome(biome);

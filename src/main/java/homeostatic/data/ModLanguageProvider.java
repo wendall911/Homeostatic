@@ -1,15 +1,14 @@
 package homeostatic.data;
 
-import net.minecraft.data.DataGenerator;
-
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import homeostatic.Homeostatic;
 
 public class ModLanguageProvider extends LanguageProvider {
 
-    public ModLanguageProvider(DataGenerator gen) {
-        super(gen, Homeostatic.MODID, "en_us");
+    public ModLanguageProvider(PackOutput packOutput) {
+        super(packOutput, Homeostatic.MODID, "en_us");
     }
 
     @Override

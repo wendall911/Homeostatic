@@ -1,6 +1,7 @@
 package homeostatic.util;
 
-import com.mojang.math.Vector3d;
+import org.joml.Vector3d;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.HitResult;

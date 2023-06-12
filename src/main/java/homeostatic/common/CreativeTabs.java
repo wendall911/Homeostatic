@@ -11,7 +11,7 @@ import homeostatic.Homeostatic;
 import homeostatic.common.item.HomeostaticItems;
 
 public class CreativeTabs {
-
+/*
     public static final CreativeTabBase ITEM_TAB_GROUP = new CreativeTabBase(Homeostatic.MODID + ".items", () -> new ItemStack(HomeostaticItems.PURIFIED_WATER_BUCKET));
 
     public static class CreativeTabBase extends CreativeModeTab {
@@ -29,5 +29,5 @@ public class CreativeTabs {
         }
 
     }
-
+ */
 }

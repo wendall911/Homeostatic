@@ -1,29 +1,32 @@
 package homeostatic.data.recipe;
 
-import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 
 import homeostatic.mixin.RecipeProviderAccessor;
@@ -32,49 +35,48 @@ import static homeostatic.Homeostatic.loc;
 
 public abstract class RecipeProviderBase implements DataProvider {
 
-    private final DataGenerator generator;
+    private final PackOutput packOutput;
 
-    protected RecipeProviderBase(DataGenerator generator) {
-        this.generator = generator;
+    protected RecipeProviderBase(@NotNull final PackOutput packOutput) {
+        this.packOutput = packOutput;
     }
 
     @Override
-    public void run(@Nonnull CachedOutput cache) throws IllegalStateException {
-        Path path = this.generator.getOutputFolder();
-        Set<ResourceLocation> recipes = Sets.newHashSet();
+    @NotNull
+    public CompletableFuture<?> run(@NotNull CachedOutput cache) throws IllegalStateException {
+        final PackOutput.PathProvider pathProvider = this.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "recipes");
+        final PackOutput.PathProvider advancementPathProvider = this.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "advancements");
+        Set<ResourceLocation> resourceLocationSet = Sets.newHashSet();
+        List<CompletableFuture<?>> recipeList = new ArrayList<>();
 
-        registerRecipes((provider) -> {
-            if (recipes.add(provider.getId())) {
-                JsonObject advancement = provider.serializeAdvancement();
-
-                RecipeProviderAccessor.callSaveRecipe(cache, provider.serializeRecipe(), path.resolve(
-                        "data/"
-                        + provider.getId().getNamespace()
-                        + "/recipes/"
-                        + provider.getId().getPath()
-                        + ".json"
-                ));
-
-                if (advancement != null) {
-                    saveRecipeAdvancement(this.generator, cache, advancement, path.resolve(
-                        "data/"
-                        + provider.getId().getNamespace()
-                        + "/advancements/"
-                        + provider.getAdvancementId().getPath()
-                        + ".json"
-                    ));
-                }
+        this.registerRecipes((recipe) -> {
+            if (!resourceLocationSet.add(recipe.getId())) {
+                throw new IllegalStateException("Duplicate recipe " + recipe.getId());
             }
             else {
-                throw new IllegalStateException("Duplicate recipe " + provider.getId());
+                recipeList.add(DataProvider.saveStable(cache,
+                        recipe.serializeRecipe(),
+                        pathProvider.json(recipe.getId())));
+                JsonObject advancement = recipe.serializeAdvancement();
+
+                if (advancement != null) {
+                    CompletableFuture<?> recipeAdvancement = saveAdvancement(cache, recipe, advancement, advancementPathProvider);
+
+                    if (recipeAdvancement != null) {
+                        recipeList.add(recipeAdvancement);
+                    }
+                }
             }
         });
+
+        return CompletableFuture.allOf(recipeList.toArray(CompletableFuture[]::new));
     }
 
     protected abstract void registerRecipes(Consumer<FinishedRecipe> consumer);
 
-    public static void saveRecipeAdvancement(DataGenerator gen, CachedOutput cache, JsonObject json, Path path) {
-        ((RecipeProviderAccessor) new RecipeProvider(gen)).callSaveRecipeAdvancement(cache, json, path);
+    @Nullable
+    protected CompletableFuture<?> saveAdvancement(CachedOutput cache, FinishedRecipe recipe, JsonObject json, PackOutput.PathProvider path) {
+        return DataProvider.saveStable(cache, json, path.json(recipe.getAdvancementId()));
     }
 
     public static InventoryChangeTrigger.TriggerInstance conditionsFromItem(ItemLike item) {
@@ -85,10 +87,23 @@ public abstract class RecipeProviderBase implements DataProvider {
         return RecipeProviderAccessor.homeostatic_condition(ItemPredicate.Builder.item().of(key).build());
     }
 
-    protected static void specialRecipe(Consumer<FinishedRecipe> consumer, SimpleRecipeSerializer<?> serializer) {
-        ResourceLocation name = Registry.RECIPE_SERIALIZER.getKey(serializer);
+    protected static void specialRecipe(Consumer<FinishedRecipe> consumer, SimpleCraftingRecipeSerializer<?> serializer) {
+        ResourceLocation name = BuiltInRegistries.RECIPE_SERIALIZER.getKey(serializer);
 
         SpecialRecipeBuilder.special(serializer).save(consumer, loc("dynamic/" + Objects.requireNonNull(name).getPath()).toString());
+    }
+
+    protected static InventoryChangeTrigger.TriggerInstance has(TagKey<Item> pTag) {
+        return inventoryTrigger(ItemPredicate.Builder.item().of(pTag).build());
+    }
+
+    protected static InventoryChangeTrigger.TriggerInstance has(ItemLike pItemLike) {
+        return inventoryTrigger(ItemPredicate.Builder.item().of(pItemLike).build());
+    }
+
+    protected static InventoryChangeTrigger.TriggerInstance inventoryTrigger(ItemPredicate... predicates) {
+        return new InventoryChangeTrigger.TriggerInstance(EntityPredicate.Composite.ANY,
+                MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, predicates);
     }
 
 }

@@ -1,16 +1,18 @@
 package homeostatic.data;
 
-import java.io.IOException;
-import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 
-import homeostatic.Homeostatic;
 import homeostatic.common.block.BlockRadiation;
 import homeostatic.common.block.BlockRadiationManager;
 import homeostatic.data.integration.ModIntegration;
@@ -18,12 +20,10 @@ import homeostatic.data.integration.ModIntegration;
 public class RadiationBlocksProvider implements DataProvider {
 
     private final Map<ResourceLocation, BlockRadiation> RADIATION_MAP = new HashMap<>();
-    private final DataGenerator dataGenerator;
-    private final String modid;
+    private final PackOutput packOutput;
 
-    public RadiationBlocksProvider(DataGenerator dataGenerator, String modid) {
-        this.dataGenerator = dataGenerator;
-        this.modid = modid;
+    public RadiationBlocksProvider(@NotNull final PackOutput packOutput) {
+        this.packOutput = packOutput;
     }
 
     protected void registerRadiationBlocks() {
@@ -62,25 +62,25 @@ public class RadiationBlocksProvider implements DataProvider {
     }
 
     @Override
-    public void run(CachedOutput pOutput) throws IOException {
+    @NotNull
+    public CompletableFuture<?> run(@NotNull CachedOutput cache) throws IllegalStateException {
+        List<CompletableFuture<?>> recipeList = new ArrayList<>();
+
         registerRadiationBlocks();
 
-        Path output = dataGenerator.getOutputFolder();
-
         for (Map.Entry<ResourceLocation, BlockRadiation> entry : RADIATION_MAP.entrySet()) {
-            Path blockRadiationPath = getPath(output, entry.getKey());
+            PackOutput.PathProvider pathProvider = getPath(entry.getKey());
 
-            try {
-                DataProvider.saveStable(pOutput, BlockRadiationManager.parseBlockRadiation(entry.getValue()), blockRadiationPath);
-            }
-            catch (IOException e) {
-                Homeostatic.LOGGER.error("Couldn't save homeostatic block_radiation %s %s", blockRadiationPath, e);
-            }
+            recipeList.add(DataProvider.saveStable(cache,
+                    BlockRadiationManager.parseBlockRadiation(entry.getValue()),
+                    pathProvider.json(entry.getKey())));
         }
+
+        return CompletableFuture.allOf(recipeList.toArray(CompletableFuture[]::new));
     }
 
-    private static Path getPath(Path output, ResourceLocation loc) {
-        return output.resolve("data/" + loc.getNamespace() + "/environment/block_radiation/" + loc.getPath() + ".json");
+    private PackOutput.PathProvider getPath(ResourceLocation loc) {
+        return this.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "environment/block_radiation/");
     }
 
 }
