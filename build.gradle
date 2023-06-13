@@ -132,7 +132,7 @@ dependencies {
     }
     else {
         runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
-        runtimeOnly fg.deobf("curse.maven:configured-457570:3947885")
+        runtimeOnly fg.deobf("curse.maven:configured-457570:4462839")
         //runtimeOnly fg.deobf("curse.maven:botania-225643:???")
         //runtimeOnly fg.deobf("curse.maven:patchouli-306770:3936481")
         //runtimeOnly fg.deobf("curse.maven:curios-309927:3924518")
