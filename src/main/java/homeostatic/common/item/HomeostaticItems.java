@@ -1,15 +1,20 @@
 package homeostatic.common.item;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 
 import net.minecraftforge.registries.RegisterEvent;
 
-import homeostatic.common.CreativeTabs;
 import homeostatic.common.fluid.HomeostaticFluids;
+import homeostatic.Homeostatic;
 
 public final class HomeostaticItems {
 
+    private static final Map<ResourceLocation, Item> ALL = new LinkedHashMap<>();
     public static RegisterEvent.RegisterHelper<Item> ITEM_REGISTRY;
     public static Item LEATHER_FLASK;
     public static Item PURIFIED_WATER_BUCKET;
@@ -43,9 +48,16 @@ public final class HomeostaticItems {
     }
 
     public static Item registerItem(String name, Item item) {
-        ITEM_REGISTRY.register(name, item);
+        ResourceLocation loc = Homeostatic.loc(name);
+
+        ITEM_REGISTRY.register(loc, item);
+        ALL.put(loc, item);
 
         return item;
+    }
+
+    public static Map<ResourceLocation, Item> getAll() {
+        return ALL;
     }
 
 }

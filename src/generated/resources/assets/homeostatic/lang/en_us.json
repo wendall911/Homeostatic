@@ -7,6 +7,7 @@
   "death.attack.hyperthermia.player": "Hyperthermia has claimed poor %1$s whilst fighting %2$s",
   "effect.thirst": "Thirst",
   "fluid_type.homeostatic.purified_water_type": "Purified Water",
+  "homeostatic.items": "Homeostatic",
   "info.homeostatic.book.education.body_temp.intro": "More info coming soon ...",
   "info.homeostatic.book.education.body_temp.name": "Education: Body Temperature",
   "info.homeostatic.book.education.desc": "This section is specifically for those who want to argue publicly that running around can generate enough body heat to even matter when you are wet, cold and only wearing a t-shirt and pants (even if you are kinda superhuman). This is just silly.$(br)$(br)If needed, please refer to the following pages to get acquainted with how this actually works. HINT: You will freeze to death if wet and cold, no matter how much you jump around or run. Also, really hot things will scald, boil or burn you...",

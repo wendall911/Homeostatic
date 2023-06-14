@@ -1,14 +1,22 @@
 package homeostatic.proxy;
 
+import java.util.Map;
+
 import biomesoplenty.api.biome.BOPBiomes;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.biome.Biome;
+
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -68,6 +76,31 @@ public class CommonProxy {
             event.register(Registries.FLUID, HomeostaticFluids::init);
             event.register(ForgeRegistries.FLUID_TYPES.get().getRegistryKey(), HomeostaticFluids::initTypes);
             event.register(Registries.RECIPE_SERIALIZER, HomeostaticRecipes::init);
+        }
+
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        public static void registerCreativeTab(CreativeModeTabEvent.Register event) {
+
+            event.registerCreativeModeTab(new ResourceLocation(Homeostatic.MODID, "items"), builder -> builder.icon(() -> new ItemStack(HomeostaticItems.PURIFIED_WATER_BUCKET))
+                .title(Component.translatable(Homeostatic.MODID + ".items"))
+                .displayItems((features, output, tab) -> {
+                    for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
+                        Item item = entry.getValue();
+
+                        output.accept(new ItemStack(item));
+                    }
+                }));
+        }
+
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        public static void registerCreativeTab(CreativeModeTabEvent.BuildContents event) {
+            if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+                for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
+                    Item item = entry.getValue();
+
+                    event.accept(new ItemStack(item));
+                }
+            }
         }
 
     }
