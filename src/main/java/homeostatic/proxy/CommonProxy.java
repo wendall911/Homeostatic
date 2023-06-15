@@ -82,14 +82,14 @@ public class CommonProxy {
         public static void registerCreativeTab(CreativeModeTabEvent.Register event) {
 
             event.registerCreativeModeTab(new ResourceLocation(Homeostatic.MODID, "items"), builder -> builder.icon(() -> new ItemStack(HomeostaticItems.PURIFIED_WATER_BUCKET))
-                .title(Component.translatable(Homeostatic.MODID + ".items"))
-                .displayItems((features, output, tab) -> {
-                    for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
-                        Item item = entry.getValue();
+                    .title(Component.translatable(Homeostatic.MODID + ".items"))
+                    .displayItems((features, output, tab) -> {
+                        for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
+                            Item item = entry.getValue();
 
-                        output.accept(new ItemStack(item));
-                    }
-                }));
+                            output.accept(new ItemStack(item));
+                        }
+                    }));
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -106,34 +106,23 @@ public class CommonProxy {
     }
 
     public void serverStart(ServerStartedEvent event) {
-        if (ModList.get().isLoaded("biomesoplenty")) {
-            for (ResourceKey<Biome> biomeResourceKey : BOPBiomes.getAllBiomes()) {
-                logBiomeInfo(event.getServer(), biomeResourceKey);
-            }
+        Registry<Biome> biomeRegistry = RegistryHelper.getRegistry(event.getServer(), Registries.BIOME);
+
+        for (Map.Entry<ResourceKey<Biome>, Biome> entry : biomeRegistry.entrySet()) {
+            ResourceKey<Biome> biomeResourceKey = entry.getKey();
+            ResourceLocation biomeName = biomeResourceKey.location();
+            Biome biome = entry.getValue();
+            BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.getBiomeCategory(biomeRegistry.getHolderOrThrow(biomeResourceKey));
+
+            Homeostatic.LOGGER.debug(
+                    "Biome: " + biomeName
+                            + "\npreciptitation=" + biome.getPrecipitation()
+                            + "\ntemperature=" + biome.getBaseTemperature()
+                            + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
+                            + "\ndownfall=" + biome.getDownfall()
+                            + "\nbiomeCategory=" + biomeCategory
+            );
         }
-
-        if (ModList.get().isLoaded("byg")) {
-            for (RegistryObject<Biome> biomeRegistryObject : BYGBiomes.BIOMES_BY_TAG.values()) {
-                ResourceKey<Biome> biomeResourceKey = biomeRegistryObject.getResourceKey();
-
-                logBiomeInfo(event.getServer(), biomeResourceKey);
-            }
-        }
-    }
-
-    private void logBiomeInfo(MinecraftServer server, ResourceKey<Biome> biomeResourceKey) {
-        Registry<Biome> biomeRegistry = RegistryHelper.getRegistry(server, Registries.BIOME);
-        String biomeName = biomeResourceKey.location().toString();
-        Biome biome = biomeRegistry.get(biomeResourceKey);
-        BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.getBiomeCategory(biomeRegistry.getHolderOrThrow(biomeResourceKey));
-
-        Homeostatic.LOGGER.debug(
-                "Biome: " + biomeName
-                        + "\npreciptitation=" + biome.getPrecipitation()
-                        + "\ntemperature=" + biome.getBaseTemperature()
-                        + "\ndownfall=" + biome.getDownfall()
-                        + "\nbiomeCategory=" + biomeCategory
-        );
     }
 
 }
