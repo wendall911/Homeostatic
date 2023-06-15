@@ -33,10 +33,10 @@ public class BiomeRegistry {
     private static final Map<ResourceKey<Biome>, BiomeCategory> BIOME_CATEGORY = new HashMap<>();
 
     private static final BiomeData BOG = new BiomeData(0.351F, 60.0F, 40F, 10F);
-    private static final BiomeData DEEP_COLD_OCEAN = new BiomeData(0.373F, 20.0F, 20F, 5F);
+    private static final BiomeData COLD_OCEAN = new BiomeData(0.373F, 20.0F, 20F, 5F);
     private static final BiomeData COLD_FOREST = new BiomeData(0.373F, 60.0F, 40F, 12F);
     private static final BiomeData COLD_DESERT = new BiomeData(0.395F, 20.0F, 40F, 20F);
-    private static final BiomeData COLD_OCEAN = new BiomeData(0.440F, 20.0F, 20F, 5F);
+    private static final BiomeData DEEP_COLD_OCEAN = new BiomeData(0.440F, 20.0F, 20F, 5F);
     private static final BiomeData ICY = new BiomeData(0.507F, 20.0F, 20F, 5F);
     private static final BiomeData TAIGA = new BiomeData(0.507F, 50.0F, 40F, 10F);
     private static final BiomeData OCEAN = new BiomeData(0.551F, 70.0F, 40F, 10F);
@@ -189,8 +189,8 @@ public class BiomeRegistry {
         BIOME_CATEGORY.put(Biomes.WARM_OCEAN, BiomeCategory.WARM_OCEAN);
         BIOME_CATEGORY.put(Biomes.LUKEWARM_OCEAN, BiomeCategory.LUKEWARM_OCEAN);
         BIOME_CATEGORY.put(Biomes.DEEP_LUKEWARM_OCEAN, BiomeCategory.DEEP_LUKEWARM_OCEAN);
-        BIOME_CATEGORY.put(Biomes.DEEP_FROZEN_OCEAN, BiomeCategory.OCEAN);
-        BIOME_CATEGORY.put(Biomes.FROZEN_OCEAN, BiomeCategory.OCEAN);
+        BIOME_CATEGORY.put(Biomes.DEEP_FROZEN_OCEAN, BiomeCategory.DEEP_COLD_OCEAN);
+        BIOME_CATEGORY.put(Biomes.FROZEN_OCEAN, BiomeCategory.COLD_OCEAN);
         BIOME_CATEGORY.put(Biomes.OCEAN, BiomeCategory.OCEAN);
         BIOME_CATEGORY.put(Biomes.DEEP_OCEAN, BiomeCategory.OCEAN);
         BIOME_CATEGORY.put(Biomes.COLD_OCEAN, BiomeCategory.COLD_OCEAN);
@@ -506,8 +506,8 @@ public class BiomeRegistry {
                 biomeCategory = BiomeCategory.ICY;
             }
             else if (temperatureModifier == Biome.TemperatureModifier.FROZEN) {
-                // DEEP_FROZEN_OCEAN
-                biomeCategory = BiomeCategory.OCEAN;
+                // FROZEN_OCEAN
+                biomeCategory = BiomeCategory.COLD_OCEAN;
             }
             else {
                 // FROZEN_RIVER
@@ -602,8 +602,8 @@ public class BiomeRegistry {
             if (temperatureModifier == Biome.TemperatureModifier.FROZEN
                     || generationSettings.hasFeature(AquaticPlacements.SEAGRASS_NORMAL.get())
                     || generationSettings.hasFeature(AquaticPlacements.SEAGRASS_DEEP.get())) {
-                // FROZEN_OCEAN OCEAN DEEP_OCEAN
-                biomeCategory = BiomeCategory.OCEAN;
+                // FROZEN_OCEANFROZEN_OCEAN OCEAN DEEP_OCEAN
+                biomeCategory = BiomeCategory.DEEP_COLD_OCEAN;
             }
             else if (generationSettings.hasFeature(AquaticPlacements.SEA_PICKLE.get())) {
                 // WARM_OCEAN

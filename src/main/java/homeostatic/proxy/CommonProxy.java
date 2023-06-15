@@ -89,6 +89,7 @@ public class CommonProxy {
                     "Biome: " + biomeName
                             + "\npreciptitation=" + biome.getPrecipitation()
                             + "\ntemperature=" + biome.getBaseTemperature()
+                            + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
                             + "\ndownfall=" + biome.getDownfall()
                             + "\nbiomeCategory=" + biomeCategory
             );
