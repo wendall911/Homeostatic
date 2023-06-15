@@ -2,12 +2,14 @@ package homeostatic.proxy;
 
 import biomesoplenty.api.biome.BOPBiomes;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartedEvent;
@@ -73,35 +75,24 @@ public class CommonProxy {
     }
 
     public void serverStart(ServerStartedEvent event) {
-        if (ModList.get().isLoaded("biomesoplenty")) {
-            for (ResourceKey<Biome> biomeResourceKey : BOPBiomes.getAllBiomes()) {
-                logBiomeInfo(biomeResourceKey);
-            }
-        }
-
-        if (ModList.get().isLoaded("byg")) {
-            for (RegistryObject<Biome> biomeRegistryObject : BYGBiomes.BIOMES_BY_TAG.values()) {
-                ResourceKey<Biome> biomeResourceKey = biomeRegistryObject.getResourceKey();
-
-                logBiomeInfo(biomeResourceKey);
-            }
-        }
-    }
-
-    private void logBiomeInfo(ResourceKey<Biome> biomeResourceKey) {
         Registry<Biome> biomeRegistry = BuiltinRegistries.BIOME;
-        String biomeName = biomeResourceKey.location().toString();
-        Biome biome = biomeRegistry.get(biomeResourceKey);
-        Consumer<String> error = x -> Homeostatic.LOGGER.error("error getting holder for %s", biomeName);
-        BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.getBiomeCategory(biomeRegistry.getOrCreateHolder(biomeResourceKey).getOrThrow(false, error));
 
-        Homeostatic.LOGGER.debug(
-                "Biome: " + biomeName
-                        + "\npreciptitation=" + biome.getPrecipitation()
-                        + "\ntemperature=" + biome.getBaseTemperature()
-                        + "\ndownfall=" + biome.getDownfall()
-                        + "\nbiomeCategory=" + biomeCategory
-        );
+        for (Map.Entry<ResourceKey<Biome>, Biome> entry : biomeRegistry.entrySet()) {
+            ResourceKey<Biome> biomeResourceKey = entry.getKey();
+            ResourceLocation biomeName = biomeResourceKey.location();
+            Biome biome = entry.getValue();
+
+            Consumer<String> error = x -> Homeostatic.LOGGER.error("error getting holder for %s", biomeName);
+            BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.getBiomeCategory(biomeRegistry.getOrCreateHolder(biomeResourceKey).getOrThrow(false, error));
+
+            Homeostatic.LOGGER.debug(
+                    "Biome: " + biomeName
+                            + "\npreciptitation=" + biome.getPrecipitation()
+                            + "\ntemperature=" + biome.getBaseTemperature()
+                            + "\ndownfall=" + biome.getDownfall()
+                            + "\nbiomeCategory=" + biomeCategory
+            );
+        }
     }
 
 }
