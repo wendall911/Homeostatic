@@ -5,7 +5,7 @@ import net.minecraft.world.level.biome.Biome;
 
 public class BiomeData {
 
-    public static final float FROZEN_OFFSET = -0.1114457831F;
+    public static final float FROZEN_OFFSET = -0.31F;
     public static final float SNOW_OFFSET = -0.446F;
     public static final float MC_DEGREE = 0.022289157F;
 
@@ -26,9 +26,7 @@ public class BiomeData {
 
         if (temperatureModifier == Biome.TemperatureModifier.FROZEN) {
             temperature += FROZEN_OFFSET;
-        }
-
-        if (precipitation == Biome.Precipitation.SNOW) {
+        } else if (precipitation == Biome.Precipitation.SNOW) {
             temperature += SNOW_OFFSET;
         }
 
