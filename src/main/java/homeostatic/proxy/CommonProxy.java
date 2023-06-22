@@ -2,14 +2,11 @@ package homeostatic.proxy;
 
 import java.util.Map;
 
-import biomesoplenty.api.biome.BOPBiomes;
-
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,15 +18,11 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
-
-import potionstudios.byg.common.world.biome.BYGBiomes;
-import potionstudios.byg.reg.RegistryObject;
 
 import homeostatic.config.ConfigHandler;
 import homeostatic.common.biome.BiomeRegistry;
@@ -113,15 +106,34 @@ public class CommonProxy {
             ResourceLocation biomeName = biomeResourceKey.location();
             Biome biome = entry.getValue();
             BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.getBiomeCategory(biomeRegistry.getHolderOrThrow(biomeResourceKey));
-
-            Homeostatic.LOGGER.debug(
-                    "Biome: " + biomeName
-                            + "\npreciptitation=" + biome.getPrecipitation()
-                            + "\ntemperature=" + biome.getBaseTemperature()
-                            + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
-                            + "\ndownfall=" + biome.getDownfall()
-                            + "\nbiomeCategory=" + biomeCategory
+            BiomeRegistry.BiomeCategory computedBiomeCategory = BiomeRegistry.getBiomeCategory(
+                    biome.getGenerationSettings(),
+                    biome.getModifiedClimateSettings().temperature(),
+                    biome.getModifiedClimateSettings().temperatureModifier(),
+                    biome.getModifiedClimateSettings().downfall(),
+                    biome.getModifiedClimateSettings().precipitation(),
+                    biome.getSpecialEffects()
             );
+
+            if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
+                Homeostatic.LOGGER.debug(
+                        "Biome: " + biomeName
+                                + "\npreciptitation=" + biome.getPrecipitation()
+                                + "\ntemperature=" + biome.getBaseTemperature()
+                                + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
+                                + "\ndownfall=" + biome.getDownfall()
+                                + "\nbiomeCategory=" + biomeCategory
+                );
+
+                if (computedBiomeCategory != biomeCategory) {
+                    Homeostatic.LOGGER.error("Computed biome category mismatch: " + biomeName
+                            + "\npreciptitation=" + biome.getModifiedClimateSettings().precipitation()
+                            + "\ntemperature=" + biome.getModifiedClimateSettings().temperature()
+                            + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
+                            + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
+                            + "\nbiomeCategory=" + computedBiomeCategory);
+                }
+            }
         }
     }
 

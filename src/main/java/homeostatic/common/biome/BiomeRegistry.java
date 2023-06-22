@@ -4,12 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import biomesoplenty.api.biome.BOPBiomes;
+import biomesoplenty.common.biome.BOPOverworldBiomeBuilder;
+import biomesoplenty.common.biome.BOPOverworldBiomes;
+import biomesoplenty.common.worldgen.placement.BOPVegetationPlacements;
 
+import biomesoplenty.core.BiomesOPlenty;
+import biomesoplenty.init.ModBiomes;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.HolderSet;
 import net.minecraft.data.worldgen.placement.AquaticPlacements;
 import net.minecraft.data.worldgen.placement.CavePlacements;
 import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
@@ -17,6 +22,7 @@ import net.minecraft.data.worldgen.placement.NetherPlacements;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
@@ -29,7 +35,8 @@ import net.minecraftforge.fml.ModList;
 import potionstudios.byg.common.world.biome.BYGBiomes;
 
 import homeostatic.Homeostatic;
-import homeostatic.util.RegistryHelper;
+import potionstudios.byg.common.world.biome.BYGOverworldBiomes;
+import potionstudios.byg.common.world.feature.BYGPlacedFeatures;
 
 public class BiomeRegistry {
 
@@ -221,7 +228,6 @@ public class BiomeRegistry {
                     case "seasonal_forest":
                     case "seasonal_orchard":
                     case "pumpkin_patch":
-                    case "boreal_forest":
                         BIOME_CATEGORY.put(biomeResourceKey, BiomeCategory.COLD_FOREST);
                         break;
                     case "marsh":
@@ -270,6 +276,7 @@ public class BiomeRegistry {
                     case "old_growth_woodland":
                     case "redwood_forest":
                     case "woodland":
+                    case "auroral_garden":
                         BIOME_CATEGORY.put(biomeResourceKey, BiomeCategory.FOREST);
                         break;
                     case "dryland":
@@ -282,7 +289,6 @@ public class BiomeRegistry {
                         BIOME_CATEGORY.put(biomeResourceKey, BiomeCategory.BEACH);
                         break;
                     case "scrubland":
-                    case "wooded_scrubland":
                         BIOME_CATEGORY.put(biomeResourceKey, BiomeCategory.SAVANNA);
                         break;
                     case "bog":
@@ -319,7 +325,7 @@ public class BiomeRegistry {
                         BIOME_CATEGORY.put(biomeResourceKey, BiomeCategory.LUSH_DESERT);
                         break;
                     case "wasteland":
-                    case "wooded_wasteland":
+                    case "wasteland_steppe":
                         BIOME_CATEGORY.put(biomeResourceKey, BiomeCategory.MESA); // Set as Nether temp
                         break;
                     default:
@@ -331,8 +337,7 @@ public class BiomeRegistry {
 
         // Oh The Biomes You'll Go
         if (ModList.get().isLoaded("byg")) {
-            BYGBiomes.BIOMES_BY_TAG.forEach((biomeTagKey, biomeRegistryObject) -> {
-                ResourceKey<Biome> biomeResourceKey = biomeRegistryObject.getResourceKey();
+            BYGBiomes.BIOMES_BY_TAG.forEach((biomeTagKey, biomeResourceKey) -> {
                 switch (biomeResourceKey.location().getPath()) {
                     case "allium_fields":
                     case "amaranth_fields":
@@ -363,6 +368,7 @@ public class BiomeRegistry {
                     case "red_oak_forest":
                     case "fragment_forest":
                     case "temperate_grove":
+                    case "black_forest":
                         BIOME_CATEGORY.put(biomeResourceKey, BiomeCategory.FOREST);
                         break;
                     case "atacama_desert":
@@ -372,9 +378,9 @@ public class BiomeRegistry {
                         break;
                     case "bayou":
                     case "white_mangrove_marshes":
+                    case "cypress_swamplands":
                         BIOME_CATEGORY.put(biomeResourceKey, BiomeCategory.SWAMP);
                         break;
-                    case "black_forest":
                     case "canadian_shield":
                     case "coniferous_forest":
                     case "dacite_ridges":
@@ -388,7 +394,6 @@ public class BiomeRegistry {
                     case "guiana_shield":
                         BIOME_CATEGORY.put(biomeResourceKey, BiomeCategory.JUNGLE);
                         break;
-                    case "cypress_swamplands":
                     case "skyris_vale":
                     case "dacite_shore":
                     case "twilight_meadow":
@@ -451,10 +456,8 @@ public class BiomeRegistry {
         }
     }
 
-    public static PlacedFeature getFeature(ResourceKey<PlacedFeature> placedFeatureResourceKey) {
-        Registry<PlacedFeature> registry = RegistryHelper.getRegistry(Registries.PLACED_FEATURE);
-
-        return registry.get(placedFeatureResourceKey);
+    public static boolean hasFeature(BiomeGenerationSettings biomeGenerationSettings, ResourceKey<PlacedFeature> placedFeatureResourceKey) {
+        return biomeGenerationSettings.features().stream().flatMap(HolderSet::stream).map(Holder::unwrapKey).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toSet()).contains(placedFeatureResourceKey);
     }
 
     public static BiomeCategory getBiomeCategory(Holder<Biome> biome) {
@@ -471,7 +474,7 @@ public class BiomeRegistry {
         return BiomeCategory.MISSING;
     }
 
-    public static BiomeCategory getBiomeCategory(BiomeGenerationSettings generationSettings, float temperature, MobSpawnSettings mobSpawnSettings, Biome.TemperatureModifier temperatureModifier, float downfall, Biome.Precipitation precipitation, BiomeSpecialEffects specialEffects) {
+    public static BiomeCategory getBiomeCategory(BiomeGenerationSettings generationSettings, float temperature, Biome.TemperatureModifier temperatureModifier, float downfall, Biome.Precipitation precipitation, BiomeSpecialEffects specialEffects) {
         BiomeCategory biomeCategory = BiomeCategory.MISSING;
 
         if (temperature == -0.2F) {
@@ -479,9 +482,11 @@ public class BiomeRegistry {
             biomeCategory = BiomeCategory.FOREST;
         }
         else if (temperature == -0.25F) {
-            // MUSKEG
-            if (downfall == 0.6F && precipitation == Biome.Precipitation.SNOW) {
-                biomeCategory = BiomeCategory.PLAINS;
+            if (ModList.get().isLoaded("biomesoplenty") && downfall == 0.5F
+                    && precipitation == Biome.Precipitation.SNOW
+                    && hasFeature(generationSettings, BOPVegetationPlacements.TREES_AURORAL_GARDEN)) {
+                // AURORAL_GARDEN
+                biomeCategory = BiomeCategory.FOREST;
             } else {
                 // RAINBOW_HILLS SNOWY_CONIFEROUS_FOREST SNOWY_FIR_CLEARING SNOWY_MAPLE_WOODS
                 biomeCategory = BiomeCategory.MOUNTAIN;
@@ -492,7 +497,12 @@ public class BiomeRegistry {
             biomeCategory = BiomeCategory.MOUNTAIN;
         }
         else if (temperature == -0.5F) {
-            if (downfall == 0.9F) {
+            if (ModList.get().isLoaded("byg")
+                    && hasFeature(generationSettings, BYGPlacedFeatures.LARGE_HOWLING_PEAKS_BOULDERS)) {
+                // HOWLING_PEAKS
+                biomeCategory = BiomeCategory.MOUNTAIN;
+            }
+            else if (downfall == 1.0F) {
                 // SHATTERED_GLACIER
                 biomeCategory = BiomeCategory.ICY;
             }
@@ -510,8 +520,12 @@ public class BiomeRegistry {
             biomeCategory = BiomeCategory.BEACH;
         }
         else if (temperature == 0.0F) {
-            if (generationSettings.hasFeature(getFeature(MiscOverworldPlacements.ICE_SPIKE))
-                    || generationSettings.hasFeature(getFeature(VegetationPlacements.TREES_SNOWY))) {
+            // MUSKEG
+            if (downfall == 0.6F && precipitation == Biome.Precipitation.SNOW) {
+                biomeCategory = BiomeCategory.PLAINS;
+            }
+            else if (hasFeature(generationSettings, MiscOverworldPlacements.ICE_SPIKE)
+                    || hasFeature(generationSettings, VegetationPlacements.TREES_SNOWY)) {
                 // ICE_SPIKES SNOWY_PLAINS
                 biomeCategory = BiomeCategory.ICY;
             }
@@ -528,12 +542,6 @@ public class BiomeRegistry {
             // CARDINAL_TUNDRA
             biomeCategory = BiomeCategory.PLAINS;
         }
-        else if (temperature == 0.15F) {
-            if (downfall == 0.5F) {
-                // HOWLING_PEAKS
-                biomeCategory = BiomeCategory.MOUNTAIN;
-            }
-        }
         else if (temperature == 0.2F) {
             if (downfall == 0.5F) {
                 // BOG TUNDRA
@@ -545,21 +553,23 @@ public class BiomeRegistry {
             }
         }
         else if (temperature == 0.25F) {
-            if (generationSettings.hasFeature(getFeature(VegetationPlacements.PATCH_GRASS_TAIGA_2))
-                    || generationSettings.hasFeature(getFeature(VegetationPlacements.PATCH_GRASS_TAIGA))) {
-                // TAIGA BLACK_FOREST MAPLE_TAIGA CANADIAN_SHIELD CONIFEROUS_FOREST DACITE_RIDGES AUTUMNAL_TAIGA
+            if (ModList.get().isLoaded("byg")
+                    && hasFeature(generationSettings, BYGPlacedFeatures.ZELKOVA_TREES)) {
+                // ZELKOVA_FOREST
+                biomeCategory = BiomeCategory.FOREST;
+            }
+            else if (hasFeature(generationSettings, VegetationPlacements.PATCH_GRASS_TAIGA_2)
+                    || hasFeature(generationSettings, VegetationPlacements.PATCH_GRASS_TAIGA)) {
+                // TAIGA MAPLE_TAIGA CANADIAN_SHIELD CONIFEROUS_FOREST DACITE_RIDGES AUTUMNAL_TAIGA
                 biomeCategory = BiomeCategory.TAIGA;
             }
-            else if (generationSettings.hasFeature(getFeature(VegetationPlacements.TREES_OLD_GROWTH_SPRUCE_TAIGA))) {
+            else if (hasFeature(generationSettings, VegetationPlacements.TREES_OLD_GROWTH_SPRUCE_TAIGA)) {
                 // OLD_GROWTH_SPRUCE_TAIGA
                 biomeCategory = BiomeCategory.TAIGA;
             }
-            else if (mobSpawnSettings.getEntityTypes().contains(EntityType.PARROT)) {
+            else if (ModList.get().isLoaded("byg")
+                    && hasFeature(generationSettings, BYGPlacedFeatures.FRAGMENT_FOREST_TREES)) {
                 // FRAGMENT_FOREST
-                biomeCategory = BiomeCategory.FOREST;
-            }
-            else if (specialEffects.getGrassColorOverride().isPresent() && specialEffects.getGrassColorOverride().get() == 9470285) {
-                // ZELKOVA_FOREST
                 biomeCategory = BiomeCategory.FOREST;
             }
             else if (downfall == 0.5F || downfall == 0.9F) {
@@ -571,7 +581,7 @@ public class BiomeRegistry {
                 biomeCategory = BiomeCategory.COLD_DESERT;
             }
             else if (downfall == 0.8F) {
-                // CYPRESS_SWAMPLANDS SKYRIS_VALE TWILIGHT_MEADOW WEEPING_WITCH_FOREST DACITE_SHORE
+                // SKYRIS_VALE TWILIGHT_MEADOW WEEPING_WITCH_FOREST DACITE_SHORE
                 biomeCategory = BiomeCategory.BOG;
 
             }
@@ -600,47 +610,48 @@ public class BiomeRegistry {
                 biomeCategory = BiomeCategory.PLAINS;
             }
             else {
-                // SEASONAL_FOREST PUMPKIN_PATCH BOREAL_FOREST SEASONAL_ORCHARD
+                // SEASONAL_FOREST PUMPKIN_PATCH SEASONAL_ORCHARD
                 biomeCategory = BiomeCategory.COLD_FOREST;
             }
         }
         else if (temperature == 0.45F) {
-            // CONIFEROUS_FOREST FIR_CLEARING
+            // CONIFEROUS_FOREST FIR_CLEARING BLACK_FOREST
             biomeCategory = BiomeCategory.FOREST;
         }
         else if (temperature == 0.5F) {
-            if (temperatureModifier == Biome.TemperatureModifier.FROZEN
-
-                    || generationSettings.hasFeature(getFeature(AquaticPlacements.SEAGRASS_NORMAL))
-                    || generationSettings.hasFeature(getFeature(AquaticPlacements.SEAGRASS_DEEP))) {
-                // DEEP_FROZEN_OCEAN OCEAN DEEP_OCEAN
+            if (temperatureModifier == Biome.TemperatureModifier.FROZEN) {
                 biomeCategory = BiomeCategory.DEEP_COLD_OCEAN;
             }
-            else if (generationSettings.hasFeature(getFeature(AquaticPlacements.SEA_PICKLE))) {
+            else if (hasFeature(generationSettings, AquaticPlacements.SEAGRASS_NORMAL)
+                    || hasFeature(generationSettings, AquaticPlacements.SEAGRASS_DEEP)) {
+                // DEEP_OCEAN OCEAN
+                biomeCategory = BiomeCategory.OCEAN;
+            }
+            else if (hasFeature(generationSettings, AquaticPlacements.SEA_PICKLE)) {
                 // WARM_OCEAN
                 biomeCategory = BiomeCategory.WARM_OCEAN;
             }
-            else if (generationSettings.hasFeature(getFeature(AquaticPlacements.SEAGRASS_WARM))) {
+            else if (hasFeature(generationSettings, AquaticPlacements.SEAGRASS_WARM)) {
                 // LUKEWARM_OCEAN
                 biomeCategory = BiomeCategory.LUKEWARM_OCEAN;
             }
-            else if (generationSettings.hasFeature(getFeature(AquaticPlacements.SEAGRASS_DEEP_WARM))) {
+            else if (hasFeature(generationSettings, AquaticPlacements.SEAGRASS_DEEP_WARM)) {
                 // DEEP_LUKEWARM_OCEAN
                 biomeCategory = BiomeCategory.DEEP_LUKEWARM_OCEAN;
             }
-            else if (generationSettings.hasFeature(getFeature(AquaticPlacements.SEAGRASS_COLD))) {
+            else if (hasFeature(generationSettings, AquaticPlacements.SEAGRASS_COLD)) {
                 // COLD_OCEAN
                 biomeCategory = BiomeCategory.COLD_OCEAN;
             }
-            else if (generationSettings.hasFeature(getFeature(AquaticPlacements.SEAGRASS_DEEP_COLD))) {
+            else if (hasFeature(generationSettings, AquaticPlacements.SEAGRASS_DEEP_COLD)) {
                 // DEEP_COLD_OCEAN
                 biomeCategory = BiomeCategory.DEEP_COLD_OCEAN;
             }
-            else if (generationSettings.hasFeature(getFeature(MiscOverworldPlacements.VOID_START_PLATFORM))) {
+            else if (hasFeature(generationSettings, MiscOverworldPlacements.VOID_START_PLATFORM)) {
                 // THE_VOID
                 biomeCategory = BiomeCategory.NONE;
             }
-            else if (generationSettings.hasFeature(getFeature(CavePlacements.CAVE_VINES))) {
+            else if (hasFeature(generationSettings, CavePlacements.CAVE_VINES)) {
                 // LUSH_CAVES
                 biomeCategory = BiomeCategory.UNDERGROUND;
             }
@@ -652,6 +663,10 @@ public class BiomeRegistry {
                 else if (downfall == 0.5F) {
                     // RIVER SPIDER_NEST
                     biomeCategory = BiomeCategory.RIVER;
+                }
+                else if (downfall == 0.6F) {
+                    // ASPEN_FOREST
+                    biomeCategory = BiomeCategory.FOREST;
                 }
             }
             else if (precipitation == Biome.Precipitation.NONE) {
@@ -685,7 +700,7 @@ public class BiomeRegistry {
             }
         }
         else if (temperature == 0.7F) {
-            if (generationSettings.hasFeature(getFeature(AquaticPlacements.SEAGRASS_SWAMP))) {
+            if (hasFeature(generationSettings, AquaticPlacements.SEAGRASS_SWAMP)) {
                 // SWAMP
                 biomeCategory = BiomeCategory.SWAMP;
             }
@@ -693,10 +708,6 @@ public class BiomeRegistry {
                 if (downfall == 0.4F) {
                     // DUNE_BEACH
                     biomeCategory = BiomeCategory.BEACH;
-                }
-                else if (downfall == 0.6F) {
-                    // ASPEN_FOREST
-                    biomeCategory = BiomeCategory.FOREST;
                 }
                 else if (downfall == 0.8F) {
                     // DARK_FOREST FOREST FLOWER_FOREST MYSTIC_GROVE CHERRY_BLOSSOM_FOREST
@@ -706,30 +717,38 @@ public class BiomeRegistry {
         }
         else if (temperature == 0.75F) {
             if (downfall == 0.8F) {
-                // GROVE TEMPERATE_GROVE
+                // GROVE TEMPERATE_GROVE CYPRESS_SWAMPLANDS
                 biomeCategory = BiomeCategory.FOREST;
             }
         }
         else if (temperature == 0.8F) {
-            if (mobSpawnSettings.getEntityTypes().contains(EntityType.TURTLE)) {
-                // BEACH
-                biomeCategory = BiomeCategory.BEACH;
+            if (ModList.get().isLoaded("byg")
+                    && (hasFeature(generationSettings, BYGPlacedFeatures.ALLIUM_FIELD_FLOWERS)
+                        || hasFeature(generationSettings, BYGPlacedFeatures.AMARANTH_FIELD_FLOWERS)
+                        || hasFeature(generationSettings, BYGPlacedFeatures.ROSE_FIELD_FLOWERS))) {
+                // ALLIUM_FIELDS AMARANTH_FIELDS ROSE_FIELDS
+                biomeCategory = BiomeCategory.PLAINS;
             }
-            else if (generationSettings.hasFeature(getFeature(AquaticPlacements.SEAGRASS_SWAMP))) {
+            else if (hasFeature(generationSettings, AquaticPlacements.SEAGRASS_SWAMP)) {
                 // MANGROVE_SWAMP BAYOU WHITE_MANGROVE_MARSHES
                 biomeCategory = BiomeCategory.SWAMP;
             }
-            else if (generationSettings.hasFeature(getFeature(CavePlacements.LARGE_DRIPSTONE))
-                    || generationSettings.hasFeature(getFeature(CavePlacements.SCULK_VEIN))) {
+            else if (hasFeature(generationSettings, CavePlacements.LARGE_DRIPSTONE)
+                    || hasFeature(generationSettings, CavePlacements.SCULK_VEIN)) {
                 // DRIPSTONE_CAVES DEEP_DARK
                 biomeCategory = BiomeCategory.UNDERGROUND;
             }
-            else if (generationSettings.hasFeature(getFeature(VegetationPlacements.PATCH_SUNFLOWER))){
-                // PLAINS SUNFLOWER_PLAINS
+            else if (hasFeature(generationSettings, VegetationPlacements.PATCH_SUNFLOWER)){
+                // SUNFLOWER_PLAINS
                 biomeCategory = BiomeCategory.PLAINS;
             }
             else if (specialEffects.getGrassColorOverride().isPresent() && specialEffects.getGrassColorOverride().get() == 6530407) {
                 // COCONINO_MEADOW
+                biomeCategory = BiomeCategory.PLAINS;
+            }
+            else if (ModList.get().isLoaded("biomesoplenty")
+                    && hasFeature(generationSettings, BOPVegetationPlacements.TREES_ORCHARD)) {
+                // ORCHARD
                 biomeCategory = BiomeCategory.PLAINS;
             }
             else if (precipitation == Biome.Precipitation.RAIN) {
@@ -741,12 +760,20 @@ public class BiomeRegistry {
                     // MEDITERRANEAN_FOREST
                     biomeCategory = BiomeCategory.LUSH_DESERT;
                 }
-                else if (downfall == 0.4F || downfall == 0.3F) {
-                    // ORCHARD PASTURE PRAIRIE ALLIUM_FIELDS AMARANTH_FIELDS ROSE_FIELDS
+                else if (downfall == 0.3F) {
+                    // PASTURE
+                    biomeCategory = BiomeCategory.PLAINS;
+                }
+                else if (downfall == 0.4F && !hasFeature(generationSettings, VegetationPlacements.PATCH_TALL_GRASS_2)) {
+                    // BEACH
+                    biomeCategory = BiomeCategory.BEACH;
+                }
+                else if (downfall == 0.4F) {
+                    // PLAINS
                     biomeCategory = BiomeCategory.PLAINS;
                 }
                 else if (downfall == 0.5F || downfall == 0.6F || downfall == 0.8F || downfall == 0.85F || downfall == 0.9F) {
-                    // OLD_GROWTH_WOODLAND REDWOOD_FOREST WOODLAND JADE_CLIFFS WOODLAND EBONY_WOODS FORGOTTEN_FOREST ORCHARD RED_OAK_FOREST TEMPERATE_RAINFOREST
+                    // OLD_GROWTH_WOODLAND REDWOOD_FOREST WOODLAND JADE_CLIFFS WOODLAND EBONY_WOODS FORGOTTEN_FOREST RED_OAK_FOREST TEMPERATE_RAINFOREST
                     biomeCategory = BiomeCategory.FOREST;
                 }
                 else if (downfall == 0.7F) {
@@ -772,11 +799,11 @@ public class BiomeRegistry {
             }
         }
         else if (temperature == 0.9F) {
-            if (generationSettings.hasFeature(getFeature(VegetationPlacements.MUSHROOM_ISLAND_VEGETATION))) {
+            if (hasFeature(generationSettings, VegetationPlacements.MUSHROOM_ISLAND_VEGETATION)) {
                 // MUSHROOM_FIELDS
                 biomeCategory = BiomeCategory.MUSHROOM;
             }
-            if (generationSettings.hasFeature(getFeature(VegetationPlacements.PATCH_GRASS_FOREST))) {
+            if (hasFeature(generationSettings, VegetationPlacements.PATCH_GRASS_FOREST)) {
                 // REDWOOD_THICKET
                 biomeCategory = BiomeCategory.FOREST;
             }
@@ -792,15 +819,19 @@ public class BiomeRegistry {
             }
         }
         else if (temperature == 0.95F) {
-            if (generationSettings.hasFeature(getFeature(VegetationPlacements.PATCH_GRASS_JUNGLE))) {
+            if (hasFeature(generationSettings, VegetationPlacements.PATCH_GRASS_JUNGLE)) {
                 if (specialEffects.getGrassColorOverride().isPresent() && specialEffects.getGrassColorOverride().get() == 10145074) {
-                    // TROPICAL_RAINFOREST JACARANDA_FOREST
+                    // TROPICAL_RAINFOREST
                     biomeCategory = BiomeCategory.RAINFOREST;
                 }
                 else {
                     // JUNGLE SPARSE_JUNGLE BAMBOO_JUNGLE GUIANA_SHIELD
                     biomeCategory = BiomeCategory.JUNGLE;
                 }
+            }
+            else if (hasFeature(generationSettings, VegetationPlacements.PATCH_GRASS_SAVANNA)) {
+                // JACARANDA_FOREST
+                biomeCategory = BiomeCategory.RAINFOREST;
             }
             else if (downfall == 0.9F) {
                 // BAYOU
@@ -816,7 +847,7 @@ public class BiomeRegistry {
             }
         }
         else if (temperature == 1.0F) {
-            if (generationSettings.hasFeature(getFeature(AquaticPlacements.SEAGRASS_WARM))) {
+            if (hasFeature(generationSettings, AquaticPlacements.SEAGRASS_WARM)) {
                 // LUSH_STACKS
                 biomeCategory = BiomeCategory.WARM_OCEAN;
             }
@@ -830,7 +861,7 @@ public class BiomeRegistry {
             }
         }
         else if (temperature == 1.1F) {
-            // SCRUBLAND WOODED_SCRUBLAND
+            // SCRUBLAND
             biomeCategory = BiomeCategory.SAVANNA;
         }
         else if (temperature == 1.2F) {
@@ -848,24 +879,24 @@ public class BiomeRegistry {
             }
         }
         else if (temperature == 2.0F) {
-            if (generationSettings.hasFeature(getFeature(VegetationPlacements.TREES_WINDSWEPT_SAVANNA))
-                    || generationSettings.hasFeature(getFeature(VegetationPlacements.PATCH_TALL_GRASS))) {
+            if (hasFeature(generationSettings, VegetationPlacements.TREES_WINDSWEPT_SAVANNA)
+                    || hasFeature(generationSettings, VegetationPlacements.PATCH_TALL_GRASS)) {
                 // SAVANNA SAVANNA_PLATEAU WINDSWEPT_SAVANNA
                 biomeCategory = BiomeCategory.SAVANNA;
             }
-            else if (generationSettings.hasFeature(getFeature(MiscOverworldPlacements.DESERT_WELL))) {
+            else if (hasFeature(generationSettings, MiscOverworldPlacements.DESERT_WELL)) {
                 // DESERT
                 biomeCategory = BiomeCategory.DESERT;
             }
-            else if (generationSettings.hasFeature(getFeature(NetherPlacements.PATCH_FIRE))) {
+            else if (hasFeature(generationSettings, NetherPlacements.PATCH_FIRE)) {
                 // NETHER
                 biomeCategory = BiomeCategory.NETHER;
             }
-            else if (generationSettings.hasFeature(getFeature(VegetationPlacements.PATCH_GRASS_BADLANDS))) {
+            else if (hasFeature(generationSettings, VegetationPlacements.PATCH_GRASS_BADLANDS)) {
                 // BADLANDS ERODED_BADLANDS WOODED_BADLANDS
                 biomeCategory = BiomeCategory.MESA;
             }
-            else if (generationSettings.hasFeature(getFeature(AquaticPlacements.SEAGRASS_NORMAL))) {
+            else if (hasFeature(generationSettings, AquaticPlacements.SEAGRASS_NORMAL)) {
                 // DEAD_SEA
                 biomeCategory = BiomeCategory.VOLCANIC;
             }
@@ -873,7 +904,7 @@ public class BiomeRegistry {
                 // WINDSWEPT_DESERT ATACAMA_DESERT
                 biomeCategory = BiomeCategory.DESERT;
             }
-            else if (generationSettings.hasFeature(getFeature(VegetationPlacements.PATCH_SUGAR_CANE_DESERT))) {
+            else if (hasFeature(generationSettings, VegetationPlacements.PATCH_SUGAR_CANE_DESERT)) {
                 // MOJAVE_DESERT
                 biomeCategory = BiomeCategory.DESERT;
             }
@@ -881,8 +912,13 @@ public class BiomeRegistry {
                 // FIRECRACKER_SHRUBLAND
                 biomeCategory = BiomeCategory.SAVANNA;
             }
+            else if (ModList.get().isLoaded("biomesoplenty")
+                    && hasFeature(generationSettings, BOPVegetationPlacements.PATCH_DEAD_GRASS)
+                    || hasFeature(generationSettings, BOPVegetationPlacements.TREES_WASTELAND)) {
+                biomeCategory = BiomeCategory.MESA;
+            }
             else {
-                // CRYSTALLINE_CHASM ERUPTING_INFERNO UNDERGROWTH VISCERAL_HEAP WITHERED_ABYSS (WASTELAND WOODED_WASTELAND -- should be MESA)
+                // CRYSTALLINE_CHASM ERUPTING_INFERNO UNDERGROWTH VISCERAL_HEAP WITHERED_ABYSS
                 // BRIMSTONE_CAVERNS CRIMSON_GARDENS EMBUR_BOG GLOWSTONE_GARDENS MAGMA_WASTES SUBZERO_HYPOGEAL SYTHIAN_TORRIDS WARPED_DESERT WAILING_GARTH ARISIAN_UNDERGROWTH WEEPING_MIRE QUARTZ_DESERT
                 biomeCategory = BiomeCategory.NETHER;
             }
