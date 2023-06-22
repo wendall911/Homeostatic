@@ -1,0 +1,4 @@
+// 1.19.4	2023-06-22T13:10:49.929956957	Registries
+9caa17b042a7e1ef677a0dfeb4ab4964b31ffeec data/homeostatic/damage_type/dehydration.json
+793fc38b3b4dcd156545e8633354024aaab2722c data/homeostatic/damage_type/hyperthermia.json
+7cb0e45d4590c7cf9b71faf49cc1e5033403ac56 data/homeostatic/damage_type/scalding.json

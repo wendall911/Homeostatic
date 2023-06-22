@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -31,7 +32,7 @@ public class HelmetThermometer extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer) {
+    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess registryAccess) {
         ItemStack armorCopy = checkContainer(pContainer).copy();
         CompoundTag tags = armorCopy.getOrCreateTag();
 
@@ -60,7 +61,7 @@ public class HelmetThermometer extends CustomRecipe {
             if (ingredient.is(HomeostaticItems.THERMOMETER)) {
                 ingredients.add(ingredient);
             }
-            else if (ingredient.getItem() instanceof ArmorItem armorItem && armorItem.getSlot() == EquipmentSlot.HEAD) {
+            else if (ingredient.getItem() instanceof ArmorItem armorItem && armorItem.getEquipmentSlot() == EquipmentSlot.HEAD) {
                 armor = ingredient;
             }
         }

@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "homeostatic:leather_flask"
-  }
+  },
+  "show_notification": true
 }

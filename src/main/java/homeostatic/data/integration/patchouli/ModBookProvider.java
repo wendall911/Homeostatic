@@ -39,7 +39,8 @@ public class ModBookProvider extends PatchouliBookProvider {
             .setDontGenerateBook(true)
             .setShowProgress(false)
             .setUseBlockyFont(false)
-            .setI18n(true);
+            .setI18n(true)
+            .setUseResourcePack(true);
 
         bookBuilder = addGameplay(bookBuilder);
         bookBuilder = addEducation(bookBuilder);

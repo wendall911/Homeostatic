@@ -29,6 +29,7 @@ import sereneseasons.config.ServerConfig;
 import homeostatic.common.biome.BiomeData;
 import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.mixin.ServerLevelAccessor;
+import homeostatic.util.BiomeHelper;
 import homeostatic.util.TempHelper;
 import homeostatic.util.WetnessHelper;
 
@@ -192,7 +193,7 @@ public class EnvironmentData {
         double maxRH = getMaxBiomeHumidity(biome);
         double minRH = maxRH - 20;
 
-        if (biome.value().getPrecipitation() != Biome.Precipitation.NONE) {
+        if (biome.value().hasPrecipitation()) {
             int nextRain = serverInfo.getClearWeatherTime();
 
             if (info.isRaining()) {
@@ -254,7 +255,7 @@ public class EnvironmentData {
     private static float getDayNightOffset(ServerLevel world, Holder<Biome> biome, double relativeHumidity) {
         BiomeData biomeData =  BiomeRegistry.getDataForBiome(biome);
         long time = (world.getDayTime() % 24000);
-        float maxTemp = biomeData.getDayNightOffset(biome.value().getPrecipitation());
+        float maxTemp = biomeData.getDayNightOffset(BiomeHelper.getPrecipitation(biome.value().getModifiedClimateSettings()));
 
         if (maxTemp == 0F) return maxTemp;
 
@@ -284,7 +285,7 @@ public class EnvironmentData {
                 int season;
                 float lateSummerOffset = biomeData.MC_DEGREE * 5;
                 int subSeason = SeasonHelper.getSeasonState(world).getSubSeason().ordinal();
-                float variation = biomeData.getSeasonVariation(biome.value().getPrecipitation()) / 2.0F;
+                float variation = biomeData.getSeasonVariation(BiomeHelper.getPrecipitation(biome.value().getModifiedClimateSettings())) / 2.0F;
 
                 if ((subSeason + 9) <= 12) {
                     season = subSeason + 9;

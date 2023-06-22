@@ -8,5 +8,6 @@
   "name": "info.homeostatic.book",
   "show_progress": false,
   "subtitle": "info.homeostatic.book.subtitle",
-  "use_blocky_font": false
+  "use_blocky_font": false,
+  "use_resource_pack": true
 }

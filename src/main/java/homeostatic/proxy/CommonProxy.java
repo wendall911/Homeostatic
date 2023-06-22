@@ -2,6 +2,7 @@ package homeostatic.proxy;
 
 import java.util.Map;
 
+import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -33,6 +34,7 @@ import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
+import homeostatic.util.BiomeHelper;
 import homeostatic.util.RegistryHelper;
 
 @Mod.EventBusSubscriber(modid = Homeostatic.MODID)
@@ -69,17 +71,17 @@ public class CommonProxy {
             event.register(Registries.FLUID, HomeostaticFluids::init);
             event.register(ForgeRegistries.FLUID_TYPES.get().getRegistryKey(), HomeostaticFluids::initTypes);
             event.register(Registries.RECIPE_SERIALIZER, HomeostaticRecipes::init);
+            event.register(Registries.DAMAGE_TYPE, HomeostaticDamageTypes::init);
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         public static void registerCreativeTab(CreativeModeTabEvent.Register event) {
 
             event.registerCreativeModeTab(new ResourceLocation(Homeostatic.MODID, "items"), builder -> builder.icon(() -> new ItemStack(HomeostaticItems.PURIFIED_WATER_BUCKET))
-                    .title(Component.translatable(Homeostatic.MODID + ".items"))
-                    .displayItems((features, output, tab) -> {
-                        for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
-                            Item item = entry.getValue();
-
+                .title(Component.translatable(Homeostatic.MODID + ".items"))
+                .displayItems((features, output) -> {
+                    for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
+                        Item item = entry.getValue();
                             output.accept(new ItemStack(item));
                         }
                     }));
@@ -111,23 +113,23 @@ public class CommonProxy {
                     biome.getModifiedClimateSettings().temperature(),
                     biome.getModifiedClimateSettings().temperatureModifier(),
                     biome.getModifiedClimateSettings().downfall(),
-                    biome.getModifiedClimateSettings().precipitation(),
+                    BiomeHelper.getPrecipitation(biome.getModifiedClimateSettings()),
                     biome.getSpecialEffects()
             );
 
             if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
                 Homeostatic.LOGGER.debug(
                         "Biome: " + biomeName
-                                + "\npreciptitation=" + biome.getPrecipitation()
+                                + "\npreciptitation=" + BiomeHelper.getPrecipitation(biome.getModifiedClimateSettings())
                                 + "\ntemperature=" + biome.getBaseTemperature()
                                 + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
-                                + "\ndownfall=" + biome.getDownfall()
+                                + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
                                 + "\nbiomeCategory=" + biomeCategory
                 );
 
                 if (computedBiomeCategory != biomeCategory) {
                     Homeostatic.LOGGER.error("Computed biome category mismatch: " + biomeName
-                            + "\npreciptitation=" + biome.getModifiedClimateSettings().precipitation()
+                            + "\npreciptitation=" + BiomeHelper.getPrecipitation(biome.getModifiedClimateSettings())
                             + "\ntemperature=" + biome.getModifiedClimateSettings().temperature()
                             + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
                             + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()

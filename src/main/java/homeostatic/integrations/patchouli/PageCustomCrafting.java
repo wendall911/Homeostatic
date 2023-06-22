@@ -9,6 +9,7 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.level.Level;
 
 import vazkii.patchouli.client.book.BookContentsBuilder;
 import vazkii.patchouli.client.book.BookEntry;
@@ -32,7 +33,7 @@ public class PageCustomCrafting extends PageCrafting {
 	}
 
 	@Override
-	public Recipe<?> loadRecipe(BookContentsBuilder builder, BookEntry entry, ResourceLocation loc) {
+	public Recipe<?> loadRecipe(Level level, BookContentsBuilder builder, BookEntry entry, ResourceLocation loc) {
 		Ingredient ingredient = null;
 		ItemStack armorStackBase = null;
 		ItemStack armorStack = null;
@@ -42,7 +43,7 @@ public class PageCustomCrafting extends PageCrafting {
 		ShapelessRecipe customRecipe = null;
 		boolean removalRecipe = false;
 
-		if (loc != null) {
+		if (loc != null && level != null) {
 			String recipe = loc.getPath();
 
 			switch (recipe) {

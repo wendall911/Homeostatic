@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "homeostatic:water_filter"
-  }
+  },
+  "show_notification": true
 }

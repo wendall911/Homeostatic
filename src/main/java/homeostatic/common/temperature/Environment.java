@@ -1,14 +1,13 @@
 package homeostatic.common.temperature;
 
-import homeostatic.util.RegistryHelper;
-import net.minecraft.core.registries.Registries;
-import org.joml.Vector3d;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.joml.Vector3d;
+
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -27,6 +26,7 @@ import net.minecraft.world.phys.Vec3;
 
 import homeostatic.common.block.BlockRadiation;
 import homeostatic.common.block.BlockRadiationManager;
+import homeostatic.util.RegistryHelper;
 import homeostatic.util.VecMath;
 
 public class Environment {
@@ -46,7 +46,8 @@ public class Environment {
         AtomicReference<Double> radiationReduction = new AtomicReference<>(1.0);
         Map<ChunkPos, LevelChunk> chunkMap = new HashMap<>();
         BlockPos pos = sp.blockPosition();
-        BlockPos eyePos = new BlockPos(sp.getEyePosition(1.0F));
+        Vec3 spPos = sp.getEyePosition(1.0F);
+        BlockPos eyePos = new BlockPos((int)spPos.x(), (int)spPos.y(), (int)spPos.z());
         ResourceKey<Level> worldKey = world.dimension();
         MobEffectInstance effectInstance = sp.getEffect(MobEffects.FIRE_RESISTANCE);
         boolean inOverworld = worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString());

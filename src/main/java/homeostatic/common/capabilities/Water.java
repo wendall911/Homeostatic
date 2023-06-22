@@ -6,14 +6,16 @@ import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
+import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.common.water.WaterInfo;
+import homeostatic.util.DamageHelper;
 
 public class Water {
 
@@ -77,7 +79,7 @@ public class Water {
 
     public void checkWaterLevel(ServerPlayer player) {
         if (this.waterLevel <= 0) {
-            player.hurt(new DamageSource("dehydration").bypassArmor().bypassMagic(), 1.0F);
+            player.hurt(new DamageSource(DamageHelper.getHolder(player.getServer(), HomeostaticDamageTypes.DEHYDRATION_KEY)), 1.0F);
         }
     }
 

@@ -7,12 +7,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import biomesoplenty.api.biome.BOPBiomes;
-import biomesoplenty.common.biome.BOPOverworldBiomeBuilder;
-import biomesoplenty.common.biome.BOPOverworldBiomes;
 import biomesoplenty.common.worldgen.placement.BOPVegetationPlacements;
 
-import biomesoplenty.core.BiomesOPlenty;
-import biomesoplenty.init.ModBiomes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.data.worldgen.placement.AquaticPlacements;
@@ -21,22 +17,18 @@ import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
 import net.minecraft.data.worldgen.placement.NetherPlacements;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import net.minecraftforge.fml.ModList;
 
 import potionstudios.byg.common.world.biome.BYGBiomes;
+import potionstudios.byg.common.world.feature.BYGPlacedFeatures;
 
 import homeostatic.Homeostatic;
-import potionstudios.byg.common.world.biome.BYGOverworldBiomes;
-import potionstudios.byg.common.world.feature.BYGPlacedFeatures;
 
 public class BiomeRegistry {
 

@@ -54,6 +54,10 @@ repositories {
         name = "Blame Jared"
         url = "https://maven.blamejared.com"
     }
+    maven {
+        name = "Geckolib"
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
     flatDir {
         dirs 'libs'
     }
@@ -124,9 +128,9 @@ dependencies {
     implementation fg.deobf("curse.maven:terrablender-563928:${terrablender_version}")
     implementation fg.deobf("curse.maven:byg-247560:${byg_version}")
     runtimeOnly fg.deobf("curse.maven:corgilib-693313:${corgilib_version}")
-    runtimeOnly fg.deobf("curse.maven:geckolib-388172:${geckolib_version}")
+    runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
     //compileOnly fg.deobf("curse.maven:create-328085:4550987")
-    implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+    implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE")
     implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
 
     if (System.getenv('DATA_GEN') != null) {

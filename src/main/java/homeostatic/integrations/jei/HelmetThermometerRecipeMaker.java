@@ -28,7 +28,7 @@ public final class HelmetThermometerRecipeMaker {
 
         RegistryHelper.getRegistry(Registries.ITEM).stream()
                 .filter(ArmorItem.class::isInstance)
-                .filter(armorItem -> ((ArmorItem) armorItem).getSlot() == EquipmentSlot.HEAD)
+                .filter(armorItem -> ((ArmorItem) armorItem).getEquipmentSlot() == EquipmentSlot.HEAD)
                 .forEach(armorItem -> {
                     ItemStack armorStack = new ItemStack(armorItem);
                     Ingredient baseArmorIngredient = Ingredient.of(armorItem.asItem());

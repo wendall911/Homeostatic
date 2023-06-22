@@ -6,14 +6,16 @@ import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
+
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
+import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.common.temperature.BodyTemperature;
+import homeostatic.util.DamageHelper;
 
 public class Temperature {
 
@@ -86,12 +88,12 @@ public class Temperature {
         else if (this.coreTemperature > BodyTemperature.HIGH) {
             float amount = (1.0F + (this.coreTemperature - BodyTemperature.HIGH)) * 0.5F;
 
-            player.hurt(new DamageSource("hyperthermia").bypassArmor().bypassMagic(), amount);
+            player.hurt(new DamageSource(DamageHelper.getHolder(player.getServer(), HomeostaticDamageTypes.HYPERTHERMIA_KEY)), amount);
         }
         if (this.skinTemperature > BodyTemperature.SCALDING) {
             float amount = (1.0F + (this.skinTemperature - BodyTemperature.SCALDING)) * 0.25F;
 
-            player.hurt(new DamageSource("heat").bypassArmor().bypassMagic(), amount);
+            player.hurt(new DamageSource(DamageHelper.getHolder(player.getServer(), HomeostaticDamageTypes.SCALDING_KEY)), amount);
         }
     }
 

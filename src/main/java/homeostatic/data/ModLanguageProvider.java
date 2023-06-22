@@ -14,12 +14,12 @@ public class ModLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         add(Homeostatic.MODID + ".items", "Homeostatic");
-        addAttack("hyperthermia", "Hyperthermia has claimed poor %1$s");
-        addAttack("hyperthermia.player", "Hyperthermia has claimed poor %1$s whilst fighting %2$s");
-        addAttack("heat", "%1$s died of scalding");
-        addAttack("heat.player", "%1$s died of scalding whilst fighting %2$s");
-        addAttack("dehydration", "%1$s turned into dead dried %1$s");
-        addAttack("dehydration.player", "%1$s turned into dead dried %1$s whilst fighting %2$s");
+        addAttack("hasHyperthermia", "Hyperthermia has claimed poor %1$s");
+        addAttack("hasHyperthermia.player", "Hyperthermia has claimed poor %1$s whilst fighting %2$s");
+        addAttack("isScalding", "%1$s died of scalding");
+        addAttack("isScalding.player", "%1$s died of scalding whilst fighting %2$s");
+        addAttack("hasDehydration", "%1$s turned into dead dried %1$s");
+        addAttack("hasDehydration.player", "%1$s turned into dead dried %1$s whilst fighting %2$s");
         addEffect("thirst", "Thirst");
         addTooltip("insulation", "Insulation");
         addTooltip("waterproof", "Waterproof");
@@ -163,7 +163,7 @@ public class ModLanguageProvider extends LanguageProvider {
     }
 
     protected void addEffect(String name, String text) {
-        add("effect." + name, text);
+        add("effect.homeostatic." + name, text);
     }
 
     protected void addTooltip(String name, String text) {

@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "homeostatic:thermometer"
-  }
+  },
+  "show_notification": true
 }

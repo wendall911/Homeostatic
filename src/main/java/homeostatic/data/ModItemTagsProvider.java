@@ -16,7 +16,7 @@ import homeostatic.Homeostatic;
 public class ModItemTagsProvider extends ItemTagsProvider {
 
     ModItemTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ModBlockTagsProvider blockTagsProvider, ExistingFileHelper helper) {
-        super(packOutput, lookupProvider, blockTagsProvider, Homeostatic.MODID, helper);
+        super(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), Homeostatic.MODID, helper);
     }
 
     @Override

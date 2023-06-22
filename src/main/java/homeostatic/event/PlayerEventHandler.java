@@ -1,8 +1,5 @@
 package homeostatic.event;
 
-import homeostatic.common.temperature.ThermometerInfo;
-import homeostatic.config.ConfigHandler;
-import homeostatic.network.ThermometerData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
@@ -22,6 +19,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -37,11 +35,14 @@ import net.minecraftforge.network.PacketDistributor;
 import homeostatic.common.capabilities.CapabilityRegistry;
 import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.common.temperature.EnvironmentData;
+import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.common.water.WaterInfo;
+import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
 import homeostatic.network.DrinkWater;
 import homeostatic.network.NetworkHandler;
 import homeostatic.network.TemperatureData;
+import homeostatic.network.ThermometerData;
 import homeostatic.network.WaterData;
 import homeostatic.util.WaterHelper;
 import homeostatic.util.WetnessHelper;
@@ -63,7 +64,8 @@ public class PlayerEventHandler {
             WetnessHelper.updateWetnessInfo(sp, 0.0F, true);
 
             sp.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
-                BlockPos pos = new BlockPos(sp.getEyePosition(1.0F));
+                Vec3 spPos = sp.getEyePosition(1.0F);
+                BlockPos pos = new BlockPos((int)spPos.x(), (int)spPos.y(), (int)spPos.z());
                 Holder<Biome> biome = world.getBiome(pos);
                 EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
                 BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, data);
@@ -98,7 +100,8 @@ public class PlayerEventHandler {
                 }
 
                 if (sp.tickCount % 16 == 0 || sp.tickCount % 60 == 0) {
-                    BlockPos pos = new BlockPos(sp.getEyePosition(1.0F));
+                    Vec3 spPos = sp.getEyePosition(1.0F);
+                    BlockPos pos = new BlockPos((int)spPos.x(), (int)spPos.y(), (int)spPos.z());
                     Holder<Biome> biome = world.getBiome(pos);
                     EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
                     boolean updateCore = sp.tickCount % 60 == 0;
@@ -145,7 +148,8 @@ public class PlayerEventHandler {
             });
 
             sp.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
-                BlockPos pos = new BlockPos(sp.getEyePosition(1.0F));
+                Vec3 spPos = sp.getEyePosition(1.0F);
+                BlockPos pos = new BlockPos((int)spPos.x(), (int)spPos.y(), (int)spPos.z());
                 Holder<Biome> biome = world.getBiome(pos);
                 EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
                 BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, data);

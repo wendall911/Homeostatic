@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 
 import com.mojang.datafixers.util.Pair;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -36,7 +37,7 @@ public class ArmorEnhancement extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer) {
+    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess registryAccess) {
         Pair<ItemStack, TagKey> check = checkContainer(pContainer);
         ItemStack armorCopy = check.getFirst().copy();
         TagKey tagKey = check.getSecond();

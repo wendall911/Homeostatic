@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import homeostatic.common.biome.BiomeData;
 import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.biome.ExtendedBiome;
+import homeostatic.util.BiomeHelper;
 
 @Mixin(Biome.class)
 public abstract class BiomeMixin implements ExtendedBiome {
@@ -39,16 +40,7 @@ public abstract class BiomeMixin implements ExtendedBiome {
         if (this.biomeCategory != BiomeRegistry.BiomeCategory.MISSING) {
             BiomeData biomeData = BiomeRegistry.BIOMES.get(this.biomeCategory);
 
-            cir.setReturnValue(biomeData.getTemperature(this.climateSettings.temperatureModifier(), biomeData.getPrecipitation(this.climateSettings.temperature(), this.climateSettings.precipitation())));
-        }
-    }
-
-    @Inject(method = "getPrecipitation", at = @At("HEAD"), cancellable = true)
-    private void overrideGetPrecipitation(CallbackInfoReturnable<Biome.Precipitation> cir) {
-        if (this.biomeCategory != BiomeRegistry.BiomeCategory.MISSING) {
-            BiomeData biomeData = BiomeRegistry.BIOMES.get(this.biomeCategory);
-
-            cir.setReturnValue(biomeData.getPrecipitation(this.climateSettings.temperature(), this.climateSettings.precipitation()));
+            cir.setReturnValue(biomeData.getTemperature(this.climateSettings.temperatureModifier(), biomeData.getPrecipitation(this.climateSettings.temperature(), BiomeHelper.getPrecipitation(this.climateSettings))));
         }
     }
 
@@ -59,7 +51,7 @@ public abstract class BiomeMixin implements ExtendedBiome {
                 climateSettings.temperature(),
                 climateSettings.temperatureModifier(),
                 climateSettings.downfall(),
-                climateSettings.precipitation(),
+                BiomeHelper.getPrecipitation(climateSettings),
                 specialEffects
         );
     }
