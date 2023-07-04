@@ -1,13 +1,12 @@
 package homeostatic.util;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class FontHelper {
     
-    public static void draw(Minecraft mc, PoseStack matrix, String label, int x, int y, int color) {
-        mc.font.draw(matrix, label, x, y, color);
+    public static void draw(Minecraft mc, GuiGraphics guiGraphics, String label, int x, int y, int color, boolean drawShadow) {
+        guiGraphics.drawString(mc.font, label, x, y, color, drawShadow);
     }
 
 }

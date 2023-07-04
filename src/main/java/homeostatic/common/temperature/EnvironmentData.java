@@ -16,8 +16,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
 
@@ -87,7 +87,7 @@ public class EnvironmentData {
          * "swimming" ... mc mechanics are so weird, lol.
          */
         if (!this.isPartialSubmersion) {
-            this.isPartialSubmersion = sp.getFeetBlockState().getMaterial().equals(Material.WATER);
+            this.isPartialSubmersion = sp.getFeetBlockState().is(Blocks.WATER);
         }
 
         // If sheltered, consider local biome UNDERGROUND

@@ -30,5 +30,6 @@
     "recipes": [
       "homeostatic:water_filter"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

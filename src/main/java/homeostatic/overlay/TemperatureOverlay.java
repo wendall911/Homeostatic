@@ -8,6 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -19,24 +20,26 @@ import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
 import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
+import homeostatic.util.FontHelper;
 import homeostatic.util.TempHelper;
 
 public class TemperatureOverlay extends Overlay {
 
-    public final static ResourceLocation ICONS = Homeostatic.loc("textures/gui/icons.png");
+    public final static ResourceLocation SPRITE = Homeostatic.loc("textures/gui/icons.png");
     protected final static int ICON_WIDTH = 13;
     protected final static int ICON_HEIGHT = 26;
 
     public TemperatureOverlay() {}
 
     @Override
-    public void render(PoseStack matrix, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
+    public void render(GuiGraphics guiGraphics, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
+        PoseStack matrix = guiGraphics.pose();
 
         if (player == null) return;
 
         RenderSystem.enableBlend();
-        RenderSystem.setShaderTexture(0, ICONS);
+        RenderSystem.setShaderTexture(0, SPRITE);
 
         player.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
             int offsetX = Alignment.getX(ConfigHandler.Client.thermometerPosition(), scaledWidth, ICON_WIDTH,
@@ -73,15 +76,15 @@ public class TemperatureOverlay extends Overlay {
             AtomicBoolean showTemperature = new AtomicBoolean(ConfigHandler.Common.showTemperatureValues());
 
             if (data.getCoreTemperature() > BodyTemperature.WARNING_HIGH) {
-                this.blit(matrix, offsetX, pY, pUOffset, pV + ICON_HEIGHT, ICON_WIDTH, ICON_HEIGHT);
+                guiGraphics.blit(SPRITE, offsetX, pY, pUOffset, pV + ICON_HEIGHT, ICON_WIDTH, ICON_HEIGHT);
             }
             else if (data.getCoreTemperature() < BodyTemperature.WARNING_LOW) {
-                this.blit(matrix, offsetX, pY, pUOffset, pV + ICON_HEIGHT * 2, ICON_WIDTH, ICON_HEIGHT);
+                guiGraphics.blit(SPRITE, offsetX, pY, pUOffset, pV + ICON_HEIGHT * 2, ICON_WIDTH, ICON_HEIGHT);
             }
             else {
-                this.blit(matrix, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT);
+                guiGraphics.blit(SPRITE, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT);
             }
-            this.blit(matrix, offsetX, pY, pUOffset + ICON_WIDTH, pV + lineOffset, ICON_WIDTH, ICON_HEIGHT);
+            guiGraphics.blit(SPRITE, offsetX, pY, pUOffset + ICON_WIDTH, pV + lineOffset, ICON_WIDTH, ICON_HEIGHT);
 
             if (ConfigHandler.Common.requireThermometer()) {
                 player.getCapability(CapabilityRegistry.THERMOMETER_CAPABILITY).ifPresent(thermometer -> {
@@ -92,16 +95,17 @@ public class TemperatureOverlay extends Overlay {
             matrix.scale(textScale, textScale, textScale);
 
             if (ConfigHandler.Client.showThermometerRateChangeSymbols()) {
-                mc.font.drawShadow(matrix, coreDirection, directionOffsetX - 8,
-                        textOffsetY - 15, ColorHelper.getLocalTemperatureColor(coreRangeStep));
-                mc.font.drawShadow(matrix, skinDirection, directionOffsetX + 8,
-                        textOffsetY - 15, ColorHelper.getLocalTemperatureColor(skinRangeStep));
+                FontHelper.draw(mc, guiGraphics, coreDirection, directionOffsetX - 8,
+                        textOffsetY - 15, ColorHelper.getLocalTemperatureColor(coreRangeStep), true);
+                FontHelper.draw(mc, guiGraphics, skinDirection, directionOffsetX + 8,
+                        textOffsetY - 15, ColorHelper.getLocalTemperatureColor(skinRangeStep), true);
             }
 
             if (showTemperature.get()) {
-                mc.font.drawShadow(matrix, localTemp, localTextOffsetX,
-                        textOffsetY - 50, ColorHelper.getLocalTemperatureColor(localRangeStep));
-                mc.font.drawShadow(matrix, coreTempSmall, textOffsetX, textOffsetY, ColorHelper.getTemperatureColor(coreRangeStep));
+                FontHelper.draw(mc, guiGraphics, localTemp, localTextOffsetX,
+                        textOffsetY - 50, ColorHelper.getLocalTemperatureColor(localRangeStep), true);
+                FontHelper.draw(mc, guiGraphics, coreTempSmall, textOffsetX,
+                        textOffsetY, ColorHelper.getTemperatureColor(coreRangeStep), true);
             }
         });
     }

@@ -2,9 +2,8 @@ package homeostatic.util;
 
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -166,7 +165,7 @@ public class WaterHelper {
         drink(sp, air, water, update);
     }
 
-    public static void drawWaterBar(int scaledWidth, int scaledHeight, MobEffectInstance effectInstance, Gui gui, PoseStack matrix, float waterSaturationLevel, int waterLevel, int tickCount) {
+    public static void drawWaterBar(ResourceLocation sprite, int scaledWidth, int scaledHeight, MobEffectInstance effectInstance, Gui gui, GuiGraphics guiGraphics, float waterSaturationLevel, int waterLevel, int tickCount) {
         int offsetX;
         int offsetY;
         int pV = 0;
@@ -192,27 +191,27 @@ public class WaterHelper {
 
         for (int i = 0; i < 10; ++i) {
             int pX = offsetX - i * 8 - 9;
-            gui.blit(matrix, pX, pY, pUOffset + 36, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT);
+            guiGraphics.blit(sprite, pX, pY, pUOffset + 36, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT);
 
             if (waterSaturationLevel <= 0.0F && tickCount % (waterLevel * 3 + 1) == 0) {
                 pY = offsetY + (Homeostatic.RANDOM.nextInt(3) - 1);
             }
 
             if (i * 2 + 1 < waterLevel) {
-                gui.blit(matrix, pX, pY, pU, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT);
+                guiGraphics.blit(sprite, pX, pY, pU, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT);
             }
 
             if (i * 2 + 1 == waterLevel) {
-                gui.blit(matrix, pX, pY, pU + 9, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT);
+                guiGraphics.blit(sprite, pX, pY, pU + 9, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT);
             }
 
             if (i * 2 + 1 < waterSaturationLevel) {
-                gui.blit(matrix, pX, pY - 1, pU, pV + 9, 9, 9);
-                gui.blit(matrix, pX, pY + 1, pU + 9, pV + 9, 9, 9);
+                guiGraphics.blit(sprite, pX, pY - 1, pU, pV + 9, 9, 9);
+                guiGraphics.blit(sprite, pX, pY + 1, pU + 9, pV + 9, 9, 9);
             }
 
             if (i * 2 + 1 == waterSaturationLevel) {
-                gui.blit(matrix, pX, pY, pU, pV + 9, 9, 9);
+                guiGraphics.blit(sprite, pX, pY, pU, pV + 9, 9, 9);
             }
         }
     }

@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 
 import homeostatic.config.ConfigHandler;
@@ -22,7 +23,8 @@ public class OverlayManager {
 
     private OverlayManager() {}
 
-    public void render(PoseStack matrix, Overlay overlay, boolean scaled, int rightHeight) {
+    public void render(GuiGraphics guiGraphics, Overlay overlay, boolean scaled, int rightHeight) {
+        PoseStack matrix = guiGraphics.pose();
         Minecraft mc = Minecraft.getInstance();
         BlockPos pos = Objects.requireNonNull(mc.getCameraEntity()).blockPosition();
         int scaledWidth;
@@ -43,44 +45,44 @@ public class OverlayManager {
                 matrix.pushPose();
             }
 
-            overlay.render(matrix, mc, pos, scaledWidth, scaledHeight);
+            overlay.render(guiGraphics, mc, pos, scaledWidth, scaledHeight);
 
             matrix.popPose();
         }
 
     }
 
-    public void renderOverlay(PoseStack matrix) {
-        render(matrix, temperatureInfo, true, 0);
+    public void renderOverlay(GuiGraphics guiGraphics) {
+        render(guiGraphics, temperatureInfo, true, 0);
     }
 
-    public void renderWaterOverlay(PoseStack matrix, int rightHeight) {
+    public void renderWaterOverlay(GuiGraphics guiGraphics, int rightHeight) {
         if (ConfigHandler.Client.forceWaterBarPosition()) {
             rightHeight = 0;
         }
 
-        render(matrix, waterHud, false, rightHeight);
-        render(matrix, wetnessOverlay, false, 0);
+        render(guiGraphics, waterHud, false, rightHeight);
+        render(guiGraphics, wetnessOverlay, false, 0);
     }
 
-    public void renderTemperatureOverlay(PoseStack matrix) {
+    public void renderTemperatureOverlay(GuiGraphics guiGraphics) {
         switch (ConfigHandler.Client.temperatureHudOption()) {
             case "RIGHT_THERMOMETER":
-                render(matrix, temperatureOverlay, false, 0);
+                render(guiGraphics, temperatureOverlay, false, 0);
                 break;
             case "CENTER_GLOBE":
             default:
-                render(matrix, temperatureGlobeOverlay, false, 0);
+                render(guiGraphics, temperatureGlobeOverlay, false, 0);
                 break;
         }
     }
 
-    public void renderEnhancedVisualsOverlay(PoseStack matrix) {
-        render(matrix, enhancedVisualsOverlay, false, 0);
+    public void renderEnhancedVisualsOverlay(GuiGraphics guiGraphics) {
+        render(guiGraphics, enhancedVisualsOverlay, false, 0);
     }
 
-    public void renderHydrationOverlay(PoseStack matrix, int rightHeight) {
-        render(matrix, hydrationOverlay, false, rightHeight);
+    public void renderHydrationOverlay(GuiGraphics guiGraphics, int rightHeight) {
+        render(guiGraphics, hydrationOverlay, false, rightHeight);
     }
 
 }

@@ -1,13 +1,13 @@
 package homeostatic.common.block;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
+
+import net.minecraftforge.registries.RegisterEvent;
 
 import homeostatic.common.fluid.HomeostaticFluids;
-import homeostatic.Homeostatic;
-import net.minecraftforge.registries.RegisterEvent;
 
 public class HomeostaticBlocks {
 
@@ -19,7 +19,7 @@ public class HomeostaticBlocks {
 
         PURIFIED_WATER_FLUID = registerBlock(
                 "purified_water_fluid",
-                new LiquidBlock(() -> HomeostaticFluids.PURIFIED_WATER, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F).noLootTable()));
+                new LiquidBlock(() -> HomeostaticFluids.PURIFIED_WATER, BlockBehaviour.Properties.copy(Blocks.WATER).noCollission().strength(100.0F).noLootTable()));
     }
 
     public static LiquidBlock registerBlock(String name, LiquidBlock block) {

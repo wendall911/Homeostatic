@@ -30,5 +30,6 @@
     "recipes": [
       "homeostatic:leather_flask"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

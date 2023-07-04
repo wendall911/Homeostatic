@@ -7,7 +7,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,6 +30,7 @@ import homeostatic.util.WaterHelper;
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Homeostatic.MODID)
 public class HydrationOverlay extends Overlay {
 
+    public final static ResourceLocation SPRITE = Homeostatic.loc("textures/gui/icons.png");
     private static float unclampedAlpha = 0F;
     private static float alpha = 0F;
     private static byte alphaDirection = 1;
@@ -36,7 +39,7 @@ public class HydrationOverlay extends Overlay {
     public HydrationOverlay() {}
 
     @Override
-    public void render(PoseStack matrix, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
+    public void render(GuiGraphics guiGraphics, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
 
         if (player == null) return;
@@ -52,7 +55,7 @@ public class HydrationOverlay extends Overlay {
         final Gui gui = mc.gui;
 
         RenderSystem.enableBlend();
-        RenderSystem.setShaderTexture(0, WaterHud.WATER_BAR);
+        RenderSystem.setShaderTexture(0, WaterHud.SPRITE);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         MobEffectInstance effectInstance = mc.player.getEffect(HomeostaticEffects.THIRST);
@@ -61,7 +64,7 @@ public class HydrationOverlay extends Overlay {
             final int waterLevel = data.getWaterLevel() + hydration.amount();
             final float waterSaturationLevel = data.getWaterSaturationLevel() + hydration.saturation();
 
-            WaterHelper.drawWaterBar(scaledWidth, scaledHeight, effectInstance, gui, matrix, waterSaturationLevel, waterLevel, tickCount);
+            WaterHelper.drawWaterBar(SPRITE, scaledWidth, scaledHeight, effectInstance, gui, guiGraphics, waterSaturationLevel, waterLevel, tickCount);
         });
 
         RenderSystem.disableBlend();

@@ -1,11 +1,14 @@
 package homeostatic.overlay;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -16,26 +19,26 @@ import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
 import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
+import homeostatic.util.FontHelper;
 import homeostatic.util.TempHelper;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TemperatureGlobeOverlay extends Overlay {
 
-    public final static ResourceLocation ICONS = Homeostatic.loc("textures/gui/icons.png");
+    public final static ResourceLocation SPRITE = Homeostatic.loc("textures/gui/icons.png");
     protected final static int ICON_WIDTH = 18;
     protected final static int ICON_HEIGHT = 14;
 
     TemperatureGlobeOverlay() {}
 
     @Override
-    public void render(PoseStack matrix, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
+    public void render(GuiGraphics guiGraphics, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
+        PoseStack matrix = guiGraphics.pose();
 
         if (player == null) return;
 
         RenderSystem.enableBlend();
-        RenderSystem.setShaderTexture(0, ICONS);
+        RenderSystem.setShaderTexture(0, SPRITE);
 
         player.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
             int offsetX = Alignment.getX(ConfigHandler.Client.globePosition(), scaledWidth, ICON_WIDTH,
@@ -64,8 +67,8 @@ public class TemperatureGlobeOverlay extends Overlay {
             pV = getTempOffset(coreRangeStep);
             localPV = getTempOffset(localRangeStep);
 
-            this.blit(matrix, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT);
-            this.blit(matrix, offsetX, pY, pUOffset + ICON_WIDTH, localPV, ICON_WIDTH, ICON_HEIGHT);
+            guiGraphics.blit(SPRITE, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT);
+            guiGraphics.blit(SPRITE, offsetX, pY, pUOffset + ICON_WIDTH, localPV, ICON_WIDTH, ICON_HEIGHT);
 
             if (ConfigHandler.Common.requireThermometer()) {
                 player.getCapability(CapabilityRegistry.THERMOMETER_CAPABILITY).ifPresent(thermometer -> {
@@ -76,8 +79,8 @@ public class TemperatureGlobeOverlay extends Overlay {
             if (showTemperature.get()) {
                 matrix.scale(textScale, textScale, textScale);
 
-                mc.font.drawShadow(matrix, localTemp, localOffsetX - 1, textOffsetY - 19, ColorHelper.getLocalTemperatureColor(localRangeStep));
-                mc.font.drawShadow(matrix, coreTempSmall, coreOffsetX - 1, textOffsetY, ColorHelper.getGlobeTemperatureColor(coreRangeStep));
+                FontHelper.draw(mc, guiGraphics, localTemp, localOffsetX - 1, textOffsetY - 19, ColorHelper.getLocalTemperatureColor(localRangeStep), true);
+                FontHelper.draw(mc, guiGraphics, coreTempSmall, coreOffsetX - 1, textOffsetY, ColorHelper.getGlobeTemperatureColor(coreRangeStep), true);
             }
 
         });

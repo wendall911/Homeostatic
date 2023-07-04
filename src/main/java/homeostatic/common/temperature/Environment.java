@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+import net.minecraft.world.level.block.Blocks;
 import org.joml.Vector3d;
 
 import net.minecraft.core.BlockPos;
@@ -21,7 +22,6 @@ import net.minecraft.world.level.chunk.PalettedContainer;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
 import homeostatic.common.block.BlockRadiation;
@@ -99,7 +99,7 @@ public class Environment {
                     }
 
                     BlockState state = palette.get(blockpos.getX() & 15, blockpos.getY() & 15, blockpos.getZ() & 15);
-                    boolean isWater = state.getMaterial().equals(Material.WATER);
+                    boolean isWater = state.is(Blocks.WATER);
 
                     if (isUnderground && y >= 0 && !isWater) {
                         isUnderground = !world.canSeeSky(eyePos.offset(x, y, z).above());

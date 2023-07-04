@@ -3,10 +3,10 @@ package homeostatic.overlay;
 import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -26,14 +26,14 @@ import homeostatic.util.WaterHelper;
 public class WaterHud extends Overlay {
 
     protected static int tickCount = 0;
-    public final static ResourceLocation WATER_BAR = Homeostatic.loc("textures/gui/icons.png");
+    public final static ResourceLocation SPRITE = Homeostatic.loc("textures/gui/icons.png");
     public final static int BAR_WIDTH = 9;
     public final static int BAR_HEIGHT = 9;
 
     public WaterHud() {}
 
     @Override
-    public void render(PoseStack matrix, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
+    public void render(GuiGraphics guiGraphics, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
 
         if (player == null) return;
@@ -41,14 +41,14 @@ public class WaterHud extends Overlay {
         final Gui gui = mc.gui;
 
         RenderSystem.enableBlend();
-        RenderSystem.setShaderTexture(0, WATER_BAR);
+        RenderSystem.setShaderTexture(0, SPRITE);
         MobEffectInstance effectInstance = mc.player.getEffect(HomeostaticEffects.THIRST);
 
         player.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
             final int waterLevel = data.getWaterLevel();
             final float waterSaturationLevel = data.getWaterSaturationLevel();
 
-            WaterHelper.drawWaterBar(scaledWidth, scaledHeight, effectInstance, gui, matrix, waterSaturationLevel, waterLevel, tickCount);
+            WaterHelper.drawWaterBar(SPRITE, scaledWidth, scaledHeight, effectInstance, gui, guiGraphics, waterSaturationLevel, waterLevel, tickCount);
         });
 
     }

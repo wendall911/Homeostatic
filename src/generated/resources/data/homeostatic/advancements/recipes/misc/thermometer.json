@@ -30,5 +30,6 @@
     "recipes": [
       "homeostatic:thermometer"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

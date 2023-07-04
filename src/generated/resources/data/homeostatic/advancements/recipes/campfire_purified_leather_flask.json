@@ -30,5 +30,6 @@
     "recipes": [
       "homeostatic:campfire_purified_leather_flask"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

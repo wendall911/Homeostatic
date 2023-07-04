@@ -21,7 +21,7 @@ public class VecMath {
         Vec3 playerVec = new Vec3(sp.getX(), sp.getEyeY(), sp.getZ());
         ClipContext clipContext = new ClipContext(playerVec, blockVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, sp);
 
-        return sp.level.clip(clipContext).getType() != HitResult.Type.MISS;
+        return sp.serverLevel().clip(clipContext).getType() != HitResult.Type.MISS;
     }
 
 }

@@ -37,33 +37,33 @@ public class GameOverlayEventHandler {
     public GameOverlayEventHandler() {
         Minecraft mc = Minecraft.getInstance();
 
-        OVERLAY = (gui, poseStack, partialTick, width, height) -> {
+        OVERLAY = (gui, guiGraphics, partialTick, width, height) -> {
             if (enabled && ConfigHandler.Common.debugEnabled() && !mc.options.renderDebug) {
-                overlayManager.renderOverlay(poseStack);
+                overlayManager.renderOverlay(guiGraphics);
             }
         };
 
-        WATER_LEVEL_OVERLAY = (gui, poseStack, partialTick, width, height) -> {
+        WATER_LEVEL_OVERLAY = (gui, guiGraphics, partialTick, width, height) -> {
             if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                overlayManager.renderWaterOverlay(poseStack, gui.rightHeight);
+                overlayManager.renderWaterOverlay(guiGraphics, gui.rightHeight);
             }
         };
 
-        TEMPERATURE_OVERLAY = (gui, poseStack, partialTick, width, height) -> {
+        TEMPERATURE_OVERLAY = (gui, guiGraphics, partialTick, width, height) -> {
             if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                overlayManager.renderTemperatureOverlay(poseStack);
+                overlayManager.renderTemperatureOverlay(guiGraphics);
             }
         };
 
-        ENHANCED_VISUALS_OVERLAY = (gui, poseStack, partialTick, width, height) -> {
+        ENHANCED_VISUALS_OVERLAY = (gui, guiGraphics, partialTick, width, height) -> {
             if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                overlayManager.renderEnhancedVisualsOverlay(poseStack);
+                overlayManager.renderEnhancedVisualsOverlay(guiGraphics);
             }
         };
 
-        HYDRATION_OVERLAY = (gui, poseStack, partialTick, width, height) -> {
+        HYDRATION_OVERLAY = (gui, guiGraphics, partialTick, width, height) -> {
             if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                overlayManager.renderHydrationOverlay(poseStack, gui.rightHeight);
+                overlayManager.renderHydrationOverlay(guiGraphics, gui.rightHeight);
             }
         };
     }

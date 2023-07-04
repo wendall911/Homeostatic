@@ -54,9 +54,9 @@ public class PlayerEventHandler {
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
         final Player player = event.getEntity() instanceof Player ? (Player) event.getEntity() : null;
 
-        if (player != null && !player.level.isClientSide) {
+        if (player != null && !player.level().isClientSide) {
             final ServerPlayer sp = (ServerPlayer) player;
-            ServerLevel world = sp.getLevel();
+            ServerLevel world = sp.serverLevel();
 
             if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
 
@@ -83,12 +83,12 @@ public class PlayerEventHandler {
         if (event.player instanceof FakePlayer) return;
         if (event.phase != TickEvent.Phase.START) return;
 
-        if (!event.player.getLevel().isClientSide()) {
+        if (!event.player.level().isClientSide()) {
             final ServerPlayer sp = (ServerPlayer) event.player;
 
             if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
 
-            ServerLevel world = sp.getLevel();
+            ServerLevel world = sp.serverLevel();
             ProfilerFiller profilerfiller = world.getProfiler();
 
             sp.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> data.checkWaterLevel(sp));
@@ -126,9 +126,9 @@ public class PlayerEventHandler {
 
         final Player player = event.getEntity() != null ? event.getEntity() : null;
 
-        if (player != null && !player.level.isClientSide) {
+        if (player != null && !player.level().isClientSide) {
             final ServerPlayer sp = (ServerPlayer) player;
-            ServerLevel world = sp.getLevel();
+            ServerLevel world = sp.serverLevel();
 
             if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
 
@@ -168,7 +168,7 @@ public class PlayerEventHandler {
     public static void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
         final Player player = event.getEntity();
 
-        if (player != null && player.level.isClientSide) {
+        if (player != null && player.level().isClientSide) {
             drinkWater(player, event);
         }
     }
@@ -177,14 +177,14 @@ public class PlayerEventHandler {
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         final Player player = event.getEntity();
 
-        if (player != null && player.level.isClientSide) {
+        if (player != null && player.level().isClientSide) {
             drinkWater(player, event);
         }
     }
 
     @SubscribeEvent
     public static void onFinishUsingItem(LivingEntityUseItemEvent.Finish event) {
-        if (event.getEntity() instanceof Player player && !player.level.isClientSide) {
+        if (event.getEntity() instanceof Player player && !player.level().isClientSide) {
             ItemStack stack = event.getItem();
             ServerPlayer sp = (ServerPlayer) player;
 
@@ -206,7 +206,7 @@ public class PlayerEventHandler {
         if (hitresult.getType() == HitResult.Type.BLOCK && level.getFluidState(pos).getType() == Fluids.WATER) {
             player.getCapability(CapabilityRegistry.WATER_CAPABILITY).ifPresent(data -> {
                 if (data.getWaterLevel() < WaterInfo.MAX_WATER_LEVEL) {
-                    player.getLevel().playSound(player, pos, SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 0.4f, 1.0f);
+                    player.level().playSound(player, pos, SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 0.4f, 1.0f);
 
                     NetworkHandler.INSTANCE.sendToServer(new DrinkWater());
                 }
@@ -217,7 +217,7 @@ public class PlayerEventHandler {
     @SubscribeEvent
     public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
         if (ConfigHandler.Common.showTemperatureValues() && ConfigHandler.Common.requireThermometer()) {
-            if (event.getEntity() instanceof Player player && !player.level.isClientSide && event.getSlot() == EquipmentSlot.HEAD) {
+            if (event.getEntity() instanceof Player player && !player.level().isClientSide && event.getSlot() == EquipmentSlot.HEAD) {
                 final ServerPlayer sp = (ServerPlayer) player;
 
                 sp.getCapability(CapabilityRegistry.THERMOMETER_CAPABILITY).ifPresent(data -> {

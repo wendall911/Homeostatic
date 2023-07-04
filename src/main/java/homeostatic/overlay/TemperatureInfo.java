@@ -1,8 +1,7 @@
 package homeostatic.overlay;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +19,7 @@ public class TemperatureInfo extends Overlay {
     public TemperatureInfo() {}
 
     @Override
-    public void render(PoseStack matrix, Minecraft mc, BlockPos pos, int scaledWidth, int scaledHeight) {
+    public void render(GuiGraphics guiGraphics, Minecraft mc, BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
 
         if (player == null) return;
@@ -52,17 +51,17 @@ public class TemperatureInfo extends Overlay {
             int y = Alignment.getTextY(ConfigHandler.Client.debugPosition(), scaledHeight, 1, mc.font.lineHeight,
                     ConfigHandler.Client.debugOffsetY(), 1.0F);
 
-            FontHelper.draw(mc, matrix, localTemp,
+            FontHelper.draw(mc, guiGraphics, localTemp,
                     Alignment.getTextX(ConfigHandler.Client.debugPosition(), scaledWidth, localTempWidth,
-                    ConfigHandler.Client.debugOffsetX(), 1.0F), y, ColorHelper.getLocalTemperatureColor(localRangeStep));
-            FontHelper.draw(mc, matrix, skinTemp,
+                    ConfigHandler.Client.debugOffsetX(), 1.0F), y, ColorHelper.getLocalTemperatureColor(localRangeStep), false);
+            FontHelper.draw(mc, guiGraphics, skinTemp,
                     Alignment.getTextX(ConfigHandler.Client.debugPosition(), scaledWidth, skinTempWidth,
                     ConfigHandler.Client.debugOffsetX(), 1.0F), y + mc.font.lineHeight,
-                    ColorHelper.getTemperatureColor(skinRangeStep));
-            FontHelper.draw(mc, matrix, coreTemp,
+                    ColorHelper.getTemperatureColor(skinRangeStep), false);
+            FontHelper.draw(mc, guiGraphics, coreTemp,
                     Alignment.getTextX(ConfigHandler.Client.debugPosition(), scaledWidth, coreTempWidth,
                     ConfigHandler.Client.debugOffsetX(), 1.0F), y + (mc.font.lineHeight * 2),
-                    ColorHelper.getTemperatureColor(coreRangeStep));
+                    ColorHelper.getTemperatureColor(coreRangeStep), false);
         });
     }
 

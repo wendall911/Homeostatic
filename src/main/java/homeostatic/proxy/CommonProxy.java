@@ -2,10 +2,8 @@ package homeostatic.proxy;
 
 import java.util.Map;
 
-import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -14,24 +12,28 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.biome.Biome;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 
 import homeostatic.config.ConfigHandler;
 import homeostatic.common.biome.BiomeRegistry;
+import homeostatic.common.CreativeTabs;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.HomeostaticRecipes;
+import homeostatic.common.HomeostaticModule;
+import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
 import homeostatic.util.BiomeHelper;
@@ -48,6 +50,7 @@ public class CommonProxy {
         ConfigHandler.init();
         registerListeners(bus);
         BiomeRegistry.init();
+        CreativeTabs.init(bus);
 
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::serverStart);
     }
@@ -57,6 +60,8 @@ public class CommonProxy {
     }
 
     public static final class RegistryListener {
+
+        private static boolean setupDone = false;
 
         @SubscribeEvent
         public static void setup(FMLCommonSetupEvent event) {
@@ -74,22 +79,22 @@ public class CommonProxy {
             event.register(Registries.DAMAGE_TYPE, HomeostaticDamageTypes::init);
         }
 
-        @SubscribeEvent(priority = EventPriority.LOWEST)
-        public static void registerCreativeTab(CreativeModeTabEvent.Register event) {
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void setupRegistries(FMLConstructModEvent event) {
+            IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-            event.registerCreativeModeTab(new ResourceLocation(Homeostatic.MODID, "items"), builder -> builder.icon(() -> new ItemStack(HomeostaticItems.PURIFIED_WATER_BUCKET))
-                .title(Component.translatable(Homeostatic.MODID + ".items"))
-                .displayItems((features, output) -> {
-                    for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
-                        Item item = entry.getValue();
-                            output.accept(new ItemStack(item));
-                        }
-                    }));
+            if (setupDone) {
+                return;
+            }
+            setupDone = true;
+
+            HomeostaticModule.initRegistries(bus);
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        public static void registerCreativeTab(CreativeModeTabEvent.BuildContents event) {
-            if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+        public static void registerCreativeTab(BuildCreativeModeTabContentsEvent event) {
+            if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES
+                    || event.getTab() == CreativeTabs.ALL_ITEMS_TAB.get()) {
                 for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
                     Item item = entry.getValue();
 
