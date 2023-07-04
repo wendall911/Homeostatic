@@ -22,7 +22,7 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
+        classpath group: 'net.darkhax.curseforgegradle', name: 'CurseForgeGradle', version: '1.+'
         classpath 'se.bjurr.gitchangelog:git-changelog-gradle-plugin:1.71.8'
         classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+'
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
@@ -32,7 +32,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
 apply plugin: 'se.bjurr.gitchangelog.git-changelog-gradle-plugin'
-apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'net.darkhax.curseforgegradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 
@@ -238,42 +238,37 @@ publishing {
     }
 }
 
-curseforge {
+task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     if (project.hasProperty('hscurseApiKey')) {
-        apiKey = project.hscurseApiKey
-        project {
-            id = project.hscurseId
-            changelog = file('build/libs/' + project.getName() + '-' + version + '-changelog.txt')
-            releaseType = cf_release_type
-            addGameVersion('Forge')
-            "${cf_versions}".split(',').each {
-                addGameVersion "${it}"
-            }
-            mainArtifact(jar) {
-                relations {
-                    optionalLibrary 'configured'
-                    optionalLibrary 'catalogue'
-                    optionalLibrary 'jei'
-                    optionalLibrary 'simpletextoverlay'
-                    optionalLibrary 'serene-seasons'
-                    optionalLibrary 'biomes-o-plenty'
-                    optionalLibrary 'oh-the-biomes-youll-go'
-                    optionalLibrary 'croptopia'
-                    optionalLibrary 'farmers-delight'
-                    optionalLibrary 'xercamod'
-                    optionalLibrary 'kitteh6660s-morecraft'
-                    optionalLibrary 'sophisticated-backpacks'
-                    optionalLibrary 'ecologics'
-                    optionalLibrary 'ars-nouveau'
-                    optionalLibrary 'sprout'
-                    optionalLibrary 'create-cafe'
-                    optionalLibrary 'fruit-trees'
-                    optionalLibrary 'leave-my-bars-alone'
-                    optionalLibrary 'create'
-                    optionalLibrary 'patchouli'
-                }
-            }
+        apiToken = project.hscurseApiKey
+        def mainFile = upload(project.hscurseId, file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
+        mainFile.changelog = file('build/libs/' + project.getName() + '-' + version + '-changelog.txt')
+        mainFile.addJavaVersion('Java 17')
+        mainFile.addModLoader('Forge')
+        mainFile.releaseType = "${cf_release_type}"
+        "${cf_versions}".split(',').each {
+            mainFile.addGameVersion("${it}")
         }
+        mainFile.addOptional('configured')
+        mainFile.addOptional('catalogue')
+        mainFile.addOptional('jei')
+        mainFile.addOptional('simpletextoverlay')
+        mainFile.addOptional('serene-seasons')
+        mainFile.addOptional('biomes-o-plenty')
+        mainFile.addOptional('oh-the-biomes-youll-go')
+        mainFile.addOptional('croptopia')
+        mainFile.addOptional('farmers-delight')
+        mainFile.addOptional('xercamod')
+        mainFile.addOptional('kitteh6660s-morecraft')
+        mainFile.addOptional('sophisticated-backpacks')
+        mainFile.addOptional('ecologics')
+        mainFile.addOptional('ars-nouveau')
+        mainFile.addOptional('sprout')
+        mainFile.addOptional('create-cafe')
+        mainFile.addOptional('fruit-trees')
+        mainFile.addOptional('leave-my-bars-alone')
+        mainFile.addOptional('create')
+        mainFile.addOptional('patchouli')
     }
 }
 
