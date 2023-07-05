@@ -905,8 +905,8 @@ public class BiomeRegistry {
                 biomeCategory = BiomeCategory.SAVANNA;
             }
             else if (ModList.get().isLoaded("biomesoplenty")
-                    && hasFeature(generationSettings, BOPVegetationPlacements.PATCH_DEAD_GRASS)
-                    || hasFeature(generationSettings, BOPVegetationPlacements.TREES_WASTELAND)) {
+                    && (hasFeature(generationSettings, BOPVegetationPlacements.PATCH_DEAD_GRASS)
+                    || hasFeature(generationSettings, BOPVegetationPlacements.TREES_WASTELAND))) {
                 biomeCategory = BiomeCategory.MESA;
             }
             else {
