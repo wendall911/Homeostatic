@@ -3,6 +3,7 @@ package homeostatic.common.item;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import homeostatic.common.CreativeTabs;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
@@ -45,6 +46,8 @@ public final class HomeostaticItems {
         THERMOMETER = registerItem(
                 "thermometer",
                 new Item(new Item.Properties()));
+
+        CreativeTabs.init();
     }
 
     public static Item registerItem(String name, Item item) {

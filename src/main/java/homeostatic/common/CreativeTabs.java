@@ -8,7 +8,6 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
 
 import homeostatic.common.item.HomeostaticItems;
@@ -18,7 +17,7 @@ public class CreativeTabs extends HomeostaticModule {
 
     public static RegistryObject<CreativeModeTab> ALL_ITEMS_TAB;
 
-    public static void init(IEventBus bus) {
+    public static void init() {
         ALL_ITEMS_TAB = registerTab("items", HomeostaticItems.PURIFIED_WATER_BUCKET);
     }
 

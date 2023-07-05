@@ -50,7 +50,6 @@ public class CommonProxy {
         ConfigHandler.init();
         registerListeners(bus);
         BiomeRegistry.init();
-        CreativeTabs.init(bus);
 
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::serverStart);
     }
