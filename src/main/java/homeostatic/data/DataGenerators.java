@@ -7,8 +7,8 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-//import homeostatic.data.integration.create.FillingRecipeProvider;
-//import homeostatic.data.integration.create.MixingRecipeProvider;
+import homeostatic.data.integration.create.FillingRecipeProvider;
+import homeostatic.data.integration.create.MixingRecipeProvider;
 import homeostatic.data.integration.patchouli.ModBookProvider;
 import homeostatic.data.recipe.ModRecipesProvider;
 import homeostatic.data.recipe.SpecialRecipeProvider;
@@ -34,11 +34,8 @@ public final class DataGenerators {
         gen.addProvider(event.includeServer(), new RadiationBlocksProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new DrinkingFluidsProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new DrinkableItemsProvider(gen.getPackOutput()));
-        // TODO Add for Create 1.19.3/4 once released
-        /*
         gen.addProvider(event.includeServer(), new MixingRecipeProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new FillingRecipeProvider(gen.getPackOutput()));
-         */
         gen.addProvider(event.includeServer(), new ModBookProvider(gen.getPackOutput()));
         gen.addProvider(event.includeClient(), new ModLanguageProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new SpecialRecipeProvider(gen.getPackOutput()));

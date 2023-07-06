@@ -105,12 +105,12 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: '*.jar')
     //runtimeOnly fg.deobf("curse.maven:corgilib-693313:${corgilib_version}")
     //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
-    //compileOnly fg.deobf("curse.maven:create-328085:${create_version}")
+    compileOnly fg.deobf("curse.maven:create-328085:${create_version}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE-SNAPSHOT")
     implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
 
     if (System.getenv('DATA_GEN') != null) {
-        //runtimeOnly fg.deobf("curse.maven:create-328085:${create_version}")
+        runtimeOnly fg.deobf("curse.maven:create-328085:${create_version}")
     }
     else {
         runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
