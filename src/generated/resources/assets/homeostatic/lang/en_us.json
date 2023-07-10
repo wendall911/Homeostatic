@@ -6,6 +6,7 @@
   "death.attack.isScalding": "%1$s died of scalding",
   "death.attack.isScalding.player": "%1$s died of scalding whilst fighting %2$s",
   "effect.homeostatic.thirst": "Thirst",
+  "block.homeostatic.purified_water_fluid": "Purified Water",
   "fluid_type.homeostatic.purified_water_type": "Purified Water",
   "homeostatic.items": "Homeostatic",
   "info.homeostatic.book.education.body_temp.intro": "More info coming soon ...",
