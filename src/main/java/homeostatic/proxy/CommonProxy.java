@@ -137,7 +137,8 @@ public class CommonProxy {
                             + "\ntemperature=" + biome.getModifiedClimateSettings().temperature()
                             + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
                             + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
-                            + "\nbiomeCategory=" + computedBiomeCategory);
+                            + "\nbiomeCategory=" + biomeCategory
+                            + "\ncomputedBiomeCategory=" + computedBiomeCategory);
                 }
             }
         }

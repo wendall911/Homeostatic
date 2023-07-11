@@ -184,6 +184,7 @@ public class BiomeRegistry {
         BIOME_CATEGORY.put(Biomes.JAGGED_PEAKS, BiomeCategory.MOUNTAIN);
         BIOME_CATEGORY.put(Biomes.FROZEN_PEAKS, BiomeCategory.MOUNTAIN);
         BIOME_CATEGORY.put(Biomes.MEADOW, BiomeCategory.MOUNTAIN);
+        BIOME_CATEGORY.put(Biomes.CHERRY_GROVE, BiomeCategory.MOUNTAIN);
         BIOME_CATEGORY.put(Biomes.STONY_PEAKS, BiomeCategory.MOUNTAIN);
         BIOME_CATEGORY.put(Biomes.RIVER, BiomeCategory.RIVER);
         BIOME_CATEGORY.put(Biomes.FROZEN_RIVER, BiomeCategory.RIVER);
@@ -259,7 +260,7 @@ public class BiomeRegistry {
                     case "coniferous_forest":
                     case "ominous_woods":
                     case "origin_valley":
-                    case "highland_moor":
+                    case "moor":
                     case "highland":
                     case "crag":
                     case "jade_cliffs":
@@ -269,6 +270,7 @@ public class BiomeRegistry {
                     case "redwood_forest":
                     case "woodland":
                     case "auroral_garden":
+                    case "snowblossom_grove":
                         BIOME_CATEGORY.put(biomeResourceKey, BiomeCategory.FOREST);
                         break;
                     case "dryland":
@@ -479,7 +481,12 @@ public class BiomeRegistry {
                     && hasFeature(generationSettings, BOPVegetationPlacements.TREES_AURORAL_GARDEN)) {
                 // AURORAL_GARDEN
                 biomeCategory = BiomeCategory.FOREST;
-            } else {
+            }
+            else if (ModList.get().isLoaded("biomesoplenty") && downfall == 0.8F) {
+                // SNOWBLOSSOM_GROVE
+                biomeCategory = BiomeCategory.FOREST;
+            }
+            else {
                 // RAINBOW_HILLS SNOWY_CONIFEROUS_FOREST SNOWY_FIR_CLEARING SNOWY_MAPLE_WOODS
                 biomeCategory = BiomeCategory.MOUNTAIN;
             }
@@ -649,7 +656,7 @@ public class BiomeRegistry {
             }
             else if (precipitation == Biome.Precipitation.RAIN) {
                 if (downfall == 0.8F) {
-                    // MEADOW
+                    // MEADOW CHERRY_GROVE
                     biomeCategory = BiomeCategory.MOUNTAIN;
                 }
                 else if (downfall == 0.5F) {
@@ -672,7 +679,7 @@ public class BiomeRegistry {
                 biomeCategory = BiomeCategory.PLAINS;
             }
             else if (downfall == 0.6F) {
-                // OMINOUS_WOODS ORIGIN_VALLEY HIGHLAND_MOOR HIGHLAND CRAG
+                // OMINOUS_WOODS ORIGIN_VALLEY MOOR HIGHLAND CRAG
                 // BIRCH_FOREST OLD_GROWTH_BIRCH_FOREST
                 biomeCategory = BiomeCategory.FOREST;
             }
