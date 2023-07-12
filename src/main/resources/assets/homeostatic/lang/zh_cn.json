@@ -69,7 +69,7 @@
   "item.homeostatic.water_filter": "滤水纸",
   "tooltip.insulation": "隔热",
   "tooltip.radiation_protection": "热辐射防护",
-  "tooltip.thermometer": "热成像",
+  "tooltip.thermometer": "温度测量",
   "tooltip.water_container.empty": "空",
   "tooltip.waterproof": "防水"
 }
