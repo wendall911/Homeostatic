@@ -241,6 +241,7 @@ public final class ConfigHandler {
         public final BooleanValue debugEnabled;
         public final BooleanValue showTemperatureValues;
         public final BooleanValue requireThermometer;
+        public final DoubleValue randomWaterLoss;
 
         static {
             Pair<Common,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
@@ -260,8 +261,12 @@ public final class ConfigHandler {
                 .define("showTemperatureValues", true);
 
             requireThermometer = builder
-                    .comment("Require thermometer helmet enhancement to display temperature values.")
-                    .define("requireThermometer", false);
+                .comment("Require thermometer helmet enhancement to display temperature values.")
+                .define("requireThermometer", false);
+
+            randomWaterLoss = builder
+                .comment("Water loss speed when not sweating. Increase to make water loss more prevalent.")
+                .defineInRange("randomWaterLoss", 0.05, 0.01, 1.0);
 
         }
 
@@ -275,6 +280,12 @@ public final class ConfigHandler {
 
         public static boolean requireThermometer() {
             return CONFIG.requireThermometer.get();
+        }
+
+        public static float getRandomWaterLoss() {
+            double waterLoss = CONFIG.randomWaterLoss.get();
+
+            return (float) waterLoss;
         }
 
     }
