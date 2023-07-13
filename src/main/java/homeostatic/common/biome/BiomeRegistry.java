@@ -448,6 +448,11 @@ public class BiomeRegistry {
                 }
             });
         }
+
+        // Ars Nouveau
+        if (ModList.get().isLoaded("ars_nouveau")) {
+            BIOME_CATEGORY.put(com.hollingsworth.arsnouveau.setup.registry.BiomeRegistry.ARCHWOOD_FOREST, BiomeCategory.FOREST);
+        }
     }
 
     public static boolean hasFeature(BiomeGenerationSettings biomeGenerationSettings, ResourceKey<PlacedFeature> placedFeatureResourceKey) {
@@ -709,7 +714,7 @@ public class BiomeRegistry {
                     biomeCategory = BiomeCategory.BEACH;
                 }
                 else if (downfall == 0.8F) {
-                    // DARK_FOREST FOREST FLOWER_FOREST MYSTIC_GROVE CHERRY_BLOSSOM_FOREST
+                    // DARK_FOREST FOREST FLOWER_FOREST MYSTIC_GROVE CHERRY_BLOSSOM_FOREST ARCHWOOD_FOREST
                     biomeCategory = BiomeCategory.FOREST;
                 }
             }
