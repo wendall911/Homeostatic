@@ -1,5 +1,6 @@
 package homeostatic.common.temperature;
 
+import homeostatic.config.ConfigHandler;
 import net.minecraft.server.level.ServerPlayer;
 
 import homeostatic.common.biome.BiomeData;
@@ -167,7 +168,7 @@ public class BodyTemperature {
         // Lose water slowly under cooling or normal conditions
         if (localTemperature < Environment.PARITY_HIGH && !canSweat && Homeostatic.RANDOM.nextFloat() < 0.17F) {
             //Homeostatic.LOGGER.debug("Random cool water loss: %s", 0.05F);
-            WaterHelper.updateWaterInfo(sp, 0.05F);
+            WaterHelper.updateWaterInfo(sp, ConfigHandler.Common.getRandomWaterLoss());
         }
 
         // POWDERED SNOW COOLING
