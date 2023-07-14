@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "scuba_gear:scuba_helmet",
+      "required": false
+    },
+    {
+      "id": "scuba_gear:scuba_chestplate",
+      "required": false
+    },
+    {
+      "id": "scuba_gear:scuba_leggings",
+      "required": false
+    },
+    {
+      "id": "scuba_gear:scuba_boots",
+      "required": false
+    }
+  ]
+}
