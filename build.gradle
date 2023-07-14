@@ -156,6 +156,7 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:fruittrees-355467:???")
         //runtimeOnly fg.deobf("curse.maven:puzzleslib-495476:4582313")
         //runtimeOnly fg.deobf("curse.maven:leavemybarsalone-281715:4555067")
+        runtimeOnly fg.deobf("curse.maven:scuba_gear-399090:4442000")
     }
 }
 
@@ -273,6 +274,7 @@ curseforge {
                     optionalLibrary 'leave-my-bars-alone'
                     optionalLibrary 'create'
                     optionalLibrary 'patchouli'
+                    optionalLibrary 'scuba-gear'
                 }
             }
         }
