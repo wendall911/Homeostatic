@@ -242,6 +242,7 @@ public final class ConfigHandler {
         public final BooleanValue showTemperatureValues;
         public final BooleanValue requireThermometer;
         public final DoubleValue randomWaterLoss;
+        public final DoubleValue radiationReductionPercent;
 
         static {
             Pair<Common,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
@@ -268,6 +269,10 @@ public final class ConfigHandler {
                 .comment("Water loss speed when not sweating. Increase to make water loss more prevalent.")
                 .defineInRange("randomWaterLoss", 0.05, 0.01, 1.0);
 
+            radiationReductionPercent = builder
+                .comment("Percentage of radiation reduced when 'Radiation Protection' is added to an armor piece. For example, 0.25 with four pieces will be 100%. 1.0 will be 100% for one piece. Default gives 80% for four pieces.")
+                .defineInRange("radiationReductionPercent", 0.2, 0.1, 1.0);
+
         }
 
         public static boolean debugEnabled() {
@@ -286,6 +291,12 @@ public final class ConfigHandler {
             double waterLoss = CONFIG.randomWaterLoss.get();
 
             return (float) waterLoss;
+        }
+
+        public static float getRadiationReductionPercent() {
+            double reduction = CONFIG.radiationReductionPercent.get();
+
+            return (float) reduction;
         }
 
     }

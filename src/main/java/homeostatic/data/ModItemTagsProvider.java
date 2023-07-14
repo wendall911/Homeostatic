@@ -7,6 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import homeostatic.common.TagManager;
@@ -40,6 +41,24 @@ public class ModItemTagsProvider extends ItemTagsProvider {
             .addTag(ItemTags.WARPED_STEMS)
             .addOptionalTag(ModIntegration.bygLoc("embur_logs"))
             .addOptional(ModIntegration.alexLoc("cockroach_wing"));
+
+        this.tag(TagManager.Items.INSULATED_ARMOR)
+            .addOptional(ModIntegration.scubaLoc("scuba_helmet"))
+            .addOptional(ModIntegration.scubaLoc("scuba_chestplate"))
+            .addOptional(ModIntegration.scubaLoc("scuba_leggings"))
+            .addOptional(ModIntegration.scubaLoc("scuba_boots"));
+
+        this.tag(TagManager.Items.WATERPROOF_ARMOR)
+            .addOptional(ModIntegration.scubaLoc("scuba_helmet"))
+            .addOptional(ModIntegration.scubaLoc("scuba_chestplate"))
+            .addOptional(ModIntegration.scubaLoc("scuba_leggings"))
+            .addOptional(ModIntegration.scubaLoc("scuba_boots"));
+
+        this.tag(TagManager.Items.RADIATION_PROTECTED_ARMOR)
+            .add(Items.NETHERITE_HELMET)
+            .add(Items.NETHERITE_CHESTPLATE)
+            .add(Items.NETHERITE_LEGGINGS)
+            .add(Items.NETHERITE_BOOTS);
     }
 
 }

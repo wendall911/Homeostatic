@@ -24,8 +24,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
+import homeostatic.common.TagManager;
 import homeostatic.common.block.BlockRadiation;
 import homeostatic.common.block.BlockRadiationManager;
+import homeostatic.config.ConfigHandler;
 import homeostatic.util.RegistryHelper;
 import homeostatic.util.VecMath;
 
@@ -66,12 +68,11 @@ public class Environment {
             isSheltered = false;
         }
 
-        sp.getArmorSlots().forEach(armorItem -> {
-            CompoundTag tags = armorItem.getTag();
+        sp.getArmorSlots().forEach(armor -> {
+            CompoundTag tags = armor.getTag();
 
-            if (tags != null && tags.contains("radiation_protection")) {
-                // TODO: add to config
-                radiationReduction.updateAndGet(v -> (double) (v - 0.20));
+            if ((tags != null && tags.contains("radiation_protection")) || armor.is(TagManager.Items.RADIATION_PROTECTED_ARMOR)) {
+                radiationReduction.updateAndGet(v -> (double) (v - ConfigHandler.Common.getRadiationReductionPercent()));
             }
         });
 
