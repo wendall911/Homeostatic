@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+import homeostatic.common.TagManager;
+import homeostatic.config.ConfigHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -63,12 +65,11 @@ public class Environment {
             isSheltered = false;
         }
 
-        sp.getArmorSlots().forEach(armorItem -> {
-            CompoundTag tags = armorItem.getTag();
+        sp.getArmorSlots().forEach(armor -> {
+            CompoundTag tags = armor.getTag();
 
-            if (tags != null && tags.contains("radiation_protection")) {
-                // TODO: add to config
-                radiationReduction.updateAndGet(v -> (double) (v - 0.20));
+            if ((tags != null && tags.contains("radiation_protection")) || armor.is(TagManager.Items.RADIATION_PROTECTED_ARMOR)) {
+                radiationReduction.updateAndGet(v -> (double) (v - ConfigHandler.Common.getRadiationReductionPercent()));
             }
         });
 

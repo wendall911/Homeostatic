@@ -1,5 +1,6 @@
 package homeostatic.util;
 
+import homeostatic.common.TagManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -68,7 +69,7 @@ public class InsulationHelper {
         if (armorModifier != 0.0) {
             CompoundTag tags = armor.getTag();
 
-            if (tags != null && tags.contains("insulation")) {
+            if ((tags != null && tags.contains("insulation")) || armor.is(TagManager.Items.INSULATED_ARMOR)) {
                 if (isCold) {
                     modifier += 4.0;
                 }

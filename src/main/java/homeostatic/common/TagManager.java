@@ -17,6 +17,9 @@ public final class TagManager {
         public static final TagKey<Item> RADIATION_PROTECTION = create("radiation_protection");
         public static final TagKey<Item> WATERPROOF = create("waterproof");
         public static final TagKey<Item> FRUITS = createForge("fruits");
+        public static final TagKey<Item> INSULATED_ARMOR = create("insulated_armor");
+        public static final TagKey<Item> RADIATION_PROTECTED_ARMOR = create("radiation_protected_armor");
+        public static final TagKey<Item> WATERPROOF_ARMOR = create("waterproof_armor");
 
         private static TagKey<Item> create(String id) {
             return ItemTags.create(identifier(id));
