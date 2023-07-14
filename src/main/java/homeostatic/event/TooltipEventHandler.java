@@ -2,6 +2,7 @@ package homeostatic.event;
 
 import java.util.List;
 
+import homeostatic.common.TagManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -28,15 +29,15 @@ public class TooltipEventHandler {
         if (stack.getItem() instanceof ArmorItem) {
             CompoundTag tags = stack.getTag();
 
-            if (tags != null && tags.contains("insulation")) {
+            if ((tags != null && tags.contains("insulation")) || stack.is(TagManager.Items.INSULATED_ARMOR)) {
                 toolTip.add((Component.translatable("tooltip.insulation")).withStyle(ChatFormatting.GRAY));
             }
 
-            if (tags != null && tags.contains("waterproof")) {
+            if ((tags != null && tags.contains("waterproof")) || stack.is(TagManager.Items.WATERPROOF_ARMOR)) {
                 toolTip.add((Component.translatable("tooltip.waterproof")).withStyle(ChatFormatting.DARK_AQUA));
             }
 
-            if (tags != null && tags.contains("radiation_protection")) {
+            if ((tags != null && tags.contains("radiation_protection")) || stack.is(TagManager.Items.RADIATION_PROTECTED_ARMOR)) {
                 toolTip.add((Component.translatable("tooltip.radiation_protection")).withStyle(ChatFormatting.GREEN));
             }
 
