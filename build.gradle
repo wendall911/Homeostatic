@@ -26,6 +26,7 @@ buildscript {
         classpath 'se.bjurr.gitchangelog:git-changelog-gradle-plugin:1.71.8'
         classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+'
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        classpath group: 'com.modrinth.minotaur', name: 'Minotaur', version: '2.+'
     }
 }
 
@@ -35,6 +36,7 @@ apply plugin: 'se.bjurr.gitchangelog.git-changelog-gradle-plugin'
 apply plugin: 'com.matthewprenger.cursegradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'com.modrinth.minotaur'
 
 repositories {
     maven {
@@ -283,8 +285,35 @@ curseforge {
 
 tasks.curseforge.dependsOn build
 
+modrinth {
+    if (project.hasProperty('hsModrinthId')) {
+        token = project.modrinthKey
+        projectId = project.hsModrinthId
+        version = getVersion()
+        versionType = "${cf_release_type}"
+        changelog = file('build/libs/' + project.getName() + '-changelog.txt').text
+        uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
+        gameVersions = "${release_versions}".split(",") as List<String>
+        dependencies {
+			optional.project "create"
+			optional.project "ecologics"
+			optional.project "create-cafe"
+			optional.project "scuba-gear"
+			optional.project "farmers-delight"
+			optional.project "xercamod"
+			optional.project "leave-my-bars-alone"
+			optional.project "sprout"
+			optional.project "patchouli"
+			optional.project "jei"
+			optional.project "biomesyougo"
+        }
+    }
+}
+
+tasks.modrinth.dependsOn build
+
 task changelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-    file = new File('build/libs/' + project.getName() + '-' + version + '-changelog.txt');
+    file = new File('build/libs/' + project.getName() + '-changelog.txt');
     templateContent = file('files/templates/changelog.mustache').getText('UTF-8');
     fromRepo = file("$projectDir");
     toRef = "HEAD";
