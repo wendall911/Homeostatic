@@ -1,4 +1,7 @@
-// 1.19.2	2022-10-27T13:59:02.632431472	Homeostatic - Item Tags
+// 1.19.2	2023-07-13T18:48:55.290665229	Homeostatic - Item Tags
+3b2e931c061fb87e5d201a89ddfe87f0863849d5 data/homeostatic/tags/items/insulated_armor.json
 fad287807127a3bb39fbd7f1568ec410fdbf1949 data/homeostatic/tags/items/insulation.json
+1b94bea5746759a465c690884ea66a9506a55990 data/homeostatic/tags/items/radiation_protected_armor.json
 1fa9893761a2cc28fdd16c19cb58802074c25547 data/homeostatic/tags/items/radiation_protection.json
 3b0607a17d0f931bda06519eb3695d9f4c8e4827 data/homeostatic/tags/items/waterproof.json
+3b2e931c061fb87e5d201a89ddfe87f0863849d5 data/homeostatic/tags/items/waterproof_armor.json
