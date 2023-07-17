@@ -275,7 +275,10 @@ modrinth {
         projectId = project.hsModrinthId
         version = getVersion()
         versionType = "${cf_release_type}"
-        changelog = file('build/libs/' + project.getName() + '-changelog.txt').text
+        def changelogFile = 'build/libs/' + project.getName() + '-' + version + '-changelog.txt'
+        if (file(changelogFile).exists()) {
+            changelog = file(changelogFile).text
+        }
         uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
         gameVersions = "${release_versions}".split(",") as List<String>
         dependencies {
