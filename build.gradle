@@ -6,6 +6,7 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7.+'
     id 'net.darkhax.curseforgegradle' version '1.+'
     id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.71.8'
+    id 'com.modrinth.minotaur' version '2.+'
 }
 
 repositories {
@@ -268,3 +269,33 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 }
 
 tasks.curseforge.dependsOn build
+
+modrinth {
+    if (project.hasProperty('hsModrinthId')) {
+        token = project.modrinthKey
+        projectId = project.hsModrinthId
+        version = getVersion()
+        versionType = "${cf_release_type}"
+        def changelogFile = 'build/libs/' + project.getName() + '-' + version + '-changelog.txt'
+        if (file(changelogFile).exists()) {
+            changelog = file(changelogFile).text
+        }
+        uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
+        gameVersions = "${cf_versions}".split(",") as List<String>
+        dependencies {
+			optional.project "create"
+			optional.project "ecologics"
+			optional.project "create-cafe"
+			optional.project "scuba-gear"
+			optional.project "farmers-delight"
+			optional.project "xercamod"
+			optional.project "leave-my-bars-alone"
+			optional.project "sprout"
+			optional.project "patchouli"
+			optional.project "jei"
+			optional.project "biomesyougo"
+        }
+    }
+}
+
+tasks.modrinth.dependsOn build
