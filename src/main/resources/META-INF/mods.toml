@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="${loader_version}"
+loaderVersion="${loader_version_range}"
 issueTrackerURL="https://github.com/wendall911/Homeostatic/issues"
 license="MIT"
 
