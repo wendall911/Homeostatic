@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="${loader_version}"
+loaderVersion="${loader_version_range}"
 issueTrackerURL="https://github.com/wendall911/Homeostatic/issues"
 license="MIT"
 
@@ -24,6 +24,6 @@ license="MIT"
 [[dependencies.homeostatic]]
     modId="minecraft"
     mandatory=true
-    versionRange="${minecraft_version}"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"

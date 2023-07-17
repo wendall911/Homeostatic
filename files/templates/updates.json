@@ -1,7 +1,7 @@
 {
   "homepage": "https://minecraft.curseforge.com/projects/homeostatic",
   "promos": {
-    "1.18.2-latest": "1.18.2-${mod_version}",
-    "1.18.2-recommended": "1.18.2-${mod_version}"
+    "1.18.2-latest": "${version}",
+    "1.18.2-recommended": "${version}"
   }
 }
