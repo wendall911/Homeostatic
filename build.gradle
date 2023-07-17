@@ -1,42 +1,13 @@
-buildscript {
-    repositories {
-        maven {
-            name = 'gradle plugins'
-            url "https://plugins.gradle.org/m2/"
-        }
-        maven {
-            name = 'forge'
-            url = 'https://files.minecraftforge.net/maven'
-        }
-        maven {
-            name = 'parchment'
-            url = 'https://maven.parchmentmc.org'
-        }
-        maven {
-            url "https://repo.spongepowered.org/repository/maven-public/"
-            content {
-                includeGroup "org.spongepowered"
-            }
-        }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
-        classpath 'se.bjurr.gitchangelog:git-changelog-gradle-plugin:1.71.8'
-        classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+'
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-        classpath group: 'com.modrinth.minotaur', name: 'Minotaur', version: '2.+'
-    }
+plugins {
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
+    id 'net.darkhax.curseforgegradle' version '1.+'
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.71.8'
+    id 'com.modrinth.minotaur' version '2.+'
 }
-
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'maven-publish'
-apply plugin: 'se.bjurr.gitchangelog.git-changelog-gradle-plugin'
-apply plugin: 'com.matthewprenger.cursegradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'com.modrinth.minotaur'
 
 repositories {
     maven {
@@ -55,6 +26,10 @@ repositories {
         // Patchouli && Provider
         name = "Blame Jared"
         url = "https://maven.blamejared.com"
+    }
+    maven {
+        name = "Geckolib"
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
     }
 }
 
@@ -106,6 +81,12 @@ minecraft {
         }
 
     }    
+}
+
+mixin {
+    add sourceSets.main, "${modid}.refmap.json"
+
+    config "${modid}.mixins.json"
 }
 
 sourceSets.main.resources {
@@ -170,41 +151,20 @@ jar {
     }
 }
 
-mixin {
-    add sourceSets.main, "${modid}.refmap.json"
-}
-
-def replaceResources = tasks.register("replaceResources", Copy) {
-    it.outputs.upToDateWhen {
-        false
-    }
-
-    it.from(sourceSets.main.resources) {
-        include "META-INF/mods.toml"
-        expand 'version': version, 'minecraft_version_range': minecraft_version_range, 'forge_version_range': forge_version_range, "loader_version": loader_version
-    }
-    it.into "$buildDir/resources/main/"
-}
-
-def updates = tasks.register("generateUpdates", Copy) {
-    it.outputs.upToDateWhen {
-        false
-    }
-
-    it.from("./files/templates/") {
-        include 'updates.json'
-        expand 'version': version
-    }
-
-    it.into 'files/'
-}
+def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta', '*.mixins.json']
+def replaceProperties = [ 'version': version,
+    'minecraft_version_range': minecraft_version_range,
+    'forge_version_range': forge_version_range,
+    "loader_version_range": loader_version_range
+]
 
 processResources {
     duplicatesStrategy(DuplicatesStrategy.FAIL)
-    exclude('META-INF/mods.toml')
-    configure {
-        finalizedBy(replaceResources)
-        finalizedBy(updates)
+    inputs.properties replaceProperties
+    replaceProperties.put 'project', project
+
+    filesMatching(resourceTargets) {
+        expand replaceProperties
     }
 }
 
@@ -229,98 +189,28 @@ publishing {
     }
 }
 
-curseforge {
-    if (project.hasProperty('hscurseApiKey')) {
-        apiKey = project.hscurseApiKey
-        project {
-            id = project.hscurseId
-            changelog = file('build/libs/' + project.getName() + '-' + version + '-changelog.txt')
-            releaseType = cf_release_type
-            addGameVersion('Forge')
-            "${cf_versions}".split(',').each {
-                addGameVersion "${it}"
-            }
-            mainArtifact(jar) {
-                relations {
-                    optionalLibrary 'configured'
-                    optionalLibrary 'catalogue'
-                    optionalLibrary 'jei'
-                    optionalLibrary 'simpletextoverlay'
-                    optionalLibrary 'serene-seasons'
-                    optionalLibrary 'biomes-o-plenty'
-                    optionalLibrary 'oh-the-biomes-youll-go'
-                    optionalLibrary 'croptopia'
-                    optionalLibrary 'farmers-delight'
-                    optionalLibrary 'xercamod'
-                    optionalLibrary 'kitteh6660s-morecraft'
-                    optionalLibrary 'sophisticated-backpacks'
-                    optionalLibrary 'ecologics'
-                    optionalLibrary 'ars-nouveau'
-                    optionalLibrary 'sprout'
-                    optionalLibrary 'create-cafe'
-                    optionalLibrary 'fruit-trees'
-                    optionalLibrary 'leave-my-bars-alone'
-                    optionalLibrary 'create'
-                    optionalLibrary 'patchouli'
-                    optionalLibrary 'scuba-gear'
-                }
-            }
-        }
+def updates = tasks.register("generateUpdates", Copy) {
+    it.outputs.upToDateWhen {
+        false
     }
-}
 
-tasks.curseforge.dependsOn build
-
-modrinth {
-    if (project.hasProperty('hsModrinthId')) {
-        token = project.modrinthKey
-        projectId = project.hsModrinthId
-        version = getVersion()
-        versionType = "${cf_release_type}"
-        changelog = file('build/libs/' + project.getName() + '-changelog.txt').text
-        uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
-        gameVersions = "${release_versions}".split(",") as List<String>
-        dependencies {
-			optional.project "create"
-			optional.project "ecologics"
-			optional.project "create-cafe"
-			optional.project "scuba-gear"
-			optional.project "farmers-delight"
-			optional.project "xercamod"
-			optional.project "leave-my-bars-alone"
-			optional.project "sprout"
-			optional.project "patchouli"
-			optional.project "jei"
-			optional.project "biomesyougo"
-        }
+    it.from("./files/templates/") {
+        include 'updates.json'
+        expand 'version': version
     }
-}
 
-tasks.modrinth.dependsOn build
+    it.into 'files/'
+}
 
 task changelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-    file = new File('build/libs/' + project.getName() + '-changelog.txt');
+    file = new File('build/libs/' + project.getName() + '-' + version + '-changelog.txt');
     templateContent = file('files/templates/changelog.mustache').getText('UTF-8');
     fromRepo = file("$projectDir");
     toRef = "HEAD";
     fromRef = "${last_mod_version}";
 }
 
-tasks.build.dependsOn('changelog')
-
-task sourcesJar(type: Jar) {
-    from sourceSets.main.allJava
-    from (sourceSets.main.output) {
-        include 'LICENSE'
-    }
-
-    classifier = 'src'
-}
-
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'deobf'
-}
+tasks.build.dependsOn('changelog', 'generateUpdates')
 
 // Jar Signing
 import net.minecraftforge.gradle.common.tasks.SignJar
@@ -340,3 +230,67 @@ task signJar(type: SignJar, dependsOn: jar) {
     inputFile = jar.archiveFile
     outputFile = jar.archiveFile
 }
+
+task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+    if (project.hasProperty('hscurseApiKey')) {
+        apiToken = project.hscurseApiKey
+        def mainFile = upload(project.hscurseId, file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
+        mainFile.changelog = file('build/libs/' + project.getName() + '-' + version + '-changelog.txt')
+        mainFile.addJavaVersion('Java 17')
+        mainFile.addModLoader('Forge')
+        mainFile.releaseType = "${cf_release_type}"
+        "${cf_versions}".split(',').each {
+            mainFile.addGameVersion("${it}")
+        }
+        mainFile.addOptional('configured')
+        mainFile.addOptional('catalogue')
+        mainFile.addOptional('jei')
+        mainFile.addOptional('simpletextoverlay')
+        mainFile.addOptional('serene-seasons')
+        mainFile.addOptional('biomes-o-plenty')
+        mainFile.addOptional('oh-the-biomes-youll-go')
+        mainFile.addOptional('croptopia')
+        mainFile.addOptional('farmers-delight')
+        mainFile.addOptional('xercamod')
+        mainFile.addOptional('kitteh6660s-morecraft')
+        mainFile.addOptional('sophisticated-backpacks')
+        mainFile.addOptional('ecologics')
+        mainFile.addOptional('ars-nouveau')
+        mainFile.addOptional('sprout')
+        mainFile.addOptional('create-cafe')
+        mainFile.addOptional('fruit-trees')
+        mainFile.addOptional('leave-my-bars-alone')
+        mainFile.addOptional('create')
+        mainFile.addOptional('patchouli')
+        mainFile.addOptional('scuba-gear')
+    }
+}
+
+tasks.curseforge.dependsOn build
+
+modrinth {
+    if (project.hasProperty('hsModrinthId')) {
+        token = project.modrinthKey
+        projectId = project.hsModrinthId
+        version = getVersion()
+        versionType = "${cf_release_type}"
+        changelog = file('build/libs/' + project.getName() + '-changelog.txt').text
+        uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
+        gameVersions = "${cf_versions}".split(",") as List<String>
+        dependencies {
+			optional.project "create"
+			optional.project "ecologics"
+			optional.project "create-cafe"
+			optional.project "scuba-gear"
+			optional.project "farmers-delight"
+			optional.project "xercamod"
+			optional.project "leave-my-bars-alone"
+			optional.project "sprout"
+			optional.project "patchouli"
+			optional.project "jei"
+			optional.project "biomesyougo"
+        }
+    }
+}
+
+tasks.modrinth.dependsOn build
