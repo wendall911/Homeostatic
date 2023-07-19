@@ -544,6 +544,15 @@ public class DrinkableItemsProvider implements DataProvider {
         add(ModIntegration.ftLoc("honey_pomelo_tea"), 6, 0.9F,  0, 0, 0.0F);
         add(ModIntegration.ftLoc("rice_with_fruits"), 6, 0.9F,  0, 0, 0.0F);
         addMeal(ModIntegration.ftLoc("lemon_roast_chicken"));
+
+        // Kobolds
+        addDrink(ModIntegration.koboldsLoc("kobold_potion_health"));
+        addDrink(ModIntegration.koboldsLoc("kobold_potion_fire"));
+        addDrink(ModIntegration.koboldsLoc("kobold_potion_combat"));
+        addDrink(ModIntegration.koboldsLoc("kobold_potion_water"));
+        addDrink(ModIntegration.koboldsLoc("kobold_potion_leaping"));
+        addDrink(ModIntegration.koboldsLoc("kobold_potion_levitation"));
+        addDrink(ModIntegration.koboldsLoc("kobold_potion_mining"));
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
