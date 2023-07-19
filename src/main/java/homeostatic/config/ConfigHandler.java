@@ -267,7 +267,7 @@ public final class ConfigHandler {
 
             randomWaterLoss = builder
                 .comment("Water loss speed when not sweating. Increase to make water loss more prevalent.")
-                .defineInRange("randomWaterLoss", 0.05, 0.01, 1.0);
+                .defineInRange("randomWaterLoss", 0.15, 0.01, 1.0);
 
             radiationReductionPercent = builder
                 .comment("Percentage of radiation reduced when 'Radiation Protection' is added to an armor piece. For example, 0.25 with four pieces will be 100%. 1.0 will be 100% for one piece. Default gives 80% for four pieces.")
