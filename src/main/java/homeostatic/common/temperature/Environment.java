@@ -129,7 +129,7 @@ public class Environment {
                                 hasRadiation = state.getValue(BlockStateProperties.LIT);
                             }
 
-                            if (hasRadiation && Objects.requireNonNull(state.getBlock().getRegistryName()).getPath().contains("campfire")) {
+                            if (hasRadiation && Objects.requireNonNull(state.getBlock().toString()).contains("campfire")) {
                                 for (int i = 1; i <= 5; i++) {
                                     if (hasRadiation && world.getBlockState(blockpos.above(i)).is(BlockTags.BEEHIVES)) {
                                         hasRadiation = false;
