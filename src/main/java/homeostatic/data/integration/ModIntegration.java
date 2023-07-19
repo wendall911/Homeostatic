@@ -19,6 +19,8 @@ public class ModIntegration {
     public static final String PATCHOULI_MODID = "patchouli";
     public static final String SPROUT_MODID = "sprout";
     public static final String XERCA_MODID = "xercamod";
+    public static final String SCUBA_GEAR_MODID = "scuba_gear";
+    public static final String KOBOLDS_MODID = "kobolds";
 
     public static ResourceLocation alexLoc(String path) {
         return new ResourceLocation(ALEX_MODID, path);
@@ -72,4 +74,11 @@ public class ModIntegration {
         return new ResourceLocation(XERCA_MODID, path);
     }
 
+    public static ResourceLocation scubaLoc(String path) {
+        return new ResourceLocation(SCUBA_GEAR_MODID, path);
+    }
+
+    public static ResourceLocation koboldsLoc(String path) {
+        return new ResourceLocation(KOBOLDS_MODID, path);
+    }
 }
