@@ -1,4 +1,4 @@
-// 1.19.2	2022-10-07T09:01:44.06000839	Homeostatic - Drinkable Items
+// 1.19.2	2023-07-18T18:27:23.034212023	Homeostatic - Drinkable Items
 dd31e2162505e7f74edc09619424947b86771a4b data/ars_nouveau/environment/drinkable/source_berry.json
 f39e9c3ba761a2e69111a35e7b18329de92c80b9 data/ars_nouveau/environment/drinkable/source_berry_pie.json
 0fd136bf3723eca9a1a53a333495ab3f6169df05 data/ars_nouveau/environment/drinkable/source_berry_roll.json
@@ -229,6 +229,14 @@ d4eb680932f5e3a389d620dbfc1532f9e50a0776 data/farmersdelight/environment/drinkab
 06681f1dc8e46d96d0655f79cfdd122b4c9c898c data/fruittrees/environment/drinkable/honey_pomelo_tea.json
 eb87df31d8fa2a46cd3b209d839c8e527f5414ab data/fruittrees/environment/drinkable/lemon_roast_chicken.json
 fa0564aab191cf6bfc0c091b1c035ac9e3969a91 data/fruittrees/environment/drinkable/rice_with_fruits.json
+83387d6ed9883905a9f2f4a3e13cadaa07a11675 data/kobolds/environment/drinkable/kobold_potion_combat.json
+02f27b140c345f754145a571dc0cde4cc7a8506c data/kobolds/environment/drinkable/kobold_potion_fire.json
+17faa1c37d4b1e300735b716cf6d90db4b3f9115 data/kobolds/environment/drinkable/kobold_potion_health.json
+5e33dfe9370af43d9b7279615cbd7b450b2c7469 data/kobolds/environment/drinkable/kobold_potion_leaping.json
+35c0c995d327ad39511ca5da2b64e490ed668e32 data/kobolds/environment/drinkable/kobold_potion_levitation.json
+a579fa7073649c6832772fdd77b6533b1c836cb7 data/kobolds/environment/drinkable/kobold_potion_mining.json
+397a024d45ade2adc9649f934c27424b1d35e335 data/kobolds/environment/drinkable/kobold_potion_stealth.json
+b6ba9768701192a6a67973f1453826047e451b64 data/kobolds/environment/drinkable/kobold_potion_water.json
 20e2e34483010348879afa4193428f9a0ca9e176 data/minecraft/environment/drinkable/apple.json
 6437e808d9849b0f13d6ee910f70402d86eeae60 data/minecraft/environment/drinkable/baked_potato.json
 fad2db1f9aaa41128111609f91010273cf0c5049 data/minecraft/environment/drinkable/beetroot.json
