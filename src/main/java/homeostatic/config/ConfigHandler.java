@@ -266,7 +266,7 @@ public final class ConfigHandler {
 
             randomWaterLoss = builder
                 .comment("Water loss speed when not sweating. Increase to make water loss more prevalent.")
-                .defineInRange("randomWaterLoss", 0.05, 0.01, 1.0);
+                .defineInRange("randomWaterLoss", 0.15, 0.01, 1.0);
 
         }
 
