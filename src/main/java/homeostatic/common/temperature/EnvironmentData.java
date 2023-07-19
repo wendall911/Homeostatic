@@ -29,7 +29,6 @@ import net.minecraftforge.fml.ModList;
 import sereneseasons.api.season.SeasonHelper;
 import sereneseasons.config.BiomeConfig;
 
-import homeostatic.Homeostatic;
 import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.util.TempHelper;
 
@@ -188,7 +187,7 @@ public class EnvironmentData {
     private static double getBiomeHumidity(ServerLevel world, Holder<Biome> biome) {
         LevelData info = world.getLevelData();
         ServerLevelAccessor serverLevel = (ServerLevelAccessor) world;
-        ServerLevelData serverInfo = serverLevel.getServerLevelData();
+        ServerLevelData serverInfo = serverLevel.homeostatic$getServerLevelData();
         double biomeHumidity;
         double maxRH = getMaxBiomeHumidity(biome);
         double minRH = maxRH - 20;
