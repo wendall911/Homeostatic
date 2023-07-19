@@ -2,6 +2,7 @@ package homeostatic.common.temperature;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.joml.Vector3d;
@@ -12,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.state.BlockState;
@@ -125,6 +127,14 @@ public class Environment {
 
                             if (state.hasProperty(BlockStateProperties.LIT)) {
                                 hasRadiation = state.getValue(BlockStateProperties.LIT);
+                            }
+
+                            if (hasRadiation && Objects.requireNonNull(state.getBlock().getRegistryName()).getPath().contains("campfire")) {
+                                for (int i = 1; i <= 5; i++) {
+                                    if (hasRadiation && world.getBlockState(blockpos.above(i)).is(BlockTags.BEEHIVES)) {
+                                        hasRadiation = false;
+                                    }
+                                }
                             }
 
                             if (hasRadiation) {
