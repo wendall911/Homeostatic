@@ -26,6 +26,6 @@ public interface RecipeProviderAccessor {
     }
 
     @Invoker("saveAdvancement")
-    void callSaveRecipeAdvancement(HashCache cache, JsonObject json, Path path);
+    void homeostatic$saveAdvancement(HashCache cache, JsonObject json, Path path);
 
 }

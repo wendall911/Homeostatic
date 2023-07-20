@@ -57,7 +57,7 @@ public abstract class RecipeProviderBase implements DataProvider {
     protected abstract void registerRecipes(Consumer<FinishedRecipe> consumer);
 
     public static void saveRecipeAdvancement(DataGenerator gen, HashCache cache, JsonObject json, Path path) {
-        ((RecipeProviderAccessor) new RecipeProvider(gen)).callSaveRecipeAdvancement(cache, json, path);
+        ((RecipeProviderAccessor) new RecipeProvider(gen)).homeostatic$saveAdvancement(cache, json, path);
     }
 
     protected static void specialRecipe(Consumer<FinishedRecipe> consumer, SimpleRecipeSerializer<?> serializer) {
