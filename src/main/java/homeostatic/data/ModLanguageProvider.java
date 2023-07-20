@@ -14,6 +14,7 @@ public class ModLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        add("itemGroup.homeostatic.items", "Homeostatic");
         addAttack("hyperthermia", "Hyperthermia has claimed poor %1$s");
         addAttack("hyperthermia.player", "Hyperthermia has claimed poor %1$s whilst fighting %2$s");
         addAttack("heat", "%1$s died of scalding");
