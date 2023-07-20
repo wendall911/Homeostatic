@@ -65,6 +65,7 @@
   "item.homeostatic.purified_water_bucket": "Purified Water Bucket",
   "item.homeostatic.thermometer": "Thermometer",
   "item.homeostatic.water_filter": "Water Filter",
+  "itemGroup.homeostatic.items": "Homeostatic",
   "tooltip.insulation": "Insulation",
   "tooltip.radiation_protection": "Radiation Protection",
   "tooltip.thermometer": "Thermovision",
