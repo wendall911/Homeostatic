@@ -22,7 +22,6 @@ import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 
@@ -74,7 +73,7 @@ public abstract class RecipeProviderBase implements DataProvider {
     protected abstract void registerRecipes(Consumer<FinishedRecipe> consumer);
 
     public static void saveRecipeAdvancement(DataGenerator gen, CachedOutput cache, JsonObject json, Path path) {
-        ((RecipeProviderAccessor) new RecipeProvider(gen)).callSaveRecipeAdvancement(cache, json, path);
+        ((RecipeProviderAccessor) new RecipeProvider(gen)).homeostatic$saveAdvancement(cache, json, path);
     }
 
     public static InventoryChangeTrigger.TriggerInstance conditionsFromItem(ItemLike item) {
