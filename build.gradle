@@ -241,8 +241,8 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.changelog = file('build/libs/' + project.getName() + '-' + version + '-changelog.txt')
         mainFile.addJavaVersion('Java 17')
         mainFile.addModLoader('Forge')
-        mainFile.releaseType = "${cf_release_type}"
-        "${cf_versions}".split(',').each {
+        mainFile.releaseType = "${release_type}"
+        "${release_versions}".split(',').each {
             mainFile.addGameVersion("${it}")
         }
         mainFile.addOptional('configured')
@@ -277,13 +277,13 @@ modrinth {
         token = project.modrinthKey
         projectId = project.hsModrinthId
         version = getVersion()
-        versionType = "${cf_release_type}"
+        versionType = "${release_type}"
         def changelogFile = 'build/libs/' + project.getName() + '-' + version + '-changelog.txt'
         if (file(changelogFile).exists()) {
             changelog = file(changelogFile).text
         }
         uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
-        gameVersions = "${cf_versions}".split(",") as List<String>
+        gameVersions = "${release_versions}".split(",") as List<String>
         dependencies {
 			optional.project "create"
 			optional.project "ecologics"
