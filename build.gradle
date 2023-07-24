@@ -132,8 +132,9 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:create_cafe-542235:???")
         //runtimeOnly fg.deobf("curse.maven:kiwi-303657:???")
         //runtimeOnly fg.deobf("curse.maven:fruittrees-355467:???")
-        //runtimeOnly fg.deobf("curse.maven:puzzleslib-495476:4582313")
-        //runtimeOnly fg.deobf("curse.maven:leavemybarsalone-281715:4555067")
+        //runtimeOnly fg.deobf("curse.maven:appleskin-248787:4605078")
+        //runtimeOnly fg.deobf("curse.maven:puzzleslib-495476:4660882")
+        //runtimeOnly fg.deobf("curse.maven:leavemybarsalone-281715:4613509")
         //runtimeOnly fg.deobf("curse.maven:scuba_gear-399090:4593711")
         //runtimeOnly fg.deobf("curse.maven:kobolds-484967:4632499")
     }
