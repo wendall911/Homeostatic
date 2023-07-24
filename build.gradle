@@ -268,8 +268,6 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     }
 }
 
-tasks.curseforge.dependsOn build
-
 modrinth {
     if (project.hasProperty('hsModrinthId')) {
         token = project.modrinthKey
@@ -298,5 +296,3 @@ modrinth {
         }
     }
 }
-
-tasks.modrinth.dependsOn build
