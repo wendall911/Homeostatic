@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -81,10 +82,10 @@ public class GameOverlayEventHandler {
 
     public void onRegisterOverlays(RegisterGuiOverlaysEvent event) {
         event.registerAboveAll("overlay", INSTANCE.OVERLAY);
-        event.registerAboveAll("water_level", INSTANCE.WATER_LEVEL_OVERLAY);
-        event.registerAboveAll("temperature", INSTANCE.TEMPERATURE_OVERLAY);
+        event.registerAbove(VanillaGuiOverlay.MOUNT_HEALTH.id(), "water_level", INSTANCE.WATER_LEVEL_OVERLAY);
+        event.registerAbove(VanillaGuiOverlay.MOUNT_HEALTH.id(), "temperature", INSTANCE.TEMPERATURE_OVERLAY);
         event.registerBelowAll("visuals", INSTANCE.ENHANCED_VISUALS_OVERLAY);
-        event.registerAboveAll("hydration", INSTANCE.HYDRATION_OVERLAY);
+        event.registerAbove(Homeostatic.loc("water_level"), "hydration", INSTANCE.HYDRATION_OVERLAY);
     }
 
 }
