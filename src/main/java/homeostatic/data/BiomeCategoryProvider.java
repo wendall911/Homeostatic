@@ -161,7 +161,7 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.bopLoc("lush_desert"), BiomeCategory.Type.LUSH_DESERT);
         add(ModIntegration.bopLoc("lush_savanna"), BiomeCategory.Type.LUSH_DESERT);
         add(ModIntegration.bopLoc("mediterranean_forest"), BiomeCategory.Type.LUSH_DESERT);
-        add(ModIntegration.bopLoc("wooded_wasteland"), BiomeCategory.Type.MESA);
+        add(ModIntegration.bopLoc("wasteland_steppe"), BiomeCategory.Type.MESA);
 
         // Oh The Biomes You'll Go
         add(ModIntegration.bygLoc("allium_fields"), BiomeCategory.Type.PLAINS);
