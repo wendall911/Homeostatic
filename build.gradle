@@ -116,6 +116,7 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:byg-247560:${byg_version}")
         //runtimeOnly fg.deobf("curse.maven:corgilib-693313:${corgilib_version}")
         //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
+        //runtimeOnly fg.deobf("curse.maven:twilightforest-227639:${twilightforest_version}")
         //runtimeOnly fg.deobf("curse.maven:botania-225643:???")
         //runtimeOnly fg.deobf("curse.maven:curios-309927:4583413")
         //runtimeOnly fg.deobf("curse.maven:croptopia-415438:4512807")
