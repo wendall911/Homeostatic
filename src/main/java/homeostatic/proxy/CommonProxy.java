@@ -1,10 +1,9 @@
 package homeostatic.proxy;
 
-import biomesoplenty.api.biome.BOPBiomes;
-
 import java.util.Map;
 import java.util.function.Consumer;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -16,17 +15,16 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 
-import potionstudios.byg.common.world.biome.BYGBiomes;
-import potionstudios.byg.reg.RegistryObject;
-
 import homeostatic.config.ConfigHandler;
+import homeostatic.common.biome.BiomeCategory;
+import homeostatic.common.biome.BiomeCategoryManager;
+import homeostatic.common.biome.BiomeData;
 import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.block.HomeostaticBlocks;
@@ -80,23 +78,18 @@ public class CommonProxy {
         for (Map.Entry<ResourceKey<Biome>, Biome> entry : biomeRegistry.entrySet()) {
             ResourceKey<Biome> biomeResourceKey = entry.getKey();
             ResourceLocation biomeName = biomeResourceKey.location();
-            Biome biome = entry.getValue();
 
             Consumer<String> error = x -> Homeostatic.LOGGER.error("error getting holder for %s", biomeName);
-            BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.getBiomeCategory(biomeRegistry.getOrCreateHolder(biomeResourceKey).getOrThrow(false, error));
+            Holder<Biome> biomeHolder = biomeRegistry.getOrCreateHolder(biomeResourceKey).getOrThrow(false, error);
+            BiomeCategory.Type biomeCategory = BiomeCategoryManager.getBiomeCategory(biomeHolder);
+            BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
 
             if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
-                if (biomeCategory != BiomeRegistry.BiomeCategory.MISSING) {
+                if (biomeCategory == BiomeCategory.Type.MISSING) {
                     Homeostatic.LOGGER.warn("Missing biome in registry, will set to neutral temperature for: %s", biomeName);
                 }
-                Homeostatic.LOGGER.debug(
-                    "Biome: " + biomeName
-                        + "\npreciptitation=" + biome.getPrecipitation()
-                        + "\ntemperature=" + biome.getBaseTemperature()
-                        + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
-                        + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
-                        + "\nbiomeCategory=" + biomeCategory
-                );
+                Homeostatic.LOGGER.debug("Biome: " + biomeName + "\nbiomeCategory=" + biomeCategory);
+                Homeostatic.LOGGER.debug(biomeData);
             }
         }
     }

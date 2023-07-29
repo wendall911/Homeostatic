@@ -10,10 +10,10 @@ import net.minecraftforge.fml.common.Mod;
 import homeostatic.data.integration.create.FillingRecipeProvider;
 import homeostatic.data.integration.create.MixingRecipeProvider;
 import homeostatic.data.integration.patchouli.ModBookProvider;
-import homeostatic.Homeostatic;
-
 import homeostatic.data.recipe.ModRecipesProvider;
 import homeostatic.data.recipe.SpecialRecipeProvider;
+import homeostatic.Homeostatic;
+
 
 @Mod.EventBusSubscriber(modid = Homeostatic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class DataGenerators {
@@ -35,6 +35,7 @@ public final class DataGenerators {
         gen.addProvider(true, new RadiationBlocksProvider(gen, Homeostatic.MODID));
         gen.addProvider(true, new DrinkingFluidsProvider(gen, Homeostatic.MODID));
         gen.addProvider(true, new DrinkableItemsProvider(gen, Homeostatic.MODID));
+        gen.addProvider(true, new BiomeCategoryProvider(gen, Homeostatic.MODID));
         gen.addProvider(true, new MixingRecipeProvider(gen));
         gen.addProvider(true, new FillingRecipeProvider(gen));
         gen.addProvider(true, new ModBookProvider(gen));
