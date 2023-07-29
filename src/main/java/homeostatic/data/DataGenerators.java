@@ -34,6 +34,7 @@ public final class DataGenerators {
         gen.addProvider(event.includeServer(), new RadiationBlocksProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new DrinkingFluidsProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new DrinkableItemsProvider(gen.getPackOutput()));
+        gen.addProvider(event.includeServer(), new BiomeCategoryProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new MixingRecipeProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new FillingRecipeProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new ModBookProvider(gen.getPackOutput()));
