@@ -34,6 +34,7 @@ public final class DataGenerators {
         gen.addProvider(event.includeServer(), new RadiationBlocksProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new DrinkingFluidsProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new DrinkableItemsProvider(gen.getPackOutput()));
+        gen.addProvider(event.includeServer(), new BiomeCategoryProvider(gen.getPackOutput()));
         // TODO Add for Create 1.19.3/4 once released
         /*
         gen.addProvider(event.includeServer(), new MixingRecipeProvider(gen.getPackOutput()));

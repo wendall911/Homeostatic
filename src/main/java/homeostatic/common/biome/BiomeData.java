@@ -21,27 +21,6 @@ public class BiomeData {
         this.temperature = temperature;
     }
 
-    public float getTemperature(Biome.TemperatureModifier temperatureModifier, Biome.Precipitation precipitation) {
-        float temperature = this.temperature;
-
-        if (temperatureModifier == Biome.TemperatureModifier.FROZEN) {
-            temperature += FROZEN_OFFSET;
-        } else if (precipitation == Biome.Precipitation.SNOW) {
-            temperature += SNOW_OFFSET;
-        }
-
-        return temperature;
-    }
-
-    public Biome.Precipitation getPrecipitation(Float temperature, Biome.Precipitation precipitation) {
-        // Fix for BOP SNOWY_CONIFEROUS_FOREST
-        if (temperature == -0.25F && precipitation == Biome.Precipitation.RAIN) {
-            return Biome.Precipitation.SNOW;
-        }
-
-        return precipitation;
-    }
-
     public float getRawTemperature() {
         return this.temperature;
     }

@@ -2,6 +2,7 @@ package homeostatic.proxy;
 
 import java.util.Map;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -25,6 +26,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 
 import homeostatic.config.ConfigHandler;
+import homeostatic.common.biome.BiomeCategory;
+import homeostatic.common.biome.BiomeCategoryManager;
+import homeostatic.common.biome.BiomeData;
 import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.common.effect.HomeostaticEffects;
@@ -106,21 +110,17 @@ public class CommonProxy {
         for (Map.Entry<ResourceKey<Biome>, Biome> entry : biomeRegistry.entrySet()) {
             ResourceKey<Biome> biomeResourceKey = entry.getKey();
             ResourceLocation biomeName = biomeResourceKey.location();
-            Biome biome = entry.getValue();
-            BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.getBiomeCategory(biomeRegistry.getHolderOrThrow(biomeResourceKey));
+            Holder<Biome> biomeHolder = biomeRegistry.getHolderOrThrow(biomeResourceKey);
+            BiomeCategory.Type biomeCategory = BiomeCategoryManager.getBiomeCategory(biomeHolder);
+            BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
 
             if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
-                if (biomeCategory != BiomeRegistry.BiomeCategory.MISSING) {
+                if (biomeCategory == BiomeCategory.Type.MISSING) {
                     Homeostatic.LOGGER.warn("Missing biome in registry, will set to neutral temperature for: %s", biomeName);
                 }
-                Homeostatic.LOGGER.debug(
-                        "Biome: " + biomeName
-                                + "\npreciptitation=" + BiomeHelper.getPrecipitation(biome.getModifiedClimateSettings())
-                                + "\ntemperature=" + biome.getBaseTemperature()
-                                + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
-                                + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
-                                + "\nbiomeCategory=" + biomeCategory
-                );
+
+                Homeostatic.LOGGER.debug("Biome: " + biomeName + "\nbiomeCategory=" + biomeCategory);
+                Homeostatic.LOGGER.debug(biomeData);
             }
         }
     }
