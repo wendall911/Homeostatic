@@ -1,4 +1,4 @@
-// 1.19.4	2023-07-29T14:57:57.734231736	Homeostatic - Biome Categories
+// 1.19.4	2023-07-29T15:16:06.443968295	Homeostatic - Biome Categories
 49e8f13ff180dab1d20ff265a4d698023239797b data/biomesoplenty/environment/biome_category/auroral_garden.json
 c6510765962f0062c2fb6175dc1e87c5d1053b30 data/biomesoplenty/environment/biome_category/bamboo_grove.json
 d5969a2741e65a41b3073b91ae8843245bc1b780 data/biomesoplenty/environment/biome_category/bayou.json
@@ -61,10 +61,10 @@ a40f4ca70fb1fb3e89a810b980a0c71d473b2330 data/biomesoplenty/environment/biome_ca
 6ed7f0930cfa0cd7e79939fd4e4cc861c8fddaee data/biomesoplenty/environment/biome_category/volcanic_plains.json
 d6bd2400086f3bd3ee75b820b9c997f0048e2a9d data/biomesoplenty/environment/biome_category/volcano.json
 d3de4675184382ebd3af905f695ee973130b665b data/biomesoplenty/environment/biome_category/wasteland.json
+43e6e74c1fac606ba9f8f13e9f0f76d4bc4d3cd1 data/biomesoplenty/environment/biome_category/wasteland_steppe.json
 9df136f71426eed2bb7a2079ec55a5cdc1004a47 data/biomesoplenty/environment/biome_category/wetland.json
 832bcd95ba75d3cacac8a5f74fcba036e8e2ad7d data/biomesoplenty/environment/biome_category/withered_abyss.json
 48dbb143c7ab4ac95e3e646ff8ec2fa63923b050 data/biomesoplenty/environment/biome_category/wooded_scrubland.json
-eb1f12335e0d29e17a512432c688fa36eb5f3a0a data/biomesoplenty/environment/biome_category/wooded_wasteland.json
 a08734704cfb8f7951f36f2f4cc58d316ca5796f data/biomesoplenty/environment/biome_category/woodland.json
 7126d221279efdf8e75255147a2f3be0c7996489 data/byg/environment/biome_category/allium_fields.json
 97dfa6946391be97dee770a4d3c2ce348c5a3e0e data/byg/environment/biome_category/amaranth_fields.json
