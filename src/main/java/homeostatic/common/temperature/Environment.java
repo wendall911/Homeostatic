@@ -120,7 +120,7 @@ public class Environment {
 
                     // Only check up to three blocks up, and ignore radiation if fire resistance is active.
                     if (y <= 3 && effectInstance == null) {
-                        BlockRadiation blockRadiation = BlockRadiationManager.RADIATION_BLOCKS.get(RegistryHelper.getRegistry(Registries.BLOCK).getKey(state.getBlock()));
+                        BlockRadiation blockRadiation = BlockRadiationManager.getBlockRadiation(state.getBlock());
 
                         if (blockRadiation != null) {
                             boolean hasRadiation = true;
