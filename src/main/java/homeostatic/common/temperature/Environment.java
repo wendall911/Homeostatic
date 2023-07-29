@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
-import homeostatic.common.TagManager;
-import homeostatic.config.ConfigHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -30,6 +28,8 @@ import net.minecraft.world.phys.Vec3;
 
 import homeostatic.common.block.BlockRadiation;
 import homeostatic.common.block.BlockRadiationManager;
+import homeostatic.common.TagManager;
+import homeostatic.config.ConfigHandler;
 import homeostatic.util.VecMath;
 
 public class Environment {
@@ -118,7 +118,7 @@ public class Environment {
 
                     // Only check up to three blocks up, and ignore radiation if fire resistance is active.
                     if (y <= 3 && effectInstance == null) {
-                        BlockRadiation blockRadiation = BlockRadiationManager.RADIATION_BLOCKS.get(Registry.BLOCK.getKey(state.getBlock()));
+                        BlockRadiation blockRadiation = BlockRadiationManager.getBlockRadiation(state.getBlock());
 
                         if (blockRadiation != null) {
                             boolean hasRadiation = true;
