@@ -34,7 +34,7 @@ repositories {
 }
 
 group = 'com.github.wendall911.homeostatic'
-version = "${minecraft_short_version}+-${mod_version}"
+version = "${minecraft_version}-${mod_version}"
 archivesBaseName = "${mod_name}"
 def modid = "${modid}"
 
@@ -204,7 +204,7 @@ def updates = tasks.register("generateUpdates", Copy) {
 
     it.from("./files/templates/") {
         include 'updates.json'
-        expand 'version': version
+        expand 'version': version, 'minecraft_version': minecraft_version
     }
 
     it.into 'files/'
@@ -272,6 +272,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('patchouli')
         mainFile.addOptional('scuba-gear')
         mainFile.addOptional('kobolds')
+        mainFile.addOptional('the-twilight-forest')
     }
 }
 
