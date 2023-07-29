@@ -15,21 +15,13 @@ import net.minecraft.util.GsonHelper;
 
 public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
 
-    public ResourceLocation getLocation() {
-        return loc;
-    }
-
-    public double getMaxRadiation() {
-        return this.maxRadiation;
-    }
-
     public double getBlockRadiation(double distance, boolean obscured, int y) {
         double radiation;
 
         if (distance <= 1) {
-            radiation = this.getMaxRadiation();
+            radiation = this.maxRadiation();
         } else {
-            radiation = this.getMaxRadiation() / distance;
+            radiation = this.maxRadiation() / distance;
         }
 
         if (y > 0 && y < 5) {
@@ -40,7 +32,7 @@ public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
             radiation = radiation * 0.9;
         }
 
-        return Math.min(radiation, getMaxRadiation());
+        return Math.min(radiation, maxRadiation());
     }
 
     public double getBlockRadiation(double distance, boolean obscured, double amount, int y) {
@@ -49,9 +41,9 @@ public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
         if (amount <= 0) return radiation;
 
         if (distance <= 1) {
-            radiation = this.getMaxRadiation();
+            radiation = this.maxRadiation();
         } else {
-            radiation = this.getMaxRadiation() * amount / distance;
+            radiation = this.maxRadiation() * amount / distance;
         }
 
         if (y > 0 && y < 5) {
@@ -62,7 +54,7 @@ public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
             radiation = radiation * 0.9;
         }
 
-        return Math.min(radiation, this.getMaxRadiation());
+        return Math.min(radiation, this.maxRadiation());
     }
 
     public static class Serializer implements JsonDeserializer<BlockRadiation>, JsonSerializer<BlockRadiation> {
@@ -78,8 +70,8 @@ public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
         public JsonElement serialize(BlockRadiation blockRadiation, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject json = new JsonObject();
 
-            json.addProperty("block", blockRadiation.getLocation().toString());
-            json.addProperty("max_radiation", blockRadiation.getMaxRadiation());
+            json.addProperty("block", blockRadiation.loc().toString());
+            json.addProperty("max_radiation", blockRadiation.maxRadiation());
 
             return json;
         }
