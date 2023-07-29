@@ -11,19 +11,22 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
+
 
 import homeostatic.Homeostatic;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
 
-    private static final Map<ResourceLocation, DrinkingFluid> FLUIDS = new HashMap<>();
+    private static final Map<Fluid, DrinkingFluid> FLUIDS = new HashMap<>();
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(DrinkingFluid.class, new DrinkingFluid.Serializer()).create();
-    private static DrinkingFluidManager INSTANCE;
 
     public DrinkingFluidManager() {
         super(GSON, "environment/fluids");
@@ -33,8 +36,8 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
         return GSON.toJsonTree(drinkingFluid);
     }
 
-    public static DrinkingFluid get(ResourceLocation loc) {
-        return FLUIDS.get(loc);
+    public static DrinkingFluid get(Fluid fluid) {
+        return FLUIDS.get(fluid);
     }
 
     @Override
@@ -44,8 +47,11 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
         for (Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet()) {
             try {
                 DrinkingFluid drinkingFluid = GSON.fromJson(entry.getValue(), DrinkingFluid.class);
+                Fluid fluid = ForgeRegistries.FLUIDS.getValue(drinkingFluid.loc());
 
-                FLUIDS.put(drinkingFluid.loc(), drinkingFluid);
+                if (fluid != Fluids.EMPTY && fluid != null) {
+                    FLUIDS.put(fluid, drinkingFluid);
+                }
             }
             catch (Exception e) {
                 Homeostatic.LOGGER.error("Couldn't parse drinking fluid %s %s", entry.getKey(), e);
@@ -57,7 +63,7 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
 
     @SubscribeEvent
     public static void onResourceReload(AddReloadListenerEvent event) {
-        event.addListener(INSTANCE = new DrinkingFluidManager());
+        event.addListener(new DrinkingFluidManager());
     }
 
 }
