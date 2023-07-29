@@ -27,13 +27,13 @@ import net.minecraftforge.registries.RegisterEvent;
 import homeostatic.config.ConfigHandler;
 import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.CreativeTabs;
+import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.common.HomeostaticModule;
-import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
 import homeostatic.util.BiomeHelper;
@@ -112,16 +112,11 @@ public class CommonProxy {
             ResourceLocation biomeName = biomeResourceKey.location();
             Biome biome = entry.getValue();
             BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.getBiomeCategory(biomeRegistry.getHolderOrThrow(biomeResourceKey));
-            BiomeRegistry.BiomeCategory computedBiomeCategory = BiomeRegistry.getBiomeCategory(
-                    biome.getGenerationSettings(),
-                    biome.getModifiedClimateSettings().temperature(),
-                    biome.getModifiedClimateSettings().temperatureModifier(),
-                    biome.getModifiedClimateSettings().downfall(),
-                    BiomeHelper.getPrecipitation(biome.getModifiedClimateSettings()),
-                    biome.getSpecialEffects()
-            );
 
             if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
+                if (biomeCategory != BiomeRegistry.BiomeCategory.MISSING) {
+                    Homeostatic.LOGGER.warn("Missing biome in registry, will set to neutral temperature for: %s", biomeName);
+                }
                 Homeostatic.LOGGER.debug(
                         "Biome: " + biomeName
                                 + "\npreciptitation=" + BiomeHelper.getPrecipitation(biome.getModifiedClimateSettings())
@@ -130,16 +125,6 @@ public class CommonProxy {
                                 + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
                                 + "\nbiomeCategory=" + biomeCategory
                 );
-
-                if (computedBiomeCategory != biomeCategory) {
-                    Homeostatic.LOGGER.error("Computed biome category mismatch: " + biomeName
-                            + "\npreciptitation=" + BiomeHelper.getPrecipitation(biome.getModifiedClimateSettings())
-                            + "\ntemperature=" + biome.getModifiedClimateSettings().temperature()
-                            + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
-                            + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
-                            + "\nbiomeCategory=" + biomeCategory
-                            + "\ncomputedBiomeCategory=" + computedBiomeCategory);
-                }
             }
         }
     }
