@@ -85,14 +85,35 @@ public class CommonProxy {
             Consumer<String> error = x -> Homeostatic.LOGGER.error("error getting holder for %s", biomeName);
             BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.getBiomeCategory(biomeRegistry.getOrCreateHolder(biomeResourceKey).getOrThrow(false, error));
 
-            Homeostatic.LOGGER.debug(
-                    "Biome: " + biomeName
-                            + "\npreciptitation=" + biome.getPrecipitation()
-                            + "\ntemperature=" + biome.getBaseTemperature()
-                            + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
-                            + "\ndownfall=" + biome.getDownfall()
-                            + "\nbiomeCategory=" + biomeCategory
+            BiomeRegistry.BiomeCategory computedBiomeCategory = BiomeRegistry.getBiomeCategory(
+                    biome.getGenerationSettings(),
+                    biome.getModifiedClimateSettings().temperature(),
+                    biome.getMobSettings(),
+                    biome.getModifiedClimateSettings().temperatureModifier(),
+                    biome.getModifiedClimateSettings().downfall(),
+                    biome.getPrecipitation(),
+                    biome.getSpecialEffects()
             );
+
+            if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
+                Homeostatic.LOGGER.debug(
+                        "Biome: " + biomeName
+                                + "\npreciptitation=" + biome.getPrecipitation()
+                                + "\ntemperature=" + biome.getBaseTemperature()
+                                + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
+                                + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
+                                + "\nbiomeCategory=" + biomeCategory
+                );
+
+                if (computedBiomeCategory != biomeCategory) {
+                    Homeostatic.LOGGER.error("Computed biome category mismatch: " + biomeName
+                            + "\npreciptitation=" + biome.getPrecipitation()
+                            + "\ntemperature=" + biome.getModifiedClimateSettings().temperature()
+                            + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
+                            + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
+                            + "\nbiomeCategory=" + computedBiomeCategory);
+                }
+            }
         }
     }
 

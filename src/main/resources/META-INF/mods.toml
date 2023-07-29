@@ -27,3 +27,15 @@ license="MIT"
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
+[[dependencies.homeostatic]]
+    modId="biomesoplenty"
+    mandatory=false
+    versionRange="[17.1.2,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.homeostatic]]
+    modId="byg"
+    mandatory=false
+    versionRange="[2.0.1,)"
+    ordering="NONE"
+    side="BOTH"

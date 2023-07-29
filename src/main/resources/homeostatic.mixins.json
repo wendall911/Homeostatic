@@ -4,10 +4,10 @@
   "package": "homeostatic.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BiomeBuilderMixin",
-    "ServerLevelAccessor",
+    "BiomeMixin",
     "CakeBlockMixin",
-    "RecipeProviderAccessor"
+    "RecipeProviderAccessor",
+    "ServerLevelAccessor"
   ],
   "client": [],
   "injectors": {
