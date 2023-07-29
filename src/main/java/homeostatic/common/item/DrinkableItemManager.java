@@ -2,33 +2,32 @@ package homeostatic.common.item;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
-import homeostatic.common.TagManager;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
+import homeostatic.common.TagManager;
 import homeostatic.Homeostatic;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
 
-    private static final Map<ResourceLocation, DrinkableItem> ITEMS = new HashMap<>();
+    private static final Map<Item, DrinkableItem> ITEMS = new HashMap<>();
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(DrinkableItem.class, new DrinkableItem.Serializer()).create();
-    private static DrinkableItemManager INSTANCE;
 
     private static final DrinkableItem FRUIT = new DrinkableItem(new ResourceLocation("forge:fruits"), 2, 0.6F, 0, 0, 0.0F);
 
@@ -41,8 +40,7 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
     }
 
     public static DrinkableItem get(ItemStack stack) {
-        ResourceLocation loc = Registry.ITEM.getKey(stack.getItem());
-        DrinkableItem drinkableItem = ITEMS.get(loc);
+        DrinkableItem drinkableItem = ITEMS.get(stack.getItem());
 
         if (drinkableItem != null) {
             return drinkableItem;
@@ -61,8 +59,11 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
         for (Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet()) {
             try {
                 DrinkableItem drinkableItem = GSON.fromJson(entry.getValue(), DrinkableItem.class);
+                Item item = ForgeRegistries.ITEMS.getValue(drinkableItem.loc());
 
-                ITEMS.put(drinkableItem.loc(), drinkableItem);
+                if (item != Items.AIR && item != null) {
+                    ITEMS.put(item, drinkableItem);
+                }
             }
             catch (Exception e) {
                 Homeostatic.LOGGER.error("Couldn't parse drinkable item %s %s", entry.getKey(), e);
@@ -74,7 +75,7 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
 
     @SubscribeEvent
     public static void onResourceReload(AddReloadListenerEvent event) {
-        event.addListener(INSTANCE = new DrinkableItemManager());
+        event.addListener(new DrinkableItemManager());
     }
 
 }
