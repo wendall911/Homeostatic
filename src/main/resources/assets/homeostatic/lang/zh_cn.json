@@ -57,7 +57,7 @@
   "info.homeostatic.book.gameplay.hydration.leather_flask_water_filter.title": "皮革水袋净化",
   "info.homeostatic.book.gameplay.hydration.name": "补水/口渴",
   "info.homeostatic.book.gameplay.hydration.title": "口渴值 HUD",
-  "info.homeostatic.book.gameplay.hydration.water_filter.text": "滤水纸也可用在合成中以去过滤皮革水袋中的脏水。",
+  "info.homeostatic.book.gameplay.hydration.water_filter.text": "滤水纸也可用在合成中去过滤皮革水袋中的脏水。",
   "info.homeostatic.book.gameplay.hydration.water_filter.title": "滤水纸",
   "info.homeostatic.book.gameplay.name": "玩法",
   "info.homeostatic.book.intro": "不违反逻辑的温度和水分变化...$(br)$(li) $(l:homeostatic:education/environment)环境$()温度受 $(l:https://simple.wikipedia.org/wiki/Thermal_radiation)热辐射$()影响, 比如太阳、岩浆、营火等等。$(li)必须保持体温，否则你会得到 $(l:https://simple.wikipedia.org/wiki/Hyperthermia)中暑$() 或 $(l:https://simple.wikipedia.org/wiki/Hypothermia)失温$() $(li)补水是生存所必需的。",
