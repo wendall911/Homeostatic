@@ -85,34 +85,18 @@ public class CommonProxy {
             Consumer<String> error = x -> Homeostatic.LOGGER.error("error getting holder for %s", biomeName);
             BiomeRegistry.BiomeCategory biomeCategory = BiomeRegistry.getBiomeCategory(biomeRegistry.getOrCreateHolder(biomeResourceKey).getOrThrow(false, error));
 
-            BiomeRegistry.BiomeCategory computedBiomeCategory = BiomeRegistry.getBiomeCategory(
-                    biome.getGenerationSettings(),
-                    biome.getModifiedClimateSettings().temperature(),
-                    biome.getMobSettings(),
-                    biome.getModifiedClimateSettings().temperatureModifier(),
-                    biome.getModifiedClimateSettings().downfall(),
-                    biome.getPrecipitation(),
-                    biome.getSpecialEffects()
-            );
-
             if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
-                Homeostatic.LOGGER.debug(
-                        "Biome: " + biomeName
-                                + "\npreciptitation=" + biome.getPrecipitation()
-                                + "\ntemperature=" + biome.getBaseTemperature()
-                                + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
-                                + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
-                                + "\nbiomeCategory=" + biomeCategory
-                );
-
-                if (computedBiomeCategory != biomeCategory) {
-                    Homeostatic.LOGGER.error("Computed biome category mismatch: " + biomeName
-                            + "\npreciptitation=" + biome.getPrecipitation()
-                            + "\ntemperature=" + biome.getModifiedClimateSettings().temperature()
-                            + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
-                            + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
-                            + "\nbiomeCategory=" + computedBiomeCategory);
+                if (biomeCategory != BiomeRegistry.BiomeCategory.MISSING) {
+                    Homeostatic.LOGGER.warn("Missing biome in registry, will set to neutral temperature for: %s", biomeName);
                 }
+                Homeostatic.LOGGER.debug(
+                    "Biome: " + biomeName
+                        + "\npreciptitation=" + biome.getPrecipitation()
+                        + "\ntemperature=" + biome.getBaseTemperature()
+                        + "\ntemperatureModifier=" + biome.getModifiedClimateSettings().temperatureModifier()
+                        + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
+                        + "\nbiomeCategory=" + biomeCategory
+                );
             }
         }
     }
