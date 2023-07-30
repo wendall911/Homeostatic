@@ -65,6 +65,7 @@ public class BiomeCategoryProvider implements DataProvider {
         add(Biomes.JAGGED_PEAKS, BiomeCategory.Type.MOUNTAIN);
         add(Biomes.FROZEN_PEAKS, BiomeCategory.Type.MOUNTAIN);
         add(Biomes.MEADOW, BiomeCategory.Type.MOUNTAIN);
+        add(Biomes.CHERRY_GROVE, BiomeCategory.Type.MOUNTAIN);
         add(Biomes.STONY_PEAKS, BiomeCategory.Type.MOUNTAIN);
         add(Biomes.RIVER, BiomeCategory.Type.RIVER);
         add(Biomes.FROZEN_RIVER, BiomeCategory.Type.RIVER);
@@ -128,7 +129,7 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.bopLoc("coniferous_forest"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("ominous_woods"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("origin_valley"), BiomeCategory.Type.FOREST);
-        add(ModIntegration.bopLoc("highland_moor"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.bopLoc("moor"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("highland"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("crag"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("jade_cliffs"), BiomeCategory.Type.FOREST);
@@ -138,6 +139,7 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.bopLoc("redwood_forest"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("woodland"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("auroral_garden"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.bopLoc("snowblossom_grove"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("dryland"), BiomeCategory.Type.DRYLAND);
         add(ModIntegration.bopLoc("cold_desert"), BiomeCategory.Type.COLD_DESERT);
         add(ModIntegration.bopLoc("dune_beach"), BiomeCategory.Type.BEACH);
