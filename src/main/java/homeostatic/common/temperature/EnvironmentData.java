@@ -188,7 +188,7 @@ public class EnvironmentData {
     private static double getBiomeHumidity(ServerLevel world, Holder<Biome> biome) {
         LevelData info = world.getLevelData();
         ServerLevelAccessor serverLevel = (ServerLevelAccessor) world;
-        ServerLevelData serverInfo = serverLevel.homeostatic$getServerLevelData();
+        ServerLevelData serverInfo = serverLevel.getServerLevelData();
         double biomeHumidity;
         double maxRH = getMaxBiomeHumidity(biome);
         double minRH = maxRH - 20;
