@@ -10,6 +10,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface ServerLevelAccessor {
 
     @Accessor("serverLevelData")
-    ServerLevelData homeostatic$getServerLevelData();
+    ServerLevelData getServerLevelData();
 
 }
