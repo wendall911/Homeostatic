@@ -1,0 +1,3 @@
+[submodule "Homeostatic.wiki"]
+	path = wiki
+	url = https://github.com/wendall911/Homeostatic.wiki.git
