@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -35,12 +36,12 @@ import homeostatic.util.VecMath;
 
 public class Environment {
 
-    public static final float PARITY = 1.108F;
-    public static final float PARITY_LOW = 0.997F;
-    public static final float PARITY_HIGH = 1.220F;
-    public static final float HOT = 1.888F;
-    public static final float EXTREME_HEAT = 2.557F;
-    public static final float EXTREME_COLD = -0.3403614458F;
+    public static final float PARITY = TemperatureRange.PARITY.temperature;
+    public static final float PARITY_LOW = TemperatureRange.PARITY_LOW.temperature;
+    public static final float PARITY_HIGH = TemperatureRange.PARITY_HIGH.temperature;
+    public static final float HOT = TemperatureRange.HOT.temperature;
+    public static final float EXTREME_HEAT = TemperatureRange.EXTREME_HEAT.temperature;
+    public static final float EXTREME_COLD = TemperatureRange.EXTREME_COLD.temperature;
 
     public static EnvironmentInfo get(ServerLevel world, ServerPlayer sp) {
         double radiation = 0.0;

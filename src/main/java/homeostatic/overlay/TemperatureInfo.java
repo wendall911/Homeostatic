@@ -8,12 +8,13 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
+import homeostatic.common.temperature.TemperatureRange;
 import homeostatic.config.ConfigHandler;
 import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
 import homeostatic.util.FontHelper;
 import homeostatic.util.TempHelper;
-import static homeostatic.util.TempHelper.TemperatureDirection;
+import homeostatic.common.temperature.TemperatureDirection;
 
 public class TemperatureInfo extends Overlay {
 
@@ -30,8 +31,8 @@ public class TemperatureInfo extends Overlay {
                     data.getLocalTemperature(), data.getSkinTemperature());
             TemperatureDirection coreTemperatureDirection = TempHelper.getCoreTemperatureDirection(
                     data.getLastSkinTemperature(), data.getCoreTemperature(), data.getSkinTemperature());
-            String skinIcon = getDirectionIcon(skinTemperatureDirection);
-            String coreIcon = getDirectionIcon(coreTemperatureDirection);
+            String skinIcon = skinTemperatureDirection.icon;
+            String coreIcon = coreTemperatureDirection.icon;
 
             String localTemp = String.format(" %.2f",
                     TempHelper.convertMcTemp(data.getLocalTemperature(), ConfigHandler.Client.useFahrenheit()));
@@ -39,11 +40,11 @@ public class TemperatureInfo extends Overlay {
                     TempHelper.convertMcTemp(data.getSkinTemperature(), ConfigHandler.Client.useFahrenheit()), skinIcon);
             String coreTemp = String.format(" c: %.2f%s ",
                     TempHelper.convertMcTemp(data.getCoreTemperature(), ConfigHandler.Client.useFahrenheit()), coreIcon);
-            Tuple<TempHelper.TemperatureRange, Integer> localRangeStep =
+            Tuple<TemperatureRange, Integer> localRangeStep =
                     TempHelper.getLocalTemperatureRangeStep(data.getLocalTemperature());
-            Tuple<TempHelper.TemperatureRange, Integer> coreRangeStep =
+            Tuple<TemperatureRange, Integer> coreRangeStep =
                     TempHelper.getBodyTemperatureRangeStep(data.getCoreTemperature());
-            Tuple<TempHelper.TemperatureRange, Integer> skinRangeStep =
+            Tuple<TemperatureRange, Integer> skinRangeStep =
                     TempHelper.getBodyTemperatureRangeStep(data.getSkinTemperature());
 
             int localTempWidth = mc.font.width(localTemp);
@@ -64,18 +65,6 @@ public class TemperatureInfo extends Overlay {
                     ConfigHandler.Client.debugOffsetX(), 1.0F), y + (mc.font.lineHeight * 2),
                     ColorHelper.getTemperatureColor(coreRangeStep));
         });
-    }
-
-    public static String getDirectionIcon(TemperatureDirection direction) {
-        return switch(direction) {
-            case COOLING -> "↧";
-            case COOLING_RAPIDLY -> "⇊";
-            case WARMING -> "↥";
-            case WARMING_RAPIDLY -> "⇈";
-            case NONE -> "·";
-            case COOLING_NORMALLY -> "ˬ";
-            case WARMING_NORMALLY -> "ˆ";
-        };
     }
 
 }
