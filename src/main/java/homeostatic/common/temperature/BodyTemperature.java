@@ -1,26 +1,17 @@
 package homeostatic.common.temperature;
 
-import homeostatic.config.ConfigHandler;
 import net.minecraft.server.level.ServerPlayer;
 
 import homeostatic.common.biome.BiomeData;
 import homeostatic.common.capabilities.Temperature;
+import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
 import homeostatic.util.InsulationHelper;
 import homeostatic.util.TempHelper;
-import static homeostatic.util.TempHelper.TemperatureDirection;
 import homeostatic.util.WaterHelper;
 import homeostatic.util.WetnessHelper;
 
 public class BodyTemperature {
-
-    public static final float LOW = 1.554216868F;
-    public static final float WARNING_LOW = 1.589879518F;
-    public static final float NORMAL = 1.634457832F;
-    public static final float HIGH = 1.799397591F;
-    public static final float WARNING_HIGH = 1.765963856F;
-    public static final float SCALDING_WARNING = 2.222891566F;
-    public static final float SCALDING = 2.557228916F;
 
     private final EnvironmentData environmentData;
     private final TemperatureDirection skinTemperatureDirection;
@@ -28,6 +19,9 @@ public class BodyTemperature {
     private float coreTemperature;
     private float skinTemperature;
     private float lastSkinTemperature;
+    private float LOW = TemperatureThreshold.LOW.temperature;
+    private float NORMAL = TemperatureThreshold.NORMAL.temperature;
+    private float HIGH = TemperatureThreshold.HIGH.temperature;
 
     public BodyTemperature(ServerPlayer sp, EnvironmentData environmentData, Temperature tempData) {
         this(sp, environmentData, tempData, false, false);
@@ -81,7 +75,7 @@ public class BodyTemperature {
 
             // Only cool core rapidly down to NORMAL, then clamp
             if (coreTemperatureDirection == TemperatureDirection.COOLING_RAPIDLY) {
-                this.coreTemperature = Math.max(this.coreTemperature, BodyTemperature.NORMAL);
+                this.coreTemperature = Math.max(this.coreTemperature, NORMAL);
             }
         }
         else {
@@ -89,7 +83,7 @@ public class BodyTemperature {
 
             // Only warm core rapidly up to NORMAL, then clamp
             if (coreTemperatureDirection == TemperatureDirection.WARMING_RAPIDLY) {
-                this.coreTemperature = Math.min(this.coreTemperature, BodyTemperature.NORMAL);
+                this.coreTemperature = Math.min(this.coreTemperature, NORMAL);
             }
         }
     }
@@ -101,7 +95,7 @@ public class BodyTemperature {
     private void setSkinTemperature(ServerPlayer sp, float skinTemperature, boolean updateSkin) {
         float tempChange;
         float localTemperature = environmentData.getLocalTemperature();
-        boolean canSweat = skinTemperature >= BodyTemperature.NORMAL && this.wetness == 0;
+        boolean canSweat = skinTemperature >= NORMAL && this.wetness == 0;
         boolean inWater = this.environmentData.isSubmerged() || this.environmentData.isPartialSubmersion();
 
         this.lastSkinTemperature = skinTemperature;
@@ -242,6 +236,18 @@ public class BodyTemperature {
         return change;
     }
 
+    /*
+     * Gets temperature rate change for skin. Values are in F because I need to
+     * convert to something that isn't MC temperatures for the math (So it
+     * makes sense while testing calculations).
+     *
+     * Determines a change direction. Direction has a speed factor for change.
+     * This allows the player to warm/cool at a rate that makes sense for
+     * gameplay. Reality: If you warmed or cooled this fast, you'd go into
+     * shock. Not going that far into hyper-realism.
+     *
+     * Returns the skin temperature change in mc minutes.
+     */
     public float getAirTemperatureSkinChange(ServerPlayer sp, double insulationModifier) {
         float localTemperature = environmentData.getLocalTemperature();
         float change = 0.0F;
@@ -264,6 +270,11 @@ public class BodyTemperature {
         if (this.skinTemperatureDirection == TemperatureDirection.NONE) return change;
 
         if (localTemperature < Environment.PARITY) {
+            /*
+             * If it is cold outside (below pairity) calculate the temperature
+             * with insulation modifier below parity. In cold environment,
+             * insulation reduces the effective temperature.
+             */
             temp = Math.min(localTempF + insulationModifier, parityTempF);
 
             if (Math.abs(parityTempF - temp) > 5.0) {

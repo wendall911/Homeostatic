@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 
 import homeostatic.common.temperature.Environment;
 
-import static homeostatic.util.TempHelper.TemperatureDirection;
+import homeostatic.common.temperature.TemperatureDirection;
 
 public class InsulationHelper {
 

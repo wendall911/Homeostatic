@@ -5,7 +5,8 @@ import java.awt.Color;
 import net.minecraft.util.Tuple;
 
 import homeostatic.config.ConfigHandler;
-import homeostatic.util.TempHelper.TemperatureRange;
+import homeostatic.common.temperature.TemperatureRange;
+
 
 public class ColorHelper {
 
@@ -25,7 +26,7 @@ public class ColorHelper {
     }
 
     public static int getTemperatureColorFromRange(Tuple<TemperatureRange, Integer> rangeStep, Color hot, Color cold, boolean invert) {
-        TempHelper.TemperatureRange range = rangeStep.getA();
+        TemperatureRange range = rangeStep.getA();
         Color stepColor;
 
         if (range == TemperatureRange.HOT) {
@@ -44,7 +45,7 @@ public class ColorHelper {
     }
 
     public static int getLocalTemperatureColor(Tuple<TemperatureRange, Integer> rangeStep) {
-        TempHelper.TemperatureRange range = rangeStep.getA();
+        TemperatureRange range = rangeStep.getA();
         Color tempColor;
 
         if (range == TemperatureRange.COLD) {

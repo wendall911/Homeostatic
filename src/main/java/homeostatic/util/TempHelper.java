@@ -2,28 +2,12 @@ package homeostatic.util;
 
 import net.minecraft.util.Tuple;
 
-import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.common.temperature.Environment;
+import homeostatic.common.temperature.TemperatureDirection;
+import homeostatic.common.temperature.TemperatureRange;
+import homeostatic.common.temperature.TemperatureThreshold;
 
 public class TempHelper {
-
-    public enum TemperatureDirection {
-
-        WARMING(0.025F),
-        WARMING_NORMALLY(0.00625F),
-        WARMING_RAPIDLY(0.2F),
-        NONE(0.0F),
-        COOLING(0.0125F),
-        COOLING_NORMALLY(0.00625F),
-        COOLING_RAPIDLY(0.2F);
-
-        public final float coreRate;
-
-        TemperatureDirection(float coreRate) {
-            this.coreRate = coreRate;
-        }
-
-    }
 
     public static TemperatureDirection getCoreTemperatureDirection(float lastSkinTemperature, float coreTemperature, float skinTemperature) {
         TemperatureDirection direction = TemperatureDirection.NONE;
@@ -31,7 +15,7 @@ public class TempHelper {
         if (lastSkinTemperature > skinTemperature) {
             direction = TemperatureDirection.COOLING_NORMALLY;
 
-            if (coreTemperature > BodyTemperature.NORMAL) {
+            if (coreTemperature > TemperatureThreshold.NORMAL.temperature) {
                 if (skinTemperature < coreTemperature) {
                     direction = TemperatureDirection.COOLING_RAPIDLY;
                 } else {
@@ -42,7 +26,7 @@ public class TempHelper {
         else if (lastSkinTemperature < skinTemperature) {
             direction = TemperatureDirection.WARMING_NORMALLY;
 
-            if (coreTemperature < BodyTemperature.NORMAL) {
+            if (coreTemperature < TemperatureThreshold.NORMAL.temperature) {
                 if (skinTemperature > coreTemperature) {
                     direction = TemperatureDirection.WARMING_RAPIDLY;
                 } else {
@@ -57,7 +41,7 @@ public class TempHelper {
     public static TemperatureDirection getSkinTemperatureDirection(float localTemperature, float lastSkinTemperature) {
         TemperatureDirection direction = TemperatureDirection.NONE;
 
-        if (lastSkinTemperature > BodyTemperature.NORMAL) {
+        if (lastSkinTemperature > TemperatureThreshold.NORMAL.temperature) {
             if (localTemperature > Environment.PARITY_HIGH) {
                 direction = TemperatureDirection.WARMING_NORMALLY;
 
@@ -73,7 +57,7 @@ public class TempHelper {
                 }
             }
         }
-        else if (lastSkinTemperature < BodyTemperature.NORMAL) {
+        else if (lastSkinTemperature < TemperatureThreshold.NORMAL.temperature) {
             if (localTemperature > Environment.PARITY_LOW) {
                 direction = TemperatureDirection.WARMING_NORMALLY;
 
@@ -175,25 +159,20 @@ public class TempHelper {
     public static Tuple<TemperatureRange, Integer> getBodyTemperatureRangeStep(float temperature) {
         Tuple<TemperatureRange, Integer> rangeStep = new Tuple<>(TemperatureRange.COLD, 17);
 
-        if (temperature > BodyTemperature.NORMAL) {
-            if (temperature < BodyTemperature.HIGH) {
-                rangeStep.setB((int) Math.floor((temperature - BodyTemperature.NORMAL) / 0.0103F));
+        if (temperature > TemperatureThreshold.NORMAL.temperature) {
+            if (temperature < TemperatureThreshold.HIGH.temperature) {
+                rangeStep.setB((int) Math.floor((temperature - TemperatureThreshold.NORMAL.temperature) / 0.0103F));
             }
 
             rangeStep.setA(TemperatureRange.HOT);
         }
         else {
-            if (temperature > BodyTemperature.LOW) {
-                rangeStep.setB((int) Math.floor((BodyTemperature.NORMAL - temperature) / 0.005F));
+            if (temperature > TemperatureThreshold.LOW.temperature) {
+                rangeStep.setB((int) Math.floor((TemperatureThreshold.NORMAL.temperature - temperature) / 0.005F));
             }
         }
 
         return rangeStep;
-    }
-
-    public enum TemperatureRange {
-        HOT,
-        COLD
     }
 
 }

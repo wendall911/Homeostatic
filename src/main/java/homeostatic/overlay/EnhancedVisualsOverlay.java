@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 
 import homeostatic.Homeostatic;
 import homeostatic.common.capabilities.CapabilityRegistry;
-import homeostatic.common.temperature.BodyTemperature;
+import homeostatic.common.temperature.TemperatureThreshold;
 import homeostatic.util.OverlayHelper;
 
 public class EnhancedVisualsOverlay extends Overlay {
@@ -32,14 +32,14 @@ public class EnhancedVisualsOverlay extends Overlay {
         RenderSystem.enableBlend();
 
         player.getCapability(CapabilityRegistry.TEMPERATURE_CAPABILITY).ifPresent(data -> {
-            if (data.getSkinTemperature() > BodyTemperature.SCALDING_WARNING) {
-                float alpha = 0.1F + ((data.getSkinTemperature() - BodyTemperature.SCALDING_WARNING) * 10);
+            if (data.getSkinTemperature() > TemperatureThreshold.SCALDING_WARNING.temperature) {
+                float alpha = 0.1F + ((data.getSkinTemperature() - TemperatureThreshold.SCALDING_WARNING.temperature) * 10);
 
                 OverlayHelper.renderTexture(BURNING_OVERLAY, scaledWidth, scaledHeight, alpha);
             }
 
-            if (data.getCoreTemperature() > BodyTemperature.WARNING_HIGH) {
-                float alpha = 0.1F + ((data.getCoreTemperature() - BodyTemperature.WARNING_HIGH) * 10);
+            if (data.getCoreTemperature() > TemperatureThreshold.WARNING_HIGH.temperature) {
+                float alpha = 0.1F + ((data.getCoreTemperature() - TemperatureThreshold.WARNING_HIGH.temperature) * 10);
 
                 OverlayHelper.renderTexture(HYPERTHERMIA_OVERLAY, scaledWidth, scaledHeight, alpha);
             }

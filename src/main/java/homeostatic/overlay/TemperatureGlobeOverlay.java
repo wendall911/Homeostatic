@@ -15,6 +15,7 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
+import homeostatic.common.temperature.TemperatureRange;
 import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
 import homeostatic.util.Alignment;
@@ -62,8 +63,8 @@ public class TemperatureGlobeOverlay extends Overlay {
                     mc.font.width(coreTempSmall), ConfigHandler.Client.globeOffsetX(), textScale, ICON_WIDTH);
             int localOffsetX = Alignment.getIconTextX(ConfigHandler.Client.globePosition(), scaledWidth,
                     mc.font.width(localTemp), ConfigHandler.Client.globeOffsetX(), textScale, ICON_WIDTH);
-            Tuple<TempHelper.TemperatureRange, Integer> localRangeStep = TempHelper.getLocalTemperatureRangeStep(data.getLocalTemperature());
-            Tuple<TempHelper.TemperatureRange, Integer> coreRangeStep = TempHelper.getBodyTemperatureRangeStep(data.getCoreTemperature());
+            Tuple<TemperatureRange, Integer> localRangeStep = TempHelper.getLocalTemperatureRangeStep(data.getLocalTemperature());
+            Tuple<TemperatureRange, Integer> coreRangeStep = TempHelper.getBodyTemperatureRangeStep(data.getCoreTemperature());
             pV = getTempOffset(coreRangeStep);
             localPV = getTempOffset(localRangeStep);
 
@@ -86,12 +87,12 @@ public class TemperatureGlobeOverlay extends Overlay {
         });
     }
 
-    private int getTempOffset(Tuple<TempHelper.TemperatureRange, Integer> rangeStep) {
-        TempHelper.TemperatureRange range = rangeStep.getA();
+    private int getTempOffset(Tuple<TemperatureRange, Integer> rangeStep) {
+        TemperatureRange range = rangeStep.getA();
         int step = rangeStep.getB() / 2;
         int offset;
 
-        if (range == TempHelper.TemperatureRange.COLD) {
+        if (range == TemperatureRange.COLD) {
             offset = 120 + (step * 15);
         }
         else {

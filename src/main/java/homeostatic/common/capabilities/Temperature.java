@@ -15,13 +15,14 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.common.temperature.BodyTemperature;
+import homeostatic.common.temperature.TemperatureThreshold;
 import homeostatic.util.DamageHelper;
 
 public class Temperature {
 
-    private float skinTemperature = BodyTemperature.NORMAL;
-    private float lastSkinTemperature = BodyTemperature.NORMAL;
-    private float coreTemperature = BodyTemperature.NORMAL;
+    private float skinTemperature = TemperatureThreshold.NORMAL.temperature;
+    private float lastSkinTemperature = TemperatureThreshold.NORMAL.temperature;
+    private float coreTemperature = TemperatureThreshold.NORMAL.temperature;
     private float localTemperature = 0.0F;
 
     public static Tag writeNBT(Capability<Temperature> capability, Temperature instance, Direction side) {
@@ -82,16 +83,16 @@ public class Temperature {
     }
 
     public void checkTemperatureLevel(Player player) {
-        if (this.coreTemperature < BodyTemperature.LOW) {
+        if (this.coreTemperature < TemperatureThreshold.LOW.temperature) {
             player.setTicksFrozen(player.getTicksFrozen() + 5);
         }
-        else if (this.coreTemperature > BodyTemperature.HIGH) {
-            float amount = (1.0F + (this.coreTemperature - BodyTemperature.HIGH)) * 0.5F;
+        else if (this.coreTemperature > TemperatureThreshold.HIGH.temperature) {
+            float amount = (1.0F + (this.coreTemperature - TemperatureThreshold.HIGH.temperature)) * 0.5F;
 
             player.hurt(new DamageSource(DamageHelper.getHolder(player.getServer(), HomeostaticDamageTypes.HYPERTHERMIA_KEY)), amount);
         }
-        if (this.skinTemperature > BodyTemperature.SCALDING) {
-            float amount = (1.0F + (this.skinTemperature - BodyTemperature.SCALDING)) * 0.25F;
+        if (this.skinTemperature > TemperatureThreshold.SCALDING.temperature) {
+            float amount = (1.0F + (this.skinTemperature - TemperatureThreshold.SCALDING.temperature)) * 0.25F;
 
             player.hurt(new DamageSource(DamageHelper.getHolder(player.getServer(), HomeostaticDamageTypes.SCALDING_KEY)), amount);
         }
