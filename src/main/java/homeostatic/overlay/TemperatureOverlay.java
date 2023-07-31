@@ -53,8 +53,8 @@ public class TemperatureOverlay extends Overlay {
                     data.getLastSkinTemperature(), data.getCoreTemperature(), data.getSkinTemperature());
             TemperatureDirection skinTemperatureDirection = TempHelper.getSkinTemperatureDirection(
                     data.getLocalTemperature(), data.getSkinTemperature());
-            String coreDirection = TemperatureInfo.getDirectionIcon(coreTemperatureDirection);
-            String skinDirection = TemperatureInfo.getDirectionIcon(skinTemperatureDirection);
+            String coreDirection = coreTemperatureDirection.icon;
+            String skinDirection = skinTemperatureDirection.icon;
             String coreTempFormat = ConfigHandler.Client.showDegreeSymbol() ? "%.1f°" : "%.1f";
             String localTempFormat = ConfigHandler.Client.showDegreeSymbol() ? "%.0f°" : "%.0f";
             String coreTempSmall = String.format(coreTempFormat, TempHelper.convertMcTemp(data.getCoreTemperature(), ConfigHandler.Client.useFahrenheit()));
