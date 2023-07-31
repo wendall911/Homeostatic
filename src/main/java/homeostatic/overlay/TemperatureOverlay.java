@@ -14,7 +14,9 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.capabilities.CapabilityRegistry;
-import homeostatic.common.temperature.BodyTemperature;
+import homeostatic.common.temperature.TemperatureDirection;
+import homeostatic.common.temperature.TemperatureRange;
+import homeostatic.common.temperature.TemperatureThreshold;
 import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
 import homeostatic.util.Alignment;
@@ -44,12 +46,12 @@ public class TemperatureOverlay extends Overlay {
             int pY = Alignment.getY(ConfigHandler.Client.thermometerPosition(), scaledHeight,
                     ConfigHandler.Client.thermometerOffsetY());
             float textScale = 0.5F;
-            TempHelper.TemperatureDirection coreTemperatureDirection = TempHelper.getCoreTemperatureDirection(
+            TemperatureDirection coreTemperatureDirection = TempHelper.getCoreTemperatureDirection(
                     data.getLastSkinTemperature(), data.getCoreTemperature(), data.getSkinTemperature());
-            TempHelper.TemperatureDirection skinTemperatureDirection = TempHelper.getSkinTemperatureDirection(
+            TemperatureDirection skinTemperatureDirection = TempHelper.getSkinTemperatureDirection(
                     data.getLocalTemperature(), data.getSkinTemperature());
-            String coreDirection = TemperatureInfo.getDirectionIcon(coreTemperatureDirection);
-            String skinDirection = TemperatureInfo.getDirectionIcon(skinTemperatureDirection);
+            String coreDirection = coreTemperatureDirection.icon;
+            String skinDirection = skinTemperatureDirection.icon;
             String coreTempFormat = ConfigHandler.Client.showDegreeSymbol() ? "%.1f°" : "%.1f";
             String localTempFormat = ConfigHandler.Client.showDegreeSymbol() ? "%.0f°" : "%.0f";
             String coreTempSmall = String.format(coreTempFormat, TempHelper.convertMcTemp(data.getCoreTemperature(), ConfigHandler.Client.useFahrenheit()));
@@ -65,17 +67,17 @@ public class TemperatureOverlay extends Overlay {
             int pV = 0;
             int pUOffset = 53;
 
-            Tuple<TempHelper.TemperatureRange, Integer> localRangeStep = TempHelper.getLocalTemperatureRangeStep(data.getLocalTemperature());
-            Tuple<TempHelper.TemperatureRange, Integer> coreRangeStep = TempHelper.getBodyTemperatureRangeStep(data.getCoreTemperature());
-            Tuple<TempHelper.TemperatureRange, Integer> skinRangeStep =
+            Tuple<TemperatureRange, Integer> localRangeStep = TempHelper.getLocalTemperatureRangeStep(data.getLocalTemperature());
+            Tuple<TemperatureRange, Integer> coreRangeStep = TempHelper.getBodyTemperatureRangeStep(data.getCoreTemperature());
+            Tuple<TemperatureRange, Integer> skinRangeStep =
                     TempHelper.getBodyTemperatureRangeStep(data.getSkinTemperature());
             int lineOffset = getTempLineOffset(coreRangeStep);
             AtomicBoolean showTemperature = new AtomicBoolean(ConfigHandler.Common.showTemperatureValues());
 
-            if (data.getCoreTemperature() > BodyTemperature.WARNING_HIGH) {
+            if (data.getCoreTemperature() > TemperatureThreshold.WARNING_HIGH.temperature) {
                 this.blit(matrix, offsetX, pY, pUOffset, pV + ICON_HEIGHT, ICON_WIDTH, ICON_HEIGHT);
             }
-            else if (data.getCoreTemperature() < BodyTemperature.WARNING_LOW) {
+            else if (data.getCoreTemperature() < TemperatureThreshold.WARNING_LOW.temperature) {
                 this.blit(matrix, offsetX, pY, pUOffset, pV + ICON_HEIGHT * 2, ICON_WIDTH, ICON_HEIGHT);
             }
             else {
@@ -106,12 +108,12 @@ public class TemperatureOverlay extends Overlay {
         });
     }
 
-    private int getTempLineOffset(Tuple<TempHelper.TemperatureRange, Integer> rangeStep) {
+    private int getTempLineOffset(Tuple<TemperatureRange, Integer> rangeStep) {
         int offset;
-        TempHelper.TemperatureRange range = rangeStep.getA();
+        TemperatureRange range = rangeStep.getA();
         int step = rangeStep.getB() / 2;
 
-        if (range == TempHelper.TemperatureRange.COLD) {
+        if (range == TemperatureRange.COLD) {
             offset = Math.max(7 - step, 1);
         }
         else {
