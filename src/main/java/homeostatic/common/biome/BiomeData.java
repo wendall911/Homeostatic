@@ -1,6 +1,5 @@
 package homeostatic.common.biome;
 
-import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome;
 
 public class BiomeData {
@@ -13,26 +12,34 @@ public class BiomeData {
     private double humidity;
     private final float seasonVariation;
     private final float dayNightOffset;
+    private final boolean isFrozen;
 
-    BiomeData (float temperature, double humidity, double seasonVariation, double dayNightOffset) {
+    BiomeData (float temperature, double humidity, double seasonVariation, double dayNightOffset, boolean isFrozen) {
         this.humidity = humidity;
         this.seasonVariation = (float) seasonVariation * MC_DEGREE;
         this.dayNightOffset = (float) dayNightOffset * MC_DEGREE;
         this.temperature = temperature;
+        this.isFrozen = isFrozen;
     }
 
-    public float getRawTemperature() {
-        return this.temperature;
+    public float getTemperature(Biome.Precipitation precipitation) {
+        float temperature = this.temperature;
+
+        if (this.isFrozen) {
+            temperature += FROZEN_OFFSET;
+        }
+
+        if (precipitation == Biome.Precipitation.SNOW) {
+            temperature += SNOW_OFFSET;
+        }
+
+        return temperature;
     }
 
-    public double getHumidity(Holder<Biome> biome) {
-        if (biome.value().getBaseTemperature() < 0.33F) {
+    public double getHumidity(Biome.Precipitation precipitation) {
+        if (precipitation == Biome.Precipitation.SNOW) {
             this.humidity = 20.0;
         }
-        return this.humidity;
-    }
-
-    public double getRawHumidity(Biome biome) {
         return this.humidity;
     }
 
@@ -50,6 +57,10 @@ public class BiomeData {
         }
 
         return this.dayNightOffset;
+    }
+
+    public boolean isFrozen() {
+        return this.isFrozen;
     }
 
     @Override

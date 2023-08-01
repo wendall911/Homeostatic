@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.joml.Vector3d;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -31,7 +30,6 @@ import homeostatic.common.TagManager;
 import homeostatic.common.block.BlockRadiation;
 import homeostatic.common.block.BlockRadiationManager;
 import homeostatic.config.ConfigHandler;
-import homeostatic.util.RegistryHelper;
 import homeostatic.util.VecMath;
 
 public class Environment {
@@ -79,6 +77,9 @@ public class Environment {
             }
         });
 
+        /*
+         * Check blocks and calculate radiation.
+         */
         for (int x = -12; x <= 12; x++) {
             for (int z = -12; z <= 12; z++) {
                 if (isSheltered && (x <= 2 && x >= -2) && (z <= 2 && z >= -2)) {
@@ -96,7 +97,6 @@ public class Environment {
                     // If in the void, this gets weird, let's just catch and move on.
                     try {
                         palette = chunk.getSection((blockpos.getY() >> 4) - chunk.getMinSection()).getStates();
-
                     }
                     catch (Exception e) {
                         continue;
@@ -130,6 +130,9 @@ public class Environment {
                                 hasRadiation = state.getValue(BlockStateProperties.LIT);
                             }
 
+                            /*
+                             * Ignore campfire heat if campfire is being used as a smoker.
+                             */
                             if (hasRadiation && Objects.requireNonNull(state.getBlock().toString()).contains("campfire")) {
                                 for (int i = 1; i <= 5; i++) {
                                     if (hasRadiation && world.getBlockState(blockpos.above(i)).is(BlockTags.BEEHIVES)) {
@@ -144,7 +147,7 @@ public class Environment {
                                 boolean obscured = VecMath.isBlockObscured(sp, vPos);
 
                                 if (!state.getFluidState().isEmpty()) {
-                                    double amount = state.getFluidState().getAmount() / 8;
+                                    double amount = state.getFluidState().getAmount() / 8.0;
                                     radiation += blockRadiation.getBlockRadiation(distance, obscured, amount, y);
                                 } else {
                                     radiation += blockRadiation.getBlockRadiation(distance, obscured, y);
