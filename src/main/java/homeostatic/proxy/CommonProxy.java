@@ -40,7 +40,6 @@ import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.common.HomeostaticModule;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
-import homeostatic.util.BiomeHelper;
 import homeostatic.util.RegistryHelper;
 
 @Mod.EventBusSubscriber(modid = Homeostatic.MODID)
@@ -117,15 +116,38 @@ public class CommonProxy {
             Holder<Biome> biomeHolder = biomeRegistry.getHolderOrThrow(biomeResourceKey);
             BiomeCategory.Type biomeCategory = BiomeCategoryManager.getBiomeCategory(biomeHolder);
             BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+            Biome biome = biomeHolder.value();
+            Biome.Precipitation precipitation = getPrecipitation(biome);
+            String temperatureModifier = biomeData.isFrozen() ? "FROZEN" : "NONE";
+            float dayNightOffset = biomeData.getDayNightOffset(precipitation);
+            double humidity = biomeData.getHumidity(precipitation);
 
             if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
                 if (biomeCategory == BiomeCategory.Type.MISSING) {
                     Homeostatic.LOGGER.warn("Missing biome in registry, will set to neutral temperature for: %s", biomeName);
                 }
 
-                Homeostatic.LOGGER.debug("Biome: " + biomeName + "\nbiomeCategory=" + biomeCategory);
-                Homeostatic.LOGGER.debug(biomeData);
+                Homeostatic.LOGGER.debug("Biome: " + biomeName
+                    + "\nprecipitation_type=" + precipitation
+                    + "\ntemperature=" + biomeData.getTemperature(precipitation)
+                    + "\ntemperatureModifier=" + temperatureModifier
+                    + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
+                    + "\ndayNightOffset=" + dayNightOffset
+                    + "\nhumidity=" + humidity
+                    + "\nbiomeCategory=" + biomeCategory);
             }
+        }
+    }
+
+    /*
+     * Mock for debugging purposes. Will not be 100% accurate, but should help map to older versions.
+     */
+    private Biome.Precipitation getPrecipitation(Biome biome) {
+        if (!biome.hasPrecipitation()) {
+            return Biome.Precipitation.NONE;
+        }
+        else {
+            return biome.getBaseTemperature() <= 0.15F ? Biome.Precipitation.SNOW : Biome.Precipitation.RAIN;
         }
     }
 

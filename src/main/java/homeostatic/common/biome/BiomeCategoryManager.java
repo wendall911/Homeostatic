@@ -20,6 +20,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import homeostatic.Homeostatic;
 
@@ -52,6 +53,20 @@ public class BiomeCategoryManager extends SimpleJsonResourceReloadListener {
 
             return BiomeCategory.Type.valueOf(biomeCategory.type());
         } catch (IllegalArgumentException | NoSuchElementException e) {
+            Homeostatic.LOGGER.debug("Unable to find biome for: %s", biome.toString());
+        }
+
+        return BiomeCategory.Type.MISSING;
+    }
+
+    public static BiomeCategory.Type getBiomeCategory(Biome biome) {
+        ResourceLocation key = ForgeRegistries.BIOMES.getKey(biome);
+        BiomeCategory biomeCategory = BIOME_CATEGORIES.getOrDefault(key, BiomeCategory.MISSING);
+
+        try {
+            return BiomeCategory.Type.valueOf(biomeCategory.type());
+        }
+        catch (IllegalArgumentException e) {
             Homeostatic.LOGGER.debug("Unable to find biome for: %s", biome.toString());
         }
 

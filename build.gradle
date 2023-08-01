@@ -43,8 +43,6 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 minecraft {
     mappings channel: "${mappings_channel}", version: "${mappings_version}-${minecraft_version}"
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
     runs {
         client {
             workingDirectory project.file("run").canonicalPath
@@ -111,14 +109,14 @@ dependencies {
     else {
         runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
         //runtimeOnly fg.deobf("curse.maven:configured-457570:4462839")
-        //runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:${bop_version}")
-        //runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_version}")
+        runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:${bop_version}")
+        runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_version}")
         //runtimeOnly fg.deobf("curse.maven:byg-247560:${byg_version}")
         //runtimeOnly fg.deobf("curse.maven:corgilib-693313:${corgilib_version}")
         //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
-        //runtimeOnly fg.deobf("curse.maven:twilightforest-227639:${twilightforest_version}")
+        runtimeOnly fg.deobf("curse.maven:twilightforest-227639:${twilightforest_version}")
         //runtimeOnly fg.deobf("curse.maven:botania-225643:???")
-        //runtimeOnly fg.deobf("curse.maven:curios-309927:4583413")
+        runtimeOnly fg.deobf("curse.maven:curios-309927:4583413")
         //runtimeOnly fg.deobf("curse.maven:croptopia-415438:4512807")
         //runtimeOnly fg.deobf("curse.maven:farmers_delight-398521:???")
         //runtimeOnly fg.deobf("curse.maven:xerca-341575:???")
@@ -127,7 +125,7 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:sophisticated_backpacks-422301:???")
         //runtimeOnly fg.deobf("curse.maven:ecologics-570463:???")
         //runtimeOnly fg.deobf("curse.maven:sprout-565856:???")
-        //runtimeOnly fg.deobf("curse.maven:arsnouveau-401955:${ars_version}")
+        runtimeOnly fg.deobf("curse.maven:arsnouveau-401955:${ars_version}")
         //runtimeOnly fg.deobf("curse.maven:create-328085:${create_version}")
         //runtimeOnly fg.deobf("curse.maven:create_cafe-542235:???")
         //runtimeOnly fg.deobf("curse.maven:kiwi-303657:???")
