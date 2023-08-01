@@ -1,12 +1,22 @@
 package homeostatic.proxy;
 
+import java.util.Map;
+
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,6 +26,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import homeostatic.config.ConfigHandler;
+import homeostatic.common.biome.BiomeData;
+import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.fluid.HomeostaticFluids;
@@ -26,6 +38,7 @@ import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.common.recipe.PurifiedLeatherFlask;
 import homeostatic.common.recipe.RemoveArmorEnhancement;
 import homeostatic.Homeostatic;
+import homeostatic.mixin.BiomeAccessor;
 import homeostatic.network.NetworkHandler;
 
 @Mod.EventBusSubscriber(modid = Homeostatic.MODID)
@@ -38,6 +51,8 @@ public class CommonProxy {
 
         ConfigHandler.init();
         registerListeners(bus);
+
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::serverStart);
     }
 
     public void registerListeners(IEventBus bus) {
@@ -93,6 +108,35 @@ public class CommonProxy {
             event.getRegistry().register(RemoveArmorEnhancement.REMOVE_ARMOR_ENHANCEMENT_SERIALIZER);
         }
 
+    }
+
+    public void serverStart(ServerStartedEvent event) {
+        Registry<Biome> biomeRegistry = BuiltinRegistries.BIOME;
+
+        for (Map.Entry<ResourceKey<Biome>, Biome> entry : biomeRegistry.entrySet()) {
+            ResourceKey<Biome> biomeResourceKey = entry.getKey();
+            ResourceLocation biomeName = biomeResourceKey.location();
+
+            Holder<Biome> biomeHolder = biomeRegistry.getOrCreateHolder(biomeResourceKey);
+            Biome biome = biomeHolder.value();
+            BiomeAccessor biomeAccessor = (BiomeAccessor) (Object) biome;
+            Biome.BiomeCategory biomeCategory = Biome.getBiomeCategory(biomeHolder);
+            BiomeData biomeData = BiomeRegistry.BIOMES.get(biomeCategory);
+            float dayNightOffset = biomeData.getDayNightOffset(biome.getPrecipitation());
+            double humidity = biomeData.getHumidity(biomeHolder);
+
+            Homeostatic.LOGGER.debug(
+                "Biome: " + biomeName
+                    + "\nprecipitation_type=" + biome.getPrecipitation()
+                    + "\ntemperature=" + biome.getBaseTemperature()
+                    + "\ntemperatureModifier=" + biomeAccessor.homeostatic$getClimateSettings().temperatureModifier
+                    + "\ndownfall=" + biome.getDownfall()
+                    + "\ndayNightOffset=" + dayNightOffset
+                    + "\nhumidity=" + humidity
+                    + "\nbiomeCategory=" + biomeCategory
+
+            );
+        }
     }
 
 }

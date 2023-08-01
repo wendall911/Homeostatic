@@ -5,9 +5,10 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BiomeBuilderMixin",
-    "ServerLevelAccessor",
+    "BiomeAccessor",
     "CakeBlockMixin",
-    "RecipeProviderAccessor"
+    "RecipeProviderAccessor",
+    "ServerLevelAccessor"
   ],
   "client": [],
   "injectors": {
