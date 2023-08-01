@@ -263,6 +263,9 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.tfLoc("thornlands"), BiomeCategory.Type.DRYLAND);
         add(ModIntegration.tfLoc("final_plateau"), BiomeCategory.Type.DRYLAND);
         add(ModIntegration.tfLoc("underground"), BiomeCategory.Type.UNDERGROUND);
+
+        // Ars Nouveau
+        add(ModIntegration.arsLoc("archwood_forest"), BiomeCategory.Type.FOREST);
     }
     
     protected void add (ResourceKey<Biome> biomeResourceKey, BiomeCategory.Type type) {
