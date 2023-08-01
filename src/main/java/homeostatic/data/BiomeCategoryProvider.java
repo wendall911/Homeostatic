@@ -55,7 +55,7 @@ public class BiomeCategoryProvider implements DataProvider {
         add(Biomes.WINDSWEPT_HILLS, BiomeCategory.Type.EXTREME_HILLS);
         add(Biomes.WINDSWEPT_GRAVELLY_HILLS, BiomeCategory.Type.EXTREME_HILLS);
         add(Biomes.WINDSWEPT_FOREST, BiomeCategory.Type.EXTREME_HILLS);
-        add(Biomes.STONY_SHORE, BiomeCategory.Type.EXTREME_HILLS);
+        add(Biomes.STONY_SHORE, BiomeCategory.Type.BEACH);
         add(Biomes.JUNGLE, BiomeCategory.Type.JUNGLE);
         add(Biomes.SPARSE_JUNGLE, BiomeCategory.Type.JUNGLE);
         add(Biomes.BAMBOO_JUNGLE, BiomeCategory.Type.JUNGLE);
@@ -74,7 +74,7 @@ public class BiomeCategoryProvider implements DataProvider {
         add(Biomes.WARM_OCEAN, BiomeCategory.Type.WARM_OCEAN);
         add(Biomes.LUKEWARM_OCEAN, BiomeCategory.Type.LUKEWARM_OCEAN);
         add(Biomes.DEEP_LUKEWARM_OCEAN, BiomeCategory.Type.DEEP_LUKEWARM_OCEAN);
-        add(Biomes.DEEP_FROZEN_OCEAN, BiomeCategory.Type.DEEP_COLD_OCEAN);
+        add(Biomes.DEEP_FROZEN_OCEAN, BiomeCategory.Type.OCEAN);
         add(Biomes.FROZEN_OCEAN, BiomeCategory.Type.COLD_OCEAN);
         add(Biomes.OCEAN, BiomeCategory.Type.OCEAN);
         add(Biomes.DEEP_OCEAN, BiomeCategory.Type.OCEAN);
@@ -110,10 +110,10 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.bopLoc("floodplain"), BiomeCategory.Type.RAINFOREST);
         add(ModIntegration.bopLoc("rocky_rainforest"), BiomeCategory.Type.RAINFOREST);
         add(ModIntegration.bopLoc("rainforest"), BiomeCategory.Type.RAINFOREST);
-        add(ModIntegration.bopLoc("wetland"), BiomeCategory.Type.PLAINS);
+        add(ModIntegration.bopLoc("wetland"), BiomeCategory.Type.SWAMP);
         add(ModIntegration.bopLoc("grassland"), BiomeCategory.Type.PLAINS);
         add(ModIntegration.bopLoc("clover_patch"), BiomeCategory.Type.PLAINS);
-        add(ModIntegration.bopLoc("muskeg"), BiomeCategory.Type.PLAINS);
+        add(ModIntegration.bopLoc("muskeg"), BiomeCategory.Type.ICY);
         add(ModIntegration.bopLoc("shrubland"), BiomeCategory.Type.PLAINS);
         add(ModIntegration.bopLoc("rocky_shrubland"), BiomeCategory.Type.PLAINS);
         add(ModIntegration.bopLoc("cherry_blossom_grove"), BiomeCategory.Type.PLAINS);
@@ -130,9 +130,9 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.bopLoc("ominous_woods"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("origin_valley"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("highland_moor"), BiomeCategory.Type.FOREST);
-        add(ModIntegration.bopLoc("highland"), BiomeCategory.Type.FOREST);
-        add(ModIntegration.bopLoc("crag"), BiomeCategory.Type.FOREST);
-        add(ModIntegration.bopLoc("jade_cliffs"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.bopLoc("highland"), BiomeCategory.Type.EXTREME_HILLS);
+        add(ModIntegration.bopLoc("crag"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.bopLoc("jade_cliffs"), BiomeCategory.Type.EXTREME_HILLS);
         add(ModIntegration.bopLoc("maple_woods"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("mystic_grove"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bopLoc("old_growth_woodland"), BiomeCategory.Type.FOREST);
@@ -144,7 +144,7 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.bopLoc("dune_beach"), BiomeCategory.Type.BEACH);
         add(ModIntegration.bopLoc("scrubland"), BiomeCategory.Type.SAVANNA);
         add(ModIntegration.bopLoc("wooded_scrubland"), BiomeCategory.Type.SAVANNA);
-        add(ModIntegration.bopLoc("wasteland"), BiomeCategory.Type.SAVANNA);
+        add(ModIntegration.bopLoc("wasteland"), BiomeCategory.Type.DESERT);
         add(ModIntegration.bopLoc("bog"), BiomeCategory.Type.BOG);
         add(ModIntegration.bopLoc("tundra"), BiomeCategory.Type.BOG);
         add(ModIntegration.bopLoc("crystalline_chasm"), BiomeCategory.Type.NETHER);
@@ -153,8 +153,8 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.bopLoc("visceral_heap"), BiomeCategory.Type.NETHER);
         add(ModIntegration.bopLoc("withered_abyss"), BiomeCategory.Type.NETHER);
         add(ModIntegration.bopLoc("dead_forest"), BiomeCategory.Type.EXTREME_HILLS);
-        add(ModIntegration.bopLoc("glowing_grotto"), BiomeCategory.Type.RIVER);
-        add(ModIntegration.bopLoc("spider_nest"), BiomeCategory.Type.RIVER);
+        add(ModIntegration.bopLoc("glowing_grotto"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.bopLoc("spider_nest"), BiomeCategory.Type.UNDERGROUND);
         add(ModIntegration.bopLoc("volcano"), BiomeCategory.Type.VOLCANIC);
         add(ModIntegration.bopLoc("volcanic_plains"), BiomeCategory.Type.VOLCANIC);
         add(ModIntegration.bopLoc("old_growth_dead_forest"), BiomeCategory.Type.TAIGA);
@@ -211,7 +211,7 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.bygLoc("twilight_meadow"), BiomeCategory.Type.BOG);
         add(ModIntegration.bygLoc("weeping_witch_forest"), BiomeCategory.Type.BOG);
         add(ModIntegration.bygLoc("lush_stacks"), BiomeCategory.Type.WARM_OCEAN);
-        add(ModIntegration.bygLoc("dead_sea"), BiomeCategory.Type.VOLCANIC);
+        add(ModIntegration.bygLoc("dead_sea"), BiomeCategory.Type.DEAD_SEA);
         add(ModIntegration.bygLoc("howling_peaks"), BiomeCategory.Type.MOUNTAIN);
         add(ModIntegration.bygLoc("jacaranda_forest"), BiomeCategory.Type.RAINFOREST);
         add(ModIntegration.bygLoc("tropical_rainforest"), BiomeCategory.Type.RAINFOREST);

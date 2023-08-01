@@ -8,7 +8,6 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -16,7 +15,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -77,6 +75,9 @@ public class Environment {
             }
         });
 
+        /*
+         * Check blocks and calculate radiation.
+         */
         for (int x = -12; x <= 12; x++) {
             for (int z = -12; z <= 12; z++) {
                 if (isSheltered && (x <= 2 && x >= -2) && (z <= 2 && z >= -2)) {
@@ -94,7 +95,6 @@ public class Environment {
                     // If in the void, this gets weird, let's just catch and move on.
                     try {
                         palette = chunk.getSection((blockpos.getY() >> 4) - chunk.getMinSection()).getStates();
-
                     }
                     catch (Exception e) {
                         continue;
@@ -128,6 +128,9 @@ public class Environment {
                                 hasRadiation = state.getValue(BlockStateProperties.LIT);
                             }
 
+                            /*
+                             * Ignore campfire heat if campfire is being used as a smoker.
+                             */
                             if (hasRadiation && Objects.requireNonNull(state.getBlock().toString()).contains("campfire")) {
                                 for (int i = 1; i <= 5; i++) {
                                     if (hasRadiation && world.getBlockState(blockpos.above(i)).is(BlockTags.BEEHIVES)) {
@@ -142,7 +145,7 @@ public class Environment {
                                 boolean obscured = VecMath.isBlockObscured(sp, vPos);
 
                                 if (!state.getFluidState().isEmpty()) {
-                                    double amount = state.getFluidState().getAmount() / 8;
+                                    double amount = state.getFluidState().getAmount() / 8.0;
                                     radiation += blockRadiation.getBlockRadiation(distance, obscured, amount, y);
                                 } else {
                                     radiation += blockRadiation.getBlockRadiation(distance, obscured, y);

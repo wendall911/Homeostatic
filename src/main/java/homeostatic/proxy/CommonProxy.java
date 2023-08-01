@@ -83,13 +83,25 @@ public class CommonProxy {
             Holder<Biome> biomeHolder = biomeRegistry.getOrCreateHolder(biomeResourceKey).getOrThrow(false, error);
             BiomeCategory.Type biomeCategory = BiomeCategoryManager.getBiomeCategory(biomeHolder);
             BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+            Biome biome = biomeHolder.value();
+            Biome.Precipitation precipitation = biome.getPrecipitation();
+            String temperatureModifier = biomeData.isFrozen() ? "FROZEN" : "NONE";
+            float dayNightOffset = biomeData.getDayNightOffset(precipitation);
+            double humidity = biomeData.getHumidity(precipitation);
 
             if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
                 if (biomeCategory == BiomeCategory.Type.MISSING) {
                     Homeostatic.LOGGER.warn("Missing biome in registry, will set to neutral temperature for: %s", biomeName);
                 }
-                Homeostatic.LOGGER.debug("Biome: " + biomeName + "\nbiomeCategory=" + biomeCategory);
-                Homeostatic.LOGGER.debug(biomeData);
+
+                Homeostatic.LOGGER.debug("Biome: " + biomeName
+                    + "\nprecipitation_type=" + precipitation
+                    + "\ntemperature=" + biomeData.getTemperature(precipitation)
+                    + "\ntemperatureModifier=" + temperatureModifier
+                    + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
+                    + "\ndayNightOffset=" + dayNightOffset
+                    + "\nhumidity=" + humidity
+                    + "\nbiomeCategory=" + biomeCategory);
             }
         }
     }
