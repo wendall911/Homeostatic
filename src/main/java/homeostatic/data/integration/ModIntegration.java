@@ -22,6 +22,7 @@ public class ModIntegration {
     public static final String SPROUT_MODID = "sprout";
     public static final String SCUBA_GEAR_MODID = "scuba_gear";
     public static final String TF_MODID = "twilightforest";
+    public static final String UG_MODID = "undergarden";
     public static final String XERCA_MODID = "xercamod";
 
     public static ResourceLocation alexLoc(String path) {
@@ -90,6 +91,10 @@ public class ModIntegration {
 
     public static ResourceLocation tfLoc(String path) {
         return new ResourceLocation(TF_MODID, path);
+    }
+
+    public static ResourceLocation ugLoc(String path) {
+        return new ResourceLocation(UG_MODID, path);
     }
 
 }
