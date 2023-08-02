@@ -195,6 +195,7 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.bygLoc("temperate_grove"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bygLoc("black_forest"), BiomeCategory.Type.FOREST);
         add(ModIntegration.bygLoc("atacama_desert"), BiomeCategory.Type.DESERT);
+        add(ModIntegration.bygLoc("windswept_desert"), BiomeCategory.Type.DESERT);
         add(ModIntegration.bygLoc("windswept_dunes"), BiomeCategory.Type.DESERT);
         add(ModIntegration.bygLoc("mojave_desert"), BiomeCategory.Type.DESERT);
         add(ModIntegration.bygLoc("bayou"), BiomeCategory.Type.SWAMP);
