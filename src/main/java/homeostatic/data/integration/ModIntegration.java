@@ -6,6 +6,7 @@ public class ModIntegration {
 
     public static final String ALEX_MODID = "alexsmobs";
     public static final String ARS_MODID = "ars_nouveau";
+    public static final String BOP_MODID = "biomesoplenty";
     public static final String BYG_MODID = "byg";
     public static final String CREATE_MODID = "create";
     public static final String CC_MODID = "createcafe";
@@ -14,13 +15,14 @@ public class ModIntegration {
     public static final String FD_MODID = "farmersdelight";
     public static final String FT_MODID = "fruittrees";
     public static final String IE_MODID = "immersiveengineering";
+    public static final String KOBOLDS_MODID = "kobolds";
     public static final String MC_MODID = "minecraft";
     public static final String MORECRAFT_MODID = "morecraft";
     public static final String PATCHOULI_MODID = "patchouli";
     public static final String SPROUT_MODID = "sprout";
-    public static final String XERCA_MODID = "xercamod";
     public static final String SCUBA_GEAR_MODID = "scuba_gear";
-    public static final String KOBOLDS_MODID = "kobolds";
+    public static final String TF_MODID = "twilightforest";
+    public static final String XERCA_MODID = "xercamod";
 
     public static ResourceLocation alexLoc(String path) {
         return new ResourceLocation(ALEX_MODID, path);
@@ -28,6 +30,10 @@ public class ModIntegration {
 
     public static ResourceLocation arsLoc(String path) {
         return new ResourceLocation(ARS_MODID, path);
+    }
+
+    public static ResourceLocation bopLoc(String path) {
+        return new ResourceLocation(BOP_MODID, path);
     }
 
     public static ResourceLocation bygLoc(String path) {
@@ -80,6 +86,10 @@ public class ModIntegration {
 
     public static ResourceLocation koboldsLoc(String path) {
         return new ResourceLocation(KOBOLDS_MODID, path);
+    }
+
+    public static ResourceLocation tfLoc(String path) {
+        return new ResourceLocation(TF_MODID, path);
     }
 
 }

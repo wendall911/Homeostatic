@@ -1,14 +1,13 @@
 package homeostatic.util;
 
-import homeostatic.common.TagManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
+import homeostatic.common.TagManager;
 import homeostatic.common.temperature.Environment;
-
-import static homeostatic.util.TempHelper.TemperatureDirection;
+import homeostatic.common.temperature.TemperatureDirection;
 
 public class InsulationHelper {
 

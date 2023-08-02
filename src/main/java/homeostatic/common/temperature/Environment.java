@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
-import homeostatic.common.TagManager;
-import homeostatic.config.ConfigHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -17,28 +15,30 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.PalettedContainer;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
 import homeostatic.common.block.BlockRadiation;
 import homeostatic.common.block.BlockRadiationManager;
+import homeostatic.common.TagManager;
+import homeostatic.config.ConfigHandler;
 import homeostatic.util.VecMath;
 
 public class Environment {
 
-    public static final float PARITY = 1.108F;
-    public static final float PARITY_LOW = 0.997F;
-    public static final float PARITY_HIGH = 1.220F;
-    public static final float HOT = 1.888F;
-    public static final float EXTREME_HEAT = 2.557F;
-    public static final float EXTREME_COLD = -0.3403614458F;
+    public static final float PARITY = TemperatureRange.PARITY.temperature;
+    public static final float PARITY_LOW = TemperatureRange.PARITY_LOW.temperature;
+    public static final float PARITY_HIGH = TemperatureRange.PARITY_HIGH.temperature;
+    public static final float HOT = TemperatureRange.HOT.temperature;
+    public static final float EXTREME_HEAT = TemperatureRange.EXTREME_HEAT.temperature;
+    public static final float EXTREME_COLD = TemperatureRange.EXTREME_COLD.temperature;
 
     public static EnvironmentInfo get(ServerLevel world, ServerPlayer sp) {
         double radiation = 0.0;
@@ -75,6 +75,9 @@ public class Environment {
             }
         });
 
+        /*
+         * Check blocks and calculate radiation.
+         */
         for (int x = -12; x <= 12; x++) {
             for (int z = -12; z <= 12; z++) {
                 if (isSheltered && (x <= 2 && x >= -2) && (z <= 2 && z >= -2)) {
@@ -92,7 +95,6 @@ public class Environment {
                     // If in the void, this gets weird, let's just catch and move on.
                     try {
                         palette = chunk.getSection((blockpos.getY() >> 4) - chunk.getMinSection()).getStates();
-
                     }
                     catch (Exception e) {
                         continue;
@@ -117,7 +119,7 @@ public class Environment {
 
                     // Only check up to three blocks up, and ignore radiation if fire resistance is active.
                     if (y <= 3 && effectInstance == null) {
-                        BlockRadiation blockRadiation = BlockRadiationManager.RADIATION_BLOCKS.get(state.getBlock().getRegistryName());
+                        BlockRadiation blockRadiation = BlockRadiationManager.getBlockRadiation(state.getBlock());
 
                         if (blockRadiation != null) {
                             boolean hasRadiation = true;
@@ -126,6 +128,9 @@ public class Environment {
                                 hasRadiation = state.getValue(BlockStateProperties.LIT);
                             }
 
+                            /*
+                             * Ignore campfire heat if campfire is being used as a smoker.
+                             */
                             if (hasRadiation && Objects.requireNonNull(state.getBlock().getRegistryName()).getPath().contains("campfire")) {
                                 for (int i = 1; i <= 5; i++) {
                                     if (hasRadiation && world.getBlockState(blockpos.above(i)).is(BlockTags.BEEHIVES)) {
@@ -140,7 +145,7 @@ public class Environment {
                                 boolean obscured = VecMath.isBlockObscured(sp, vPos);
 
                                 if (!state.getFluidState().isEmpty()) {
-                                    double amount = state.getFluidState().getAmount() / 8;
+                                    double amount = state.getFluidState().getAmount() / 8.0;
                                     radiation += blockRadiation.getBlockRadiation(distance, obscured, amount, y);
                                 } else {
                                     radiation += blockRadiation.getBlockRadiation(distance, obscured, y);

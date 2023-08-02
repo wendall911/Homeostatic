@@ -35,6 +35,7 @@ public final class DataGenerators {
         gen.addProvider(new RadiationBlocksProvider(gen, Homeostatic.MODID));
         gen.addProvider(new DrinkingFluidsProvider(gen, Homeostatic.MODID));
         gen.addProvider(new DrinkableItemsProvider(gen, Homeostatic.MODID));
+        gen.addProvider(new BiomeCategoryProvider(gen, Homeostatic.MODID));
         gen.addProvider(new MixingRecipeProvider(gen));
         gen.addProvider(new FillingRecipeProvider(gen));
         gen.addProvider(new ModBookProvider(gen));

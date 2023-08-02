@@ -4,7 +4,6 @@ import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import homeostatic.config.ConfigHandler;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -15,10 +14,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.GameType;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -31,8 +29,9 @@ import homeostatic.common.fluid.DrinkingFluidManager;
 import homeostatic.common.item.DrinkableItem;
 import homeostatic.common.item.DrinkableItemManager;
 import homeostatic.common.water.WaterInfo;
+import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.Hydration;
-import homeostatic.data.integration.ModIntegration;
+import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
 import homeostatic.network.NetworkHandler;
 import homeostatic.network.WaterData;
@@ -64,11 +63,11 @@ public class WaterHelper {
         drink(sp, getItemHydration(stack), update);
     }
 
-    public static void drink(ServerPlayer sp, ItemStack stack, @Nullable ResourceLocation fluid) {
+    public static void drink(ServerPlayer sp, ItemStack stack, @Nullable Fluid fluid) {
         drink(sp, stack, fluid, true);
     }
 
-    public static void drink(ServerPlayer sp, ItemStack stack, @Nullable ResourceLocation fluid, boolean update) {
+    public static void drink(ServerPlayer sp, ItemStack stack, @Nullable Fluid fluid, boolean update) {
         drink(sp, getItemHydration(stack, fluid), update);
     }
 
@@ -111,7 +110,7 @@ public class WaterHelper {
         }
     }
 
-    public static Hydration getItemHydration(@Nullable ItemStack stack, @Nullable ResourceLocation fluid) {
+    public static Hydration getItemHydration(@Nullable ItemStack stack, @Nullable Fluid fluid) {
         DrinkableItem drinkableItem = stack != null ? DrinkableItemManager.get(stack) : null;
         DrinkingFluid drinkingFluid = fluid != null ? DrinkingFluidManager.get(fluid) : null;
         Hydration hydration = null;
@@ -126,7 +125,7 @@ public class WaterHelper {
     }
 
     public static Hydration getItemHydration(ItemStack stack) {
-        ResourceLocation fluid = null;
+        Fluid fluid = null;
 
         if (stack.getItem() instanceof PotionItem) {
             ResourceLocation water = Registry.POTION.getKey(Potions.WATER);
@@ -134,17 +133,17 @@ public class WaterHelper {
             stack = new ItemStack(Items.AIR);
 
             if (!potion.contentEquals(water.toString())) {
-                fluid = Homeostatic.loc("purified_water");
+                fluid = HomeostaticFluids.PURIFIED_WATER;
             }
             else {
-                fluid = ModIntegration.mcLoc("water");
+                fluid = Fluids.WATER;
             }
         }
         else {
             IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
 
             if (fluidHandlerItem != null) {
-                fluid = Registry.FLUID.getKey(fluidHandlerItem.getFluidInTank(0).getFluid());
+                fluid = fluidHandlerItem.getFluidInTank(0).getFluid();
             }
         }
 
@@ -152,9 +151,7 @@ public class WaterHelper {
     }
 
     public static Hydration getFluidHydration(Fluid fluid) {
-        ResourceLocation fluidKey = Registry.FLUID.getKey(fluid);
-
-        return getItemHydration(null, fluidKey);
+        return getItemHydration(null, fluid);
     }
 
     public static void drinkWater(ServerPlayer sp) {
@@ -163,9 +160,8 @@ public class WaterHelper {
 
     public static void drinkDirtyWaterItem(ServerPlayer sp, boolean update) {
         ItemStack air = new ItemStack(Items.AIR);
-        ResourceLocation water = ModIntegration.mcLoc("water");
 
-        drink(sp, air, water, update);
+        drink(sp, air, Fluids.WATER, update);
     }
 
     public static void drawWaterBar(int scaledWidth, int scaledHeight, MobEffectInstance effectInstance, Gui gui, PoseStack matrix, float waterSaturationLevel, int waterLevel, int tickCount) {

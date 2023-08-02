@@ -43,8 +43,6 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 minecraft {
     mappings channel: "${mappings_channel}", version: mappings_version
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
     runs {
         client {
             workingDirectory project.file("run").canonicalPath
@@ -116,7 +114,6 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:byg-247560:${byg_version}")
         //runtimeOnly fg.deobf("curse.maven:bop-220318:3759237")
         //runtimeOnly fg.deobf("curse.maven:botania-225643:3936568")
-        //runtimeOnly fg.deobf("curse.maven:patchouli-306770:3846086")
         //runtimeOnly fg.deobf("curse.maven:curios-309927:3841948")
         //runtimeOnly fg.deobf("curse.maven:croptopia-415438:3947782")
         //runtimeOnly fg.deobf("curse.maven:farmers_delight-398521:3834150")
@@ -135,6 +132,8 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:leavemybarsalone-281715:3671258")
         //runtimeOnly fg.deobf("curse.maven:scuba_gear-399090:3680208")
         //runtimeOnly fg.deobf("curse.maven:kobolds-484967:4019488")
+        //runtimeOnly fg.deobf("curse.maven:the_undergarden-379849:3810810")
+        //runtimeOnly fg.deobf("curse.maven:twilightforest-227639:4337390")
     }
 }
 

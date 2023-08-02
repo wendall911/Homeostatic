@@ -26,6 +26,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import homeostatic.config.ConfigHandler;
+import homeostatic.common.biome.BiomeCategory;
+import homeostatic.common.biome.BiomeCategoryManager;
 import homeostatic.common.biome.BiomeData;
 import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.block.HomeostaticBlocks;
@@ -38,7 +40,6 @@ import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.common.recipe.PurifiedLeatherFlask;
 import homeostatic.common.recipe.RemoveArmorEnhancement;
 import homeostatic.Homeostatic;
-import homeostatic.mixin.BiomeAccessor;
 import homeostatic.network.NetworkHandler;
 
 @Mod.EventBusSubscriber(modid = Homeostatic.MODID)
@@ -118,24 +119,27 @@ public class CommonProxy {
             ResourceLocation biomeName = biomeResourceKey.location();
 
             Holder<Biome> biomeHolder = biomeRegistry.getOrCreateHolder(biomeResourceKey);
+            BiomeCategory.Type biomeCategory = BiomeCategoryManager.getBiomeCategory(biomeHolder);
+            BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
             Biome biome = biomeHolder.value();
-            BiomeAccessor biomeAccessor = (BiomeAccessor) (Object) biome;
-            Biome.BiomeCategory biomeCategory = Biome.getBiomeCategory(biomeHolder);
-            BiomeData biomeData = BiomeRegistry.BIOMES.get(biomeCategory);
-            float dayNightOffset = biomeData.getDayNightOffset(biome.getPrecipitation());
-            double humidity = biomeData.getHumidity(biomeHolder);
+            Biome.Precipitation precipitation = biome.getPrecipitation();
+            String temperatureModifier = biomeData.isFrozen() ? "FROZEN" : "NONE";
+            float dayNightOffset = biomeData.getDayNightOffset(precipitation);
+            double humidity = biomeData.getHumidity(precipitation);
 
-            Homeostatic.LOGGER.debug(
-                "Biome: " + biomeName
-                    + "\nprecipitation_type=" + biome.getPrecipitation()
-                    + "\ntemperature=" + biome.getBaseTemperature()
-                    + "\ntemperatureModifier=" + biomeAccessor.homeostatic$getClimateSettings().temperatureModifier
-                    + "\ndownfall=" + biome.getDownfall()
-                    + "\ndayNightOffset=" + dayNightOffset
-                    + "\nhumidity=" + humidity
-                    + "\nbiomeCategory=" + biomeCategory
-
-            );
+            if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
+                if (biomeCategory == BiomeCategory.Type.MISSING) {
+                    Homeostatic.LOGGER.warn("Missing biome in registry, will set to neutral temperature for: %s", biomeName);
+                }
+                Homeostatic.LOGGER.debug("Biome: " + biomeName
+                        + "\nprecipitation_type=" + precipitation
+                        + "\ntemperature=" + biomeData.getTemperature(precipitation)
+                        + "\ntemperatureModifier=" + temperatureModifier
+                        + "\ndownfall=" + biome.getDownfall()
+                        + "\ndayNightOffset=" + dayNightOffset
+                        + "\nhumidity=" + humidity
+                        + "\nbiomeCategory=" + biomeCategory);
+            }
         }
     }
 

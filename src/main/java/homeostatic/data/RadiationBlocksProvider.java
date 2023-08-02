@@ -8,8 +8,6 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import homeostatic.common.block.BlockRadiationManager;
-import homeostatic.data.integration.ModIntegration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
@@ -17,6 +15,8 @@ import net.minecraft.resources.ResourceLocation;
 
 import homeostatic.Homeostatic;
 import homeostatic.common.block.BlockRadiation;
+import homeostatic.common.block.BlockRadiationManager;
+import homeostatic.data.integration.ModIntegration;
 
 public class RadiationBlocksProvider implements DataProvider {
 
