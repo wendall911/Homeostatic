@@ -5,7 +5,7 @@
   "death.attack.heat.player": "%1$s 在与 %2$s 战斗时死于烫伤",
   "death.attack.hyperthermia": "中暑夺走了可怜的 %1$s",
   "death.attack.hyperthermia.player": "在与 %2$s 战斗时，中暑夺走了可怜的 %1$s",
-  "effect.thirst": "脱水",
+  "effect.homeostatic.thirst": "脱水",
   "fluid_type.homeostatic.purified_water_type": "纯净水",
   "info.homeostatic.book.education.body_temp.intro": "更多信息即将到来 ...",
   "info.homeostatic.book.education.body_temp.name": "教程：体温",

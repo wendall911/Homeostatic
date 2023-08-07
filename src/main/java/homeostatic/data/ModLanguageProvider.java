@@ -164,7 +164,7 @@ public class ModLanguageProvider extends LanguageProvider {
     }
 
     protected void addEffect(String name, String text) {
-        add("effect." + name, text);
+        add("effect." + Homeostatic.MODID + "." + name, text);
     }
 
     protected void addTooltip(String name, String text) {
