@@ -108,6 +108,7 @@ dependencies {
     else {
         runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
         runtimeOnly fg.deobf("curse.maven:configured-457570:3947885")
+        //runtimeOnly fg.deobf("curse.maven:primalwinter-393321:4499145")
         //runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_version}")
         //runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:${bop_version}")
         //runtimeOnly fg.deobf("curse.maven:corgilib-693313:4554111")
@@ -267,6 +268,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('scuba-gear')
         mainFile.addOptional('kobolds')
         mainFile.addOptional('the-twilight-forest')
+        mainFile.addOptional('primal-winter')
     }
 }
 
@@ -295,6 +297,7 @@ modrinth {
 			optional.project "jei"
 			optional.project "biomesyougo"
 			optional.project "kobolds"
+            optional.project "primal-winter"
         }
     }
 }
