@@ -263,7 +263,7 @@ public class EnvironmentData {
         /*
          * Only calculate in Overworld.
          */
-        if (!DimensionType.OVERWORLD_LOCATION.equals(dimensionType)) {
+        if (!DimensionType.OVERWORLD_LOCATION.toString().contains(dimensionType.effectsLocation().toString())) {
             return 0F;
         }
 
@@ -298,8 +298,8 @@ public class EnvironmentData {
         /*
          * Only calculate in Overworld.
          */
-        if (!DimensionType.OVERWORLD_LOCATION.equals(dimensionType)) {
-            return 0F;
+        if (!DimensionType.OVERWORLD_LOCATION.toString().contains(dimensionType.effectsLocation().toString())) {
+            return temperature;
         }
 
         /*
@@ -323,7 +323,7 @@ public class EnvironmentData {
         /*
          * Only calculate season temperatures in Overworld
          */
-        if (!DimensionType.OVERWORLD_LOCATION.equals(dimensionType)) {
+        if (!DimensionType.OVERWORLD_LOCATION.toString().contains(dimensionType.effectsLocation().toString())) {
             return biomeTemp;
         }
 
