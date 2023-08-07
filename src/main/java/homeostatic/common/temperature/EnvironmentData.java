@@ -301,7 +301,7 @@ public class EnvironmentData {
          * Only calculate in Overworld.
          */
         if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
-            return 0F;
+            return temperature;
         }
 
         /*
