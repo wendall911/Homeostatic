@@ -5,7 +5,7 @@
   "death.attack.heat.player": "%1$s died of scalding whilst fighting %2$s",
   "death.attack.hyperthermia": "Hyperthermia has claimed poor %1$s",
   "death.attack.hyperthermia.player": "Hyperthermia has claimed poor %1$s whilst fighting %2$s",
-  "effect.thirst": "Thirst",
+  "effect.homeostatic.thirst": "Thirst",
   "fluid_type.homeostatic.purified_water_type": "Purified Water",
   "info.homeostatic.book.education.body_temp.intro": "More info coming soon ...",
   "info.homeostatic.book.education.body_temp.name": "Education: Body Temperature",
