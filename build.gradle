@@ -36,7 +36,6 @@ repositories {
 group = 'com.github.wendall911.homeostatic'
 version = "${minecraft_version}-${mod_version}"
 archivesBaseName = "${mod_name}"
-def modid = "${modid}"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '17'
 
@@ -46,7 +45,7 @@ minecraft {
     runs {
         client {
             workingDirectory project.file("run").canonicalPath
-            arg "-mixin.config=${modid}.mixins.json"
+            arg "-mixin.config=${mod_id}.mixins.json"
             property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
@@ -60,12 +59,12 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-            arg "-mixin.config=${modid}.mixins.json"
+            arg "-mixin.config=${mod_id}.mixins.json"
             property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
-            args '--mod', "${modid}",
+            args '--mod', "${mod_id}",
                     '--all',
                     '--output', file('src/generated/resources/'),
                     '--existing', file('src/main/resources/'),
@@ -82,9 +81,9 @@ minecraft {
 }
 
 mixin {
-    add sourceSets.main, "${modid}.refmap.json"
+    add sourceSets.main, "${mod_id}.refmap.json"
 
-    config "${modid}.mixins.json"
+    config "${mod_id}.mixins.json"
 }
 
 sourceSets.main.resources {
@@ -149,21 +148,23 @@ jar {
             "Implementation-Version": "${archiveVersion}",
             "Implementation-Vendor" :"${mod_author}",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "${modid}.mixins.json"
+            "MixinConfigs": "${mod_id}.mixins.json"
         ])
     }
 }
 
 def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta', '*.mixins.json']
-def replaceProperties = [ 'version': version,
-    'minecraft_version_range': minecraft_version_range,
-    'forge_version_range': forge_version_range,
-    "loader_version_range": loader_version_range
+def replaceProperties = [
+    'version': version, 'forge_mc_version_range': forge_mc_version_range, 'forge_version_range': forge_version_range,
+    'license': license, 'mod_id': mod_id, 'mod_author': mod_author, 'mod_description': mod_description,
+    'mod_name': mod_name, 'issue_tracker': issue_tracker, 'mod_credits': mod_credits,
+    'loader_version_range': loader_version_range, 'mod_update_branch': mod_update_branch
 ]
 
 processResources {
     duplicatesStrategy(DuplicatesStrategy.FAIL)
     inputs.properties replaceProperties
+    exclude '.cache'
     replaceProperties.put 'project', project
 
     filesMatching(resourceTargets) {
@@ -210,7 +211,7 @@ task changelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
     templateContent = file('files/templates/changelog.mustache').getText('UTF-8');
     fromRepo = file("$projectDir");
     toRef = "HEAD";
-    fromRef = "${last_mod_version}";
+    fromRef = "${minecraft_version}-${last_mod_version}";
 }
 
 tasks.build.dependsOn('changelog', 'generateUpdates')
@@ -241,8 +242,8 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.changelog = file('build/libs/' + project.getName() + '-' + version + '-changelog.txt')
         mainFile.addJavaVersion('Java 17')
         mainFile.addModLoader('Forge')
-        mainFile.releaseType = "${cf_release_type}"
-        "${cf_versions}".split(',').each {
+        mainFile.releaseType = "${release_type}"
+        "${release_versions}".split(',').each {
             mainFile.addGameVersion("${it}")
         }
         mainFile.addOptional('configured')
@@ -276,7 +277,7 @@ modrinth {
         token = project.modrinthKey
         projectId = project.hsModrinthId
         version = getVersion()
-        versionType = "${cf_release_type}"
+        versionType = "${release_type}"
         def changelogFile = 'build/libs/' + project.getName() + '-' + version + '-changelog.txt'
         if (file(changelogFile).exists()) {
             changelog = file(changelogFile).text
