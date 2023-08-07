@@ -118,7 +118,7 @@ public class EnvironmentData {
             Holder<Biome> chunkBiome = pair.getFirst();
             BlockPos chunkPos = pair.getSecond();
 
-            float chunkTemp = getHeightAdjustedTemperature(chunkBiome, chunkPos);
+            float chunkTemp = getHeightAdjustedTemperature(world, chunkBiome, chunkPos);
 
             accumulatedDryTemp += isUnderground ? chunkTemp : getSeasonAdjustedTemperature(world, chunkBiome, chunkTemp, chunkPos);
 
@@ -260,6 +260,15 @@ public class EnvironmentData {
     }
 
     private static float getDayNightOffset(ServerLevel world, Holder<Biome> biome, double relativeHumidity) {
+        ResourceKey<Level> worldKey = world.dimension();
+
+        /*
+         * Only calculate in Overworld.
+         */
+        if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
+            return 0F;
+        }
+
         BiomeData biomeData = BiomeRegistry.getDataForBiome(biome);
         long time = (world.getDayTime() % 24000);
         float maxTemp = biomeData.getDayNightOffset(BiomeHelper.getPrecipitation(biome.value().getModifiedClimateSettings()));
@@ -282,10 +291,25 @@ public class EnvironmentData {
         return offset * humidityOffset;
     }
 
-    private static float getHeightAdjustedTemperature(Holder<Biome> biomeHolder, BlockPos pos) {
-        Biome biome = biomeHolder.get();
+    private static float getHeightAdjustedTemperature(ServerLevel world, Holder<Biome> biomeHolder, BlockPos pos) {
+        ResourceKey<Level> worldKey = world.dimension();
         BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
-        float temperature = biomeData.getTemperature(biomeHolder.get().getPrecipitationAt(pos));
+        Biome.Precipitation precipitation = biomeHolder.get().getPrecipitationAt(pos);
+        float temperature = biomeData.getTemperature(precipitation);
+
+        /*
+         * Only calculate in Overworld.
+         */
+        if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
+            return 0F;
+        }
+
+        /*
+         * If not already a snowy biome, add SNOW offset if Primal Winter mod is loaded.
+         */
+        if (ModList.get().isLoaded("primalwinter") && precipitation != Biome.Precipitation.SNOW) {
+            temperature += BiomeData.SNOW_OFFSET;
+        }
 
         if (pos.getY() > 80) {
             float noise = (float)(TEMPERATURE_NOISE.getValue((double)((float)pos.getX() / 8.0F), (double)((float)pos.getZ() / 8.0F), false) * 8.0D);
@@ -296,12 +320,21 @@ public class EnvironmentData {
     }
 
     private static float getSeasonAdjustedTemperature(ServerLevel world, Holder<Biome> biomeHolder, float biomeTemp, BlockPos pos) {
+        ResourceKey<Level> worldKey = world.dimension();
+
+        /*
+         * Only calculate season temperatures in Overworld
+         */
+        if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
+            return biomeTemp;
+        }
+
+        BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+
         if (ModList.get().isLoaded("sereneseasons")) {
-            ResourceKey<Level> worldKey = world.dimension();
             boolean seasonEffects = ServerConfig.isDimensionWhitelisted(world.dimension());
 
-            if (seasonEffects && worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
-                BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+            if (seasonEffects) {
                 int season;
                 float lateSummerOffset = biomeData.MC_DEGREE * 5;
                 int subSeason = SeasonHelper.getSeasonState(world).getSubSeason().ordinal();
@@ -314,17 +347,35 @@ public class EnvironmentData {
                     season = subSeason - 3;
                 }
 
-                double temp = variation * Math.cos( ((season - 1) * Math.PI) / 6) + biomeTemp;
+                double temp = getSeasonTemperature(season, variation, biomeTemp);
 
                 if (season == 2) {
                     temp += lateSummerOffset;
                 }
 
-                return(float) temp;
+                return (float) temp;
             }
+        }
+        /*
+         * Always set season to winter if Primal Winter mod is loaded.
+         *
+         * Will always use the full season temperature variation in calculatons.
+         *
+         * Always will use the full season temperature variation used in RAIN calculations.
+         */
+        else if (ModList.get().isLoaded("primalwinter")) {
+            int season = 7;
+            float variation = biomeData.getSeasonVariation(Biome.Precipitation.RAIN);
+            double temp = getSeasonTemperature(season, variation, biomeTemp);
+
+            return (float) temp;
         }
 
         return biomeTemp;
+    }
+
+    private static double getSeasonTemperature(int season, float variation, float biomeTemp) {
+        return variation * Math.cos(((season - 1) * Math.PI) / 6) + biomeTemp;
     }
 
     @Override
