@@ -132,10 +132,14 @@ public class BodyTemperature {
                     tempChange = -(tempChange);
                     if (!canSweat) {
                         // Shivering
-                        float exhaustion = Math.abs(Math.min(tempChange * 200.0F, 0.2F));
+                        float exhaustion = Math.abs(Math.min(tempChange * 200.0F, 0.1F));
+                        int foodLevel = sp.getFoodData().getFoodLevel();
 
-                        //Homeostatic.LOGGER.debug("shivering ... adding exhaustion: %s", exhaustion);
-                        sp.getFoodData().addExhaustion(exhaustion);
+                        if (foodLevel > 6 && Homeostatic.RANDOM.nextFloat() < 0.2F) {
+                            sp.getFoodData().addExhaustion(exhaustion);
+                        }
+
+                        //Homeostatic.LOGGER.debug("shivering ... adding exhaustion: %s, %s", exhaustion, foodLevel);
                     }
                 }
                 case WARMING -> {
