@@ -219,7 +219,7 @@ public class BodyTemperature {
         if (this.skinTemperatureDirection == TemperatureDirection.NONE) return change;
 
         if (localTemperature < Environment.PARITY) {
-            double temp = Math.min(localTempF + insulationModifier, parityTempF);
+            double temp = Math.max(Math.min(localTempF + insulationModifier, parityTempF), 0);
 
             minutes = 8.845477e-7 * Math.pow(temp, 4.75641);
 
@@ -279,7 +279,7 @@ public class BodyTemperature {
              * with insulation modifier below parity. In cold environment,
              * insulation reduces the effective temperature.
              */
-            temp = Math.min(localTempF + insulationModifier, parityTempF);
+            temp = Math.max(Math.min(localTempF + insulationModifier, parityTempF), 0);
 
             if (Math.abs(parityTempF - temp) > 5.0) {
                 minutes = 383.4897 + (12.38784 - 383.4897) / (1 + Math.pow((temp / 43.26779), 8.271186));
