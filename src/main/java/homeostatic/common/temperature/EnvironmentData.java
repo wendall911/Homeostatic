@@ -386,7 +386,7 @@ public class EnvironmentData {
                 ", waterTemperature=" + waterTemperature +
                 ", localTemperature=" + localTemperature +
                 ", envRadiation=" + envRadiation +
-                '}';
+                "}";
     }
 
 }
