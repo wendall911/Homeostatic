@@ -6,6 +6,7 @@
   "mixins": [
     "ServerLevelAccessor",
     "CakeBlockMixin",
+    "LivingEntityMixin",
     "RecipeProviderAccessor"
   ],
   "client": [],
