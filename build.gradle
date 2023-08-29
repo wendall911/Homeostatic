@@ -11,11 +11,6 @@ plugins {
 
 repositories {
     maven {
-        // location of the maven that hosts Mantle and JEI files
-        name = 'Progwml6 maven'
-        url = 'https://dvs1.progwml6.com/files/maven'
-    }
-    maven {
         name = "Curse Maven"
         url = "https://cursemaven.com"
         content {
