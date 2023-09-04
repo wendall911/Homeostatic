@@ -26,6 +26,11 @@ repositories {
         name = "Geckolib"
         url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
     }
+    maven {
+        // location of the maven that hosts Mantle and JEI files
+        name = 'Progwml6 maven'
+        url = 'https://dvs1.progwml6.com/files/maven'
+    }
 }
 
 group = 'com.github.wendall911.homeostatic'
@@ -91,18 +96,20 @@ dependencies {
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
-    compileOnly fg.deobf("curse.maven:create-328085:4007544")
+    compileOnly fg.deobf("curse.maven:create-328085:4625533")
     compileOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
     implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
 
     if (System.getenv('DATA_GEN') != null) {
-        runtimeOnly fg.deobf("curse.maven:create-328085:4007544")
-        runtimeOnly fg.deobf("curse.maven:flywheel-486392:3934664")
+        runtimeOnly fg.deobf("curse.maven:create-328085:4625533")
     }
     else {
         runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
         runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
+        //runtimeOnly fg.deobf("slimeknights.tconstruct:TConstruct:${minecraft_version}-${tic_version}")
+        //runtimeOnly fg.deobf("slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}")
+        //runtimeOnly fg.deobf("curse.maven:create-328085:4625533")
         //runtimeOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
         //runtimeOnly fg.deobf("curse.maven:primalwinter-393321:4044096")
         //runtimeOnly fg.deobf("curse.maven:crafttweaker-239197:${crafttweaker_version}")
@@ -121,8 +128,6 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:geckolib-388172:4181370")
         //runtimeOnly fg.deobf("curse.maven:sprout-565856:3788680")
         //runtimeOnly fg.deobf("curse.maven:arsnouveau-401955:3950802")
-        //runtimeOnly fg.deobf("curse.maven:create-328085:4007544")
-        //runtimeOnly fg.deobf("curse.maven:flywheel-486392:3934664")
         //runtimeOnly fg.deobf("curse.maven:create_cafe-542235:3995985")
         //runtimeOnly fg.deobf("curse.maven:puzzleslib-495476:3804332")
         //runtimeOnly fg.deobf("curse.maven:leavemybarsalone-281715:3671258")
@@ -264,6 +269,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('scuba-gear')
         mainFile.addOptional('kobolds')
         mainFile.addOptional('primal-winter')
+        mainFile.addOptional('tinkers-construct')
     }
 }
 
@@ -293,6 +299,7 @@ modrinth {
 			optional.project "biomesyougo"
 			optional.project "kobolds"
             optional.project "primal-winter"
+            optional.project "tinkers-construct"
         }
     }
 }
