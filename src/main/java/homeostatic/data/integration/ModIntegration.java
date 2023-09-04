@@ -19,8 +19,11 @@ public class ModIntegration {
     public static final String MC_MODID = "minecraft";
     public static final String MORECRAFT_MODID = "morecraft";
     public static final String PATCHOULI_MODID = "patchouli";
+    public static final String PW_MODID = "primalwinter";
     public static final String SPROUT_MODID = "sprout";
     public static final String SCUBA_GEAR_MODID = "scuba_gear";
+    public static final String SS_MODID = "sereneseasons";
+    public static final String TCON_MODID = "tconstruct";
     public static final String TF_MODID = "twilightforest";
     public static final String XERCA_MODID = "xercamod";
 
@@ -90,6 +93,14 @@ public class ModIntegration {
 
     public static ResourceLocation tfLoc(String path) {
         return new ResourceLocation(TF_MODID, path);
+    }
+
+    public static ResourceLocation createLoc(String path) {
+        return new ResourceLocation(CREATE_MODID, path);
+    }
+
+    public static ResourceLocation tconLoc(String path) {
+        return new ResourceLocation(TCON_MODID, path);
     }
 
 }

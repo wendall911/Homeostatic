@@ -32,6 +32,7 @@ import sereneseasons.config.ServerConfig;
 
 import homeostatic.common.biome.BiomeData;
 import homeostatic.common.biome.BiomeRegistry;
+import homeostatic.data.integration.ModIntegration;
 import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.util.BiomeHelper;
 import homeostatic.util.TempHelper;
@@ -307,7 +308,7 @@ public class EnvironmentData {
         /*
          * If not already a snowy biome, add SNOW offset if Primal Winter mod is loaded.
          */
-        if (ModList.get().isLoaded("primalwinter") && precipitation != Biome.Precipitation.SNOW) {
+        if (ModList.get().isLoaded(ModIntegration.PW_MODID) && precipitation != Biome.Precipitation.SNOW) {
             temperature += BiomeData.SNOW_OFFSET;
         }
 
@@ -331,7 +332,7 @@ public class EnvironmentData {
 
         BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
 
-        if (ModList.get().isLoaded("sereneseasons")) {
+        if (ModList.get().isLoaded(ModIntegration.SS_MODID)) {
             boolean seasonEffects = ServerConfig.isDimensionWhitelisted(world.dimension());
 
             if (seasonEffects) {
@@ -363,7 +364,7 @@ public class EnvironmentData {
          *
          * Always will use the full season temperature variation used in RAIN calculations.
          */
-        else if (ModList.get().isLoaded("primalwinter")) {
+        else if (ModList.get().isLoaded(ModIntegration.PW_MODID)) {
             int season = 7;
             float variation = biomeData.getSeasonVariation(Biome.Precipitation.RAIN);
             double temp = getSeasonTemperature(season, variation, biomeTemp);
