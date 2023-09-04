@@ -1,7 +1,7 @@
 plugins {
     id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'net.neoforged.gradle' version '[6.0.13,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'org.spongepowered.mixin' version '0.7.+'
     id 'net.darkhax.curseforgegradle' version '1.+'
@@ -91,7 +91,7 @@ sourceSets.main.resources {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "net.neoforged:forge:${minecraft_version}-${forge_version}"
 
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
@@ -243,6 +243,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.changelog = file('build/libs/' + project.getName() + '-' + version + '-changelog.txt')
         mainFile.addJavaVersion('Java 17')
         mainFile.addModLoader('Forge')
+        mainFile.addModLoader('NeoForge')
         mainFile.releaseType = "${release_type}"
         "${release_versions}".split(',').each {
             mainFile.addGameVersion("${it}")
@@ -286,6 +287,7 @@ modrinth {
         }
         uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
         gameVersions = "${release_versions}".split(",") as List<String>
+        loaders = ['neoforge', 'forge']
         dependencies {
 			optional.project "create"
 			optional.project "ecologics"
