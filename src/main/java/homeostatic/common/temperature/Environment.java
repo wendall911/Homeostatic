@@ -147,9 +147,9 @@ public class Environment {
 
                                 if (!state.getFluidState().isEmpty()) {
                                     double amount = state.getFluidState().getAmount() / 8.0;
-                                    radiation += blockRadiation.getBlockRadiation(distance, obscured, amount, y);
+                                    radiation += blockRadiation.getBlockRadiation(state, distance, obscured, amount, y);
                                 } else {
-                                    radiation += blockRadiation.getBlockRadiation(distance, obscured, y);
+                                    radiation += blockRadiation.getBlockRadiation(state, distance, obscured, y);
                                 }
                             }
                         }
