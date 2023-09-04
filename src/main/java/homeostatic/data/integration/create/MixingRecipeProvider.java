@@ -3,13 +3,12 @@ package homeostatic.data.integration.create;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
-import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo;
 
-import homeostatic.data.integration.ModIntegration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.material.Fluids;
 
 import homeostatic.common.fluid.HomeostaticFluids;
+import homeostatic.data.integration.ModIntegration;
 
 import static homeostatic.Homeostatic.loc;
 
@@ -35,7 +34,7 @@ public class MixingRecipeProvider extends ProcessingRecipeGen {
     }
 
     @Override
-    protected IRecipeTypeInfo getRecipeType() {
+    protected AllRecipeTypes getRecipeType() {
         return AllRecipeTypes.MIXING;
     }
 

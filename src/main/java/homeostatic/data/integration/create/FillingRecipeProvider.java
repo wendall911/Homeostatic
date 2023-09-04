@@ -2,9 +2,7 @@ package homeostatic.data.integration.create;
 
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
-import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo;
 
-import homeostatic.data.integration.ModIntegration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
@@ -14,6 +12,7 @@ import net.minecraft.world.level.material.Fluid;
 
 import homeostatic.common.TagManager;
 import homeostatic.common.item.HomeostaticItems;
+import homeostatic.data.integration.ModIntegration;
 import homeostatic.util.WaterHelper;
 
 import static homeostatic.Homeostatic.loc;
@@ -44,7 +43,7 @@ public class FillingRecipeProvider extends ProcessingRecipeGen {
     }
 
     @Override
-    protected IRecipeTypeInfo getRecipeType() {
+    protected AllRecipeTypes getRecipeType() {
         return AllRecipeTypes.FILLING;
     }
 

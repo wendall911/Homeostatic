@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 
+import homeostatic.data.integration.ModIntegration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -306,7 +307,7 @@ public class EnvironmentData {
         /*
          * If not already a snowy biome, add SNOW offset if Primal Winter mod is loaded.
          */
-        if (ModList.get().isLoaded("primalwinter") && biome.getPrecipitation() != Biome.Precipitation.SNOW) {
+        if (ModList.get().isLoaded(ModIntegration.PW_MODID) && biome.getPrecipitation() != Biome.Precipitation.SNOW) {
             temperature += BiomeData.SNOW_OFFSET;
         }
 
@@ -330,7 +331,7 @@ public class EnvironmentData {
 
         BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
 
-        if (ModList.get().isLoaded("sereneseasons")) {
+        if (ModList.get().isLoaded(ModIntegration.SS_MODID)) {
             boolean seasonEffects = BiomeConfig.enablesSeasonalEffects(biomeHolder);
 
             if (seasonEffects) {
@@ -362,7 +363,7 @@ public class EnvironmentData {
          *
          * Always will use the full season temperature variation used in RAIN calculations.
          */
-        else if (ModList.get().isLoaded("primalwinter")) {
+        else if (ModList.get().isLoaded(ModIntegration.PW_MODID)) {
             int season = 7;
             float variation = biomeData.getSeasonVariation(Biome.Precipitation.RAIN);
             double temp = getSeasonTemperature(season, variation, biomeTemp);
