@@ -26,6 +26,11 @@ repositories {
         name = "Geckolib"
         url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
     }
+    maven {
+        // location of the maven that hosts Mantle and JEI files
+        name = 'Progwml6 maven'
+        url = 'https://dvs1.progwml6.com/files/maven'
+    }
 }
 
 group = 'com.github.wendall911.homeostatic'
@@ -265,6 +270,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('kobolds')
         mainFile.addOptional('the-twilight-forest')
         mainFile.addOptional('primal-winter')
+        mainFile.addOptional('tinkers-construct')
     }
 }
 
@@ -294,6 +300,7 @@ modrinth {
 			optional.project "biomesyougo"
 			optional.project "kobolds"
             optional.project "primal-winter"
+            optional.project "tinkers-construct"
         }
     }
 }
