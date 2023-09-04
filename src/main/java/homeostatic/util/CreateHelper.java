@@ -1,6 +1,6 @@
 package homeostatic.util;
 
-import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerBlock;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 
 import net.minecraft.world.level.block.state.BlockState;
 
