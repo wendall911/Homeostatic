@@ -54,6 +54,16 @@ public class RadiationBlocksProvider implements DataProvider {
         add(ModIntegration.bygLoc("cryptic_magma_block"), 1200);
         add(ModIntegration.bygLoc("boric_lantern"), 400);
         add(ModIntegration.bygLoc("cryptic_lantern"), 470);
+
+        // Create
+        add(ModIntegration.createLoc("blaze_burner"), 8325);
+
+        // Tinkers' Construct
+        add(ModIntegration.tconLoc("smeltery_controller"), 5550);
+        add(ModIntegration.tconLoc("foundry_controller"), 5550);
+        add(ModIntegration.tconLoc("seared_melter"), 2450);
+        add(ModIntegration.tconLoc("seared_heater"), 2450);
+        add(ModIntegration.tconLoc("scorched_alloyer"), 2450);
     }
 
     protected void add(ResourceLocation loc, double maxRadiation) {
