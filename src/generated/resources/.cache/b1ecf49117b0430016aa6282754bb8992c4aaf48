@@ -1,10 +1,11 @@
-// 1.19.2	2023-09-04T11:03:28.904448613	Homeostatic - Block Radiation 
+// 1.19.2	2024-04-04T09:14:28.713866902	Homeostatic - Block Radiation 
 98647b84350ba935c6081771f094ee0c3e23fb4c data/byg/environment/block_radiation/boric_campfire.json
 17ca2c1949bd4c64cb1ef09771677aa45b7c5e7c data/byg/environment/block_radiation/boric_lantern.json
 1def640cd434f57f90f5de941f7e7ba129a9c64c data/byg/environment/block_radiation/cryptic_campfire.json
 c0c63c9bd7b0526da00509a5cf056a86cb636b2c data/byg/environment/block_radiation/cryptic_lantern.json
 f4ee2a26723c087dd2146b5e93a544e68f94b5e5 data/byg/environment/block_radiation/cryptic_magma_block.json
 4f8365ec26addb5cb9cf103115e2c650b43dc7f6 data/create/environment/block_radiation/blaze_burner.json
+d53fb31e4753337eece25e3851ee6a81a61a0ee6 data/create/environment/block_radiation/lit_blaze_burner.json
 ef08618d795101a02c6e9f7166a5ba76198085b4 data/minecraft/environment/block_radiation/blast_furnace.json
 6e64932c11ed13f755399bb99398a06e6b44c664 data/minecraft/environment/block_radiation/campfire.json
 b77aeb12ef1f3667c3626a48a91d9b085f9f107a data/minecraft/environment/block_radiation/fire.json
