@@ -97,12 +97,12 @@ dependencies {
 
     implementation fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
     compileOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
-    compileOnly fg.deobf("curse.maven:create-328085:4011414")
+    compileOnly fg.deobf("curse.maven:create-328085:4835190")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
     implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
 
     if (System.getenv('DATA_GEN') != null) {
-        runtimeOnly fg.deobf("curse.maven:create-328085:4011414")
+        runtimeOnly fg.deobf("curse.maven:create-328085:4835190")
     }
     else {
         runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
@@ -127,7 +127,7 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:ecologics-570463:3939727")
         //runtimeOnly fg.deobf("curse.maven:sprout-565856:3967673")
         //runtimeOnly fg.deobf("curse.maven:arsnouveau-401955:3950796")
-        //runtimeOnly fg.deobf("curse.maven:create-328085:4011414")
+        //runtimeOnly fg.deobf("curse.maven:create-328085:4835190")
         //runtimeOnly fg.deobf("curse.maven:create_cafe-542235:4012312")
         //runtimeOnly fg.deobf("curse.maven:kiwi-303657:3974084")
         //runtimeOnly fg.deobf("curse.maven:fruittrees-355467:3990227")
