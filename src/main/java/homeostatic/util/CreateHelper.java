@@ -1,6 +1,7 @@
 package homeostatic.util;
 
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
+import com.simibubi.create.content.processing.burner.LitBlazeBurnerBlock;
 
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -23,6 +24,18 @@ public class CreateHelper {
                 case KINDLED:
                     yield 0.75D * radiation;
                 case SEETHING:
+                    yield radiation;
+            };
+        }
+        else if (state.hasProperty(LitBlazeBurnerBlock.FLAME_TYPE)) {
+            LitBlazeBurnerBlock.FlameType flameType = state.getValue(LitBlazeBurnerBlock.FLAME_TYPE);
+
+            level = switch(flameType) {
+                default:
+                    yield 0D;
+                case REGULAR:
+                    yield 0.67D * radiation;
+                case SOUL:
                     yield radiation;
             };
         }

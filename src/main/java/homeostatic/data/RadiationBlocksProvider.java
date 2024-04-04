@@ -53,6 +53,7 @@ public class RadiationBlocksProvider implements DataProvider {
 
         // Create
         add(ModIntegration.createLoc("blaze_burner"), 8325);
+        add(ModIntegration.createLoc("lit_blaze_burner"), 8325);
 
         // Tinkers' Construct
         add(ModIntegration.tconLoc("smeltery_controller"), 5550);
