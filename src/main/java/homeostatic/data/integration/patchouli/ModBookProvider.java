@@ -45,20 +45,20 @@ public class ModBookProvider extends PatchouliBookProvider {
         bookBuilder.build(consumer);
     }
 
-    private BookBuilder addGameplay(BookBuilder bookBuilder) {
+    public BookBuilder addGameplay(BookBuilder bookBuilder) {
         CategoryBuilder category = bookBuilder.addCategory(
             "gameplay",
             prefix("gameplay.name"),
             prefix("gameplay.desc"),
             new ItemStack(Items.IRON_SWORD)
         )
-        .setSortnum(categorySortNum++);
+        .setSortnum(getCategorySortNum());
 
         EntryBuilder gameplayEnvironmentEntry = category.addEntry(
             "gameplay/environment",
             prefix("gameplay.environment.name"),
             new ItemStack(Items.CAMPFIRE)
-        ).setSortnum(entrySortNum++);
+        ).setSortnum(getEntrySortNum());
 
         gameplayEnvironmentEntry.addImagePage(bookImage("normal_outside"))
             .setTitle(prefix("gameplay.environment.title"))
@@ -69,7 +69,7 @@ public class ModBookProvider extends PatchouliBookProvider {
             "gameplay/body_temp",
             prefix("gameplay.body_temp.name"),
             new ItemStack(Items.LIGHT_GRAY_WOOL)
-        ).setSortnum(entrySortNum++);
+        ).setSortnum(getEntrySortNum());
 
         gameplayBodyTempEntry.addImagePage(bookImage("normal_body"))
             .setTitle(prefix("gameplay.body_temp.title"))
@@ -121,7 +121,7 @@ public class ModBookProvider extends PatchouliBookProvider {
             "gameplay/hydration",
             prefix("gameplay.hydration.name"),
             new ItemStack(HomeostaticItems.LEATHER_FLASK)
-        ).setSortnum(entrySortNum++);
+        ).setSortnum(getEntrySortNum());
 
         gameplayHydrationEntry.addImagePage(bookImage("water_bar"))
             .setTitle(prefix("gameplay.hydration.title"))
@@ -143,35 +143,43 @@ public class ModBookProvider extends PatchouliBookProvider {
         return category.build();
     }
 
-    private BookBuilder addEducation(BookBuilder bookBuilder) {
+    public BookBuilder addEducation(BookBuilder bookBuilder) {
         return bookBuilder.addCategory(
             "education",
             prefix("education.name"),
             prefix("education.desc"),
             new ItemStack(Items.BOOKSHELF)
         )
-        .setSortnum(categorySortNum++)
+        .setSortnum(getCategorySortNum())
         .addEntry(
             "education/environment",
             prefix("education.environment.name"),
             new ItemStack(Items.SOUL_CAMPFIRE)
-        ).setSortnum(entrySortNum++)
+        ).setSortnum(getEntrySortNum())
         .addTextPage(prefix("education.environment.intro")).build()
         .build()
         .addEntry(
             "education/body_temp",
             prefix("education.body_temp.name"),
             new ItemStack(Items.GREEN_WOOL)
-        ).setSortnum(entrySortNum++)
+        ).setSortnum(getEntrySortNum())
         .addTextPage(prefix("education.body_temp.intro")).build()
         .build()
         .addEntry(
             "education/hydration",
             prefix("education.hydration.name"),
             new ItemStack(HomeostaticItems.PURIFIED_WATER_BUCKET)
-        ).setSortnum(entrySortNum++)
+        ).setSortnum(getEntrySortNum())
         .addTextPage(prefix("education.hydration.intro")).build()
         .build().build();
+    }
+
+    public int getCategorySortNum() {
+        return ++categorySortNum;
+    }
+
+    public int getEntrySortNum() {
+        return ++entrySortNum;
     }
 
     private String prefix(String name) {
