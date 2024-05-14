@@ -189,14 +189,21 @@ def reobfArtifact = artifacts.add('default', reobfFile) {
 }
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact reobfArtifact
-        }
-    }
     repositories {
         maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+            name = 'GitHubPackages'
+            url = uri(maven_url)
+            credentials {
+                username = project.githubusername
+                password = project.githubtoken
+            }
+        }
+    }
+
+    publications {
+        gpr(MavenPublication) {
+            artifactId = mod_id
+            from(components.java)
         }
     }
 }
@@ -309,26 +316,6 @@ modrinth {
 			optional.project "kobolds"
             optional.project "primal-winter"
             optional.project "tinkers-construct"
-        }
-    }
-}
-
-publishing {
-    repositories {
-        maven {
-            name = 'GitHubPackages'
-            url = uri(maven_url)
-            credentials {
-                username = project.githubusername
-                password = project.githubtoken
-            }
-        }
-    }
-
-    publications {
-        gpr(MavenPublication) {
-            artifactId = mod_id
-            from(components.java)
         }
     }
 }
