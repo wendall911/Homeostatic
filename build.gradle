@@ -31,6 +31,14 @@ repositories {
         name = 'Progwml6 maven'
         url = 'https://dvs1.progwml6.com/files/maven'
     }
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/wendall911/Homeostatic")
+        credentials {
+            username = project.githubusername
+            password = project.githubtoken
+        }
+    }
 }
 
 group = 'com.github.wendall911.homeostatic'
@@ -301,6 +309,26 @@ modrinth {
 			optional.project "kobolds"
             optional.project "primal-winter"
             optional.project "tinkers-construct"
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = 'GitHubPackages'
+            url = uri(maven_url)
+            credentials {
+                username = project.githubusername
+                password = project.githubtoken
+            }
+        }
+    }
+
+    publications {
+        gpr(MavenPublication) {
+            artifactId = mod_id
+            from(components.java)
         }
     }
 }
