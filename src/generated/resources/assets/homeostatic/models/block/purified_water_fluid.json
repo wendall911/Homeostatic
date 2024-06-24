@@ -1,5 +1,4 @@
 {
-  "parent": "homeostatic:block/purified_water_fluid",
   "textures": {
     "particle": "homeostatic:block/fluid/still_water"
   }
