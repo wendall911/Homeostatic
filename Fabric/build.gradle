@@ -171,7 +171,6 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('the-twilight-forest')
         mainFile.addOptional('primal-winter')
         mainFile.addOptional('tinkers-construct')
-
     }
 }
 
@@ -202,7 +201,7 @@ modrinth {
             optional.project 'kobolds'
             optional.project 'primal-winter'
             optional.project 'tinkers-construct'
-
+            optional.project 'fruitful-fun'
         }
     }
 }

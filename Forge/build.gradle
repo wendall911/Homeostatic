@@ -270,6 +270,7 @@ modrinth {
             optional.project 'kobolds'
             optional.project 'primal-winter'
             optional.project 'tinkers-construct'
+            optional.project 'fruitful-fun'
         }
     }
 }
