@@ -1,0 +1,11 @@
+{
+  "type": "homeostatic:smoking_purified_leather_flask",
+  "cookingtime": 200,
+  "experience": 0.15,
+  "ingredient": {
+    "item": "homeostatic:leather_flask"
+  },
+  "result": {
+    "item": "homeostatic:leather_flask"
+  }
+}

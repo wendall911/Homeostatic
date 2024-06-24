@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_author}"
+  ],
+  "contact": {
+    "issues": "${issue_tracker}"
+  },
+  "license": "${license}",
+  "icon": "${mod_id}_icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "homeostatic.HomeostaticFabric"
+    ],
+    "client": [
+      "homeostatic.HomeostaticClientFabric"
+    ],
+    "fabric-datagen": [
+      "homeostatic.data.FabricDatagenInitializer"
+    ],
+    "rei_client": [
+      "homeostatic.integrations.rei.REIPlugin"
+    ],
+    "jei_mod_plugin": [
+      "homeostatic.integrations.jei.JEIPlugin"
+    ],
+    "spectrelib": [
+      "homeostatic.FabricConfigInitializer"
+    ],
+    "cardinal-components-entity": [
+      "homeostatic.common.components.HomeostaticComponents"
+    ]
+  },
+  "custom": {
+    "cardinal-components": [
+      "homeostatic:temperature_data_provider",
+      "homeostatic:thermometer_data_provider",
+      "homeostatic:water_data_provider",
+      "homeostatic:wetness_data_provider",
+      "homeostatic:item_fluid_provider"
+    ]
+  },
+  "mixins": [
+    "homeostatic.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "${fabric_loader_min_version}",
+    "fabric": "*",
+    "minecraft": "${fabric_mc_version_range}",
+    "java": ">=17"
+  }
+}

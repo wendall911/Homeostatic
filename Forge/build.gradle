@@ -1,0 +1,275 @@
+plugins {
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'org.spongepowered.mixin'
+    id 'net.darkhax.curseforgegradle' version '1.+'
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.71.8'
+    id 'com.modrinth.minotaur' version '2.+'
+}
+
+archivesBaseName = "${mod_id}"
+version = "${minecraft_version}-${mod_version}-FORGE"
+
+mixin {
+    add sourceSets.main, "${mod_id}-refmap.json"
+
+    config "${mod_id}.mixins.json"
+    config "${mod_id}_forge.mixins.json"
+}
+
+minecraft {
+    mappings channel: "${mappings_channel}", version: "${mappings_version}-${minecraft_version}"
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            taskName 'Client'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            args "-mixin.config=${mod_id}.mixins.json"
+            mods {
+                modClientRun {
+                    source sourceSets.main
+                    source project(":Common").sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            taskName 'Server'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            args "-mixin.config=${mod_id}.mixins.json"
+            mods {
+                modClientRun {
+                    source sourceSets.main
+                    source project(":Common").sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            taskName 'Data'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            args "-mixin.config=${mod_id}.mixins.json"
+            mods {
+                modDataRun {
+                    source sourceSets.main
+                    source project(":Common").sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources.srcDir 'src/generated/resources'
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    compileOnly project(":Common")
+    annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+
+    implementation fg.deobf(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_range}")
+    jarJar fg.deobf(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_range}") {
+        jarJar.pin(it, "${spectrelib_version}")
+    }
+
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    implementation fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    compileOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_forge_version}")
+    compileOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
+    implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE-SNAPSHOT")
+    implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
+
+    if (System.getenv('DATA_GEN') != null) {
+        runtimeOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
+    }
+    else {
+        //runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}-FORGE-SNAPSHOT"
+        runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
+        //runtimeOnly fg.deobf("curse.maven:configured-457570:4462839")
+        //runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:${bop_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:primalwinter-393321:4575861")
+        //runtimeOnly fg.deobf("curse.maven:byg-247560:${byg_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:corgilib-693313:${corgilib_forge_version}")
+        //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:twilightforest-227639:${twilight_forest_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:botania-225643:???")
+        //runtimeOnly fg.deobf("curse.maven:curios-309927:4583413")
+        //runtimeOnly fg.deobf("curse.maven:croptopia-415438:4512807")
+        //runtimeOnly fg.deobf("curse.maven:farmers_delight-398521:???")
+        //runtimeOnly fg.deobf("curse.maven:xerca-341575:???")
+        //runtimeOnly fg.deobf("curse.maven:morecraft-59648:???")
+        //runtimeOnly fg.deobf("curse.maven:sophisticated_core-618298:???")
+        //runtimeOnly fg.deobf("curse.maven:sophisticated_backpacks-422301:???")
+        //runtimeOnly fg.deobf("curse.maven:ecologics-570463:???")
+        //runtimeOnly fg.deobf("curse.maven:sprout-565856:???")
+        //runtimeOnly fg.deobf("curse.maven:arsnouveau-401955:${ars_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:create_cafe-542235:???")
+        //runtimeOnly fg.deobf("curse.maven:kiwi-303657:???")
+        //runtimeOnly fg.deobf("curse.maven:fruittrees-355467:???")
+        //runtimeOnly fg.deobf("curse.maven:appleskin-248787:4605078")
+        //runtimeOnly fg.deobf("curse.maven:puzzleslib-495476:4660882")
+        //runtimeOnly fg.deobf("curse.maven:leavemybarsalone-281715:4613509")
+        //runtimeOnly fg.deobf("curse.maven:scuba_gear-399090:4593711")
+        //runtimeOnly fg.deobf("curse.maven:kobolds-484967:4632499")
+    }
+}
+
+tasks.withType(JavaCompile) {
+    source(project(":Common").sourceSets.main.allSource)
+}
+
+def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta', '*.mixins.json']
+def replaceProperties = [
+    'version': version, 'forge_mc_version_range': forge_mc_version_range, 'forge_version_range': forge_version_range,
+    'license': license, 'mod_id': mod_id, 'mod_author': mod_author, 'mod_description': mod_description,
+    'mod_name': mod_name, 'issue_tracker': issue_tracker, 'mod_credits': mod_credits,
+    'loader_version_range': loader_version_range, 'mod_update_branch': mod_update_branch
+]
+
+processResources {
+    from project(":Common").sourceSets.main.resources
+    duplicatesStrategy(DuplicatesStrategy.FAIL)
+    inputs.properties replaceProperties
+    exclude '.cache'
+    replaceProperties.put 'project', project
+
+    filesMatching(resourceTargets) {
+        expand replaceProperties
+    }
+}
+
+tasks.jarJar.finalizedBy('reobfJar')
+jar.finalizedBy('reobfJarJar')
+
+reobf {
+    jarJar {}
+}
+
+tasks.jarJar.configure {
+    archiveClassifier.set("")
+}
+
+jarJar {
+    enable()
+}
+
+publishing {
+    repositories {
+        maven {
+            url "file://" + System.getenv("local_maven")
+        }
+    }
+}
+
+task changelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+    file = new File(project(":").projectDir.toString() + '/build/libs/changelog.txt');
+    templateContent = file(project(":").projectDir.toString() + '/files/templates/changelog.mustache').getText('UTF-8');
+    fromRepo = file("$projectDir");
+    toRef = "HEAD";
+    fromRef = "${minecraft_version}-${last_mod_version}";
+}
+
+def updates = tasks.register("generateUpdates", Copy) {
+    it.outputs.upToDateWhen {
+        false
+    }
+
+    it.from("../files/templates/") {
+        include 'updates.json'
+        expand 'version': version, 'minecraft_version': minecraft_version
+    }
+
+    it.into '../files/'
+}
+
+tasks.generateUpdates.mustRunAfter('jar', 'sourcesJar')
+
+tasks.build.dependsOn('changelog', 'generateUpdates')
+
+def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
+
+task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+    if (project.hasProperty('hscurseApiKey')) {
+        apiToken = project.hscurseApiKey
+        def mainFile = upload(project.hscurseId, file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
+        if (file(changelogFile).exists()) {
+            mainFile.changelog = file(changelogFile)
+        }
+        mainFile.addJavaVersion('Java 17')
+        mainFile.addModLoader('Forge')
+        mainFile.addModLoader('NeoForge')
+        mainFile.releaseType = "${release_type}"
+        "${release_versions}".split(',').each {
+            mainFile.addGameVersion("${it}")
+        }
+        mainFile.addOptional('configured')
+        mainFile.addOptional('catalogue')
+        mainFile.addOptional('jei')
+        mainFile.addOptional('simpletextoverlay')
+        mainFile.addOptional('serene-seasons')
+        mainFile.addOptional('biomes-o-plenty')
+        mainFile.addOptional('oh-the-biomes-youll-go')
+        mainFile.addOptional('croptopia')
+        mainFile.addOptional('farmers-delight')
+        mainFile.addOptional('xercamod')
+        mainFile.addOptional('kitteh6660s-morecraft')
+        mainFile.addOptional('sophisticated-backpacks')
+        mainFile.addOptional('ecologics')
+        mainFile.addOptional('ars-nouveau')
+        mainFile.addOptional('sprout')
+        mainFile.addOptional('create-cafe')
+        mainFile.addOptional('fruit-trees')
+        mainFile.addOptional('leave-my-bars-alone')
+        mainFile.addOptional('create')
+        mainFile.addOptional('patchouli')
+        mainFile.addOptional('scuba-gear')
+        mainFile.addOptional('kobolds')
+        mainFile.addOptional('primal-winter')
+        mainFile.addOptional('tinkers-construct')
+    }
+}
+
+modrinth {
+    if (project.hasProperty('hsModrinthId')) {
+        token = project.modrinthKey
+        projectId = project.hsModrinthId
+        version = getVersion()
+        versionType = "${release_type}"
+        if (file(changelogFile).exists()) {
+            changelog = file(changelogFile).text
+        }
+        uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
+        gameVersions = "${release_versions}".split(",") as List<String>
+        loaders = ['neoforge', 'forge']
+        dependencies {
+            optional.project 'create'
+            optional.project 'ecologics'
+            optional.project 'create-cafe'
+            optional.project 'scuba-gear'
+            optional.project 'farmers-delight'
+            optional.project 'xercamod'
+            optional.project 'leave-my-bars-alone'
+            optional.project 'sprout'
+            optional.project 'patchouli'
+            optional.project 'jei'
+            optional.project 'biomesyougo'
+            optional.project 'kobolds'
+            optional.project 'primal-winter'
+            optional.project 'tinkers-construct'
+        }
+    }
+}

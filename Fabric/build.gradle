@@ -1,0 +1,208 @@
+plugins {
+    id 'fabric-loom'
+    id 'maven-publish'
+    id 'idea'
+    id 'net.darkhax.curseforgegradle' version '1.+'
+    id 'com.modrinth.minotaur' version '2.+'
+}
+
+version = "${minecraft_version}-${mod_version}-FABRIC"
+archivesBaseName = "${mod_id}"
+
+repositories {
+    maven {
+        url "https://maven.shedaniel.me/" // for rei
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings(loom.layered {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${minecraft_version}:${mappings_version}@zip")
+    })
+
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    modImplementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_range}"
+
+    modRuntimeOnly "curse.maven:architectury-419699:${architectury_version}"
+    modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
+    modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    modCompileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
+    modCompileOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
+    include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
+    include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
+	modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
+    modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
+    modRuntimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
+
+    modRuntimeOnly("com.terraformersmc:modmenu:${mod_menu_version}") {
+        transitive = false
+    }
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+    implementation project(":Common")
+
+    include group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_version}"
+
+    if (System.getenv('DATA_GEN') != null) {
+        // Datagen mods
+    }
+    else {
+        // Runtime testing mods
+        // This doesn't work for whatever reason. Such a strange port
+        //modRuntimeOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
+    }
+}
+
+loom {
+	if (project(":Common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
+        accessWidenerPath.set(project(":Common").file("src/main/resources/${mod_id}.accesswidener"))
+    }
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
+    runs {
+        client {
+            client()
+            setConfigName("Fabric Client")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+        server {
+            server()
+            setConfigName("Fabric Server")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+        commonDatagen {
+            client()
+            vmArg "-D${mod_id}.common_datagen=1"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.modid=${mod_id}"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("../Common/src/generated/resources")}"
+        }
+        fabricDatagen {
+            client()
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.modid=${mod_id}"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated/resources")}"
+        }
+    }
+}
+
+sourceSets.main.resources.srcDir 'src/generated/resources'
+
+processResources {
+    from project(":Common").sourceSets.main.resources
+    // Added so we have book data and damage types built in Forge datagen
+    from ('../Forge/src/generated/resources/') {
+        exclude '**/recipes/*'
+    }
+    
+    inputs.property "version", project.version
+    exclude '.cache'
+    duplicatesStrategy(DuplicatesStrategy.FAIL)
+
+    filesMatching("fabric.mod.json") {
+        expand 'version': project.version, 'fabric_mc_version_range': project.fabric_mc_version_range, 'license': project.license,
+                'mod_id': project.mod_id, 'mod_author': project.mod_author, 'mod_description': project.mod_description,
+                'mod_name': project.mod_name, 'issue_tracker': project.issue_tracker, 'fabric_loader_min_version': fabric_loader_min_version
+    }
+
+    filesMatching("pack.mcmeta") {
+        expand 'mod_name': project.mod_name
+    }
+
+    filesMatching('*.mixins.json') {
+        expand "mod_id": "${archivesBaseName}"
+    }
+}
+
+tasks.withType(JavaCompile) {
+    source(project(":Common").sourceSets.main.allSource)
+}
+
+publishing {
+    repositories {
+        maven {
+            url "file://" + System.getenv("local_maven")
+        }
+    }
+}
+
+def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
+
+task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+    if (project.hasProperty('hscurseApiKey')) {
+        apiToken = project.hscurseApiKey
+        def mainFile = upload(project.hscurseId, file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
+        mainFile.changelog = file(changelogFile)
+        mainFile.addJavaVersion('Java 17')
+        mainFile.addModLoader('Fabric')
+        mainFile.releaseType = "${release_type}"
+        "${release_versions}".split(',').each {
+            mainFile.addGameVersion("${it}")
+        }
+        mainFile.addRequirement('fabric-api')
+        mainFile.addOptional('jei')
+        mainFile.addOptional('simpletextoverlay')
+        mainFile.addOptional('serene-seasons')
+        mainFile.addOptional('biomes-o-plenty')
+        mainFile.addOptional('oh-the-biomes-youll-go')
+        mainFile.addOptional('croptopia')
+        mainFile.addOptional('farmers-delight')
+        mainFile.addOptional('xercamod')
+        mainFile.addOptional('kitteh6660s-morecraft')
+        mainFile.addOptional('sophisticated-backpacks')
+        mainFile.addOptional('ecologics')
+        mainFile.addOptional('ars-nouveau')
+        mainFile.addOptional('sprout')
+        mainFile.addOptional('create-cafe')
+        mainFile.addOptional('fruit-trees')
+        mainFile.addOptional('leave-my-bars-alone')
+        mainFile.addOptional('create')
+        mainFile.addOptional('patchouli')
+        mainFile.addOptional('scuba-gear')
+        mainFile.addOptional('kobolds')
+        mainFile.addOptional('the-twilight-forest')
+        mainFile.addOptional('primal-winter')
+        mainFile.addOptional('tinkers-construct')
+
+    }
+}
+
+modrinth {
+    if (project.hasProperty('hsModrinthId')) {
+        token = project.modrinthKey
+        projectId = project.hsModrinthId
+        version = getVersion()
+        versionType = "${release_type}"
+        if (file(changelogFile).exists()) {
+            changelog = file(changelogFile).text
+        }
+        uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
+        gameVersions = "${release_versions}".split(",") as List<String>
+        dependencies {
+            required.project 'fabric-api'
+            optional.project 'create'
+            optional.project 'ecologics'
+            optional.project 'create-cafe'
+            optional.project 'scuba-gear'
+            optional.project 'farmers-delight'
+            optional.project 'xercamod'
+            optional.project 'leave-my-bars-alone'
+            optional.project 'sprout'
+            optional.project 'patchouli'
+            optional.project 'jei'
+            optional.project 'biomesyougo'
+            optional.project 'kobolds'
+            optional.project 'primal-winter'
+            optional.project 'tinkers-construct'
+
+        }
+    }
+}

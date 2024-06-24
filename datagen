@@ -1,3 +1,3 @@
 #!/bin/sh
 
-DATA_GEN=all ./gradlew runData
+DATA_GEN=all ./gradlew :Fabric:runCommonDatagen :Fabric:runFabricDatagen :Forge:Data || exit 1

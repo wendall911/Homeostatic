@@ -1,308 +1,118 @@
 plugins {
-    id 'idea'
-    id 'maven-publish'
-    id 'net.neoforged.gradle' version '[6.0.13,6.2)'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-    id 'org.spongepowered.mixin' version '0.7.+'
-    id 'net.darkhax.curseforgegradle' version '1.+'
-    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.71.8'
-    id 'com.modrinth.minotaur' version '2.+'
+    id 'fabric-loom' version '1.6-SNAPSHOT' apply(false)
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)' apply(false)
+    id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT' apply(false)
+    id 'org.spongepowered.mixin' version "0.7-SNAPSHOT" apply(false)
+}
+allprojects {
+    apply plugin: 'java'
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+        options.release = 17
+    }
 }
 
-repositories {
-    maven {
-        name = "Curse Maven"
-        url = "https://cursemaven.com"
-        content {
-            includeGroup "curse.maven"
+subprojects {
+    apply plugin: 'java'
+    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    java.withSourcesJar()
+
+    jar {
+        from(rootProject.file("LICENSE"))
+        from(rootProject.file("README.md"))
+        from(rootProject.file('files/changelog.txt'))
+        manifest {
+            attributes([
+                'Specification-Title'     : mod_name,
+                'Specification-Vendor'    : mod_author,
+                'Specification-Version'   : project.jar.archiveVersion,
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : mod_author,
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                'Timestamp'              : System.currentTimeMillis(),
+                'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
+                'Build-On-Minecraft'      : minecraft_version
+            ])
         }
     }
-    maven {
-        // Patchouli && Provider
-        name = "Blame Jared"
-        url = "https://maven.blamejared.com"
+
+    sourcesJar {
+        from(rootProject.file("LICENSE"))
+        from(rootProject.file("README.md"))
+        from(rootProject.file('files/changelog.txt'))
     }
-    maven {
-        name = "Geckolib"
-        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
-    }
-    maven {
-        // location of the maven that hosts Mantle and JEI files
-        name = 'Progwml6 maven'
-        url = 'https://dvs1.progwml6.com/files/maven'
-    }
-}
 
-group = 'com.github.wendall911.homeostatic'
-version = "${minecraft_version}-${mod_version}"
-archivesBaseName = "${mod_name}"
-
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '17'
-
-minecraft {
-    mappings channel: "${mappings_channel}", version: "${mappings_version}-${minecraft_version}"
-
-    runs {
-        client {
-            workingDirectory project.file("run").canonicalPath
-            arg "-mixin.config=${mod_id}.mixins.json"
-            property 'forge.logging.console.level', 'debug'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            mods {
-                homeostatic {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-            arg "-mixin.config=${mod_id}.mixins.json"
-            property 'forge.logging.console.level', 'debug'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            args '--mod', "${mod_id}",
-                    '--all',
-                    '--output', file('src/generated/resources/'),
-                    '--existing', file('src/main/resources/'),
-                    '--existing', file('src/generated/resources')
-
-            mods {
-                homeostatic {
-                    source sourceSets.main
-                }
-            }
-        }
-
-    }    
-}
-
-mixin {
-    add sourceSets.main, "${mod_id}.refmap.json"
-
-    config "${mod_id}.mixins.json"
-}
-
-sourceSets.main.resources {
-    srcDir 'src/generated/resources'
-}
-
-dependencies {
-    minecraft "net.neoforged:forge:${minecraft_version}-${forge_version}"
-
-    annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
-
-    implementation fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
-    compileOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
-    compileOnly fileTree(dir: 'libs', include: '*.jar')
-    compileOnly fg.deobf("curse.maven:create-328085:${create_version}")
-    implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE-SNAPSHOT")
-    implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
-
-    if (System.getenv('DATA_GEN') != null) {
-        runtimeOnly fg.deobf("curse.maven:create-328085:${create_version}")
-    }
-    else {
-        runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
-        //runtimeOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
-        //runtimeOnly fg.deobf("curse.maven:configured-457570:4462839")
-        //runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:${bop_version}")
-        //runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_version}")
-        //runtimeOnly fg.deobf("curse.maven:primalwinter-393321:4575861")
-        //runtimeOnly fg.deobf("curse.maven:byg-247560:${byg_version}")
-        //runtimeOnly fg.deobf("curse.maven:corgilib-693313:${corgilib_version}")
-        //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
-        //runtimeOnly fg.deobf("curse.maven:twilightforest-227639:${twilightforest_version}")
-        //runtimeOnly fg.deobf("curse.maven:botania-225643:???")
-        //runtimeOnly fg.deobf("curse.maven:curios-309927:4583413")
-        //runtimeOnly fg.deobf("curse.maven:croptopia-415438:4512807")
-        //runtimeOnly fg.deobf("curse.maven:farmers_delight-398521:???")
-        //runtimeOnly fg.deobf("curse.maven:xerca-341575:???")
-        //runtimeOnly fg.deobf("curse.maven:morecraft-59648:???")
-        //runtimeOnly fg.deobf("curse.maven:sophisticated_core-618298:???")
-        //runtimeOnly fg.deobf("curse.maven:sophisticated_backpacks-422301:???")
-        //runtimeOnly fg.deobf("curse.maven:ecologics-570463:???")
-        //runtimeOnly fg.deobf("curse.maven:sprout-565856:???")
-        //runtimeOnly fg.deobf("curse.maven:arsnouveau-401955:${ars_version}")
-        //runtimeOnly fg.deobf("curse.maven:create-328085:${create_version}")
-        //runtimeOnly fg.deobf("curse.maven:create_cafe-542235:???")
-        //runtimeOnly fg.deobf("curse.maven:kiwi-303657:???")
-        //runtimeOnly fg.deobf("curse.maven:fruittrees-355467:???")
-        //runtimeOnly fg.deobf("curse.maven:appleskin-248787:4605078")
-        //runtimeOnly fg.deobf("curse.maven:puzzleslib-495476:4660882")
-        //runtimeOnly fg.deobf("curse.maven:leavemybarsalone-281715:4613509")
-        //runtimeOnly fg.deobf("curse.maven:scuba_gear-399090:4593711")
-        //runtimeOnly fg.deobf("curse.maven:kobolds-484967:4632499")
-    }
-}
-
-jar {
-    manifest {
-        attributes([
-            "Specification-Title": mod_name,
-            "Specification-Vendor": "${mod_author}",
-            "Specification-Version": "${archiveVersion}",
-            "Implementation-Title": "${mod_name}",
-            "Implementation-Version": "${archiveVersion}",
-            "Implementation-Vendor" :"${mod_author}",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "${mod_id}.mixins.json"
-        ])
-    }
-}
-
-def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta', '*.mixins.json']
-def replaceProperties = [
-    'version': version, 'forge_mc_version_range': forge_mc_version_range, 'forge_version_range': forge_version_range,
-    'license': license, 'mod_id': mod_id, 'mod_author': mod_author, 'mod_description': mod_description,
-    'mod_name': mod_name, 'issue_tracker': issue_tracker, 'mod_credits': mod_credits,
-    'loader_version_range': loader_version_range, 'mod_update_branch': mod_update_branch
-]
-
-processResources {
-    duplicatesStrategy(DuplicatesStrategy.FAIL)
-    inputs.properties replaceProperties
-    exclude '.cache'
-    replaceProperties.put 'project', project
-
-    filesMatching(resourceTargets) {
-        expand replaceProperties
-    }
-}
-
-jar.finalizedBy('reobfJar', 'signJar')
-
-def reobfFile = file("$buildDir/reobfJar/output.jar")
-def reobfArtifact = artifacts.add('default', reobfFile) {
-    type 'jar'
-    builtBy 'reobfJar'
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact reobfArtifact
-        }
-    }
     repositories {
+        mavenCentral()
+        mavenLocal()
+
         maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+            name = 'Sponge / Mixin'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+
+        maven {
+            // Patchouli && Provider
+            name = 'BlameJared Maven (CrT / Bookshelf / JEI (Newer) / vazkii / xyz)'
+            url = 'https://maven.blamejared.com'
+        }
+        
+        maven {
+            name = 'ParchmentMC'
+            url = 'https://maven.parchmentmc.org/'
+        }
+
+        maven {
+            name = "TerraformersMC (Trinkets)"
+            url = "https://maven.terraformersmc.com/"
+        }
+
+        maven {
+            name = "Ladysnake Libs"
+            url = "https://maven.ladysnake.org/releases"
+        }
+
+        maven {
+            // location of the maven that hosts Mantle and JEI files
+            name = "JEI"
+            url "https://dvs1.progwml6.com/files/maven/"
+        }
+
+        maven {
+            name = "Curse Maven"
+            url = "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+
+        maven {
+            name = "C4's Maven"
+            url = "https://maven.theillusivec4.top/"
+        }
+
+        if (project.hasProperty('localmaven')) {
+            maven {
+                url "file://" + localmaven
+            }
         }
     }
-}
 
-def updates = tasks.register("generateUpdates", Copy) {
-    it.outputs.upToDateWhen {
-        false
+    tasks.withType(JavaCompile).configureEach {
+        it.options.encoding = 'UTF-8'
+        it.options.release = 17
     }
 
-    it.from("./files/templates/") {
-        include 'updates.json'
-        expand 'version': version
+    // Disables Gradle's custom module metadata from being published to maven. The
+    // metadata includes mapped dependencies which are not reasonably consumable by
+    // other mod developers.
+    tasks.withType(GenerateModuleMetadata) {
+        it.enabled = false
     }
 
-    it.into 'files/'
-}
-
-task changelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-    file = new File('build/libs/' + project.getName() + '-' + version + '-changelog.txt');
-    templateContent = file('files/templates/changelog.mustache').getText('UTF-8');
-    fromRepo = file("$projectDir");
-    toRef = "HEAD";
-    fromRef = "${minecraft_version}-${last_mod_version}";
-}
-
-tasks.build.dependsOn('changelog', 'generateUpdates')
-
-// Jar Signing
-import net.minecraftforge.gradle.common.tasks.SignJar
-
-task signJar(type: SignJar, dependsOn: jar) {
-    dependsOn 'reobfJar'
-
-    // Skip the task if our secret data isn't available
-    onlyIf {
-        project.hasProperty('keyStore')
-    }
-
-    keyStore = project.keyStore // This needs to be a path to the keystore file
-    alias = project.keyStoreAlias
-    storePass = project.keyStorePass
-    keyPass = project.keyStoreKeyPass
-    inputFile = jar.archiveFile
-    outputFile = jar.archiveFile
-}
-
-task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
-    if (project.hasProperty('hscurseApiKey')) {
-        apiToken = project.hscurseApiKey
-        def mainFile = upload(project.hscurseId, file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
-        mainFile.changelog = file('build/libs/' + project.getName() + '-' + version + '-changelog.txt')
-        mainFile.addJavaVersion('Java 17')
-        mainFile.addModLoader('Forge')
-        mainFile.addModLoader('NeoForge')
-        mainFile.releaseType = "${release_type}"
-        "${release_versions}".split(',').each {
-            mainFile.addGameVersion("${it}")
-        }
-        mainFile.addOptional('configured')
-        mainFile.addOptional('catalogue')
-        mainFile.addOptional('jei')
-        mainFile.addOptional('simpletextoverlay')
-        mainFile.addOptional('serene-seasons')
-        mainFile.addOptional('biomes-o-plenty')
-        mainFile.addOptional('oh-the-biomes-youll-go')
-        mainFile.addOptional('croptopia')
-        mainFile.addOptional('farmers-delight')
-        mainFile.addOptional('xercamod')
-        mainFile.addOptional('kitteh6660s-morecraft')
-        mainFile.addOptional('sophisticated-backpacks')
-        mainFile.addOptional('ecologics')
-        mainFile.addOptional('ars-nouveau')
-        mainFile.addOptional('sprout')
-        mainFile.addOptional('create-cafe')
-        mainFile.addOptional('fruit-trees')
-        mainFile.addOptional('leave-my-bars-alone')
-        mainFile.addOptional('create')
-        mainFile.addOptional('patchouli')
-        mainFile.addOptional('scuba-gear')
-        mainFile.addOptional('kobolds')
-        mainFile.addOptional('primal-winter')
-        mainFile.addOptional('tinkers-construct')
-    }
-}
-
-modrinth {
-    if (project.hasProperty('hsModrinthId')) {
-        token = project.modrinthKey
-        projectId = project.hsModrinthId
-        version = getVersion()
-        versionType = "${release_type}"
-        def changelogFile = 'build/libs/' + project.getName() + '-' + version + '-changelog.txt'
-        if (file(changelogFile).exists()) {
-            changelog = file(changelogFile).text
-        }
-        uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
-        gameVersions = "${release_versions}".split(",") as List<String>
-        loaders = ['neoforge', 'forge']
-        dependencies {
-			optional.project "create"
-			optional.project "ecologics"
-			optional.project "create-cafe"
-			optional.project "scuba-gear"
-			optional.project "farmers-delight"
-			optional.project "xercamod"
-			optional.project "leave-my-bars-alone"
-			optional.project "sprout"
-			optional.project "patchouli"
-			optional.project "jei"
-			optional.project "biomesyougo"
-			optional.project "kobolds"
-            optional.project "primal-winter"
-            optional.project "tinkers-construct"
-        }
+    tasks.withType(Jar).all {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
 }

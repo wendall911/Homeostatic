@@ -1,0 +1,388 @@
+package homeostatic.common.temperature;
+
+import java.util.ArrayList;
+
+import com.google.common.collect.ImmutableList;
+
+import com.mojang.datafixers.util.Pair;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
+import net.minecraft.world.level.storage.LevelData;
+import net.minecraft.world.level.storage.ServerLevelData;
+
+import homeostatic.common.biome.BiomeData;
+import homeostatic.common.biome.BiomeRegistry;
+import homeostatic.common.biome.ClimateSettings;
+import homeostatic.data.integration.ModIntegration;
+import homeostatic.platform.Services;
+import homeostatic.util.TempHelper;
+import homeostatic.util.WetnessHelper;
+
+public class EnvironmentData {
+
+    private boolean isSubmerged;
+    private boolean isPartialSubmersion;
+    private double relativeHumidity;
+    private float airTemperature;
+    private float waterTemperature;
+    private float localTemperature;
+    private double envRadiation;
+
+    private static final PerlinSimplexNoise TEMPERATURE_NOISE = new PerlinSimplexNoise(new WorldgenRandom(new LegacyRandomSource(1234L)), ImmutableList.of(0));
+
+    /*
+     * Returns WBGT
+     * See: https://en.wikipedia.org/wiki/Wet-bulb_globe_temperature
+     */
+    public EnvironmentData(ServerPlayer sp, BlockPos pos, Holder<Biome> biome, ServerLevel world) {
+        LevelData info = world.getLevelData();
+        ArrayList<Pair<Holder<Biome>, BlockPos>> biomes = new ArrayList<>();
+        int chunkRange = 3;
+        float accumulatedDryTemp = 0.0F;
+        float accumulatedHumidity = 0.0F;
+        float moisture = 0.0F;
+        float dryTemp;
+        float dayNightOffset;
+        float wetTemp;
+        float blackGlobeTemp;
+        EnvironmentInfo envData = Environment.get(world, sp);
+        boolean isUnderground = envData.isUnderground();
+        boolean isSheltered = envData.isSheltered();
+        double waterVolume = envData.getWaterVolume();
+        Holder<Biome> lushBiome = world.registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(Biomes.LUSH_CAVES);
+
+        this.envRadiation = envData.getRadiation();
+        this.isPartialSubmersion = !sp.isUnderWater() && sp.isInWater() && sp.isInWaterRainOrBubble();
+        this.isSubmerged = sp.isUnderWater() && sp.isInWater() && sp.isInWaterRainOrBubble();
+
+        if (isSubmerged) {
+            moisture = 20.0F;
+        }
+        else if (isPartialSubmersion) {
+            moisture = 10.0F;
+        }
+        else if (sp.isInWaterRainOrBubble()) {
+            moisture = 0.5F;
+        }
+
+        if (moisture > 0.0F) {
+            WetnessHelper.updateWetnessInfo(sp, moisture, true);
+        }
+
+        /*
+         * Since we can literally jump vertically out of the water, check the block under the player to see if they are
+         * "swimming" ... mc mechanics are so weird, lol.
+         */
+        if (!this.isPartialSubmersion) {
+            this.isPartialSubmersion = sp.getFeetBlockState().is(Blocks.WATER);
+        }
+
+        // If sheltered, consider local biome UNDERGROUND
+        if (isSheltered || isUnderground) {
+            biomes.add(Pair.of(lushBiome, pos));
+        }
+
+        // Only do biome smoothing if not underground or player is submerged
+        if (!isUnderground || this.isSubmerged) {
+            for (int x = -chunkRange; x <= chunkRange; x++) {
+                for (int z = -chunkRange; z <= chunkRange; z++) {
+                    BlockPos chunkPos = pos.offset(x * 16, 0, z * 16);
+
+                    if (world.isLoaded(chunkPos)) {
+                        biomes.add(Pair.of(world.getBiome(chunkPos), chunkPos));
+                    }
+                }
+            }
+        }
+
+        for (Pair<Holder<Biome>, BlockPos> pair : biomes) {
+            Holder<Biome> chunkBiome = pair.getFirst();
+            BlockPos chunkPos = pair.getSecond();
+
+            float chunkTemp = getHeightAdjustedTemperature(world, chunkBiome, chunkPos);
+
+            accumulatedDryTemp += isUnderground ? chunkTemp : getSeasonAdjustedTemperature(world, chunkBiome, chunkTemp, chunkPos);
+
+            // If weather is enabled
+            if (info.getGameRules().getBoolean(GameRules.RULE_WEATHER_CYCLE)) {
+                double chunkHumidity = getBiomeHumidity(world, chunkBiome, chunkPos);
+
+                accumulatedHumidity += chunkHumidity;
+            }
+        }
+
+        this.relativeHumidity = accumulatedHumidity / biomes.size();
+        dayNightOffset = isUnderground ? 0F : getDayNightOffset(world, biome, this.relativeHumidity);
+        dryTemp = (accumulatedDryTemp / biomes.size()) + dayNightOffset;
+        wetTemp = (float) TempHelper.getHeatIndex(dryTemp, this.relativeHumidity);
+        blackGlobeTemp = (float) getBlackGlobeTemp(world, pos, dryTemp, this.relativeHumidity);
+
+        if (isSheltered || isUnderground) {
+            //If not exposed to solar radiation, we use the simplified formula for temperature calculation.
+            this.airTemperature = (wetTemp * 0.7F) + (blackGlobeTemp * 0.3F);
+        }
+        else {
+            this.airTemperature = (wetTemp * 0.7F) + (blackGlobeTemp * 0.2F) + (dryTemp * 0.1F);
+        }
+
+        if (this.isSubmerged || this.isPartialSubmersion) {
+            this.waterTemperature = getWaterTemperature(this.airTemperature, waterVolume);
+
+            if (this.isSubmerged) {
+                this.localTemperature = this.waterTemperature;
+            }
+            else {
+                this.localTemperature = (this.waterTemperature * 0.7F) + (this.airTemperature * 0.3F);
+            }
+        }
+        else {
+            this.localTemperature = this.airTemperature;
+        }
+    }
+
+    public boolean isSubmerged() {
+        return isSubmerged;
+    }
+
+    public boolean isPartialSubmersion() {
+        return isPartialSubmersion;
+    }
+
+    public double getRelativeHumidity() {
+        return relativeHumidity;
+    }
+
+    public float getLocalTemperature() {
+        return localTemperature;
+    }
+
+    public double getEnvRadiation() {
+        return envRadiation;
+    }
+
+    /*
+     * Calculate current radiation where player is standing.
+     */
+    private double getBlackGlobeTemp(ServerLevel world, BlockPos pos, float dryTemp, double relativeHumidity) {
+        this.envRadiation += getSunRadiation(world, pos);
+
+        return TempHelper.getBlackGlobe(this.envRadiation, dryTemp, relativeHumidity);
+    }
+
+    /*
+     * Only calculate humidity for rain and snow biomes
+     */
+    private static double getBiomeHumidity(ServerLevel level, Holder<Biome> biomeHolder, BlockPos pos) {
+        LevelData info = level.getLevelData();
+        Biome biome = biomeHolder.value();
+        ServerLevelData serverInfo = Services.PLATFORM.getServerLevelData(level);
+        double biomeHumidity;
+        double maxRH = getMaxBiomeHumidity(biomeHolder, pos);
+        double minRH = maxRH - 20;
+
+        if (biome.hasPrecipitation()) {
+            int nextRain = serverInfo.getClearWeatherTime();
+
+            if (info.isRaining()) {
+                biomeHumidity = maxRH;
+            } else if (nextRain > 0 && nextRain <= 12000) {
+                biomeHumidity = minRH + (20 * (1 - ((float) nextRain / 12000)));
+            } else {
+                biomeHumidity = minRH;
+            }
+        }
+        else {
+            biomeHumidity = minRH;
+        }
+
+        return biomeHumidity;
+    }
+
+    /*
+     * Based on sun angle ... do mathy things to get radiation
+     */
+    private static double getSunRadiation(ServerLevel world, BlockPos pos) {
+        double radiation = 0.0;
+        double sunlight = world.getBrightness(LightLayer.SKY, pos.above()) - world.getSkyDarken();
+        float f = world.getSunAngle(1.0F);
+
+        if (sunlight > 0) {
+            float f1 = f < (float)Math.PI ? 0.0F : ((float)Math.PI * 2F);
+            f += (f1 - f) * 0.2F;
+            sunlight = sunlight * Mth.cos(f);
+        }
+
+        radiation += sunlight * 100;
+
+        return Math.max(radiation, 0);
+    }
+
+    private static double getMaxBiomeHumidity(Holder<Biome> biomeHolder, BlockPos pos) {
+        BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+
+        return biomeData.getHumidity(biomeHolder.value().getPrecipitationAt(pos));
+    }
+
+    private static float getWaterTemperature(float airTemperature, double waterVolume) {
+        float baseWaterTemp = 0.663F;
+        float waterTemp;
+
+        if (airTemperature >= Environment.PARITY) {
+            float increase = 0.1F + ((float) (1 - waterVolume) * 0.35F);
+
+            waterTemp = baseWaterTemp + ((airTemperature - Environment.PARITY) * increase);
+        }
+        else {
+            waterTemp = Math.max(baseWaterTemp - (((Environment.PARITY - airTemperature) * 0.5F)), 0.072F);
+        }
+
+        return waterTemp;
+    }
+
+    private static float getDayNightOffset(ServerLevel world, Holder<Biome> biome, double relativeHumidity) {
+        ResourceKey<Level> worldKey = world.dimension();
+
+        /*
+         * Only calculate in Overworld.
+         */
+        if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
+            return 0F;
+        }
+
+        BiomeData biomeData = BiomeRegistry.getDataForBiome(biome);
+        long time = (world.getDayTime() % 24000);
+        ClimateSettings climateSettings = Services.PLATFORM.getClimateSettings(biome);
+        float maxTemp = biomeData.getDayNightOffset(climateSettings.getPrecipitationType());
+
+        if (maxTemp == 0F) return maxTemp;
+
+        float increaseTemp = maxTemp / 10000F;
+        float decreaseTemp = maxTemp / 14000F;
+        float humidityOffset = 1.0F - (float) (relativeHumidity / 100);
+        float offset;
+
+        if (time > 23000) {
+            offset = (24001 - time) * increaseTemp;
+        } else if (time < 9001) {
+            offset = (time + 1000) * increaseTemp;
+        } else {
+            offset = maxTemp - ((time - 9000) * decreaseTemp);
+        }
+
+        return offset * humidityOffset;
+    }
+
+    private static float getHeightAdjustedTemperature(ServerLevel world, Holder<Biome> biomeHolder, BlockPos pos) {
+        ResourceKey<Level> worldKey = world.dimension();
+        BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+        Biome.Precipitation precipitation = biomeHolder.value().getPrecipitationAt(pos);
+        float temperature = biomeData.getTemperature(precipitation);
+
+        /*
+         * Only calculate in Overworld.
+         */
+        if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
+            return temperature;
+        }
+
+        /*
+         * If not already a snowy biome, add SNOW offset if Primal Winter mod is loaded.
+         */
+        if (Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID) && precipitation != Biome.Precipitation.SNOW) {
+            temperature += BiomeData.SNOW_OFFSET;
+        }
+
+        if (pos.getY() > 80) {
+            float noise = (float)(TEMPERATURE_NOISE.getValue((double)((float)pos.getX() / 8.0F), (double)((float)pos.getZ() / 8.0F), false) * 8.0D);
+            return temperature - (noise + (float)pos.getY() - 80.0F) * 0.05F / 40.0F;
+        } else {
+            return temperature;
+        }
+    }
+
+    private static float getSeasonAdjustedTemperature(ServerLevel level, Holder<Biome> biomeHolder, float biomeTemp, BlockPos pos) {
+        ResourceKey<Level> worldKey = level.dimension();
+
+        /*
+         * Only calculate season temperatures in Overworld
+         */
+        if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
+            return biomeTemp;
+        }
+
+        BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+        SubSeason subSeasonHolder = Services.PLATFORM.getSubSeason(level, biomeHolder);
+
+        if (subSeasonHolder != null) {
+            int season;
+            float lateSummerOffset = biomeData.MC_DEGREE * 5;
+            int subSeason = subSeasonHolder.ordinal();
+            float variation = biomeData.getSeasonVariation(biomeHolder.value().getPrecipitationAt(pos)) / 2.0F;
+
+            if ((subSeason + 9) <= 12) {
+                season = subSeason + 9;
+            }
+            else {
+                season = subSeason - 3;
+            }
+
+            double temp = getSeasonTemperature(season, variation, biomeTemp);
+
+            if (season == 2) {
+                temp += lateSummerOffset;
+            }
+
+            return (float) temp;
+        }
+        /*
+         * Always set season to winter if Primal Winter mod is loaded.
+         *
+         * Will always use the full season temperature variation in calculatons.
+         *
+         * Always will use the full season temperature variation used in RAIN calculations.
+         */
+        else if (Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID)) {
+            int season = 7;
+            float variation = biomeData.getSeasonVariation(Biome.Precipitation.RAIN);
+            double temp = getSeasonTemperature(season, variation, biomeTemp);
+
+            return (float) temp;
+        }
+
+        return biomeTemp;
+    }
+
+    private static double getSeasonTemperature(int season, float variation, float biomeTemp) {
+        return variation * Math.cos(((season - 1) * Math.PI) / 6) + biomeTemp;
+    }
+
+    @Override
+    public String toString() {
+        return "EnvironmentData{" +
+                "isSubmerged=" + isSubmerged +
+                ", isPartialSubmersion=" + isPartialSubmersion +
+                ", relativeHumidity=" + relativeHumidity +
+                ", airTemperature=" + airTemperature +
+                ", waterTemperature=" + waterTemperature +
+                ", localTemperature=" + localTemperature +
+                ", envRadiation=" + envRadiation +
+                "}";
+    }
+
+}

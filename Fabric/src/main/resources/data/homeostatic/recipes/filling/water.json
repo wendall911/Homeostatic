@@ -1,0 +1,32 @@
+{
+  "type": "create:filling",
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "create"
+      ]
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "homeostatic:leather_flask"
+    },
+    {
+      "amount": 1000,
+      "fluidTag": "minecraft:water"
+    }
+  ],
+  "results": [
+    {
+      "item": "homeostatic:leather_flask",
+      "nbt": {
+        "Damage": 0,
+        "Fluid": {
+          "Amount": 1000,
+          "FluidName": "minecraft:water"
+        }
+      }
+    }
+  ]
+}
