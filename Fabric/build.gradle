@@ -13,6 +13,12 @@ repositories {
     maven {
         url "https://maven.shedaniel.me/" // for rei
     }
+
+    // For Create Fabric
+    maven { url = "https://mvn.devos.one/snapshots/" } // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" } // Forge Config API Port
+    maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
+    maven { url = "https://maven.jamieswhiteshirt.com/libs-release" } // Reach Entity Attributes
 }
 
 dependencies {
@@ -27,18 +33,18 @@ dependencies {
 
     modImplementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_range}"
 
-    modRuntimeOnly "curse.maven:architectury-419699:${architectury_version}"
-    modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
+    modApi "dev.architectury:architectury-fabric:${architectury_version}"
+    modApi "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
-    modCompileOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
+    modCompileOnly "com.simibubi.create:create-fabric-${minecraft_version}:${create_fabric_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-	modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
+	modCompileOnly "maven.modrinth:fabric-seasons:${fabric_seasons_version}"
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
-    modRuntimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
+    modRuntimeOnly "maven.modrinth:simpletextoverlay:${simpletextoverlay_version}-FABRIC"
 
     modRuntimeOnly("com.terraformersmc:modmenu:${mod_menu_version}") {
         transitive = false
@@ -50,11 +56,7 @@ dependencies {
 
     if (System.getenv('DATA_GEN') != null) {
         // Datagen mods
-    }
-    else {
-        // Runtime testing mods
-        // This doesn't work for whatever reason. Such a strange port
-        //modRuntimeOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
+        modRuntimeOnly "com.simibubi.create:create-fabric-${minecraft_version}:${create_fabric_version}"
     }
 }
 

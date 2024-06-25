@@ -1,3 +1,9 @@
+buildscript { // For Terrablender
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net/' }
+    }
+}
+
 plugins {
     id 'idea'
     id 'maven-publish'
@@ -71,6 +77,16 @@ minecraft {
     }
 }
 
+repositories {
+    maven { // Create Forge and Registrate Forge
+        url = "https://maven.tterrag.com/"
+        content {
+            includeGroup("com.tterrag.registrate")
+            includeGroup("com.simibubi.create")
+        }
+    }
+}
+
 sourceSets.main.resources.srcDir 'src/generated/resources'
 
 dependencies {
@@ -85,24 +101,24 @@ dependencies {
 
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     implementation fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
-    compileOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_forge_version}")
-    compileOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
+    compileOnly fg.deobf("maven.modrinth:sereneseasons:${serene_seasons_forge_version}")
+    compileOnly fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_forge_version}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE-SNAPSHOT")
     implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
+    implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:${minecraft_version}-${terrablender_forge_version}")
 
     if (System.getenv('DATA_GEN') != null) {
-        runtimeOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
+        runtimeOnly fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_forge_version}")
     }
     else {
         //runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}-FORGE-SNAPSHOT"
-        runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_forge_version}")
-        //runtimeOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
+        runtimeOnly fg.deobf("maven.modrinth:simpletextoverlay:${simpletextoverlay_version}-FORGE")
+        //runtimeOnly fg.deobf("maven.modrinth:sereneseasons:${serene_seasons_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:configured-457570:4462839")
-        //runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:${bop_forge_version}")
-        //runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_forge_version}")
+        //runtimeOnly fg.deobf("maven.modrinth:biomes-o-plenty:${bop_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:primalwinter-393321:4575861")
         //runtimeOnly fg.deobf("curse.maven:byg-247560:${byg_forge_version}")
-        //runtimeOnly fg.deobf("curse.maven:corgilib-693313:${corgilib_forge_version}")
+        //runtimeOnly fg.deobf("maven.modrinth:corgilib:${corgilib_forge_version}")
         //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:twilightforest-227639:${twilight_forest_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:botania-225643:???")
@@ -115,7 +131,7 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:sophisticated_backpacks-422301:???")
         //runtimeOnly fg.deobf("curse.maven:ecologics-570463:???")
         //runtimeOnly fg.deobf("curse.maven:sprout-565856:???")
-        //runtimeOnly fg.deobf("curse.maven:arsnouveau-401955:${ars_forge_version}")
+        //runtimeOnly fg.deobf("maven.modrinth:ars-nouveau:${ars_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:create_cafe-542235:???")
         //runtimeOnly fg.deobf("curse.maven:kiwi-303657:???")

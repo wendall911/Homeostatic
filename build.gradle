@@ -89,8 +89,24 @@ subprojects {
         }
 
         maven {
+            name = "Modrinth"
+            url = "https://api.modrinth.com/maven"
+            content {
+                includeGroup "maven.modrinth"
+            }
+        }
+
+        maven {
             name = "C4's Maven"
             url = "https://maven.theillusivec4.top/"
+        }
+
+        maven { // Flywheel
+            url = "https://maven.tterrag.com/"
+            content {
+                // need to be specific here due to version overlaps
+                includeGroup("com.jozufozu.flywheel")
+            }
         }
 
         if (project.hasProperty('localmaven')) {
