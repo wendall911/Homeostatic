@@ -1,0 +1,152 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'idea'
+}
+
+base {
+    archivesName = "${mod_id}-${project.name}-${minecraft_version}"
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+    withSourcesJar()
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    // https://docs.gradle.org/current/userguide/declaring_repositories.html#declaring_content_exclusively_found_in_one_repository
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Sponge'
+                url = 'https://repo.spongepowered.org/repository/maven-public'
+            }
+        }
+        filter { includeGroupAndSubgroups("org.spongepowered") }
+    }
+
+    maven {
+        name = 'BlameJared Maven (CrT / Bookshelf / JEI (Newer) / vazkii / xyz)'
+        url = 'https://maven.blamejared.com'
+    }
+    
+    maven {
+        name = 'ParchmentMC'
+        url = 'https://maven.parchmentmc.org/'
+    }
+
+    maven {
+        name = "TerraformersMC (Trinkets)"
+        url = "https://maven.terraformersmc.com/"
+    }
+
+    maven {
+        name = "Ladysnake Libs"
+        url = "https://maven.ladysnake.org/releases"
+    }
+
+    maven {
+        name = "JEI"
+        url "https://dvs1.progwml6.com/files/maven/"
+    }
+
+    maven {
+        name = "Curse Maven"
+        url = "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+
+    maven {
+        name = 'Illusive Soulworks'
+        url = "https://maven.theillusivec4.top/"
+    }
+
+    maven {
+        url "https://maven.shedaniel.me/" // for rei
+    }
+
+    if (project.hasProperty('localmaven')) {
+        maven {
+            url "file://" + localmaven
+        }
+    }
+}
+
+// Declare capabilities on the outgoing configurations.
+// Read more about capabilities here: https://docs.gradle.org/current/userguide/component_capabilities.html#sec:declaring-additional-capabilities-for-a-local-component
+['apiElements', 'runtimeElements', 'sourcesElements'].each { variant ->
+    configurations."$variant".outgoing {
+        capability("$group:$mod_id-${project.name}:$version")
+        capability("$group:$mod_id:$version")
+    }
+    publishing.publications.configureEach {
+        suppressPomMetadataWarningsFor(variant)
+    }
+}
+
+sourcesJar {
+    from(rootProject.file("LICENSE"))
+    from(rootProject.file("CREDITS.md"))
+    from(rootProject.file("README.md"))
+    from(rootProject.file('build/libs/changelog.txt'))
+}
+
+jar {
+    archiveClassifier.set("slim")
+    from(rootProject.file("LICENSE"))
+    from(rootProject.file("CREDITS.md"))
+    from(rootProject.file("README.md"))
+    from(rootProject.file('build/libs/changelog.txt'))
+    manifest {
+        attributes([
+            'Specification-Title'     : mod_name,
+            'Specification-Vendor'    : mod_author,
+            'Specification-Version'   : project.jar.archiveVersion,
+            'Implementation-Title'    : project.name,
+            'Implementation-Version'  : project.jar.archiveVersion,
+            'Implementation-Vendor'   : mod_author,
+            'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            'Timestamp'              : System.currentTimeMillis(),
+            'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
+            'Build-On-Minecraft'      : minecraft_version
+        ])
+    }
+}
+
+processResources {
+    def expandProps = [
+        'version': version,
+        'neoforge_mod_version': neoforge_mod_version,
+        'fabric_mod_version': fabric_mod_version,
+        'license': license,
+        'mod_id': mod_id,
+        'mod_author': mod_author,
+        'mod_credits': mod_credits,
+        'mod_description': mod_description,
+        'mod_name': mod_name,
+        'issue_tracker': issue_tracker,
+        'mod_update_branch': mod_update_branch,
+        'mod_url': mod_url,
+        'fabric_mc_version_range': project.fabric_mc_version_range,
+        'fabric_loader_min_version': fabric_loader_min_version,
+        'neoforge_loader_version_range': neoforge_loader_version_range,
+        'neoforge_mc_version_range': neoforge_mc_version_range
+    ]
+
+    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
+        expand expandProps
+    }
+    inputs.properties(expandProps)
+}
+
+publishing {
+    repositories {
+        maven {
+            url System.getenv("local_maven_url")
+        }
+    }
+}

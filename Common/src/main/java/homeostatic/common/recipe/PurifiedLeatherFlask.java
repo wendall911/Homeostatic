@@ -3,7 +3,6 @@ package homeostatic.common.recipe;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -20,8 +19,8 @@ import homeostatic.platform.Services;
 
 public class PurifiedLeatherFlask extends CustomRecipe {
 
-    public PurifiedLeatherFlask(ResourceLocation loc, CraftingBookCategory category) {
-        super(loc, category);
+    public PurifiedLeatherFlask(CraftingBookCategory category) {
+        super(category);
     }
 
     @Override

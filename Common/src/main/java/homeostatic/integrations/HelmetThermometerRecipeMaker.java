@@ -13,17 +13,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 
-import homeostatic.Homeostatic;
 import homeostatic.common.item.HomeostaticItems;
+import homeostatic.Homeostatic;
 import homeostatic.util.RegistryHelper;
 
 public final class HelmetThermometerRecipeMaker {
 
-    public static List<CraftingRecipe> createRecipes(String plugin) {
+    public static List<RecipeHolder<CraftingRecipe>> createRecipes(String plugin) {
         String group = plugin + ".helmet";
-        List<CraftingRecipe> recipes = new ArrayList<>();
+        List<RecipeHolder<CraftingRecipe>> recipes = new ArrayList<>();
         Ingredient thermometer = Ingredient.of(HomeostaticItems.THERMOMETER);
 
         RegistryHelper.getRegistry(Registries.ITEM).stream()
@@ -36,7 +37,10 @@ public final class HelmetThermometerRecipeMaker {
                     NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, thermometer);
 
                     tag.putBoolean("thermometer", true);
-                    recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".thermometer"), group, CraftingBookCategory.EQUIPMENT, armorStack, recipeInputs));
+                    recipes.add(new RecipeHolder<>(
+                        new ResourceLocation(Homeostatic.MODID, group + ".thermometer"),
+                        new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, armorStack, recipeInputs)
+                    ));
                 });
 
         return recipes;

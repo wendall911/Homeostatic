@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="${license}"
+issueTrackerURL="${issue_tracker}"
+
+[[mods]]
+  modId="${mod_id}"
+  displayName="${mod_name}"
+  description='''${mod_description}'''
+  version="${neoforge_mod_version}"
+  updateJSONURL="https://raw.githubusercontent.com/wendall911/Homeostatic/${mod_update_branch}/files/updates.json"
+  authors="${mod_author}"
+  credits="${mod_credits}"
+  logoFile="${mod_id}_icon.png"
+  itemIcon="minecraft:bubble_column"
+[[mixins]]
+    config = "${mod_id}.mixins.json"
+[[mixins]]
+    config = "${mod_id}_neoforge.mixins.json"
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neoforge_loader_version_range}"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${neoforge_mc_version_range}"
+    ordering="NONE"
+    side="BOTH"

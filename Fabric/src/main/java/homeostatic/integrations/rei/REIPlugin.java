@@ -17,6 +17,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.config.ConfigHandler;
@@ -28,7 +29,7 @@ public class REIPlugin implements REIClientPlugin {
 
     @Override
     public void registerDisplays(DisplayRegistry helper) {
-        List<CraftingRecipe> recipes = ArmorEnhancementRecipeMaker.createRecipes("rei");
+        List<RecipeHolder<CraftingRecipe>> recipes = ArmorEnhancementRecipeMaker.createRecipes("rei");
         RegistryAccess registryAccess = RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
 
         if (!ConfigHandler.Common.requireThermometer()) {
@@ -40,11 +41,11 @@ public class REIPlugin implements REIClientPlugin {
         recipes.forEach(recipe -> {
             List<EntryIngredient> input = new ArrayList<>();
 
-            recipe.getIngredients().forEach(ingredient -> {
+            recipe.value().getIngredients().forEach(ingredient -> {
                 input.add(EntryIngredients.ofIngredient(ingredient));
             });
 
-            helper.add(new DefaultCustomDisplay(null, input, Collections.singletonList(EntryIngredients.of(recipe.getResultItem(registryAccess)))));
+            helper.add(new DefaultCustomDisplay(null, input, Collections.singletonList(EntryIngredients.of(recipe.value().getResultItem(registryAccess)))));
         });
     }
 

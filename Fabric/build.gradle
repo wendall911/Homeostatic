@@ -1,52 +1,56 @@
 plugins {
-    id 'fabric-loom'
-    id 'maven-publish'
-    id 'idea'
+    id 'multiloader-loader'
+    id 'fabric-loom' version '1.6-SNAPSHOT'
     id 'net.darkhax.curseforgegradle' version '1.+'
     id 'com.modrinth.minotaur' version '2.+'
 }
 
-version = "${minecraft_version}-${mod_version}-FABRIC"
+version = fabric_mod_version
 archivesBaseName = "${mod_id}"
-
-repositories {
-    maven {
-        url "https://maven.shedaniel.me/" // for rei
-    }
-}
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings(loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${minecraft_version}:${mappings_version}@zip")
+        parchment("org.parchmentmc.data:parchment-${parchment_mc_version}:${parchment_version}@zip")
     })
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
-    modImplementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_range}"
+    modImplementation "com.illusivesoulworks.spectrelib:spectrelib-fabric:${spectrelib_version}+${minecraft_version}"
+    include "com.illusivesoulworks.spectrelib:spectrelib-fabric:${spectrelib_version}+${minecraft_version}"
 
-    modRuntimeOnly "curse.maven:architectury-419699:${architectury_version}"
-    modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
+    modApi "dev.architectury:architectury-fabric:${architectury_version}"
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rei_version}"
+
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
-    modCompileOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
+    //modCompileOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-	modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
+    // Not available for 1.20.4 :(
+    //modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
+    modImplementation "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
+    modImplementation "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
     modRuntimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
+    modRuntimeOnly "net.jodah:typetools:0.6.3"
+    modImplementation "com.electronwill.night-config:core:3.6.7"
 
     modRuntimeOnly("com.terraformersmc:modmenu:${mod_menu_version}") {
         transitive = false
     }
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
-    implementation project(":Common")
 
-    include group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_version}"
+    include group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_version}+${minecraft_version}"
 
     if (System.getenv('DATA_GEN') != null) {
         // Datagen mods
@@ -55,12 +59,15 @@ dependencies {
         // Runtime testing mods
         // This doesn't work for whatever reason. Such a strange port
         //modRuntimeOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
+        //runtimeOnly "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
+        //runtimeOnly "curse.maven:terrablender-565956:${terrablender_fabric_version}"
     }
 }
 
 loom {
-	if (project(":Common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
-        accessWidenerPath.set(project(":Common").file("src/main/resources/${mod_id}.accesswidener"))
+    def aw = project(":Common").file("src/main/resources/${mod_id}.accesswidener")
+    if (aw.exists()) {
+        accessWidenerPath.set(aw)
     }
     mixin {
         defaultRefmapName.set("${mod_id}.refmap.json")
@@ -94,43 +101,14 @@ loom {
     }
 }
 
-sourceSets.main.resources.srcDir 'src/generated/resources'
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
 
 processResources {
-    from project(":Common").sourceSets.main.resources
     // Added so we have book data and damage types built in Forge datagen
     from ('../Forge/src/generated/resources/') {
         exclude '**/recipes/*'
-    }
-    
-    inputs.property "version", project.version
-    exclude '.cache'
-    duplicatesStrategy(DuplicatesStrategy.FAIL)
-
-    filesMatching("fabric.mod.json") {
-        expand 'version': project.version, 'fabric_mc_version_range': project.fabric_mc_version_range, 'license': project.license,
-                'mod_id': project.mod_id, 'mod_author': project.mod_author, 'mod_description': project.mod_description,
-                'mod_name': project.mod_name, 'issue_tracker': project.issue_tracker, 'fabric_loader_min_version': fabric_loader_min_version
-    }
-
-    filesMatching("pack.mcmeta") {
-        expand 'mod_name': project.mod_name
-    }
-
-    filesMatching('*.mixins.json') {
-        expand "mod_id": "${archivesBaseName}"
-    }
-}
-
-tasks.withType(JavaCompile) {
-    source(project(":Common").sourceSets.main.allSource)
-}
-
-publishing {
-    repositories {
-        maven {
-            url "file://" + System.getenv("local_maven")
-        }
     }
 }
 

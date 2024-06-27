@@ -1,0 +1,199 @@
+plugins {
+    id 'multiloader-loader'
+    id 'net.neoforged.gradle.userdev' version '7.0.133'
+    id 'net.darkhax.curseforgegradle' version '1.+'
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.71.8'
+    id 'com.modrinth.minotaur' version '2.+'
+}
+
+archivesBaseName = "${mod_id}"
+version = neoforge_mod_version
+
+runs {
+    configureEach {
+        modSource project.sourceSets.main
+    }
+    client {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+    }
+    server {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        programArgument '--nogui'
+    }
+    gameTestServer {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+    }
+    data {
+        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+    }
+}
+
+subsystems {
+    parchment {
+        minecraftVersion = "${parchment_mc_version}"
+        mappingsVersion = "${parchment_version}"
+    }
+}
+
+dependencies {
+    implementation "net.neoforged:neoforge:${neoforge_version}"
+
+    implementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge', version: "${spectrelib_version}+${minecraft_version}"
+    jarJar group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge', version: "${spectrelib_version}+${minecraft_version}"
+
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+
+    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+    implementation "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
+    implementation "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
+    //compileOnly "curse.maven:create-328085:${create_forge_version}"
+    implementation "vazkii.patchouli:Patchouli:${patchouli_version}-FORGE-SNAPSHOT"
+    implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+
+    if (System.getenv('DATA_GEN') != null) {
+        runtimeOnly "curse.maven:create-328085:${create_forge_version}"
+    }
+    else {
+        //runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+        //runtimeOnly "dev.architectury:architectury-neoforge:${architectury_version}"
+        //runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+        runtimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_neoforge_version}"
+        //runtimeOnly "curse.maven:sereneseasons-291874:${serene_seasons_version}"
+        //runtimeOnly "curse.maven:configured-457570:4462839"
+        //runtimeOnly "curse.maven:biomesoplenty-220318:${bop_neoforge_version}"
+        //runtimeOnly "curse.maven:terrablender-563928:${terrablender_neoforge_version}"
+        //runtimeOnly "curse.maven:primalwinter-393321:4575861"
+        //runtimeOnly "curse.maven:byg-247560:${byg_neoforge_version}"
+        //runtimeOnly "curse.maven:corgilib-693313:${corgilib_neoforge_version}"
+        //runtimeOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_neoforge_version}"
+        //runtimeOnly "curse.maven:twilightforest-227639:${twilight_forest_neoforge_version}"
+        //runtimeOnly "curse.maven:botania-225643:???"
+        //runtimeOnly "curse.maven:curios-309927:4583413"
+        //runtimeOnly "curse.maven:croptopia-415438:4512807"
+        //runtimeOnly "curse.maven:farmers_delight-398521:???"
+        //runtimeOnly "curse.maven:xerca-341575:???"
+        //runtimeOnly "curse.maven:morecraft-59648:???"
+        //runtimeOnly "curse.maven:sophisticated_core-618298:???"
+        //runtimeOnly "curse.maven:sophisticated_backpacks-422301:???"
+        //runtimeOnly "curse.maven:ecologics-570463:???"
+        //runtimeOnly "curse.maven:sprout-565856:???"
+        //runtimeOnly "curse.maven:arsnouveau-401955:${ars_neoforge_version}"
+        //runtimeOnly "curse.maven:create-328085:${create_neoforge_version}"
+        //runtimeOnly "curse.maven:create_cafe-542235:???"
+        //runtimeOnly "curse.maven:kiwi-303657:???"
+        //runtimeOnly "curse.maven:fruittrees-355467:???"
+        //runtimeOnly "curse.maven:appleskin-248787:4605078"
+        //runtimeOnly "curse.maven:puzzleslib-495476:4660882"
+        //runtimeOnly "curse.maven:leavemybarsalone-281715:4613509"
+        //runtimeOnly "curse.maven:scuba_gear-399090:4593711"
+        //runtimeOnly "curse.maven:kobolds-484967:4632499"
+    }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+tasks.jarJar.configure {
+    archiveClassifier.set("")
+}
+
+task changelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+    file = new File(project(":").projectDir.toString() + '/build/libs/changelog.txt');
+    templateContent = file(project(":").projectDir.toString() + '/files/templates/changelog.mustache').getText('UTF-8');
+    fromRepo = file("$projectDir");
+    toRef = "HEAD";
+    fromRef = "${minecraft_version}-${last_mod_version}";
+}
+
+def updates = tasks.register("generateUpdates", Copy) {
+    it.outputs.upToDateWhen {
+        false
+    }
+
+    it.from("../files/templates/") {
+        include 'updates.json'
+        expand 'version': version, 'minecraft_version': minecraft_version
+    }
+
+    it.into '../files/'
+}
+
+tasks.generateUpdates.mustRunAfter('jar', 'sourcesJar')
+
+tasks.build.dependsOn('changelog', 'generateUpdates')
+
+def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
+
+task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+    if (project.hasProperty('hscurseApiKey')) {
+        apiToken = project.hscurseApiKey
+        def mainFile = upload(project.hscurseId, file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
+        if (file(changelogFile).exists()) {
+            mainFile.changelog = file(changelogFile)
+        }
+        mainFile.addJavaVersion('Java 17')
+        mainFile.addModLoader('NeoForge')
+        mainFile.releaseType = "${release_type}"
+        "${release_versions}".split(',').each {
+            mainFile.addGameVersion("${it}")
+        }
+        mainFile.addOptional('configured')
+        mainFile.addOptional('catalogue')
+        mainFile.addOptional('jei')
+        mainFile.addOptional('simpletextoverlay')
+        mainFile.addOptional('serene-seasons')
+        mainFile.addOptional('biomes-o-plenty')
+        mainFile.addOptional('oh-the-biomes-youll-go')
+        mainFile.addOptional('croptopia')
+        mainFile.addOptional('farmers-delight')
+        mainFile.addOptional('xercamod')
+        mainFile.addOptional('kitteh6660s-morecraft')
+        mainFile.addOptional('sophisticated-backpacks')
+        mainFile.addOptional('ecologics')
+        mainFile.addOptional('ars-nouveau')
+        mainFile.addOptional('sprout')
+        mainFile.addOptional('create-cafe')
+        mainFile.addOptional('fruit-trees')
+        mainFile.addOptional('leave-my-bars-alone')
+        mainFile.addOptional('create')
+        mainFile.addOptional('patchouli')
+        mainFile.addOptional('scuba-gear')
+        mainFile.addOptional('kobolds')
+        mainFile.addOptional('primal-winter')
+        mainFile.addOptional('tinkers-construct')
+    }
+}
+
+modrinth {
+    if (project.hasProperty('hsModrinthId')) {
+        token = project.modrinthKey
+        projectId = project.hsModrinthId
+        version = getVersion()
+        versionType = "${release_type}"
+        if (file(changelogFile).exists()) {
+            changelog = file(changelogFile).text
+        }
+        uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
+        gameVersions = "${release_versions}".split(",") as List<String>
+        loaders = ['neoforge']
+        dependencies {
+            optional.project 'create'
+            optional.project 'ecologics'
+            optional.project 'create-cafe'
+            optional.project 'scuba-gear'
+            optional.project 'farmers-delight'
+            optional.project 'xercamod'
+            optional.project 'leave-my-bars-alone'
+            optional.project 'sprout'
+            optional.project 'patchouli'
+            optional.project 'jei'
+            optional.project 'biomesyougo'
+            optional.project 'kobolds'
+            optional.project 'primal-winter'
+            optional.project 'tinkers-construct'
+            optional.project 'fruitful-fun'
+        }
+    }
+}

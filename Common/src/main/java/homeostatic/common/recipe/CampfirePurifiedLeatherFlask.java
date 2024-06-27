@@ -3,7 +3,6 @@ package homeostatic.common.recipe;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
 import net.minecraft.world.item.ItemStack;
@@ -14,8 +13,8 @@ import net.minecraft.world.level.Level;
 
 public class CampfirePurifiedLeatherFlask extends CampfireCookingRecipe implements ICookingRecipe {
 
-    public CampfirePurifiedLeatherFlask(ResourceLocation id, String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
-        super(id, group, category, ingredient, result, experience, cookingTime);
+    public CampfirePurifiedLeatherFlask(String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
+        super(group, category, ingredient, result, experience, cookingTime);
     }
 
     @Override

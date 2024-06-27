@@ -8,7 +8,6 @@ import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ArmorItem;
@@ -23,8 +22,8 @@ import homeostatic.common.TagManager;
 
 public class ArmorEnhancement extends CustomRecipe {
 
-    public ArmorEnhancement(ResourceLocation resourceLocation, CraftingBookCategory category) {
-        super(resourceLocation, category);
+    public ArmorEnhancement(CraftingBookCategory category) {
+        super(category);
     }
 
     @Override

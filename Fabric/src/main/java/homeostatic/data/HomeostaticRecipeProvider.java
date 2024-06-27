@@ -1,11 +1,10 @@
 package homeostatic.data;
 
-import java.util.function.Consumer;
+import net.minecraft.data.recipes.RecipeOutput;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
-import net.minecraft.data.recipes.FinishedRecipe;
 
 import homeostatic.Homeostatic;
 import homeostatic.data.integration.ModIntegration;
@@ -25,8 +24,8 @@ public class HomeostaticRecipeProvider extends FabricRecipeProvider {
     }
 
     @Override
-    public void buildRecipes(Consumer<FinishedRecipe> consumer) {
-        Consumer<FinishedRecipe> patchouliWrapped = withConditions(consumer, DefaultResourceConditions.allModsLoaded(ModIntegration.PATCHOULI_MODID));
+    public void buildRecipes(RecipeOutput recipeOutput) {
+        RecipeOutput patchouliWrapped = withConditions(recipeOutput, DefaultResourceConditions.allModsLoaded(ModIntegration.PATCHOULI_MODID));
 
         RecipeProviderBase.book().save(patchouliWrapped, loc("book_from_dirt"));
     }

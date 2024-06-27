@@ -14,7 +14,6 @@ import net.minecraft.world.level.Level;
 import homeostatic.common.TagManager;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
-import homeostatic.Homeostatic;
 import homeostatic.platform.Services;
 
 public class PatchouliHelper {
@@ -99,13 +98,13 @@ public class PatchouliHelper {
                     armorInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, ingredient, Ingredient.EMPTY, ingredient, ingredient);
                 }
 
-                customRecipe = new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, recipe), "armor.enhancement", CraftingBookCategory.EQUIPMENT, armorStack, armorInputs);
+                customRecipe = new ShapelessRecipe("armor.enhancement", CraftingBookCategory.EQUIPMENT, armorStack, armorInputs);
             }
             else if (leatherFlask != null) {
                 Ingredient baseFlaskIngredient = Ingredient.of(leatherFlaskBase.getItem());
                 NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseFlaskIngredient, ingredient);
 
-                customRecipe = new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, recipe), "flask.filter", CraftingBookCategory.MISC, leatherFlask, recipeInputs);
+                customRecipe = new ShapelessRecipe("flask.filter", CraftingBookCategory.MISC, leatherFlask, recipeInputs);
             }
         }
 

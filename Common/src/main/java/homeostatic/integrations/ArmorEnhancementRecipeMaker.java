@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 
 import homeostatic.common.TagManager;
@@ -20,9 +21,9 @@ import homeostatic.util.RegistryHelper;
 
 public final class ArmorEnhancementRecipeMaker {
 
-    public static List<CraftingRecipe> createRecipes(String plugin) {
+    public static List<RecipeHolder<CraftingRecipe>> createRecipes(String plugin) {
         String group = plugin + ".armor.enhancement";
-        List<CraftingRecipe> recipes = new ArrayList<>();
+        List<RecipeHolder<CraftingRecipe>> recipes = new ArrayList<>();
         Ingredient wool = Ingredient.of(TagManager.Items.INSULATION);
         Ingredient waterproof = Ingredient.of(TagManager.Items.WATERPROOF);
         Ingredient radiation = Ingredient.of(TagManager.Items.RADIATION_PROTECTION);
@@ -43,18 +44,27 @@ public final class ArmorEnhancementRecipeMaker {
 
                     if (woolArmorStackTag != null) {
                         woolArmorStackTag.putBoolean("insulation", true);
-                        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".insulated"), group, CraftingBookCategory.EQUIPMENT, woolArmorStack, insulatedInputs));
+                        recipes.add(new RecipeHolder<>(
+                            new ResourceLocation(Homeostatic.MODID, group + ".insulated"),
+                            new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, woolArmorStack, insulatedInputs)
+                        ));
                     }
 
                     if (waterproofArmorStackTag != null) {
                         waterproofArmorStackTag.putBoolean("waterproof", true);
-                        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".waterproof"), group, CraftingBookCategory.EQUIPMENT, waterproofArmorStack, waterproofInputs));
+                        recipes.add(new RecipeHolder<>(
+                            new ResourceLocation(Homeostatic.MODID, group + ".waterproof"),
+                            new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, waterproofArmorStack, waterproofInputs)
+                        ));
 
                     }
 
                     if (radiationArmorStackTag != null) {
                         radiationArmorStackTag.putBoolean("radiation_protection", true);
-                        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".radiation_resistance"), group, CraftingBookCategory.EQUIPMENT, radiationArmorStack, radiationInputs));
+                        recipes.add(new RecipeHolder<>(
+                            new ResourceLocation(Homeostatic.MODID, group + ".radiation_resistance"),
+                            new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, radiationArmorStack, radiationInputs)
+                        ));
                     }
                 });
 

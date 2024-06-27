@@ -6,7 +6,6 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ArmorItem;
@@ -20,8 +19,8 @@ import homeostatic.common.item.HomeostaticItems;
 
 public class HelmetThermometer extends CustomRecipe {
 
-    public HelmetThermometer(ResourceLocation resourceLocation, CraftingBookCategory category) {
-        super(resourceLocation, category);
+    public HelmetThermometer(CraftingBookCategory category) {
+        super(category);
     }
 
     @Override
