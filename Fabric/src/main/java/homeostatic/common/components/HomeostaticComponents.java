@@ -24,10 +24,10 @@ public class HomeostaticComponents implements EntityComponentInitializer {
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-        registry.registerForPlayers(TEMPERATURE_DATA, player -> new ComponentTemperatureData(), RespawnCopyStrategy.NEVER_COPY);
-        registry.registerForPlayers(THERMOMETER_DATA, player -> new ComponentThermometerData(), RespawnCopyStrategy.NEVER_COPY);
-        registry.registerForPlayers(WATER_DATA, player -> new ComponentWaterData(), RespawnCopyStrategy.NEVER_COPY);
-        registry.registerForPlayers(WETNESS_DATA, player -> new ComponentWetnessData(), RespawnCopyStrategy.NEVER_COPY);
+        registry.registerForPlayers(TEMPERATURE_DATA, ComponentTemperatureData::new, RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.registerForPlayers(THERMOMETER_DATA, player -> new ComponentThermometerData(), RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.registerForPlayers(WATER_DATA, player -> new ComponentWaterData(), RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.registerForPlayers(WETNESS_DATA, player -> new ComponentWetnessData(), RespawnCopyStrategy.LOSSLESS_ONLY);
     }
 
 }

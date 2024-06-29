@@ -1,6 +1,6 @@
-package homeostatic.common.capabilities;
+package homeostatic.network;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
 
 import homeostatic.common.water.WaterInfo;
@@ -27,8 +27,8 @@ public interface IWater {
 
     void checkWaterLevel(ServerPlayer player);
 
-    CompoundTag write();
+    ListTag write();
 
-    void read(CompoundTag tag);
+    void read(ListTag tag);
 
 }

@@ -1,6 +1,7 @@
-package homeostatic.common.capabilities;
+package homeostatic.network;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 
@@ -82,7 +83,8 @@ public class Temperature implements ITemperature {
     }
 
     @Override
-    public CompoundTag write() {
+    public ListTag write() {
+        ListTag listTag = new ListTag();
         CompoundTag tag = new CompoundTag();
 
         tag.putFloat("skinTemperature", this.getSkinTemperature());
@@ -90,11 +92,15 @@ public class Temperature implements ITemperature {
         tag.putFloat("coreTemperature", this.getCoreTemperature());
         tag.putFloat("localTemperature", this.getLocalTemperature());
 
-        return tag;
+        listTag.add(tag);
+
+        return listTag;
     }
 
     @Override
-    public void read(CompoundTag tag) {
+    public void read(ListTag nbt) {
+        CompoundTag tag = nbt.getCompound(0);
+
         this.setSkinTemperature(tag.getFloat("skinTemperature"));
         this.setLastSkinTemperature(tag.getFloat("lastSkinTemperature"));
         this.setCoreTemperature(tag.getFloat("coreTemperature"));

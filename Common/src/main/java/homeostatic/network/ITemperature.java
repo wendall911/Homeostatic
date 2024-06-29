@@ -1,6 +1,6 @@
-package homeostatic.common.capabilities;
+package homeostatic.network;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.temperature.BodyTemperature;
@@ -27,8 +27,8 @@ public interface ITemperature {
 
     void checkTemperatureLevel(Player player);
 
-    CompoundTag write();
+    ListTag write();
 
-    void read(CompoundTag tag);
+    void read(ListTag tag);
 
 }

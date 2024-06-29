@@ -7,8 +7,9 @@ import net.minecraft.server.level.ServerPlayer;
 
 import homeostatic.util.WaterHelper;
 
-public class NeoForgeDrinkWater implements IData {
+public class NeoForgeDrinkWater {
 
+    /*
     public NeoForgeDrinkWater() {}
 
     public NeoForgeDrinkWater(FriendlyByteBuf buf) {}
@@ -25,5 +26,7 @@ public class NeoForgeDrinkWater implements IData {
         }
 
     }
+
+     */
 
 }

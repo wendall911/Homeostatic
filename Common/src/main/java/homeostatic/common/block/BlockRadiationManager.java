@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -15,7 +16,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 import homeostatic.Homeostatic;
-import homeostatic.platform.Services;
 
 public class BlockRadiationManager extends SimpleJsonResourceReloadListener {
 
@@ -42,7 +42,7 @@ public class BlockRadiationManager extends SimpleJsonResourceReloadListener {
         for (Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet()) {
             try {
                 BlockRadiation blockRadiation = GSON.fromJson(entry.getValue(), BlockRadiation.class);
-                Block block = Services.PLATFORM.getBlock(blockRadiation.loc());
+                Block block = BuiltInRegistries.BLOCK.get(blockRadiation.loc());
 
                 if (block != Blocks.AIR && block != null) {
                     RADIATION_BLOCKS.put(block, blockRadiation);

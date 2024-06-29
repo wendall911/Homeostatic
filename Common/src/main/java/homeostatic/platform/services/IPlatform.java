@@ -8,19 +8,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.storage.ServerLevelData;
 
 import homeostatic.common.biome.ClimateSettings;
-import homeostatic.common.capabilities.ITemperature;
-import homeostatic.common.capabilities.IThermometer;
-import homeostatic.common.capabilities.IWater;
-import homeostatic.common.capabilities.IWetness;
+import homeostatic.network.ITemperature;
+import homeostatic.network.IThermometer;
+import homeostatic.network.IWater;
+import homeostatic.network.IWetness;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.common.temperature.EnvironmentData;
@@ -28,7 +26,6 @@ import homeostatic.common.temperature.SubSeason;
 import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.common.water.WaterInfo;
 import homeostatic.common.wetness.WetnessInfo;
-import net.minecraft.world.level.storage.ServerLevelData;
 
 public interface IPlatform {
 
@@ -38,15 +35,7 @@ public interface IPlatform {
 
     boolean isPhysicalClient();
 
-    Ingredient getStrictNBTIngredient(ItemStack stack);
-
     double getCreateBlockRadiation(BlockState state, Double radiation);
-
-    Block getBlock(ResourceLocation loc);
-
-    Fluid getFluid(ResourceLocation loc);
-
-    Item getItem(ResourceLocation loc);
 
     String fluidStackTag();
 

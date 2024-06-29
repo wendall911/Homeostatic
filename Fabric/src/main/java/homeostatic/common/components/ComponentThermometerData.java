@@ -4,10 +4,11 @@ import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 
-import homeostatic.common.capabilities.Thermometer;
+import homeostatic.network.Thermometer;
 import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.network.ThermometerData;
 
@@ -15,7 +16,10 @@ public class ComponentThermometerData extends Thermometer implements Component, 
 
     @Override
     public void readFromNbt(CompoundTag tag) {
-        this.read(tag.getCompound("ThermometerData"));
+        ListTag listTag = new ListTag();
+
+        listTag.add(tag.getCompound("ThermometerData"));
+        this.read(listTag);
     }
 
     @Override

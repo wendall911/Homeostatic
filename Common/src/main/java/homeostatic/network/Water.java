@@ -1,6 +1,7 @@
-package homeostatic.common.capabilities;
+package homeostatic.network;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 
@@ -69,18 +70,23 @@ public class Water implements IWater {
     }
 
     @Override
-    public CompoundTag write() {
+    public ListTag write() {
+        ListTag listTag = new ListTag();
         CompoundTag tag = new CompoundTag();
 
         tag.putInt("waterLevel", this.getWaterLevel());
         tag.putFloat("waterExhaustion", this.getWaterExhaustionLevel());
         tag.putFloat("waterSaturation", this.getWaterSaturationLevel());
 
-        return tag;
+        listTag.add(tag);
+
+        return listTag;
     }
 
     @Override
-    public void read(CompoundTag tag) {
+    public void read(ListTag nbt) {
+        CompoundTag tag = nbt.getCompound(0);
+
         this.setWaterLevel(tag.getInt("waterLevel"));
         this.setWaterExhaustionLevel(tag.getFloat("waterExhaustion"));
         this.setWaterSaturationLevel(tag.getFloat("waterSaturation"));

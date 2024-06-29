@@ -1,4 +1,4 @@
-// 1.20.1	2024-06-23T16:53:08.434362404	Homeostatic/Homeostatic - Biome Categories
+// 1.20.4	2024-06-28T13:34:57.984489961	Homeostatic/Homeostatic - Biome Categories
 89cb8254870a5e56904f5c89f31ea6f65699fb16 data/minecraft/environment/biome_category/soul_sand_valley.json
 d18f4c43fe65ac53bff64b550c39202a748bde93 data/twilightforest/environment/biome_category/fire_swamp.json
 66f1d3ed7ed82107a9a55c780560efe130081713 data/minecraft/environment/biome_category/end_barrens.json
@@ -13,8 +13,8 @@ fbd0caa0dc363264a5a98b4f04953ef8b63eea92 data/byg/environment/biome_category/ara
 03c5781b5dab9a97842ac1b79a9894e9cd36cf6a data/twilightforest/environment/biome_category/oak_savannah.json
 ad755f0d4dda6df5b9617be4d89632816d60b633 data/byg/environment/biome_category/sythian_torrids.json
 7126d221279efdf8e75255147a2f3be0c7996489 data/byg/environment/biome_category/allium_fields.json
-f9445c6ef17bc76b90999a7a6681ed41e75a8da8 data/byg/environment/biome_category/brimstone_caverns.json
 a27643d6df7b10defd499845f5641b5f9113dc14 data/byg/environment/biome_category/magma_wastes.json
+f9445c6ef17bc76b90999a7a6681ed41e75a8da8 data/byg/environment/biome_category/brimstone_caverns.json
 06c1358d2dabc73a71b1a831704eb57a0ef86f0a data/byg/environment/biome_category/white_mangrove_marshes.json
 1099e7c29f2ba359fe29d90d1059dadd4270af25 data/byg/environment/biome_category/borealis_grove.json
 8d9e05d86151ec34a75d103866807abbb282cf96 data/twilightforest/environment/biome_category/enchanted_forest.json
@@ -93,8 +93,8 @@ decc09b055362fcc0f2dd30149967bc1b64241ac data/biomesoplenty/environment/biome_ca
 97dfa6946391be97dee770a4d3c2ce348c5a3e0e data/byg/environment/biome_category/amaranth_fields.json
 3338d7b2363d1925d7a1a137a36675b8261d9729 data/biomesoplenty/environment/biome_category/dryland.json
 1143ace7088ca9cd606658d7112ac531d60671b3 data/biomesoplenty/environment/biome_category/bog.json
-39467c6438849b5f97aef97d73d12a5333dc2eb5 data/biomesoplenty/environment/biome_category/highland.json
 2b565d76f1c2a4df22fcb2d65fd92857a9b7d13f data/byg/environment/biome_category/ivis_fields.json
+39467c6438849b5f97aef97d73d12a5333dc2eb5 data/biomesoplenty/environment/biome_category/highland.json
 32c80134f91e34e161b8f3f8506a2963bee865f2 data/twilightforest/environment/biome_category/firefly_forest.json
 f3a40b7f73d28e2e60b6c7a112d84a6acb0cfd64 data/biomesoplenty/environment/biome_category/muskeg.json
 a40f4ca70fb1fb3e89a810b980a0c71d473b2330 data/biomesoplenty/environment/biome_category/undergrowth.json

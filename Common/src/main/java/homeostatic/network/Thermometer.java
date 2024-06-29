@@ -1,6 +1,7 @@
-package homeostatic.common.capabilities;
+package homeostatic.network;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 public class Thermometer implements IThermometer {
 
@@ -17,16 +18,21 @@ public class Thermometer implements IThermometer {
     }
 
     @Override
-    public CompoundTag write() {
+    public ListTag write() {
+        ListTag listTag = new ListTag();
         CompoundTag tag = new CompoundTag();
 
         tag.putBoolean("thermometer", this.hasThermometer());
 
-        return tag;
+        listTag.add(tag);
+
+        return listTag;
     }
 
     @Override
-    public void read(CompoundTag tag) {
+    public void read(ListTag nbt) {
+        CompoundTag tag = nbt.getCompound(0);
+
         this.setHasThermometer(tag.getBoolean("thermometer"));
     }
 

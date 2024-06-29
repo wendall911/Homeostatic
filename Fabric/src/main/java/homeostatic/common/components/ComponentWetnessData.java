@@ -4,10 +4,11 @@ import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 
-import homeostatic.common.capabilities.Wetness;
+import homeostatic.network.Wetness;
 import homeostatic.common.wetness.WetnessInfo;
 import homeostatic.network.WetnessData;
 
@@ -15,7 +16,10 @@ public class ComponentWetnessData extends Wetness implements Component, AutoSync
 
     @Override
     public void readFromNbt(CompoundTag tag) {
-        this.read(tag.getCompound("WetnessData"));
+        ListTag listTag = new ListTag();
+
+        listTag.add(tag.getCompound("WetnessData"));
+        this.read(listTag);
     }
 
     @Override

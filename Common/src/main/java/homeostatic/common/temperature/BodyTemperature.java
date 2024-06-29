@@ -3,7 +3,7 @@ package homeostatic.common.temperature;
 import net.minecraft.server.level.ServerPlayer;
 
 import homeostatic.common.biome.BiomeData;
-import homeostatic.common.capabilities.ITemperature;
+import homeostatic.network.ITemperature;
 import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
 import homeostatic.util.InsulationHelper;

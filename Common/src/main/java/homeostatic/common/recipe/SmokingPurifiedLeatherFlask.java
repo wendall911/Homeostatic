@@ -11,12 +11,15 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmokingRecipe;
 import net.minecraft.world.level.Level;
 
-import homeostatic.platform.Services;
-
 public class SmokingPurifiedLeatherFlask extends SmokingRecipe implements ICookingRecipe {
 
     public SmokingPurifiedLeatherFlask(String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
         super(group, category, ingredient, result, experience, cookingTime);
+    }
+
+    @Override
+    public @NotNull ItemStack assemble(@NotNull Container container, @NotNull RegistryAccess registryAccess) {
+        return assemble(container, this.result);
     }
 
     @Override
@@ -26,7 +29,7 @@ public class SmokingPurifiedLeatherFlask extends SmokingRecipe implements ICooki
 
     @Override
     public boolean matches(@NotNull Container container, @NotNull Level level) {
-        return matches(container, Services.PLATFORM.getFluidCapacity(container.getItem(0)));
+        return matches(container, 1L);
     }
 
     @Override

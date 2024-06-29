@@ -30,14 +30,13 @@
   },
   "requirements": [
     [
-      "has_dirt",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_dirt"
     ]
   ],
   "rewards": {
     "recipes": [
       "homeostatic:book_from_dirt"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

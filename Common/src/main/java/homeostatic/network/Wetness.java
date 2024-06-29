@@ -1,6 +1,7 @@
-package homeostatic.common.capabilities;
+package homeostatic.network;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 import homeostatic.common.wetness.WetnessInfo;
 
@@ -36,17 +37,22 @@ public class Wetness implements IWetness {
     }
 
     @Override
-    public CompoundTag write() {
+    public ListTag write() {
+        ListTag listTag = new ListTag();
         CompoundTag tag = new CompoundTag();
 
         tag.putInt("wetnessLevel", this.getWetnessLevel());
         tag.putFloat("moistureLevel", this.getMoistureLevel());
 
-        return tag;
+        listTag.add(tag);
+
+        return listTag;
     }
 
     @Override
-    public void read(CompoundTag tag) {
+    public void read(ListTag nbt) {
+        CompoundTag tag = nbt.getCompound(0);
+
         this.setWetnessLevel(tag.getInt("wetnessLevel"));
         this.setMoistureLevel(tag.getFloat("moistureLevel"));
     }

@@ -2,8 +2,9 @@ package homeostatic.platform;
 
 import java.util.Optional;
 
+import homeostatic.Homeostatic;
+import homeostatic.common.components.ComponentTemperatureData;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.fabric.impl.recipe.ingredient.builtin.NbtIngredient;
 import net.fabricmc.loader.api.FabricLoader;
 
 import net.minecraft.core.Holder;
@@ -13,20 +14,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ServerLevelData;
 
 import homeostatic.common.biome.ClimateSettings;
-import homeostatic.common.capabilities.ITemperature;
-import homeostatic.common.capabilities.IThermometer;
-import homeostatic.common.capabilities.IWater;
-import homeostatic.common.capabilities.IWetness;
+import homeostatic.network.ITemperature;
+import homeostatic.network.IThermometer;
+import homeostatic.network.IWater;
+import homeostatic.network.IWetness;
 import homeostatic.common.components.HomeostaticComponents;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.item.IItemStackFluid;
@@ -44,7 +42,9 @@ import homeostatic.platform.services.IPlatform;
 import homeostatic.util.CreateHelper;
 import homeostatic.util.FabricSeasonsHelper;
 import homeostatic.util.ItemStackFluidHelper;
+import homeostatic.util.SereneSeasonsFabricHelper;
 
+import static homeostatic.common.components.HomeostaticComponents.TEMPERATURE_DATA;
 
 public class FabricPlatform implements IPlatform {
 
@@ -64,28 +64,8 @@ public class FabricPlatform implements IPlatform {
     }
 
     @Override
-    public Ingredient getStrictNBTIngredient(ItemStack stack) {
-        return new NbtIngredient(Ingredient.of(stack),stack.getTag(),true).toVanilla();
-    }
-
-    @Override
     public double getCreateBlockRadiation(BlockState state, Double radiation) {
         return CreateHelper.getBlockRadiation(state, radiation);
-    }
-
-    @Override
-    public Block getBlock(ResourceLocation loc) {
-        return BuiltInRegistries.BLOCK.get(loc);
-    }
-
-    @Override
-    public Fluid getFluid(ResourceLocation loc) {
-        return BuiltInRegistries.FLUID.get(loc);
-    }
-
-    @Override
-    public Item getItem(ResourceLocation loc) {
-        return BuiltInRegistries.ITEM.get(loc);
     }
 
     @Override
@@ -149,7 +129,10 @@ public class FabricPlatform implements IPlatform {
 
     @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
-        if (isModLoaded(ModIntegration.SEASONS_MODID) && FabricSeasonsHelper.isSeasonDimension(level)) {
+        if (isModLoaded(ModIntegration.SS_MODID) && SereneSeasonsFabricHelper.isSeasonDimension(level)) {
+            return SubSeason.getSubSeason(level, SereneSeasonsFabricHelper.getSeasonDuration(level));
+        }
+        else if (isModLoaded(ModIntegration.SEASONS_MODID) && FabricSeasonsHelper.isSeasonDimension(level)) {
             return SubSeason.getSubSeason(level, FabricSeasonsHelper.getSeasonDuration());
         }
 
@@ -158,12 +141,19 @@ public class FabricPlatform implements IPlatform {
 
     @Override
     public Optional<? extends ITemperature> getTemperatureData(Player player) {
-        return HomeostaticComponents.TEMPERATURE_DATA.maybeGet(player);
+        ComponentTemperatureData data = player.getComponent(TEMPERATURE_DATA);
+
+        if (data.getCoreTemperature() != 0F) {
+            Homeostatic.LOGGER.warn("have data");
+            return TEMPERATURE_DATA.maybeGet(player);
+        }
+
+        return Optional.empty();
     }
 
     @Override
     public void syncTemperatureData(ServerPlayer sp, EnvironmentData environmentData, BodyTemperature bodyTemperature) {
-        HomeostaticComponents.TEMPERATURE_DATA.sync(sp);
+        TEMPERATURE_DATA.sync(sp);
     }
 
     @Override

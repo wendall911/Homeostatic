@@ -120,6 +120,7 @@ jar {
 processResources {
     def expandProps = [
         'version': version,
+		'minecraft_version': minecraft_version,
         'neoforge_mod_version': neoforge_mod_version,
         'fabric_mod_version': fabric_mod_version,
         'license': license,
@@ -131,7 +132,6 @@ processResources {
         'issue_tracker': issue_tracker,
         'mod_update_branch': mod_update_branch,
         'mod_url': mod_url,
-        'fabric_mc_version_range': project.fabric_mc_version_range,
         'fabric_loader_min_version': fabric_loader_min_version,
         'neoforge_loader_version_range': neoforge_loader_version_range,
         'neoforge_mc_version_range': neoforge_mc_version_range

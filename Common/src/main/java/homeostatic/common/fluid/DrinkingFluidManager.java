@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -15,7 +16,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
 import homeostatic.Homeostatic;
-import homeostatic.platform.Services;
 
 public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
 
@@ -41,9 +41,9 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
         for (Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet()) {
             try {
                 DrinkingFluid drinkingFluid = GSON.fromJson(entry.getValue(), DrinkingFluid.class);
-                Fluid fluid = Services.PLATFORM.getFluid(drinkingFluid.loc());
+                Fluid fluid = BuiltInRegistries.FLUID.get(drinkingFluid.loc());
 
-                if (fluid != Fluids.EMPTY && fluid != null) {
+                if (fluid != Fluids.EMPTY) {
                     FLUIDS.put(fluid, drinkingFluid);
                 }
             }

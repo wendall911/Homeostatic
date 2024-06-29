@@ -1,33 +1,37 @@
 package homeostatic.event;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Map;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.biome.Biome;
 
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 
+import homeostatic.common.biome.BiomeCategory;
 import homeostatic.common.biome.BiomeCategoryManager;
+import homeostatic.common.biome.BiomeData;
+import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.block.BlockRadiationManager;
-import homeostatic.common.capabilities.CapabilityRegistry;
-import homeostatic.common.item.DrinkableItemManager;
-import homeostatic.common.item.HomeostaticItems;
-import homeostatic.common.item.LeatherFlask;
 import homeostatic.common.fluid.DrinkingFluidManager;
-import homeostatic.common.fluid.FluidInfo;
-import homeostatic.platform.Services;
+import homeostatic.common.item.DrinkableItemManager;
+import homeostatic.Homeostatic;
+import homeostatic.util.RegistryHelper;
 import homeostatic.util.WaterHelper;
 
 public class ServerEventListener {
@@ -85,43 +89,49 @@ public class ServerEventListener {
         event.addListener(new DrinkableItemManager());
     }
 
-    @SubscribeEvent
-    public static void onStartUsingItem(LivingEntityUseItemEvent.Start event) {
-        if (event.getEntity() instanceof Player player) {
-            if (!player.level().isClientSide && event.getItem().getItem() instanceof LeatherFlask) {
-                ItemStack holding = event.getItem();
-                int holdingCapacity = (int) Services.PLATFORM.getFluidCapacity(holding);
-                FluidInfo fluidInfo = Services.PLATFORM.getFluidInfo(holding).get();
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public static void serverStart(final ServerStartedEvent event) {
+        Registry<Biome> biomeRegistry = RegistryHelper.getRegistry(event.getServer(), Registries.BIOME);
 
-                if (holdingCapacity != LeatherFlask.LEATHER_FLASK_CAPACITY || fluidInfo.amount() > LeatherFlask.LEATHER_FLASK_CAPACITY ) {
-                    ItemStack mainHandItem = player.getMainHandItem();
-                    ItemStack offhandItem = player.getOffhandItem();
+        for (Map.Entry<ResourceKey<Biome>, Biome> entry : biomeRegistry.entrySet()) {
+            ResourceKey<Biome> biomeResourceKey = entry.getKey();
+            ResourceLocation biomeName = biomeResourceKey.location();
+            Holder<Biome> biomeHolder = biomeRegistry.getHolderOrThrow(biomeResourceKey);
+            BiomeCategory.Type biomeCategory = BiomeCategoryManager.getBiomeCategory(biomeHolder);
+            BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+            Biome biome = biomeHolder.value();
+            Biome.Precipitation precipitation = getPrecipitation(biome);
+            String temperatureModifier = biomeData.isFrozen() ? "FROZEN" : "NONE";
+            float dayNightOffset = biomeData.getDayNightOffset(precipitation);
+            double humidity = biomeData.getHumidity(precipitation);
 
-                    if (mainHandItem.getItem() instanceof LeatherFlask) {
-                        player.setItemSlot(EquipmentSlot.MAINHAND, stackFixerUpper(mainHandItem, new ItemStack(HomeostaticItems.LEATHER_FLASK)));
-                    }
-                    if (offhandItem.getItem() instanceof LeatherFlask) {
-                        player.setItemSlot(EquipmentSlot.MAINHAND, stackFixerUpper(offhandItem, new ItemStack(HomeostaticItems.LEATHER_FLASK)));
-                    }
+            if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
+                if (biomeCategory == BiomeCategory.Type.MISSING) {
+                    Homeostatic.LOGGER.warn("Missing biome in registry, will set to neutral temperature for: {}", biomeName);
                 }
+
+                Homeostatic.LOGGER.debug("Biome: " + biomeName
+                    + "\nprecipitation_type=" + precipitation
+                    + "\ntemperature=" + biomeData.getTemperature(precipitation)
+                    + "\ntemperatureModifier=" + temperatureModifier
+                    + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
+                    + "\ndayNightOffset=" + dayNightOffset
+                    + "\nhumidity=" + humidity
+                    + "\nbiomeCategory=" + biomeCategory);
             }
         }
     }
 
     /*
-     * Temporary method for 1.20.1. Changed stack size from 5000 to 1000 to match buckets
+     * Mock for debugging purposes. Will not be 100% accurate, but should help map to older versions.
      */
-    @Deprecated
-    private static ItemStack stackFixerUpper(ItemStack original, ItemStack replacement) {
-        AtomicInteger currentAmount = new AtomicInteger(0);
-        AtomicReference<Fluid> currentFluid = new AtomicReference<>(Fluids.WATER);
-
-        original.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).ifPresent(handler -> {
-            currentFluid.set(handler.getFluidInTank(0).getFluid());
-            currentAmount.set(handler.getTankCapacity(0));
-        });
-
-        return WaterHelper.getFilledItem(replacement, currentFluid.get(), currentAmount.get() / 5);
+    private static Biome.Precipitation getPrecipitation(Biome biome) {
+        if (!biome.hasPrecipitation()) {
+            return Biome.Precipitation.NONE;
+        }
+        else {
+            return biome.getBaseTemperature() <= 0.15F ? Biome.Precipitation.SNOW : Biome.Precipitation.RAIN;
+        }
     }
 
 }

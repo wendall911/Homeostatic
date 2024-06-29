@@ -1,13 +1,12 @@
 package homeostatic.network;
 
-import java.util.function.Supplier;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 
 import homeostatic.common.wetness.WetnessInfo;
 
-public class NeoForgeWetnessData implements IData {
+public class NeoForgeWetnessData implements CustomPacketPayload {
 
     private final WetnessData wetnessData;
 
@@ -19,17 +18,18 @@ public class NeoForgeWetnessData implements IData {
         wetnessData = new WetnessData(buf);
     }
 
+    public WetnessData getWetnessData() {
+        return wetnessData;
+    }
+
     @Override
-    public void toBytes(FriendlyByteBuf buf) {
+    public void write(FriendlyByteBuf buf) {
         wetnessData.toBytes(buf);
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public void process(Supplier<NetworkEvent.Context> ctx) {
-        if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
-            ctx.get().enqueueWork(() -> wetnessData.process(Minecraft.getInstance().player, wetnessData));
-        }
+    public ResourceLocation id() {
+        return WetnessData.ID;
     }
 
 }

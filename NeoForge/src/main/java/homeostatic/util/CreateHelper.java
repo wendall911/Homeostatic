@@ -1,7 +1,7 @@
 package homeostatic.util;
 
-import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
-import com.simibubi.create.content.processing.burner.LitBlazeBurnerBlock;
+//import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
+//import com.simibubi.create.content.processing.burner.LitBlazeBurnerBlock;
 
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -9,7 +9,7 @@ public class CreateHelper {
 
     public static double getBlockRadiation(BlockState state, Double radiation) {
         Double level = 0D;
-
+/*
         if (state.hasProperty(BlazeBurnerBlock.HEAT_LEVEL)) {
             BlazeBurnerBlock.HeatLevel heatLevel = state.getValue(BlazeBurnerBlock.HEAT_LEVEL);
 
@@ -39,7 +39,7 @@ public class CreateHelper {
                     yield radiation;
             };
         }
-
+*/
         return level;
     }
 

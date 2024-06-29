@@ -1,6 +1,6 @@
-package homeostatic.common.capabilities;
+package homeostatic.network;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 import homeostatic.common.wetness.WetnessInfo;
 
@@ -16,8 +16,8 @@ public interface IWetness {
 
     float getMoistureLevel();
 
-    CompoundTag write();
+    ListTag write();
 
-    void read(CompoundTag tag);
+    void read(ListTag tag);
 
 }

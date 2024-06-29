@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_leather_flask",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_leather_flask"
     ]
   ],
   "rewards": {
     "recipes": [
       "homeostatic:furnace_purified_leather_flask"
     ]
-  },
-  "sends_telemetry_event": true
+  }
 }

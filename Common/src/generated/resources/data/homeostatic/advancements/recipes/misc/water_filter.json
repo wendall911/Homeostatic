@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_charcoal",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_charcoal"
     ]
   ],
   "rewards": {
     "recipes": [
       "homeostatic:water_filter"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

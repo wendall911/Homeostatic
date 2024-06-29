@@ -107,7 +107,7 @@ sourceSets.main.resources {
 
 processResources {
     // Added so we have book data and damage types built in Forge datagen
-    from ('../Forge/src/generated/resources/') {
+    from ('../NeoForge/src/generated/resources/') {
         exclude '**/recipes/*'
     }
 }

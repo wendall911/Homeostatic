@@ -32,13 +32,11 @@ public class HomeostaticClientFabric implements ClientModInitializer {
             HomeostaticFluids.STILL_FLUID_TEXTURE,
             HomeostaticFluids.FLOWING_FLUID_TEXTURE
         ));
-
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> {
             for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
                 entries.accept(entry.getValue());
             }
         });
-
     }
 
 }

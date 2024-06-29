@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "${mod_id}",
-  "version": "${fabric_mod_version}",
+  "version": "${version}",
   "name": "${mod_name}",
   "description": "${mod_description}",
   "authors": [
@@ -46,12 +46,13 @@
     ]
   },
   "mixins": [
+    "homeostatic.mixins.json",
     "homeostatic.fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": "${fabric_loader_min_version}",
     "fabric": "*",
-    "minecraft": "${fabric_mc_version_range}",
+    "minecraft": "${minecraft_version}",
     "java": ">=17"
   }
 }

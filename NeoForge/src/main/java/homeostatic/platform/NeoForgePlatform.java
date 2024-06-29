@@ -1,33 +1,39 @@
 package homeostatic.platform;
 
+import java.util.Objects;
 import java.util.Optional;
 
+import net.neoforged.neoforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ServerLevelData;
 
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
+
+import homeostatic.common.attachments.TemperatureData;
+import homeostatic.common.attachments.ThermometerData;
+import homeostatic.common.attachments.WaterData;
+import homeostatic.common.attachments.WetnessData;
 import homeostatic.common.biome.ClimateSettings;
-import homeostatic.common.capabilities.CapabilityRegistry;
-import homeostatic.common.capabilities.ITemperature;
-import homeostatic.common.capabilities.IThermometer;
-import homeostatic.common.capabilities.IWater;
-import homeostatic.common.capabilities.TemperatureCapability;
-import homeostatic.common.capabilities.ThermometerCapability;
-import homeostatic.common.capabilities.WaterCapability;
-import homeostatic.common.capabilities.IWetness;
-import homeostatic.common.capabilities.WetnessCapability;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.temperature.SubSeason;
 import homeostatic.common.temperature.BodyTemperature;
@@ -36,21 +42,24 @@ import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.common.water.WaterInfo;
 import homeostatic.common.wetness.WetnessInfo;
 import homeostatic.data.integration.ModIntegration;
-import homeostatic.mixin.ServerLevelAccessor;
+import homeostatic.network.ITemperature;
+import homeostatic.network.IThermometer;
+import homeostatic.network.IWater;
+import homeostatic.network.IWetness;
 import homeostatic.network.NeoForgeThermometerData;
 import homeostatic.network.NeoForgeWaterData;
 import homeostatic.network.NeoForgeWetnessData;
 import homeostatic.network.NeoForgeTemperatureData;
-import homeostatic.network.NetworkHandler;
+import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.platform.services.IPlatform;
 import homeostatic.util.CreateHelper;
-import homeostatic.util.SereneSeasonsHelper;
+import homeostatic.util.SereneSeasonsForgeHelper;
 
 public class NeoForgePlatform implements IPlatform {
 
     @Override
     public ResourceLocation getFluidResourceLocation(Fluid fluid) {
-        return ForgeRegistries.FLUIDS.getKey(fluid);
+        return BuiltInRegistries.FLUID.getKey(fluid);
     }
 
     @Override
@@ -64,28 +73,8 @@ public class NeoForgePlatform implements IPlatform {
     }
 
     @Override
-    public Ingredient getStrictNBTIngredient(ItemStack stack) {
-        return StrictNBTIngredient.of(stack);
-    }
-
-    @Override
     public double getCreateBlockRadiation(BlockState state, Double radiation) {
         return CreateHelper.getBlockRadiation(state, radiation);
-    }
-
-    @Override
-    public Block getBlock(ResourceLocation loc) {
-        return ForgeRegistries.BLOCKS.getValue(loc);
-    }
-
-    @Override
-    public Fluid getFluid(ResourceLocation loc) {
-        return ForgeRegistries.FLUIDS.getValue(loc);
-    }
-
-    @Override
-    public Item getItem(ResourceLocation loc) {
-        return ForgeRegistries.ITEMS.getValue(loc);
     }
 
     @Override
@@ -95,18 +84,25 @@ public class NeoForgePlatform implements IPlatform {
 
     @Override
     public Optional<FluidInfo> getFluidInfo(ItemStack stack) {
-        return stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY)
-            .map(handler -> handler.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE))
-            .map(fluidStack -> new FluidInfo(
+        @Nullable IFluidHandlerItem capablity = stack.getCapability(Capabilities.FluidHandler.ITEM);
+
+        if (capablity != null) {
+            FluidStack fluidStack = capablity.getFluidInTank(0);
+
+            return Optional.of(new FluidInfo(
                 fluidStack.getFluid(),
                 fluidStack.getAmount(),
                 fluidStack.isEmpty() ? new CompoundTag() : fluidStack.getOrCreateTag()
             ));
+        }
+        else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public ItemStack drainFluid(ItemStack stack, long amount) {
-        stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).ifPresent(handler -> handler.drain((int) amount, IFluidHandler.FluidAction.EXECUTE));
+        Objects.requireNonNull(stack.getCapability(Capabilities.FluidHandler.ITEM)).drain((int) amount, IFluidHandler.FluidAction.EXECUTE);
 
         updateDamage(stack);
 
@@ -117,7 +113,7 @@ public class NeoForgePlatform implements IPlatform {
     public ItemStack fillFluid(ItemStack stack, Fluid fluid, long amount) {
         FluidStack fluidStack = new FluidStack(fluid, (int) amount);
 
-        stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).ifPresent(handler -> handler.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE));
+        Objects.requireNonNull(stack.getCapability(Capabilities.FluidHandler.ITEM)).fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
 
         updateDamage(stack);
 
@@ -126,9 +122,7 @@ public class NeoForgePlatform implements IPlatform {
 
     @Override
     public long getFluidCapacity(ItemStack stack) {
-        IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
-
-        return (long) fluidHandlerItem.getTankCapacity(0);
+        return Objects.requireNonNull(stack.getCapability(Capabilities.FluidHandler.ITEM)).getTankCapacity(0);
     }
 
     @Override
@@ -153,8 +147,8 @@ public class NeoForgePlatform implements IPlatform {
 
     @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
-        if (isModLoaded(ModIntegration.SS_MODID) && SereneSeasonsHelper.isSeasonDimension(level)) {
-            return SubSeason.getSubSeason(level, SereneSeasonsHelper.getSeasonDuration(level));
+        if (isModLoaded(ModIntegration.SS_MODID) && SereneSeasonsForgeHelper.isSeasonDimension(level)) {
+            return SubSeason.getSubSeason(level, SereneSeasonsForgeHelper.getSeasonDuration(level));
         }
 
         return null;
@@ -162,54 +156,42 @@ public class NeoForgePlatform implements IPlatform {
 
     @Override
     public Optional<? extends ITemperature> getTemperatureData(Player player) {
-        return TemperatureCapability.getCapability(player).resolve();
+        return TemperatureData.getData(player);
     }
 
     @Override
     public void syncTemperatureData(ServerPlayer sp, EnvironmentData environmentData, BodyTemperature bodyTemperature) {
-        NetworkHandler.INSTANCE.send(
-            PacketDistributor.PLAYER.with(() -> sp),
-            new NeoForgeTemperatureData(environmentData.getLocalTemperature(), bodyTemperature)
-        );
+        PacketDistributor.PLAYER.with(sp).send(new NeoForgeTemperatureData(environmentData.getLocalTemperature(), bodyTemperature));
     }
 
     @Override
     public Optional<? extends IThermometer> getThermometerCapability(Player player) {
-        return ThermometerCapability.getCapability(player).resolve();
+        return ThermometerData.getData(player);
     }
 
     @Override
     public void syncThermometerData(ServerPlayer sp, ThermometerInfo info) {
-        NetworkHandler.INSTANCE.send(
-            PacketDistributor.PLAYER.with(() -> sp),
-            new NeoForgeThermometerData(info)
-        );
+        PacketDistributor.PLAYER.with(sp).send(new NeoForgeThermometerData(info));
     }
 
     @Override
     public Optional<? extends IWater> getWaterCapabilty(Player player) {
-        return WaterCapability.getCapability(player).resolve();
+        return WaterData.getData(player);
     }
 
     @Override
     public void syncWaterData(ServerPlayer sp, WaterInfo waterInfo) {
-        NetworkHandler.INSTANCE.send(
-            PacketDistributor.PLAYER.with(() -> sp),
-            new NeoForgeWaterData(waterInfo)
-        );
+        PacketDistributor.PLAYER.with(sp).send(new NeoForgeWaterData(waterInfo));
     }
 
     @Override
     public Optional<? extends IWetness> getWetnessCapability(Player player) {
-        return WetnessCapability.getCapability(player).resolve();
+        return WetnessData.getData(player);
     }
 
     @Override
     public void syncWetnessData(ServerPlayer sp, WetnessInfo wetnessInfo) {
-        NetworkHandler.INSTANCE.send(
-                PacketDistributor.PLAYER.with(() -> sp),
-                new NeoForgeWetnessData(wetnessInfo)
-        );
+        PacketDistributor.PLAYER.with(sp).send(new NeoForgeWetnessData(wetnessInfo));
     }
 
     @Override
@@ -221,8 +203,9 @@ public class NeoForgePlatform implements IPlatform {
 
     public void updateDamage(ItemStack stack) {
         if (stack.isDamageableItem()) {
-            IFluidHandlerItem fluidHandlerItem = stack.getCapability(CapabilityRegistry.FLUID_ITEM_CAPABILITY).orElse(null);
+            IFluidHandlerItem fluidHandlerItem = stack.getCapability(Capabilities.FluidHandler.ITEM);
 
+            assert fluidHandlerItem != null;
             stack.setDamageValue(Math.min(stack.getMaxDamage(), stack.getMaxDamage() - fluidHandlerItem.getFluidInTank(0).getAmount()));
         }
     }

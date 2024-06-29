@@ -1,9 +1,11 @@
 package homeostatic.network;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.water.WaterInfo;
+import homeostatic.Homeostatic;
 import homeostatic.platform.Services;
 
 public class WaterData {
@@ -12,6 +14,7 @@ public class WaterData {
     private final float waterSaturationLevel;
     private final float waterExhaustionLevel;
     private final WaterInfo waterInfo;
+    public static final ResourceLocation ID = new ResourceLocation(Homeostatic.MODID, "water_data");
 
     public WaterData(WaterInfo waterInfo) {
         this.waterLevel = waterInfo.getWaterLevel();
@@ -37,9 +40,9 @@ public class WaterData {
         buf.writeFloat(waterExhaustionLevel);
     }
 
-    public void process(Player player, WaterData waterData) {
+    public static void process(Player player, WaterData waterData) {
         Services.PLATFORM.getWaterCapabilty(player).ifPresent(data -> {
-            data.setWaterData(waterInfo);
+            data.setWaterData(waterData.getWaterInfo());
         });
     }
 

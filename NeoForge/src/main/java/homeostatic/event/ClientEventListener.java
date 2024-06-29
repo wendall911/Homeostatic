@@ -3,9 +3,9 @@ package homeostatic.event;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import homeostatic.overlay.HydrationOverlay;
 import homeostatic.overlay.WaterHud;
@@ -16,7 +16,7 @@ public class ClientEventListener {
     public static void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
         final Player player = event.getEntity();
 
-        if (player != null && player.level().isClientSide) {
+        if (player.level().isClientSide) {
             drinkWater(player, event);
         }
     }
@@ -25,7 +25,7 @@ public class ClientEventListener {
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         final Player player = event.getEntity();
 
-        if (player != null && player.level().isClientSide) {
+        if (player.level().isClientSide) {
             drinkWater(player, event);
         }
     }

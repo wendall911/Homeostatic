@@ -1,13 +1,12 @@
 package homeostatic.network;
 
-import java.util.function.Supplier;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 
 import homeostatic.common.water.WaterInfo;
 
-public class NeoForgeWaterData implements IData {
+public class NeoForgeWaterData implements CustomPacketPayload {
 
     private final WaterData waterData;
 
@@ -19,17 +18,18 @@ public class NeoForgeWaterData implements IData {
         waterData = new WaterData(buf);
     }
 
+    public WaterData getWaterData() {
+        return waterData;
+    }
+
     @Override
-    public void toBytes(FriendlyByteBuf buf) {
+    public void write(FriendlyByteBuf buf) {
         waterData.toBytes(buf);
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public void process(Supplier<NetworkEvent.Context> ctx) {
-        if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
-            ctx.get().enqueueWork(() -> waterData.process(Minecraft.getInstance().player, waterData));
-        }
+    public ResourceLocation id() {
+        return WaterData.ID;
     }
 
 }

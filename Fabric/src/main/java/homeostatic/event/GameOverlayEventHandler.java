@@ -13,7 +13,7 @@ public class GameOverlayEventHandler {
         OverlayManager overlayManager = OverlayManager.INSTANCE;
         Minecraft mc = Minecraft.getInstance();
 
-        if (ConfigHandler.Common.debugEnabled() && !mc.options.renderDebug) {
+        if (ConfigHandler.Common.debugEnabled() && !mc.getDebugOverlay().showDebugScreen()) {
             overlayManager.renderOverlay(guiGraphics);
         }
 
@@ -35,7 +35,7 @@ public class GameOverlayEventHandler {
     }
 
     public static boolean shouldDrawSurvivalElements(Minecraft mc) {
-        return mc.gameMode.canHurtPlayer() && mc.getCameraEntity() instanceof Player;
+        return mc.gameMode != null && mc.gameMode.canHurtPlayer() && mc.getCameraEntity() instanceof Player;
     }
 
 }

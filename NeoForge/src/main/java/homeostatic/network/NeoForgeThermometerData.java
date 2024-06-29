@@ -1,13 +1,13 @@
 package homeostatic.network;
 
-import java.util.function.Supplier;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 
 import homeostatic.common.temperature.ThermometerInfo;
+import homeostatic.Homeostatic;
 
-public class NeoForgeThermometerData implements IData {
+public class NeoForgeThermometerData implements CustomPacketPayload {
 
     private final ThermometerData thermometerData;
 
@@ -19,17 +19,18 @@ public class NeoForgeThermometerData implements IData {
         thermometerData = new ThermometerData(buf);
     }
 
+    public ThermometerData getThermometerData() {
+        return thermometerData;
+    }
+
     @Override
-    public void toBytes(FriendlyByteBuf buf) {
+    public void write(FriendlyByteBuf buf) {
         thermometerData.toBytes(buf);
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public void process(Supplier<NetworkEvent.Context> ctx) {
-        if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
-            ctx.get().enqueueWork(() -> thermometerData.process(Minecraft.getInstance().player, thermometerData));
-        }
+    public ResourceLocation id() {
+        return ThermometerData.ID;
     }
 
 }
