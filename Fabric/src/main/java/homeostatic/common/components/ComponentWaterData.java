@@ -4,7 +4,6 @@ import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -16,15 +15,12 @@ public class ComponentWaterData extends Water implements Component, AutoSyncedCo
 
     @Override
     public void readFromNbt(CompoundTag tag) {
-        ListTag listTag = new ListTag();
-
-        listTag.add(tag.getCompound("WaterData"));
-        this.read(listTag);
+        this.read(tag);
     }
 
     @Override
     public void writeToNbt(CompoundTag tag) {
-        tag.put("WaterData", this.write());
+        this.write(tag);
     }
 
     @Override

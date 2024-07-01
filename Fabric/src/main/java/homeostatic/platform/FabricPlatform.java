@@ -2,8 +2,6 @@ package homeostatic.platform;
 
 import java.util.Optional;
 
-import homeostatic.Homeostatic;
-import homeostatic.common.components.ComponentTemperatureData;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -43,8 +41,6 @@ import homeostatic.util.CreateHelper;
 import homeostatic.util.FabricSeasonsHelper;
 import homeostatic.util.ItemStackFluidHelper;
 import homeostatic.util.SereneSeasonsFabricHelper;
-
-import static homeostatic.common.components.HomeostaticComponents.TEMPERATURE_DATA;
 
 public class FabricPlatform implements IPlatform {
 
@@ -141,19 +137,12 @@ public class FabricPlatform implements IPlatform {
 
     @Override
     public Optional<? extends ITemperature> getTemperatureData(Player player) {
-        ComponentTemperatureData data = player.getComponent(TEMPERATURE_DATA);
-
-        if (data.getCoreTemperature() != 0F) {
-            Homeostatic.LOGGER.warn("have data");
-            return TEMPERATURE_DATA.maybeGet(player);
-        }
-
-        return Optional.empty();
+        return HomeostaticComponents.TEMPERATURE_DATA.maybeGet(player);
     }
 
     @Override
     public void syncTemperatureData(ServerPlayer sp, EnvironmentData environmentData, BodyTemperature bodyTemperature) {
-        TEMPERATURE_DATA.sync(sp);
+        HomeostaticComponents.TEMPERATURE_DATA.sync(sp);
     }
 
     @Override

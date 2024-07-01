@@ -87,20 +87,25 @@ public class Temperature implements ITemperature {
         ListTag listTag = new ListTag();
         CompoundTag tag = new CompoundTag();
 
-        tag.putFloat("skinTemperature", this.getSkinTemperature());
-        tag.putFloat("lastSkinTemperature", this.getLastSkinTemperature());
-        tag.putFloat("coreTemperature", this.getCoreTemperature());
-        tag.putFloat("localTemperature", this.getLocalTemperature());
-
+        write(tag);
         listTag.add(tag);
 
         return listTag;
     }
 
+    public void write(CompoundTag tag) {
+        tag.putFloat("skinTemperature", this.getSkinTemperature());
+        tag.putFloat("lastSkinTemperature", this.getLastSkinTemperature());
+        tag.putFloat("coreTemperature", this.getCoreTemperature());
+        tag.putFloat("localTemperature", this.getLocalTemperature());
+    }
+
     @Override
     public void read(ListTag nbt) {
-        CompoundTag tag = nbt.getCompound(0);
+        read(nbt.getCompound(0));
+    }
 
+    public void read(CompoundTag tag) {
         this.setSkinTemperature(tag.getFloat("skinTemperature"));
         this.setLastSkinTemperature(tag.getFloat("lastSkinTemperature"));
         this.setCoreTemperature(tag.getFloat("coreTemperature"));

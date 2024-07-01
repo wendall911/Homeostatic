@@ -16,15 +16,12 @@ public class ComponentThermometerData extends Thermometer implements Component, 
 
     @Override
     public void readFromNbt(CompoundTag tag) {
-        ListTag listTag = new ListTag();
-
-        listTag.add(tag.getCompound("ThermometerData"));
-        this.read(listTag);
+        this.read(tag);
     }
 
     @Override
     public void writeToNbt(CompoundTag tag) {
-        tag.put("ThermometerData", this.write());
+        this.write(tag);
     }
 
     @Override

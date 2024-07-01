@@ -74,19 +74,24 @@ public class Water implements IWater {
         ListTag listTag = new ListTag();
         CompoundTag tag = new CompoundTag();
 
-        tag.putInt("waterLevel", this.getWaterLevel());
-        tag.putFloat("waterExhaustion", this.getWaterExhaustionLevel());
-        tag.putFloat("waterSaturation", this.getWaterSaturationLevel());
-
+        write(tag);
         listTag.add(tag);
 
         return listTag;
     }
 
+    public void write(CompoundTag tag) {
+        tag.putInt("waterLevel", this.getWaterLevel());
+        tag.putFloat("waterExhaustion", this.getWaterExhaustionLevel());
+        tag.putFloat("waterSaturation", this.getWaterSaturationLevel());
+    }
+
     @Override
     public void read(ListTag nbt) {
-        CompoundTag tag = nbt.getCompound(0);
+        read(nbt.getCompound(0));
+    }
 
+    public void read(CompoundTag tag) {
         this.setWaterLevel(tag.getInt("waterLevel"));
         this.setWaterExhaustionLevel(tag.getFloat("waterExhaustion"));
         this.setWaterSaturationLevel(tag.getFloat("waterSaturation"));

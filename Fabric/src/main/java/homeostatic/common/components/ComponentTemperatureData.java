@@ -1,36 +1,27 @@
 package homeostatic.common.components;
 
+import org.jetbrains.annotations.NotNull;
+
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 
 import homeostatic.network.Temperature;
 import homeostatic.network.TemperatureData;
 
 public class ComponentTemperatureData extends Temperature implements Component, AutoSyncedComponent {
 
-    private final Player provider;
-
-    public ComponentTemperatureData(Player player) {
-        this.provider = player;
+    @Override
+    public void readFromNbt(@NotNull CompoundTag tag) {
+        this.read(tag);
     }
 
     @Override
-    public void readFromNbt(CompoundTag tag) {
-        ListTag listTag = new ListTag();
-
-        listTag.add(tag.getCompound("TemperatureData"));
-        this.read(listTag);
-    }
-
-    @Override
-    public void writeToNbt(CompoundTag tag) {
-        tag.put("TemperatureData", this.write());
+    public void writeToNbt(@NotNull CompoundTag tag) {
+        this.write(tag);
     }
 
     @Override
@@ -47,11 +38,6 @@ public class ComponentTemperatureData extends Temperature implements Component, 
         this.setLocalTemperature(temperatureData.localTemperature);
         this.setSkinTemperature(temperatureData.skinTemperature);
         this.setCoreTemperature(temperatureData.coreTemperature);
-    }
-
-    @Override
-    public boolean shouldSyncWith(ServerPlayer sp) {
-        return sp == provider;
     }
 
 }

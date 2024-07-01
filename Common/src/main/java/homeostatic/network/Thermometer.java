@@ -22,17 +22,22 @@ public class Thermometer implements IThermometer {
         ListTag listTag = new ListTag();
         CompoundTag tag = new CompoundTag();
 
-        tag.putBoolean("thermometer", this.hasThermometer());
-
+        write(tag);
         listTag.add(tag);
 
         return listTag;
     }
 
+    public void write(CompoundTag tag) {
+        tag.putBoolean("thermometer", this.hasThermometer());
+    }
+
     @Override
     public void read(ListTag nbt) {
-        CompoundTag tag = nbt.getCompound(0);
+        read(nbt.getCompound(0));
+    }
 
+    public void read(CompoundTag tag) {
         this.setHasThermometer(tag.getBoolean("thermometer"));
     }
 

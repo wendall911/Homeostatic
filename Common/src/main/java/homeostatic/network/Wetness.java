@@ -41,18 +41,23 @@ public class Wetness implements IWetness {
         ListTag listTag = new ListTag();
         CompoundTag tag = new CompoundTag();
 
-        tag.putInt("wetnessLevel", this.getWetnessLevel());
-        tag.putFloat("moistureLevel", this.getMoistureLevel());
-
+        write(tag);
         listTag.add(tag);
 
         return listTag;
     }
 
+    public void write(CompoundTag tag) {
+        tag.putInt("wetnessLevel", this.getWetnessLevel());
+        tag.putFloat("moistureLevel", this.getMoistureLevel());
+    }
+
     @Override
     public void read(ListTag nbt) {
-        CompoundTag tag = nbt.getCompound(0);
+        read(nbt.getCompound(0));
+    }
 
+    public void read(CompoundTag tag) {
         this.setWetnessLevel(tag.getInt("wetnessLevel"));
         this.setMoistureLevel(tag.getFloat("moistureLevel"));
     }
