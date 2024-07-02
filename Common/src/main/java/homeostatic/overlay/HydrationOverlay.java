@@ -1,5 +1,6 @@
 package homeostatic.overlay;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import org.lwjgl.opengl.GL11;
@@ -51,7 +52,7 @@ public class HydrationOverlay extends Overlay {
         RenderSystem.setShaderTexture(0, WaterHud.SPRITE);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        MobEffectInstance effectInstance = mc.player.getEffect(HomeostaticEffects.THIRST);
+        MobEffectInstance effectInstance = mc.player.getEffect(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(HomeostaticEffects.THIRST));
 
         Services.PLATFORM.getWaterCapabilty(player).ifPresent(data -> {
             final int waterLevel = data.getWaterLevel() + hydration.amount();

@@ -2,19 +2,23 @@ package homeostatic.common.recipe;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.google.common.collect.Lists;
 
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
+import homeostatic.common.component.HomeostaticComponents;
 import homeostatic.common.item.HomeostaticItems;
 
 public class HelmetThermometer extends CustomRecipe {
@@ -24,18 +28,19 @@ public class HelmetThermometer extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer pContainer, Level pLevel) {
-        ItemStack armor = checkContainer(pContainer);
+    public boolean matches(@NotNull CraftingInput craftingInput, @NotNull Level level) {
+        ItemStack armor = checkContainer(craftingInput);
 
         return armor != null;
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess registryAccess) {
-        ItemStack armorCopy = checkContainer(pContainer).copy();
-        CompoundTag tags = armorCopy.getOrCreateTag();
+    public ItemStack assemble(@NotNull CraftingInput craftingInput, HolderLookup.@NotNull Provider provider) {
+        ItemStack armorCopy = checkContainer(craftingInput).copy();
+        CompoundTag tags = armorCopy.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();
 
         tags.putBoolean("thermometer", true);
+        armorCopy.set(HomeostaticComponents.ARMOR, CustomData.of(tags));
 
         return armorCopy;
     }
@@ -50,12 +55,12 @@ public class HelmetThermometer extends CustomRecipe {
         return HomeostaticRecipes.HELMET_THERMOMETER_SERIALIZER;
     }
 
-    public ItemStack checkContainer(CraftingContainer pContainer) {
+    public ItemStack checkContainer(CraftingInput craftingInput) {
         List<ItemStack> ingredients = Lists.newArrayList();
         ItemStack armor = null;
 
-        for (int i = 0; i < pContainer.getContainerSize(); i++) {
-            ItemStack ingredient = pContainer.getItem(i);
+        for (int i = 0; i < craftingInput.size(); i++) {
+            ItemStack ingredient = craftingInput.getItem(i);
 
             if (ingredient.is(HomeostaticItems.THERMOMETER)) {
                 ingredients.add(ingredient);

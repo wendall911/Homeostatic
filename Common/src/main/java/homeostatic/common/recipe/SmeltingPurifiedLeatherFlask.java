@@ -2,8 +2,8 @@ package homeostatic.common.recipe;
 
 import org.jetbrains.annotations.NotNull;
 
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.world.Container;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -18,18 +18,18 @@ public class SmeltingPurifiedLeatherFlask extends SmeltingRecipe implements ICoo
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull Container container, @NotNull RegistryAccess registryAccess) {
-        return assemble(container, this.result);
+    public @NotNull ItemStack assemble(@NotNull SingleRecipeInput recipeInput, HolderLookup.@NotNull Provider pRegistries) {
+        return assemble(recipeInput, this.result);
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess registryAccess) {
+    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registryProvider) {
         return getCleanWaterFilledLWaterContainer(this.result);
     }
 
     @Override
-    public boolean matches(@NotNull Container container, @NotNull Level level) {
-        return matches(container, 1L);
+    public boolean matches(@NotNull SingleRecipeInput recipeInput, @NotNull Level level) {
+        return matches(recipeInput, 1L);
     }
 
     @Override

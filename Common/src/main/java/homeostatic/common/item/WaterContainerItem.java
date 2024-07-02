@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -91,10 +90,8 @@ public class WaterContainerItem extends Item implements IItemStackFluid {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> components, @NotNull TooltipFlag tooltipFlag) {
-        Component textComponent = Component.translatable("tooltip.water_container.empty").setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY));
-
-        super.appendHoverText(stack, level, components, tooltipFlag);
+    public void appendHoverText(ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> components, @NotNull TooltipFlag flag) {        Component textComponent = Component.translatable("tooltip.water_container.empty").setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY));
+        super.appendHoverText(stack, context, components, flag);
 
         Optional<FluidInfo> fluidInfoOptional = Services.PLATFORM.getFluidInfo(stack);
 
@@ -116,7 +113,7 @@ public class WaterContainerItem extends Item implements IItemStackFluid {
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack stack) {
+    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
         return 32;
     }
 

@@ -6,6 +6,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +25,7 @@ import homeostatic.network.ITemperature;
 import homeostatic.network.IThermometer;
 import homeostatic.network.IWater;
 import homeostatic.network.IWetness;
-import homeostatic.common.components.HomeostaticComponents;
+import homeostatic.common.components.HomeostaticCardinalComponents;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.item.IItemStackFluid;
 import homeostatic.common.item.LeatherFlask;
@@ -137,42 +139,42 @@ public class FabricPlatform implements IPlatform {
 
     @Override
     public Optional<? extends ITemperature> getTemperatureData(Player player) {
-        return HomeostaticComponents.TEMPERATURE_DATA.maybeGet(player);
+        return HomeostaticCardinalComponents.TEMPERATURE_DATA.maybeGet(player);
     }
 
     @Override
     public void syncTemperatureData(ServerPlayer sp, EnvironmentData environmentData, BodyTemperature bodyTemperature) {
-        HomeostaticComponents.TEMPERATURE_DATA.sync(sp);
+        HomeostaticCardinalComponents.TEMPERATURE_DATA.sync(sp);
     }
 
     @Override
     public Optional<? extends IThermometer> getThermometerCapability(Player player) {
-        return HomeostaticComponents.THERMOMETER_DATA.maybeGet(player);
+        return HomeostaticCardinalComponents.THERMOMETER_DATA.maybeGet(player);
     }
 
     @Override
     public void syncThermometerData(ServerPlayer sp, ThermometerInfo info) {
-        HomeostaticComponents.THERMOMETER_DATA.sync(sp);
+        HomeostaticCardinalComponents.THERMOMETER_DATA.sync(sp);
     }
 
     @Override
     public Optional<? extends IWater> getWaterCapabilty(Player player) {
-        return HomeostaticComponents.WATER_DATA.maybeGet(player);
+        return HomeostaticCardinalComponents.WATER_DATA.maybeGet(player);
     }
 
     @Override
     public void syncWaterData(ServerPlayer sp, WaterInfo waterInfo) {
-        HomeostaticComponents.WATER_DATA.sync(sp);
+        HomeostaticCardinalComponents.WATER_DATA.sync(sp);
     }
 
     @Override
     public Optional<? extends IWetness> getWetnessCapability(Player player) {
-        return HomeostaticComponents.WETNESS_DATA.maybeGet(player);
+        return HomeostaticCardinalComponents.WETNESS_DATA.maybeGet(player);
     }
 
     @Override
     public void syncWetnessData(ServerPlayer sp, WetnessInfo wetnessInfo) {
-       HomeostaticComponents.WETNESS_DATA.sync(sp);
+       HomeostaticCardinalComponents.WETNESS_DATA.sync(sp);
     }
 
     @Override
@@ -180,6 +182,15 @@ public class FabricPlatform implements IPlatform {
         ServerLevelAccessor serverLevel = (ServerLevelAccessor) level;
 
         return serverLevel.getServerLevelData();
+    }
+
+    @Override
+    public <T> void registerDataComponent(ResourceLocation name, DataComponentType<T> component) {
+        Registry.register(
+            BuiltInRegistries.DATA_COMPONENT_TYPE,
+            name,
+            component
+        );
     }
 
 }

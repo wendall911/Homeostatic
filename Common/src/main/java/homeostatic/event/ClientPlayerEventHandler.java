@@ -29,7 +29,7 @@ public class ClientPlayerEventHandler {
                 if (data.getWaterLevel() < WaterInfo.MAX_WATER_LEVEL) {
                     player.level().playSound(player, pos, SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 0.4f, 1.0f);
 
-                    Services.CLIENT_PLATFORM.sendDrinkWaterPacket();
+                    Services.CLIENT_PLATFORM.sendDrinkWaterPacket(player);
                 }
             });
         }

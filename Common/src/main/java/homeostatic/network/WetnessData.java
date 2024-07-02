@@ -5,15 +5,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.wetness.WetnessInfo;
-import homeostatic.Homeostatic;
 import homeostatic.platform.Services;
+
+import static homeostatic.Homeostatic.loc;
 
 public class WetnessData {
 
     private final int wetnessLevel;
     private final float moistureLevel;
     private final WetnessInfo wetnessInfo;
-    public static final ResourceLocation ID = new ResourceLocation(Homeostatic.MODID, "wetness_data");
+    public static final ResourceLocation ID = loc("wetness_data");
 
     public WetnessData(WetnessInfo wetnessInfo) {
         this.wetnessLevel = wetnessInfo.getWetnessLevel();

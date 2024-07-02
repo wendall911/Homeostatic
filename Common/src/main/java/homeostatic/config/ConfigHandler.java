@@ -13,6 +13,8 @@ import homeostatic.util.ColorHelper;
 
 public class ConfigHandler {
 
+    public static boolean loaded = false;
+
     public static final SpectreConfigSpec CLIENT_SPEC;
     public static final SpectreConfigSpec COMMON_SPEC;
 
@@ -219,6 +221,8 @@ public class ConfigHandler {
 
             temperatureColorCold = ColorHelper.decode(temperatureColors[0]);
             temperatureColorHot = ColorHelper.decode(temperatureColors[1]);
+
+            loaded = true;
         }
 
     }

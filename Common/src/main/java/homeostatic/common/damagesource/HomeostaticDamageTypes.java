@@ -1,7 +1,7 @@
 package homeostatic.common.damagesource;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageType;
 
@@ -18,7 +18,7 @@ public class HomeostaticDamageTypes {
 
     public static void init() {}
 
-    public static void bootstrap(BootstapContext<DamageType> context) {
+    public static void bootstrap(BootstrapContext<DamageType> context) {
         context.register(HYPERTHERMIA_KEY, HYPERTHERMIA);
         context.register(SCALDING_KEY, SCALDING);
         context.register(DEHYDRATION_KEY, DEHYDRATION);

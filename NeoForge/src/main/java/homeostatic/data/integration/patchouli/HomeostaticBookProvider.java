@@ -1,5 +1,5 @@
 package homeostatic.data.integration.patchouli;
-
+/*
 import java.util.function.Consumer;
 
 import org.jetbrains.annotations.NotNull;
@@ -186,3 +186,5 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
     }
 
 }
+
+ */

@@ -33,7 +33,7 @@
       "homeostatic.FabricConfigInitializer"
     ],
     "cardinal-components-entity": [
-      "homeostatic.common.components.HomeostaticComponents"
+      "homeostatic.common.components.HomeostaticCardinalComponents"
     ]
   },
   "custom": {

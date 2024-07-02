@@ -1,11 +1,13 @@
 package homeostatic.common.recipe;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.mojang.datafixers.util.Pair;
 
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -24,8 +26,8 @@ public class PurifiedLeatherFlask extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer pContainer, Level pLevel) {
-        Pair<ItemStack, ItemStack> check = checkContainer(pContainer);
+    public boolean matches(@NotNull CraftingInput craftingInput, @NotNull Level level) {
+        Pair<ItemStack, ItemStack> check = checkContainer(craftingInput);
         ItemStack flask = check.getFirst();
         ItemStack filter = check.getSecond();
 
@@ -33,8 +35,8 @@ public class PurifiedLeatherFlask extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess registryAccess) {
-        Pair<ItemStack, ItemStack> check = checkContainer(pContainer);
+    public ItemStack assemble(@NotNull CraftingInput craftingInput, HolderLookup.@NotNull Provider provider) {
+        Pair<ItemStack, ItemStack> check = checkContainer(craftingInput);
         ItemStack flaskCopy = check.getFirst().copy();
         FluidInfo fluidInfo = Services.PLATFORM.getFluidInfo(flaskCopy).get();
         int amount = (int) fluidInfo.amount();
@@ -54,12 +56,12 @@ public class PurifiedLeatherFlask extends CustomRecipe {
         return HomeostaticRecipes.PURIFIED_LEATHER_FLASK_SERIALIZER;
     }
 
-    public Pair<ItemStack, ItemStack> checkContainer(CraftingContainer pContainer) {
+    public Pair<ItemStack, ItemStack> checkContainer(CraftingInput craftingInput) {
         ItemStack flask = null;
         ItemStack filter = null;
 
-        for (int i = 0; i < pContainer.getContainerSize(); i++) {
-            ItemStack ingredient = pContainer.getItem(i);
+        for (int i = 0; i < craftingInput.size(); i++) {
+            ItemStack ingredient = craftingInput.getItem(i);
 
             if (ingredient.is(HomeostaticItems.WATER_FILTER)) {
                 filter = ingredient;

@@ -2,22 +2,27 @@ package homeostatic.common.recipe;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.google.common.collect.Lists;
 
 import com.mojang.datafixers.util.Pair;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+
+import homeostatic.common.component.HomeostaticComponents;
 
 public class RemoveArmorEnhancement extends CustomRecipe {
 
@@ -26,8 +31,8 @@ public class RemoveArmorEnhancement extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer pContainer, Level pLevel) {
-        Pair<ItemStack, ItemStack> check = checkContainer(pContainer);
+    public boolean matches(@NotNull CraftingInput craftingInput, @NotNull Level level) {
+        Pair<ItemStack, ItemStack> check = checkContainer(craftingInput);
         ItemStack armor = check.getFirst();
         ItemStack removalItem = check.getSecond();
 
@@ -35,26 +40,34 @@ public class RemoveArmorEnhancement extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess registryAccess) {
-        Pair<ItemStack, ItemStack> check = checkContainer(pContainer);
+    public ItemStack assemble(@NotNull CraftingInput craftingInput, HolderLookup.@NotNull Provider provider) {
+        Pair<ItemStack, ItemStack> check = checkContainer(craftingInput);
         ItemStack armorCopy = check.getFirst().copy();
         ItemStack removalItem = check.getSecond();
-        CompoundTag tags = armorCopy.getOrCreateTag();
+        CompoundTag tags = armorCopy.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();
+        boolean save = false;
 
         if (removalItem.is(Items.SHEARS)) {
             if (tags.contains("insulation")) {
+                save = true;
                 tags.remove("insulation");
             }
         }
         else if (removalItem.is(Items.LAVA_BUCKET)) {
             if (tags.contains("waterproof")) {
+                save = true;
                 tags.remove("waterproof");
             }
         }
         else if (removalItem.is(Items.WATER_BUCKET)) {
             if (tags.contains("radiation_protection")) {
+                save = true;
                 tags.remove("radiation_protection");
             }
+        }
+
+        if (save) {
+            armorCopy.set(HomeostaticComponents.ARMOR, CustomData.of(tags));
         }
 
         return armorCopy;
@@ -71,18 +84,19 @@ public class RemoveArmorEnhancement extends CustomRecipe {
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer pContainer) {
-        NonNullList<ItemStack> nonnulllist = NonNullList.withSize(pContainer.getContainerSize(), ItemStack.EMPTY);
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput craftingInput) {
+        NonNullList<ItemStack> nonnulllist = NonNullList.withSize(craftingInput.size(), ItemStack.EMPTY);
 
         for (int i = 0; i < nonnulllist.size(); ++i) {
-            ItemStack item = pContainer.getItem(i);
+            ItemStack stack = craftingInput.getItem(i);
 
-            if (item.is(Items.SHEARS)) {
-                ItemStack shears = item.copy();
-                shears.hurt(1, RandomSource.create(), null);
-                nonnulllist.set(i, shears);
+            if (stack.is(Items.SHEARS)) {
+                Item item = stack.getItem();
+
+                assert stack.getItem().getCraftingRemainingItem() != null;
+                nonnulllist.set(i, new ItemStack(stack.getItem().getCraftingRemainingItem()));
             }
-            else if (item.is(Items.WATER_BUCKET) || item.is(Items.LAVA_BUCKET)) {
+            else if (stack.is(Items.WATER_BUCKET) || stack.is(Items.LAVA_BUCKET)) {
                 ItemStack bucket = new ItemStack(Items.BUCKET);
                 nonnulllist.set(i, bucket);
             }
@@ -91,7 +105,7 @@ public class RemoveArmorEnhancement extends CustomRecipe {
         return nonnulllist;
     }
 
-    public Pair<ItemStack, ItemStack> checkContainer(CraftingContainer pContainer) {
+    public Pair<ItemStack, ItemStack> checkContainer(CraftingInput craftingInput) {
         List<ItemStack> ingredients = Lists.newArrayList();
         ItemStack removalItem = null;
         ItemStack armor = null;
@@ -99,8 +113,8 @@ public class RemoveArmorEnhancement extends CustomRecipe {
         boolean hasWaterproof = false;
         boolean hasRadiation = false;
 
-        for (int i = 0; i < pContainer.getContainerSize(); i++) {
-            ItemStack ingredient = pContainer.getItem(i);
+        for (int i = 0; i < craftingInput.size(); i++) {
+            ItemStack ingredient = craftingInput.getItem(i);
 
             if (ingredient.is(Items.SHEARS) && !hasWaterproof && !hasRadiation) {
                 hasInsulation = true;

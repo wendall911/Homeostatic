@@ -29,79 +29,79 @@ public class ModIntegration {
     public static final String XERCA_MODID = "xercamod";
 
     public static ResourceLocation alexLoc(String path) {
-        return new ResourceLocation(ALEX_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(ALEX_MODID, path);
     }
 
     public static ResourceLocation arsLoc(String path) {
-        return new ResourceLocation(ARS_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(ARS_MODID, path);
     }
 
     public static ResourceLocation bopLoc(String path) {
-        return new ResourceLocation(BOP_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(BOP_MODID, path);
     }
 
     public static ResourceLocation bygLoc(String path) {
-        return new ResourceLocation(BYG_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(BYG_MODID, path);
     }
 
     public static ResourceLocation ccLoc(String path) {
-        return new ResourceLocation(CC_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(CC_MODID, path);
     }
 
     public static ResourceLocation croptopiaLoc(String path) {
-        return new ResourceLocation(CROPTOPIA_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(CROPTOPIA_MODID, path);
     }
 
     public static ResourceLocation ecoLoc(String path) {
-        return new ResourceLocation(ECO_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(ECO_MODID, path);
     }
 
     public static ResourceLocation fdLoc(String path) {
-        return new ResourceLocation(FD_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(FD_MODID, path);
     }
 
     public static ResourceLocation ftLoc(String path) {
-        return new ResourceLocation(FT_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(FT_MODID, path);
     }
 
     public static ResourceLocation ieLoc(String path) {
-        return new ResourceLocation(IE_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(IE_MODID, path);
     }
 
     public static ResourceLocation mcLoc(String path) {
-        return new ResourceLocation(MC_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(MC_MODID, path);
     }
 
     public static ResourceLocation sproutLoc(String path) {
-        return new ResourceLocation(SPROUT_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(SPROUT_MODID, path);
     }
 
     public static ResourceLocation morecraftLoc(String path) {
-        return new ResourceLocation(MORECRAFT_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(MORECRAFT_MODID, path);
     }
 
     public static ResourceLocation xercaLoc(String path) {
-        return new ResourceLocation(XERCA_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(XERCA_MODID, path);
     }
 
     public static ResourceLocation scubaLoc(String path) {
-        return new ResourceLocation(SCUBA_GEAR_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(SCUBA_GEAR_MODID, path);
     }
 
     public static ResourceLocation koboldsLoc(String path) {
-        return new ResourceLocation(KOBOLDS_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(KOBOLDS_MODID, path);
     }
 
     public static ResourceLocation tfLoc(String path) {
-        return new ResourceLocation(TF_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(TF_MODID, path);
     }
 
     public static ResourceLocation createLoc(String path) {
-        return new ResourceLocation(CREATE_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(CREATE_MODID, path);
     }
 
     public static ResourceLocation tconLoc(String path) {
-        return new ResourceLocation(TCON_MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(TCON_MODID, path);
     }
 
 }

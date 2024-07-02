@@ -2,7 +2,9 @@ package homeostatic;
 
 import java.util.function.BiConsumer;
 
+import homeostatic.network.DrinkWater;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 
@@ -14,7 +16,8 @@ import net.minecraft.server.packs.PackType;
 import homeostatic.common.biome.FabricBiomeCategoryManager;
 import homeostatic.common.block.FabricBlockRadiationManager;
 import homeostatic.common.block.HomeostaticBlocks;
-import homeostatic.common.components.HomeostaticComponents;
+import homeostatic.common.component.HomeostaticComponents;
+import homeostatic.common.components.HomeostaticCardinalComponents;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.FabricCreativeTabs;
 import homeostatic.common.fluid.FabricDrinkingFluidManager;
@@ -38,8 +41,9 @@ public class HomeostaticFabric implements ModInitializer {
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricDrinkingFluidManager());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricDrinkableItemManager());
 
-        ServerPlayNetworking.registerGlobalReceiver(HomeostaticComponents.DRINK_WATER_KEY, ((server, player, handler, buf, responseSender) -> {
-            server.execute(() -> WaterHelper.drinkWater(player));
+        PayloadTypeRegistry.playC2S().register(DrinkWater.TYPE, DrinkWater.STREAM_CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(DrinkWater.TYPE, ((payload, context) -> {
+            WaterHelper.drinkWater(context.player());
         }));
     }
 
@@ -50,6 +54,7 @@ public class HomeostaticFabric implements ModInitializer {
         HomeostaticRecipes.init(bind(BuiltInRegistries.RECIPE_SERIALIZER));
         HomeostaticItems.init(bind(BuiltInRegistries.ITEM));
         FabricCreativeTabs.init(bind(BuiltInRegistries.CREATIVE_MODE_TAB));
+        HomeostaticComponents.registerDataComponents();
     }
 
     private static <T> BiConsumer<T, ResourceLocation> bind(Registry<? super T> registry) {

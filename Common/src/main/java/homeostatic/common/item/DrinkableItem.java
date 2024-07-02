@@ -28,7 +28,7 @@ public record DrinkableItem(ResourceLocation loc, int amount, float saturation, 
             JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
 
             return new DrinkableItem(
-                    new ResourceLocation(json.get("type").getAsString()),
+                    ResourceLocation.parse(json.get("type").getAsString()),
                     json.get("amount").getAsInt(),
                     json.get("saturation").getAsFloat(),
                     json.get("effect_potency").getAsInt(),

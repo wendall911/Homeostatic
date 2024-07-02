@@ -5,16 +5,18 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
 import homeostatic.Homeostatic;
+import net.minecraft.core.HolderLookup;
+
+import java.util.concurrent.CompletableFuture;
 
 public class HomeostaticLanguageProvider extends FabricLanguageProvider {
 
-
-    protected HomeostaticLanguageProvider(FabricDataOutput dataOutput) {
-        super(dataOutput, "en_us");
+    protected HomeostaticLanguageProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryFuture) {
+        super(dataOutput, registryFuture);
     }
 
     @Override
-    public void generateTranslations(TranslationBuilder translationBuilder) {
+    public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
         translationBuilder.
             add(Homeostatic.MODID + ".items", "Homeostatic");
 

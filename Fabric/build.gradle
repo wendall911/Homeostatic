@@ -1,8 +1,6 @@
 plugins {
     id 'multiloader-loader'
-    id 'fabric-loom' version '1.6-SNAPSHOT'
-    id 'net.darkhax.curseforgegradle' version '1.+'
-    id 'com.modrinth.minotaur' version '2.+'
+    id 'fabric-loom'
 }
 
 version = fabric_mod_version
@@ -27,8 +25,8 @@ dependencies {
     }
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rei_version}"
-
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
+
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
     //modCompileOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
@@ -40,7 +38,7 @@ dependencies {
     //modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
     modImplementation "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
     modImplementation "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
-    modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
+    //modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
     modRuntimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
     modRuntimeOnly "net.jodah:typetools:0.6.3"
     modImplementation "com.electronwill.night-config:core:3.6.7"
@@ -48,7 +46,6 @@ dependencies {
     modRuntimeOnly("com.terraformersmc:modmenu:${mod_menu_version}") {
         transitive = false
     }
-    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
 
     include group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_version}+${minecraft_version}"
 

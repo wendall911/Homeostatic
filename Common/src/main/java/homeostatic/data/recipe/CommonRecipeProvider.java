@@ -1,7 +1,10 @@
 package homeostatic.data.recipe;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.PackOutput;
@@ -17,12 +20,12 @@ import static homeostatic.Homeostatic.loc;
 
 public class CommonRecipeProvider extends RecipeProvider {
 
-    public CommonRecipeProvider(@NotNull final PackOutput packOutput) {
-        super(packOutput);
+    public CommonRecipeProvider(@NotNull final PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registryFuture) {
+        super(packOutput, registryFuture);
     }
 
     @Override
-    public void buildRecipes(RecipeOutput recipeOutput) {
+    public void buildRecipes(@NotNull RecipeOutput recipeOutput) {
         RecipeProviderBase.specialRecipe(
             recipeOutput,
             (SimpleCraftingRecipeSerializer<?>) HomeostaticRecipes.ARMOR_ENHANCEMENT_SERIALIZER,

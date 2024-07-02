@@ -19,36 +19,29 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 import homeostatic.common.attachments.AttachmentsRegistry;
 import homeostatic.common.block.HomeostaticBlocks;
+import homeostatic.common.component.HomeostaticComponents;
 import homeostatic.common.CreativeTabs;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.fluid.NeoForgeFluidType;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.HomeostaticModule;
-import homeostatic.common.item.FluidHandlerItem;
 import homeostatic.common.item.HomeostaticItems;
-import homeostatic.common.item.LeatherFlask;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.event.GameOverlayEventHandler;
 import homeostatic.event.ServerEventListener;
+import homeostatic.network.DrinkWater;
 import homeostatic.network.NeoForgeNetworkManager;
 import homeostatic.network.NeoForgeTemperatureData;
-import homeostatic.network.NeoForgeThermometerData;
-import homeostatic.network.NeoForgeWaterData;
-import homeostatic.network.NeoForgeWetnessData;
-import homeostatic.network.TemperatureData;
-import homeostatic.network.ThermometerData;
-import homeostatic.network.WaterData;
-import homeostatic.network.WetnessData;
+import homeostatic.registries.HomeostaticNeoForgeRegistries;
 
 @Mod(Homeostatic.MODID)
 public class HomeostaticNeoForge {
@@ -98,11 +91,6 @@ public class HomeostaticNeoForge {
             }
         }
 
-        @SubscribeEvent
-        public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-            event.registerItem(Capabilities.FluidHandler.ITEM, (item, b) -> new FluidHandlerItem(item, (int) LeatherFlask.LEATHER_FLASK_CAPACITY), HomeostaticItems.LEATHER_FLASK);
-        }
-
     }
 
     private void registryInit(IEventBus bus) {
@@ -112,17 +100,24 @@ public class HomeostaticNeoForge {
         bind(bus, Registries.FLUID, HomeostaticFluids::init);
         bind(bus, Registries.RECIPE_SERIALIZER, HomeostaticRecipes::init);
         bind(bus, Registries.ITEM, HomeostaticItems::init);
+        HomeostaticNeoForgeRegistries.COMPONENT_TYPE_DEFERRED_REGISTER.register(bus);
+        HomeostaticComponents.registerDataComponents();
     }
 
-    private void registerPayloadHandler(final RegisterPayloadHandlerEvent event) {
-        event.registrar(Homeostatic.MODID).play(TemperatureData.ID, NeoForgeTemperatureData::new,
-            handler -> handler.client(NeoForgeNetworkManager.getInstance()::processTemperatureData));
+    private void registerPayloadHandler(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(Homeostatic.MODID).versioned("1.0");
+
+        registrar.playToServer(DrinkWater.TYPE, DrinkWater.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processDrinkWater);
+        registrar.playToClient(NeoForgeTemperatureData.TYPE, NeoForgeTemperatureData.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processTemperatureData);
+        /*
         event.registrar(Homeostatic.MODID).play(ThermometerData.ID, NeoForgeThermometerData::new,
             handler -> handler.client(NeoForgeNetworkManager.getInstance()::processThermometerData));
         event.registrar(Homeostatic.MODID).play(WaterData.ID, NeoForgeWaterData::new,
             handler -> handler.client(NeoForgeNetworkManager.getInstance()::processWaterData));
         event.registrar(Homeostatic.MODID).play(WetnessData.ID, NeoForgeWetnessData::new,
             handler -> handler.client(NeoForgeNetworkManager.getInstance()::processWetnessData));
+
+         */
     }
 
     private static <T> void bind(IEventBus bus, ResourceKey<Registry<T>> registry, Consumer<BiConsumer<T, ResourceLocation>> source) {

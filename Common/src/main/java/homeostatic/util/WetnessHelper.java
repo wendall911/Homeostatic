@@ -2,8 +2,10 @@ package homeostatic.util;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.GameType;
 
 import homeostatic.common.TagManager;
@@ -23,9 +25,9 @@ public class WetnessHelper {
             AtomicInteger waterproofing = new AtomicInteger();
 
             sp.getArmorSlots().forEach(armor -> {
-                CompoundTag tags = armor.getTag();
+                CompoundTag tags = armor.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
 
-                if ((tags != null && tags.contains("waterproof")) || armor.is(TagManager.Items.WATERPROOF_ARMOR)) {
+                if (tags.contains("waterproof") || armor.is(TagManager.Items.WATERPROOF_ARMOR)) {
                     waterproofing.addAndGet(5);
                 }
             });

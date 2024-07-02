@@ -3,8 +3,10 @@ package homeostatic.util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.ItemStack;
 
+import homeostatic.common.component.HomeostaticComponents;
 import homeostatic.common.TagManager;
 import homeostatic.common.temperature.Environment;
 import homeostatic.common.temperature.TemperatureDirection;
@@ -66,9 +68,9 @@ public class InsulationHelper {
 
         // Add modifier for any armor type
         if (armorModifier != 0.0) {
-            CompoundTag tags = armor.getTag();
+            CompoundTag tags = armor.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();
 
-            if ((tags != null && tags.contains("insulation")) || armor.is(TagManager.Items.INSULATED_ARMOR)) {
+            if ((tags.contains("insulation")) || armor.is(TagManager.Items.INSULATED_ARMOR)) {
                 if (isCold) {
                     modifier += 4.0;
                 }

@@ -1,5 +1,8 @@
 package homeostatic.util;
 
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.alchemy.PotionContents;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -73,13 +76,13 @@ public class WaterHelper {
                 data.increaseSaturationLevel(hydration.saturation());
 
                 // Reduce change of getting more thirst effect if player already has the effect
-                if (!sp.hasEffect(HomeostaticEffects.THIRST)) {
+                if (!sp.hasEffect(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(HomeostaticEffects.THIRST))) {
                     chance = chance * 0.5F;
                 }
 
                 if (isDirty && Homeostatic.RANDOM.nextFloat() < chance) {
                     sp.addEffect(new MobEffectInstance(
-                        HomeostaticEffects.THIRST,
+                        BuiltInRegistries.MOB_EFFECT.wrapAsHolder(HomeostaticEffects.THIRST),
                         hydration.duration(),
                         hydration.potency(),
                         false,
@@ -117,11 +120,10 @@ public class WaterHelper {
         Fluid fluid = null;
 
         if (stack.getItem() instanceof PotionItem) {
-            ResourceLocation water = RegistryHelper.getRegistry(Registries.POTION).getKey(Potions.WATER);
-            String potion = stack.getOrCreateTag().getString("Potion");
+            PotionContents potion = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
             stack = new ItemStack(Items.AIR);
 
-            if (!potion.contentEquals(water.toString())) {
+            if (!potion.is(Potions.WATER)) {
                 fluid = HomeostaticFluids.PURIFIED_WATER;
             }
             else {

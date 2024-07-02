@@ -10,10 +10,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
 
+import homeostatic.common.component.HomeostaticComponents;
 import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.common.temperature.EnvironmentData;
 import homeostatic.common.temperature.ThermometerInfo;
@@ -122,7 +124,7 @@ public class PlayerEventHandler {
     }
 
     private static boolean hasThermometer(ItemStack helmet) {
-        CompoundTag tag = helmet.getOrCreateTag();
+        CompoundTag tag = helmet.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();
 
         return tag.contains("thermometer");
     }

@@ -1,5 +1,5 @@
 package homeostatic.data.integration.patchouli;
-
+/*
 import com.google.gson.JsonObject;
 
 import net.minecraft.resources.ResourceLocation;
@@ -48,3 +48,5 @@ public abstract class AbstractRecipePageBuilder<T extends AbstractRecipePageBuil
     }
 
 }
+
+ */

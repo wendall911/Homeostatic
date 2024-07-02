@@ -13,7 +13,7 @@ import net.minecraft.util.GsonHelper;
 
 public record BiomeCategory(ResourceLocation loc, String type) {
 
-    public static final BiomeCategory MISSING = new BiomeCategory(new ResourceLocation("missing"), "MISSING");
+    public static final BiomeCategory MISSING = new BiomeCategory(ResourceLocation.withDefaultNamespace("missing"), "MISSING");
 
     public static class Serializer implements JsonDeserializer<BiomeCategory>, JsonSerializer<BiomeCategory> {
 
@@ -21,7 +21,7 @@ public record BiomeCategory(ResourceLocation loc, String type) {
         public BiomeCategory deserialize(JsonElement jsonElement, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
 
-            return new BiomeCategory(new ResourceLocation(json.get("biome").getAsString()), json.get("category").getAsString());
+            return new BiomeCategory(ResourceLocation.parse(json.get("biome").getAsString()), json.get("category").getAsString());
         }
 
         @Override

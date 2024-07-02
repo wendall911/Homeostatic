@@ -15,7 +15,7 @@ public final class TagManager {
         public static final TagKey<Item> INSULATION = create("insulation");
         public static final TagKey<Item> RADIATION_PROTECTION = create("radiation_protection");
         public static final TagKey<Item> WATERPROOF = create("waterproof");
-        public static final TagKey<Item> FRUITS = createForge("fruits");
+        public static final TagKey<Item> FRUITS = createCommon("fruits");
         public static final TagKey<Item> INSULATED_ARMOR = create("insulated_armor");
         public static final TagKey<Item> RADIATION_PROTECTED_ARMOR = create("radiation_protected_armor");
         public static final TagKey<Item> WATERPROOF_ARMOR = create("waterproof_armor");
@@ -24,8 +24,8 @@ public final class TagManager {
             return TagKey.create(Registries.ITEM, identifier(id));
         }
 
-        private static TagKey<Item> createForge(String id) {
-            return TagKey.create(Registries.ITEM, new ResourceLocation("forge", id));
+        private static TagKey<Item> createCommon(String id) {
+            return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", id));
         }
 
     }

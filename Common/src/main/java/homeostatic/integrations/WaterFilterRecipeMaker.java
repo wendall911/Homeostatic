@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -14,9 +13,10 @@ import net.minecraft.world.item.crafting.ShapelessRecipe;
 
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
-import homeostatic.Homeostatic;
 import homeostatic.platform.Services;
 import homeostatic.util.WaterHelper;
+
+import static homeostatic.Homeostatic.loc;
 
 public class WaterFilterRecipeMaker {
 
@@ -35,7 +35,7 @@ public class WaterFilterRecipeMaker {
         NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseFlaskIngredient, ingredient);
 
         recipes.add(new RecipeHolder<>(
-            new ResourceLocation(Homeostatic.MODID, group + ".purified_leather_flask"),
+            loc(group + ".purified_leather_flask"),
             new ShapelessRecipe(group, CraftingBookCategory.MISC, leatherFlask, recipeInputs)
         ));
 

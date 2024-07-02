@@ -1,0 +1,18 @@
+{
+  "type": "homeostatic:campfire_purified_leather_flask",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.15,
+  "ingredient": {
+    "item": "homeostatic:leather_flask"
+  },
+  "result": {
+    "components": {
+      "homeostatic:water_container": {
+        "Amount": 0,
+        "Fluid": "minecraft:empty"
+      }
+    },
+    "id": "homeostatic:leather_flask"
+  }
+}

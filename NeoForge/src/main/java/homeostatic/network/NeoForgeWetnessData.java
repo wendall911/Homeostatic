@@ -5,7 +5,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
 import homeostatic.common.wetness.WetnessInfo;
-
+/*
 public class NeoForgeWetnessData implements CustomPacketPayload {
 
     private final WetnessData wetnessData;
@@ -33,3 +33,5 @@ public class NeoForgeWetnessData implements CustomPacketPayload {
     }
 
 }
+
+ */

@@ -10,9 +10,10 @@ import static homeostatic.Homeostatic.loc;
 public class HomeostaticEffects {
 
     public static final MobEffect THIRST = new Thirst();
+    public static final ResourceLocation THIRST_ID = loc("thirst");
 
     public static void init(BiConsumer<MobEffect, ResourceLocation> consumer) {
-        consumer.accept(THIRST, loc("thirst"));
+        consumer.accept(THIRST, THIRST_ID);
     }
 
 }

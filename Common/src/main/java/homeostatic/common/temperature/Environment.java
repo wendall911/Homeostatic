@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -25,9 +26,10 @@ import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-import homeostatic.common.TagManager;
 import homeostatic.common.block.BlockRadiation;
 import homeostatic.common.block.BlockRadiationManager;
+import homeostatic.common.component.HomeostaticComponents;
+import homeostatic.common.TagManager;
 import homeostatic.config.ConfigHandler;
 import homeostatic.util.VecMath;
 
@@ -69,9 +71,9 @@ public class Environment {
         }
 
         sp.getArmorSlots().forEach(armor -> {
-            CompoundTag tags = armor.getTag();
+            CompoundTag tags = armor.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();
 
-            if ((tags != null && tags.contains("radiation_protection")) || armor.is(TagManager.Items.RADIATION_PROTECTED_ARMOR)) {
+            if ((tags.contains("radiation_protection")) || armor.is(TagManager.Items.RADIATION_PROTECTED_ARMOR)) {
                 radiationReduction.updateAndGet(v -> (double) (v - ConfigHandler.Common.getRadiationReductionPercent()));
             }
         });

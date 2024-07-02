@@ -2,6 +2,8 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'idea'
+    id 'net.darkhax.curseforgegradle'
+    id 'com.modrinth.minotaur'
 }
 
 base {
@@ -24,7 +26,7 @@ repositories {
                 url = 'https://repo.spongepowered.org/repository/maven-public'
             }
         }
-        filter { includeGroupAndSubgroups("org.spongepowered") }
+        filter { includeGroupAndSubgroups('org.spongepowered') }
     }
 
     maven {
@@ -32,46 +34,55 @@ repositories {
         url = 'https://maven.blamejared.com'
     }
     
-    maven {
-        name = 'ParchmentMC'
-        url = 'https://maven.parchmentmc.org/'
+    exclusiveContent {
+        forRepositories(
+            maven {
+                name = 'ParchmentMC'
+                url = 'https://maven.parchmentmc.org/'
+            },
+            maven {
+                name = 'NeoForge'
+                url = 'https://maven.neoforged.net/releases'
+            }
+        )
+        filter { includeGroup('org.parchmentmc.data') }
     }
 
     maven {
-        name = "TerraformersMC (Trinkets)"
-        url = "https://maven.terraformersmc.com/"
+        name = 'TerraformersMC (Trinkets / ModMenu)'
+        url = 'https://maven.terraformersmc.com/'
     }
 
     maven {
-        name = "Ladysnake Libs"
-        url = "https://maven.ladysnake.org/releases"
+        name = 'Ladysnake Libs'
+        url = 'https://maven.ladysnake.org/releases'
     }
 
     maven {
-        name = "JEI"
-        url "https://dvs1.progwml6.com/files/maven/"
+        name = 'JEI'
+        url 'https://dvs1.progwml6.com/files/maven/'
     }
 
     maven {
-        name = "Curse Maven"
-        url = "https://cursemaven.com"
+        name = 'Curse Maven'
+        url = 'https://cursemaven.com'
         content {
-            includeGroup "curse.maven"
+            includeGroup 'curse.maven'
         }
     }
 
     maven {
         name = 'Illusive Soulworks'
-        url = "https://maven.theillusivec4.top/"
+        url = 'https://maven.theillusivec4.top/'
     }
 
     maven {
-        url "https://maven.shedaniel.me/" // for rei
+        url 'https://maven.shedaniel.me/' // for rei
     }
 
     if (project.hasProperty('localmaven')) {
         maven {
-            url "file://" + localmaven
+            url 'file://' + localmaven
         }
     }
 }
@@ -96,7 +107,6 @@ sourcesJar {
 }
 
 jar {
-    archiveClassifier.set("slim")
     from(rootProject.file("LICENSE"))
     from(rootProject.file("CREDITS.md"))
     from(rootProject.file("README.md"))
@@ -120,7 +130,6 @@ jar {
 processResources {
     def expandProps = [
         'version': version,
-		'minecraft_version': minecraft_version,
         'neoforge_mod_version': neoforge_mod_version,
         'fabric_mod_version': fabric_mod_version,
         'license': license,
@@ -132,12 +141,13 @@ processResources {
         'issue_tracker': issue_tracker,
         'mod_update_branch': mod_update_branch,
         'mod_url': mod_url,
+        'minecraft_version': minecraft_version,
         'fabric_loader_min_version': fabric_loader_min_version,
         'neoforge_loader_version_range': neoforge_loader_version_range,
         'neoforge_mc_version_range': neoforge_mc_version_range
     ]
 
-    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
+    filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
         expand expandProps
     }
     inputs.properties(expandProps)
@@ -145,8 +155,10 @@ processResources {
 
 publishing {
     repositories {
-        maven {
-            url System.getenv("local_maven_url")
+        if (project.hasProperty('localmaven')) {
+            maven {
+                url 'file://' + localmaven
+            }
         }
     }
 }

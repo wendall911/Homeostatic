@@ -108,7 +108,7 @@ public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
         public BlockRadiation deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
 
-            return new BlockRadiation(new ResourceLocation(json.get("block").getAsString()), json.get("max_radiation").getAsDouble());
+            return new BlockRadiation(ResourceLocation.parse(json.get("block").getAsString()), json.get("max_radiation").getAsDouble());
         }
 
         @Override

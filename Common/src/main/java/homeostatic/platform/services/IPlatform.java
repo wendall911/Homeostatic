@@ -3,6 +3,7 @@ package homeostatic.platform.services;
 import java.util.Optional;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -70,5 +71,7 @@ public interface IPlatform {
     void syncWetnessData(ServerPlayer sp, WetnessInfo wetnessInfo);
 
     ServerLevelData getServerLevelData(ServerLevel level);
+
+    <T> void registerDataComponent(ResourceLocation name, DataComponentType<T> component);
 
 }

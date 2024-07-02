@@ -90,7 +90,7 @@ public class EnvironmentData {
          * "swimming" ... mc mechanics are so weird, lol.
          */
         if (!this.isPartialSubmersion) {
-            this.isPartialSubmersion = sp.getFeetBlockState().is(Blocks.WATER);
+            this.isPartialSubmersion = sp.getInBlockState().is(Blocks.WATER);
         }
 
         // If sheltered, consider local biome UNDERGROUND

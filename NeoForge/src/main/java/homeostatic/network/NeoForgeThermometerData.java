@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.Homeostatic;
-
+/*
 public class NeoForgeThermometerData implements CustomPacketPayload {
 
     private final ThermometerData thermometerData;
@@ -34,3 +34,6 @@ public class NeoForgeThermometerData implements CustomPacketPayload {
     }
 
 }
+
+
+ */

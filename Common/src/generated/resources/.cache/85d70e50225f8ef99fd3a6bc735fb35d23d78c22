@@ -1,7 +1,7 @@
-// 1.20.4	2024-06-28T13:34:57.987547812	Homeostatic/Tags for minecraft:item
-dc7a049258845ac5e06b342665ff6fa79dde30df data/homeostatic/tags/items/waterproof_armor.json
-c0b4a999db01a54e5b6d2604c3c38af2debcd2e5 data/homeostatic/tags/items/waterproof.json
-ffd4559956f03f391ad9fac581ec36c5d87f94f5 data/homeostatic/tags/items/radiation_protected_armor.json
-f887910cd322edb5590887df49ad379e7fee383c data/homeostatic/tags/items/radiation_protection.json
-dc7a049258845ac5e06b342665ff6fa79dde30df data/homeostatic/tags/items/insulated_armor.json
-2301fdcd067ba501a57926e401efd3233b145c55 data/homeostatic/tags/items/insulation.json
+// 1.21	2024-07-02T11:16:49.053379723	Homeostatic/Tags for minecraft:item
+1b94bea5746759a465c690884ea66a9506a55990 data/homeostatic/tags/item/radiation_protected_armor.json
+3b2e931c061fb87e5d201a89ddfe87f0863849d5 data/homeostatic/tags/item/insulated_armor.json
+fe636b6454502909f3eac04a941dd15080c8b0d8 data/homeostatic/tags/item/waterproof.json
+3b2e931c061fb87e5d201a89ddfe87f0863849d5 data/homeostatic/tags/item/waterproof_armor.json
+c0e44cd70ce92d25f9d7a0b1eafe56c7a01985c9 data/homeostatic/tags/item/radiation_protection.json
+e5e42e8198174cc83b78356bd9dcc05e29593e70 data/homeostatic/tags/item/insulation.json

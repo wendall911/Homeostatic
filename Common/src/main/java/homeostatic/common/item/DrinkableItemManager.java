@@ -19,14 +19,13 @@ import net.minecraft.world.item.Items;
 
 import homeostatic.common.TagManager;
 import homeostatic.Homeostatic;
-import homeostatic.platform.Services;
 
 public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
 
     private static final Map<Item, DrinkableItem> ITEMS = new HashMap<>();
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(DrinkableItem.class, new DrinkableItem.Serializer()).create();
 
-    private static final DrinkableItem FRUIT = new DrinkableItem(new ResourceLocation("forge:fruits"), 2, 0.6F, 0, 0, 0.0F);
+    private static final DrinkableItem FRUIT = new DrinkableItem(ResourceLocation.tryBySeparator("c:fruits", ':'), 2, 0.6F, 0, 0, 0.0F);
 
     public DrinkableItemManager() {
         super(GSON, "environment/drinkable");

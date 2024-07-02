@@ -1,8 +1,10 @@
 package homeostatic.network;
 
+import homeostatic.util.WaterHelper;
 import net.minecraft.client.Minecraft;
 
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class NeoForgeNetworkManager {
 
@@ -12,10 +14,12 @@ public class NeoForgeNetworkManager {
         return INSTANCE;
     }
 
-    public void processTemperatureData(NeoForgeTemperatureData msgData, PlayPayloadContext ctx) {
-        ctx.workHandler().submitAsync(() -> TemperatureData.process(Minecraft.getInstance().player, msgData.getTemperatureData()));
+    public void processTemperatureData(NeoForgeTemperatureData msgData, IPayloadContext ctx) {
+        ctx.enqueueWork(() -> {
+            TemperatureData.process(Minecraft.getInstance().player, msgData.getData());
+        });
     }
-
+/*
     public void processThermometerData(NeoForgeThermometerData msgData, PlayPayloadContext ctx) {
         ctx.workHandler().submitAsync(() -> ThermometerData.process(Minecraft.getInstance().player, msgData.getThermometerData()));
     }
@@ -26,6 +30,12 @@ public class NeoForgeNetworkManager {
 
     public void processWetnessData(NeoForgeWetnessData msgData, PlayPayloadContext ctx) {
         ctx.workHandler().submitAsync(() -> WetnessData.process(Minecraft.getInstance().player, msgData.getWetnessData()));
+    }
+*/
+    public void processDrinkWater(DrinkWater msgData, IPayloadContext ctx) {
+        ctx.enqueueWork(() -> {
+            WaterHelper.drinkWater((ServerPlayer) ctx.player());
+        });
     }
 
 }

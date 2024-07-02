@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import homeostatic.overlay.HydrationOverlay;
@@ -31,9 +31,7 @@ public class ClientEventListener {
     }
 
     @SubscribeEvent
-    public static void onClientTickEvent(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.START) return;
-
+    public static void onClientTickEvent(ClientTickEvent.Pre event) {
         Minecraft minecraft = Minecraft.getInstance();
 
         HydrationOverlay.onClientTick(minecraft);

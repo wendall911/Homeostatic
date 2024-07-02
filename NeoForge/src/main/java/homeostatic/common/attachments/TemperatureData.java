@@ -1,15 +1,16 @@
 package homeostatic.common.attachments;
 
-import net.minecraft.world.entity.player.Player;
+import java.util.Optional;
+
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.world.entity.player.Player;
 
 import net.neoforged.neoforge.common.util.INBTSerializable;
 
 import homeostatic.network.Temperature;
-
-import java.util.Optional;
 
 public class TemperatureData {
 
@@ -24,12 +25,12 @@ public class TemperatureData {
         public TemperatureDataProvider() {}
 
         @Override
-        public ListTag serializeNBT() {
+        public ListTag serializeNBT(HolderLookup.@NotNull Provider provider) {
             return TEMPERATURE_DATA_INSTANCE.write();
         }
 
         @Override
-        public void deserializeNBT(@NotNull ListTag nbt) {
+        public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull ListTag nbt) {
             TEMPERATURE_DATA_INSTANCE.read(nbt);
         }
 

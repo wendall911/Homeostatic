@@ -5,7 +5,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
 import homeostatic.common.water.WaterInfo;
-
+/*
 public class NeoForgeWaterData implements CustomPacketPayload {
 
     private final WaterData waterData;
@@ -33,3 +33,6 @@ public class NeoForgeWaterData implements CustomPacketPayload {
     }
 
 }
+
+
+ */

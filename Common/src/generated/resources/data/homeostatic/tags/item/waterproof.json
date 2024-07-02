@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "immersiveengineering:duroplast",
+      "required": false
+    },
+    {
+      "id": "#minecraft:candles",
+      "required": false
+    }
+  ]
+}

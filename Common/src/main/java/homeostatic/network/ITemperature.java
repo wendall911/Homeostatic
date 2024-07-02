@@ -1,5 +1,6 @@
 package homeostatic.network;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.player.Player;
 
@@ -30,5 +31,9 @@ public interface ITemperature {
     ListTag write();
 
     void read(ListTag tag);
+
+    CompoundTag write(CompoundTag tag);
+
+    void read(CompoundTag tag);
 
 }

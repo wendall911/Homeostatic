@@ -16,12 +16,12 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
-import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import homeostatic.common.biome.BiomeCategory;
 import homeostatic.common.biome.BiomeCategoryManager;
@@ -46,12 +46,11 @@ public class ServerEventListener {
     }
 
     @SubscribeEvent
-    public static void onPlayerTickEvent(TickEvent.PlayerTickEvent event) {
-        if (event.player instanceof FakePlayer) return;
-        if (event.phase != TickEvent.Phase.START) return;
+    public static void onPlayerTickEvent(PlayerTickEvent.Pre event) {
+        if (event.getEntity() instanceof FakePlayer) return;
 
-        if (!event.player.level().isClientSide()) {
-            PlayerEventHandler.onPlayerTickEvent((ServerPlayer) event.player);
+        if (!event.getEntity().level().isClientSide()) {
+            PlayerEventHandler.onPlayerTickEvent((ServerPlayer) event.getEntity());
         }
     }
 

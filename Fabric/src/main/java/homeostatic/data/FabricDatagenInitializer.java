@@ -31,12 +31,12 @@ public class FabricDatagenInitializer implements DataGeneratorEntrypoint {
         pack.addProvider((dataOutput, registryFuture) -> new DrinkingFluidsProvider(dataOutput));
         pack.addProvider((dataOutput, registryFuture) -> new DrinkableItemsProvider(dataOutput));
         pack.addProvider((dataOutput, registryFuture) -> new BiomeCategoryProvider(dataOutput));
-        pack.addProvider((dataOutput, registryFuture) -> new HomeostaticLanguageProvider(dataOutput));
-        pack.addProvider((dataOutput, registryFuture) -> new CommonRecipeProvider(dataOutput));
+        pack.addProvider(HomeostaticLanguageProvider::new);
+        pack.addProvider(CommonRecipeProvider::new);
     }
 
     public static void configureFabricDatagen(FabricDataGenerator.Pack pack) {
-        pack.addProvider((dataOutput, registryFuture) -> new HomeostaticRecipeProvider(dataOutput));
+        pack.addProvider(HomeostaticRecipeProvider::new);
     }
 
 }

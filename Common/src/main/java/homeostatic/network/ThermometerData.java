@@ -1,6 +1,5 @@
 package homeostatic.network;
 
-import homeostatic.Homeostatic;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -8,10 +7,12 @@ import net.minecraft.world.entity.player.Player;
 import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.platform.Services;
 
+import static homeostatic.Homeostatic.loc;
+
 public class ThermometerData {
 
     public boolean hasThermometer;
-    public static final ResourceLocation ID = new ResourceLocation(Homeostatic.MODID, "thermometer_data");
+    public static final ResourceLocation ID = loc("thermometer_data");
 
     public ThermometerData(ThermometerInfo info) {
         this.hasThermometer = info.hasThermometer();
