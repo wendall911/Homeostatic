@@ -14,6 +14,7 @@
     }
   ],
   "result": {
-    "item": "homeostatic:book"
+    "count": 1,
+    "id": "homeostatic:book"
   }
 }

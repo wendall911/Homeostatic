@@ -1,3 +1,4 @@
-// 1.20.4	2024-06-28T13:37:18.253589237	Tags for minecraft:damage_type mod id homeostatic
+// 1.21	2024-07-02T15:57:48.660083929	Tags for minecraft:damage_type mod id homeostatic
 cd61388f8b4a3c12eda047abc5e2df4400b44a03 data/minecraft/tags/damage_type/bypasses_armor.json
 cd61388f8b4a3c12eda047abc5e2df4400b44a03 data/minecraft/tags/damage_type/bypasses_invulnerability.json
+cd61388f8b4a3c12eda047abc5e2df4400b44a03 data/minecraft/tags/damage_type/no_knockback.json
