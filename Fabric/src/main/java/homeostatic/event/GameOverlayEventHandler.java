@@ -13,23 +13,14 @@ public class GameOverlayEventHandler {
         OverlayManager overlayManager = OverlayManager.INSTANCE;
         Minecraft mc = Minecraft.getInstance();
 
-        if (ConfigHandler.Common.debugEnabled() && !mc.getDebugOverlay().showDebugScreen()) {
-            overlayManager.renderOverlay(guiGraphics);
-        }
+        if (ConfigHandler.loaded && !mc.getDebugOverlay().showDebugScreen() && !mc.options.hideGui) {
+            if (ConfigHandler.Common.debugEnabled()) {
+                overlayManager.renderOverlay(guiGraphics);
+            }
 
-        if (!mc.options.hideGui && shouldDrawSurvivalElements(mc)) {
             overlayManager.renderWaterOverlay(guiGraphics, rightHeight);
-        }
-
-        if (!mc.options.hideGui && shouldDrawSurvivalElements(mc)) {
             overlayManager.renderTemperatureOverlay(guiGraphics);
-        }
-
-        if (!mc.options.hideGui && shouldDrawSurvivalElements(mc)) {
             overlayManager.renderEnhancedVisualsOverlay(guiGraphics);
-        }
-
-        if (!mc.options.hideGui && shouldDrawSurvivalElements(mc)) {
             overlayManager.renderHydrationOverlay(guiGraphics, rightHeight);
         }
     }
