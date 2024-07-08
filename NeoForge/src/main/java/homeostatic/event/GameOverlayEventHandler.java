@@ -24,10 +24,15 @@ public class GameOverlayEventHandler implements LayeredDraw.Layer {
     public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         Minecraft mc = Minecraft.getInstance();
 
-        if (ConfigHandler.loaded && !mc.getDebugOverlay().showDebugScreen() && !mc.options.hideGui) {
+        /*
+         * For some reason "rightHeight" is only correct during phase when drawing the Health bar. I may just go with
+         * using the same Mixin as Fabric and just ignore this, as it is not as well implemented as it was before.
+         */
+        if (ConfigHandler.loaded && !mc.getDebugOverlay().showDebugScreen() && !mc.options.hideGui && mc.gui.rightHeight != 39) {
             if (ConfigHandler.Common.debugEnabled()) {
                 overlayManager.renderOverlay(guiGraphics);
             }
+
             overlayManager.renderWaterOverlay(guiGraphics, mc.gui.rightHeight);
             overlayManager.renderTemperatureOverlay(guiGraphics);
             overlayManager.renderEnhancedVisualsOverlay(guiGraphics);
@@ -38,7 +43,7 @@ public class GameOverlayEventHandler implements LayeredDraw.Layer {
 
     public void onRegisterOverlays(RegisterGuiLayersEvent event) {
         event.registerAboveAll(loc("overlay"), INSTANCE);
-        event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, loc("water_level"), INSTANCE);
+        event.registerAbove(VanillaGuiLayers.FOOD_LEVEL, loc("water_level"), INSTANCE);
         event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, loc("temperature"), INSTANCE);
         event.registerBelowAll(loc("visuals"), INSTANCE);
         event.registerAbove(loc("water_level"), loc("hydration"), INSTANCE);
