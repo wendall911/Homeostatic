@@ -3,6 +3,7 @@ build
 .gradle
 libs
 run
+NeoForge
 
 # IntelliJ
 .idea

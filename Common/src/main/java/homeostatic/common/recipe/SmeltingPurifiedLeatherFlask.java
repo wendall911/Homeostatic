@@ -12,12 +12,15 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 
-import homeostatic.platform.Services;
-
 public class SmeltingPurifiedLeatherFlask extends SmeltingRecipe implements ICookingRecipe {
 
     public SmeltingPurifiedLeatherFlask(ResourceLocation id, String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
         super(id, group, category, ingredient, result, experience, cookingTime);
+    }
+
+    @Override
+    public @NotNull ItemStack assemble(@NotNull Container container, @NotNull RegistryAccess registryAccess) {
+        return assemble(container, this.result);
     }
 
     @Override
@@ -27,7 +30,7 @@ public class SmeltingPurifiedLeatherFlask extends SmeltingRecipe implements ICoo
 
     @Override
     public boolean matches(@NotNull Container container, @NotNull Level level) {
-        return matches(container, Services.PLATFORM.getFluidCapacity(container.getItem(0)));
+        return matches(container, 1L);
     }
 
     @Override
