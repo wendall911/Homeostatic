@@ -28,8 +28,11 @@ public class Thermometer implements IThermometer {
         return listTag;
     }
 
-    public void write(CompoundTag tag) {
+    @Override
+    public CompoundTag write(CompoundTag tag) {
         tag.putBoolean("thermometer", this.hasThermometer());
+
+        return tag;
     }
 
     @Override
@@ -37,6 +40,7 @@ public class Thermometer implements IThermometer {
         read(nbt.getCompound(0));
     }
 
+    @Override
     public void read(CompoundTag tag) {
         this.setHasThermometer(tag.getBoolean("thermometer"));
     }

@@ -80,10 +80,13 @@ public class Water implements IWater {
         return listTag;
     }
 
-    public void write(CompoundTag tag) {
+    @Override
+    public CompoundTag write(CompoundTag tag) {
         tag.putInt("waterLevel", this.getWaterLevel());
         tag.putFloat("waterExhaustion", this.getWaterExhaustionLevel());
         tag.putFloat("waterSaturation", this.getWaterSaturationLevel());
+
+        return tag;
     }
 
     @Override
@@ -91,6 +94,7 @@ public class Water implements IWater {
         read(nbt.getCompound(0));
     }
 
+    @Override
     public void read(CompoundTag tag) {
         this.setWaterLevel(tag.getInt("waterLevel"));
         this.setWaterExhaustionLevel(tag.getFloat("waterExhaustion"));

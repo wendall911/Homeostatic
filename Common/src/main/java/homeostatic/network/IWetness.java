@@ -1,5 +1,6 @@
 package homeostatic.network;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 
 import homeostatic.common.wetness.WetnessInfo;
@@ -18,6 +19,10 @@ public interface IWetness {
 
     ListTag write();
 
+    CompoundTag write(CompoundTag tag);
+
     void read(ListTag tag);
+
+    void read(CompoundTag tag);
 
 }

@@ -1,5 +1,6 @@
 package homeostatic.network;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -41,9 +42,9 @@ public class WaterData {
         buf.writeFloat(waterExhaustionLevel);
     }
 
-    public static void process(Player player, WaterData waterData) {
+    public static void process(Player player, CompoundTag tag) {
         Services.PLATFORM.getWaterCapabilty(player).ifPresent(data -> {
-            data.setWaterData(waterData.getWaterInfo());
+            data.read(tag);
         });
     }
 

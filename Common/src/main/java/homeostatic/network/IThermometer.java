@@ -1,5 +1,6 @@
 package homeostatic.network;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 
 public interface IThermometer {
@@ -10,6 +11,10 @@ public interface IThermometer {
 
     ListTag write();
 
+    CompoundTag write(CompoundTag tag);
+
     void read(ListTag tag);
+
+    void read(CompoundTag tag);
 
 }

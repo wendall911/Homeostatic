@@ -1,5 +1,6 @@
 package homeostatic.network;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -29,6 +30,10 @@ public interface IWater {
 
     ListTag write();
 
+    CompoundTag write(CompoundTag tag);
+
     void read(ListTag tag);
+
+    void read(CompoundTag tag);
 
 }

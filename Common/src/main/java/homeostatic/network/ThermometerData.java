@@ -1,5 +1,6 @@
 package homeostatic.network;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -26,9 +27,9 @@ public class ThermometerData {
         buf.writeBoolean(hasThermometer);
     }
 
-    public static void process(Player player, ThermometerData thermometerData) {
+    public static void process(Player player, CompoundTag tag) {
         Services.PLATFORM.getThermometerCapability(player).ifPresent(data -> {
-            data.setHasThermometer(thermometerData.hasThermometer);
+            data.read(tag);
         });
     }
 
