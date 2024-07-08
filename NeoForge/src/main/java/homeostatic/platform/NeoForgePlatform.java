@@ -19,8 +19,12 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import homeostatic.common.attachments.TemperatureData;
+import homeostatic.common.attachments.ThermometerData;
+import homeostatic.common.attachments.WaterData;
+import homeostatic.common.attachments.WetnessData;
 import homeostatic.common.biome.ClimateSettings;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.item.IItemStackFluid;
@@ -36,6 +40,10 @@ import homeostatic.network.ITemperature;
 import homeostatic.network.IThermometer;
 import homeostatic.network.IWater;
 import homeostatic.network.IWetness;
+import homeostatic.network.NeoForgeTemperatureData;
+import homeostatic.network.NeoForgeThermometerData;
+import homeostatic.network.NeoForgeWaterData;
+import homeostatic.network.NeoForgeWetnessData;
 import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.platform.services.IPlatform;
 import homeostatic.registries.HomeostaticNeoForgeRegistries;
@@ -141,40 +149,37 @@ public class NeoForgePlatform implements IPlatform {
 
     @Override
     public void syncTemperatureData(ServerPlayer sp, EnvironmentData environmentData, BodyTemperature bodyTemperature) {
-        //PacketDistributor.PLAYER.with(sp).send(new NeoForgeTemperatureData(environmentData.getLocalTemperature(), bodyTemperature));
+        PacketDistributor.sendToPlayer(sp, new NeoForgeTemperatureData(environmentData.getLocalTemperature(), bodyTemperature));
     }
 
     @Override
     public Optional<? extends IThermometer> getThermometerCapability(Player player) {
-        //return ThermometerData.getData(player);
-        return Optional.empty();
+        return ThermometerData.getData(player);
     }
 
     @Override
     public void syncThermometerData(ServerPlayer sp, ThermometerInfo info) {
-        //PacketDistributor.PLAYER.with(sp).send(new NeoForgeThermometerData(info));
+        PacketDistributor.sendToPlayer(sp, new NeoForgeThermometerData(info));
     }
 
     @Override
     public Optional<? extends IWater> getWaterCapabilty(Player player) {
-        //return WaterData.getData(player);
-        return Optional.empty();
+        return WaterData.getData(player);
     }
 
     @Override
     public void syncWaterData(ServerPlayer sp, WaterInfo waterInfo) {
-        //PacketDistributor.PLAYER.with(sp).send(new NeoForgeWaterData(waterInfo));
+        PacketDistributor.sendToPlayer(sp, new NeoForgeWaterData(waterInfo));
     }
 
     @Override
     public Optional<? extends IWetness> getWetnessCapability(Player player) {
-        //return WetnessData.getData(player);
-        return Optional.empty();
+        return WetnessData.getData(player);
     }
 
     @Override
     public void syncWetnessData(ServerPlayer sp, WetnessInfo wetnessInfo) {
-        //PacketDistributor.PLAYER.with(sp).send(new NeoForgeWetnessData(wetnessInfo));
+        PacketDistributor.sendToPlayer(sp, new NeoForgeWetnessData(wetnessInfo));
     }
 
     @Override

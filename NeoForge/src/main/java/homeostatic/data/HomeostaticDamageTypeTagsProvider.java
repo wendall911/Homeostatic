@@ -2,6 +2,8 @@ package homeostatic.data;
 
 import java.util.concurrent.CompletableFuture;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -21,9 +23,10 @@ public class HomeostaticDamageTypeTagsProvider extends TagsProvider<DamageType> 
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider pProvider) {
+    protected void addTags(HolderLookup.@NotNull Provider pProvider) {
         this.tag(DamageTypeTags.BYPASSES_ARMOR).add(HomeostaticDamageTypes.HYPERTHERMIA_KEY, HomeostaticDamageTypes.SCALDING_KEY, HomeostaticDamageTypes.DEHYDRATION_KEY);
         this.tag(DamageTypeTags.BYPASSES_INVULNERABILITY).add(HomeostaticDamageTypes.HYPERTHERMIA_KEY, HomeostaticDamageTypes.SCALDING_KEY, HomeostaticDamageTypes.DEHYDRATION_KEY);
+        this.tag(DamageTypeTags.NO_KNOCKBACK).add(HomeostaticDamageTypes.HYPERTHERMIA_KEY, HomeostaticDamageTypes.SCALDING_KEY, HomeostaticDamageTypes.DEHYDRATION_KEY);
     }
 
 }

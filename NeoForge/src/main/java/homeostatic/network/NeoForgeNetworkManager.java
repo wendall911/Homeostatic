@@ -1,10 +1,11 @@
 package homeostatic.network;
 
-import homeostatic.util.WaterHelper;
-import net.minecraft.client.Minecraft;
-
 import net.minecraft.server.level.ServerPlayer;
+
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+
+import homeostatic.util.LocalPlayerHelper;
+import homeostatic.util.WaterHelper;
 
 public class NeoForgeNetworkManager {
 
@@ -16,22 +17,28 @@ public class NeoForgeNetworkManager {
 
     public void processTemperatureData(NeoForgeTemperatureData msgData, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
-            TemperatureData.process(Minecraft.getInstance().player, msgData.getData());
+            TemperatureData.process(LocalPlayerHelper.getLocalPlayer(), msgData.getData());
         });
     }
-/*
-    public void processThermometerData(NeoForgeThermometerData msgData, PlayPayloadContext ctx) {
-        ctx.workHandler().submitAsync(() -> ThermometerData.process(Minecraft.getInstance().player, msgData.getThermometerData()));
+
+    public void processThermometerData(NeoForgeThermometerData msgData, IPayloadContext ctx) {
+        ctx.enqueueWork(() -> {
+            ThermometerData.process(LocalPlayerHelper.getLocalPlayer(), msgData.getData());
+        });
     }
 
-    public void processWaterData(NeoForgeWaterData msgData, PlayPayloadContext ctx) {
-        ctx.workHandler().submitAsync(() -> WaterData.process(Minecraft.getInstance().player, msgData.getWaterData()));
+    public void processWaterData(NeoForgeWaterData msgData, IPayloadContext ctx) {
+        ctx.enqueueWork(() -> {
+            WaterData.process(LocalPlayerHelper.getLocalPlayer(), msgData.getData());
+        });
     }
 
-    public void processWetnessData(NeoForgeWetnessData msgData, PlayPayloadContext ctx) {
-        ctx.workHandler().submitAsync(() -> WetnessData.process(Minecraft.getInstance().player, msgData.getWetnessData()));
+    public void processWetnessData(NeoForgeWetnessData msgData, IPayloadContext ctx) {
+        ctx.enqueueWork(() -> {
+            WetnessData.process(LocalPlayerHelper.getLocalPlayer(), msgData.getData());
+        });
     }
-*/
+
     public void processDrinkWater(DrinkWater msgData, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             WaterHelper.drinkWater((ServerPlayer) ctx.player());

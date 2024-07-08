@@ -25,7 +25,9 @@ public class GameOverlayEventHandler implements LayeredDraw.Layer {
         Minecraft mc = Minecraft.getInstance();
 
         if (ConfigHandler.loaded && !mc.getDebugOverlay().showDebugScreen() && !mc.options.hideGui) {
-            overlayManager.renderOverlay(guiGraphics);
+            if (ConfigHandler.Common.debugEnabled()) {
+                overlayManager.renderOverlay(guiGraphics);
+            }
             overlayManager.renderWaterOverlay(guiGraphics, mc.gui.rightHeight);
             overlayManager.renderTemperatureOverlay(guiGraphics);
             overlayManager.renderEnhancedVisualsOverlay(guiGraphics);

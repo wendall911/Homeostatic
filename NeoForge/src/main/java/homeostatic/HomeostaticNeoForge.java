@@ -41,6 +41,9 @@ import homeostatic.event.ServerEventListener;
 import homeostatic.network.DrinkWater;
 import homeostatic.network.NeoForgeNetworkManager;
 import homeostatic.network.NeoForgeTemperatureData;
+import homeostatic.network.NeoForgeThermometerData;
+import homeostatic.network.NeoForgeWaterData;
+import homeostatic.network.NeoForgeWetnessData;
 import homeostatic.registries.HomeostaticNeoForgeRegistries;
 
 @Mod(Homeostatic.MODID)
@@ -109,15 +112,9 @@ public class HomeostaticNeoForge {
 
         registrar.playToServer(DrinkWater.TYPE, DrinkWater.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processDrinkWater);
         registrar.playToClient(NeoForgeTemperatureData.TYPE, NeoForgeTemperatureData.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processTemperatureData);
-        /*
-        event.registrar(Homeostatic.MODID).play(ThermometerData.ID, NeoForgeThermometerData::new,
-            handler -> handler.client(NeoForgeNetworkManager.getInstance()::processThermometerData));
-        event.registrar(Homeostatic.MODID).play(WaterData.ID, NeoForgeWaterData::new,
-            handler -> handler.client(NeoForgeNetworkManager.getInstance()::processWaterData));
-        event.registrar(Homeostatic.MODID).play(WetnessData.ID, NeoForgeWetnessData::new,
-            handler -> handler.client(NeoForgeNetworkManager.getInstance()::processWetnessData));
-
-         */
+        registrar.playToClient(NeoForgeThermometerData.TYPE, NeoForgeThermometerData.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processThermometerData);
+        registrar.playToClient(NeoForgeWaterData.TYPE, NeoForgeWaterData.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processWaterData);
+        registrar.playToClient(NeoForgeWetnessData.TYPE, NeoForgeWetnessData.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processWetnessData);
     }
 
     private static <T> void bind(IEventBus bus, ResourceKey<Registry<T>> registry, Consumer<BiConsumer<T, ResourceLocation>> source) {

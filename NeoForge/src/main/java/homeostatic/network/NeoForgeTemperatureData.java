@@ -32,7 +32,8 @@ public class NeoForgeTemperatureData extends Temperature implements CustomPacket
     }
 
     public NeoForgeTemperatureData(CompoundTag tag) {
-        data = this.write(tag);
+        this.read(tag);
+        data = this.write(new CompoundTag());
         temperatureData = new TemperatureData(getLocalTemperature(), getSkinTemperature(), getCoreTemperature());
     }
 
@@ -48,5 +49,7 @@ public class NeoForgeTemperatureData extends Temperature implements CustomPacket
     public @NotNull Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
+
+
 
 }
