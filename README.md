@@ -1,6 +1,7 @@
 # Homeostatic [![Project](http://cf.way2muchnoise.eu/full_634466_downloads.svg)](https://minecraft.curseforge.com/projects/634466)
-![Minecraft](http://cf.way2muchnoise.eu/versions/For%20MC_634466_all.svg)
-![Forge](https://img.shields.io/badge/Forge-40.0.1+-green.svg?longCache=true&style=flat)
+[![](http://cf.way2muchnoise.eu/versions/634466.svg)](https://www.curseforge.com/minecraft/mc-mods/homeostatic/files)
+[![](https://img.shields.io/badge/NeoForge-20.4+-orange.svg?longCache=true&style=flat)](https://www.curseforge.com/minecraft/mc-mods/homeostatic/files?gameVersionTypeId=6)
+[![](https://img.shields.io/badge/Fabric-0.46.0+-yellowgreen.svg?longCache=true&style=flat)](https://www.curseforge.com/minecraft/mc-mods/homeostatic/files?gameVersionTypeId=4)
 ![MIT](https://img.shields.io/badge/license-MIT-blue.svg?longCache=true&style=flat)
 
 A temperature and thirst mod that doesn't defy logic:
@@ -19,15 +20,8 @@ A temperature and thirst mod that doesn't defy logic:
     - [Being wet](https://en.wikipedia.org/wiki/Hypothermia#Water_immersion) is really bad (unless you're overheated), it can causing rapid cooling.
   - Blocks that generate heat aren't measured in temperature, but rather the [thermal radiation](https://en.wikipedia.org/wiki/Thermal_radiation) they release, which affects how "hot" it is to be near these objects.
 
-Download latest (1.19):
-
-[![Download](https://curse.nikky.moe/api/img/634466?logo)](https://curse.nikky.moe/api/url/634466?version=1.19)
-
-All Downloads:
-
-[![Files](https://curse.nikky.moe/api/img/634466/files?logo)](https://minecraft.curseforge.com/projects/634466/files)
-
 ## Links of Interest
 
 + [Homeostatic Wiki](https://github.com/wendall911/Homeostatic/wiki)
 + [Homeostatic Curseforge Page](https://www.curseforge.com/minecraft/mc-mods/homeostatic)
++ [Homeostatic Modrinth Page](https://modrinth.com/mod/homeostatic)
