@@ -29,7 +29,7 @@
     "jei_mod_plugin": [
       "homeostatic.integrations.jei.JEIPlugin"
     ],
-    "spectrelib": [
+    "spectrelib-config": [
       "homeostatic.FabricConfigInitializer"
     ],
     "cardinal-components-entity": [
