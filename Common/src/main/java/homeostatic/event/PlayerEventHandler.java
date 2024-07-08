@@ -21,6 +21,7 @@ import homeostatic.common.temperature.EnvironmentData;
 import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.common.water.WaterInfo;
 import homeostatic.config.ConfigHandler;
+import homeostatic.network.Temperature;
 import homeostatic.platform.Services;
 import homeostatic.util.WaterHelper;
 import homeostatic.util.WetnessHelper;
@@ -100,7 +101,8 @@ public class PlayerEventHandler {
             BlockPos pos = new BlockPos((int)spPos.x(), (int)spPos.y(), (int)spPos.z());
             Holder<Biome> biome = world.getBiome(pos);
             EnvironmentData environmentData = new EnvironmentData(sp, pos, biome, world);
-            BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, data);
+            // Need to do a new Temperature here, as NeoForge isn't honoring not copying data on death
+            BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, new Temperature());
 
             data.setTemperatureData(environmentData.getLocalTemperature(), bodyTemperature);
 
@@ -116,6 +118,8 @@ public class PlayerEventHandler {
                 Services.PLATFORM.getThermometerCapability(sp).ifPresent(data -> {
                     boolean equippedHasThermometer = hasThermometer(equippedItem);
                     ThermometerInfo info = new ThermometerInfo(equippedHasThermometer);
+
+                    data.setHasThermometer(equippedHasThermometer);
 
                     Services.PLATFORM.syncThermometerData(sp, info);
                 });
