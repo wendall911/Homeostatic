@@ -30,10 +30,10 @@ dependencies {
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
     //modCompileOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-    include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
-    include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
+    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
+    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
+    include "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
+    include "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     // Not available for 1.20.4 :(
     //modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
     modImplementation "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
@@ -46,8 +46,6 @@ dependencies {
     modRuntimeOnly("com.terraformersmc:modmenu:${mod_menu_version}") {
         transitive = false
     }
-
-    include group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_version}+${minecraft_version}"
 
     if (System.getenv('DATA_GEN') != null) {
         // Datagen mods
