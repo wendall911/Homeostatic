@@ -80,6 +80,13 @@ repositories {
         url 'https://maven.shedaniel.me/' // for rei
     }
 
+    maven {
+        url 'https://www.dogforce-games.com/maven/'
+        content {
+            includeGroup "dev.gigaherz.sewingkit"
+        }
+    }
+
     if (project.hasProperty('localmaven')) {
         maven {
             url 'file://' + localmaven

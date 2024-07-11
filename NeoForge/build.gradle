@@ -50,15 +50,18 @@ dependencies {
     //compileOnly "curse.maven:create-328085:${create_forge_version}"
     //implementation "vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT"
     //implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+    compileOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"
 
     if (System.getenv('DATA_GEN') != null) {
         //runtimeOnly "curse.maven:create-328085:${create_neoforge_version}"
+        runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"
     }
     else {
         //runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
         //runtimeOnly "dev.architectury:architectury-neoforge:${architectury_version}"
         //runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
         runtimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_neoforge_version}"
+        //runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"
         //runtimeOnly "curse.maven:sereneseasons-291874:${serene_seasons_version}"
         //runtimeOnly "curse.maven:configured-457570:4462839"
         //runtimeOnly "curse.maven:biomesoplenty-220318:${bop_neoforge_version}"
@@ -163,6 +166,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('kobolds')
         mainFile.addOptional('primal-winter')
         mainFile.addOptional('tinkers-construct')
+        mainFile.addOptional('sewing-kit')
     }
 }
 

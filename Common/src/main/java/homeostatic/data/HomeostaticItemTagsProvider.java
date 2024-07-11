@@ -39,7 +39,8 @@ public class HomeostaticItemTagsProvider extends ItemTagsProvider {
             .addOptional(ModIntegration.scubaLoc("scuba_helmet"))
             .addOptional(ModIntegration.scubaLoc("scuba_chestplate"))
             .addOptional(ModIntegration.scubaLoc("scuba_leggings"))
-            .addOptional(ModIntegration.scubaLoc("scuba_boots"));
+            .addOptional(ModIntegration.scubaLoc("scuba_boots"))
+            .addTag(TagManager.Items.SEWINGKIT_WEARABLE);
 
         this.tag(TagManager.Items.WATERPROOF_ARMOR)
             .addOptional(ModIntegration.scubaLoc("scuba_helmet"))
@@ -52,6 +53,12 @@ public class HomeostaticItemTagsProvider extends ItemTagsProvider {
             .add(Items.NETHERITE_CHESTPLATE)
             .add(Items.NETHERITE_LEGGINGS)
             .add(Items.NETHERITE_BOOTS);
+
+        this.tag(TagManager.Items.SEWINGKIT_WEARABLE)
+            .addOptional(ModIntegration.skLoc("wool_hat"))
+            .addOptional(ModIntegration.skLoc("wool_shirt"))
+            .addOptional(ModIntegration.skLoc("wool_pants"))
+            .addOptional(ModIntegration.skLoc("wool_shoes"));
     }
 
 }
