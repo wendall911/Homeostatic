@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import homeostatic.data.integration.create.FillingRecipeProvider;
 import homeostatic.data.integration.create.MixingRecipeProvider;
 import homeostatic.data.integration.patchouli.ModBookProvider;
+import homeostatic.data.integration.sewingkit.SewingKitRecipeProvider;
 import homeostatic.data.recipe.ModRecipesProvider;
 import homeostatic.data.recipe.SpecialRecipeProvider;
 import homeostatic.Homeostatic;
@@ -41,6 +42,7 @@ public final class DataGenerators {
         gen.addProvider(true, new ModBookProvider(gen));
         gen.addProvider(true, new ModLanguageProvider(gen));
         gen.addProvider(true, new SpecialRecipeProvider(gen));
+        gen.addProvider(true, new SewingKitRecipeProvider(gen));
     }
 
 }

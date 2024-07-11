@@ -96,7 +96,7 @@ public class ModRecipesProvider extends RecipeProvider {
                 .save(consumer, loc("smoking_purified_leather_flask"));
     }
 
-    private static Consumer<FinishedRecipe> withCondition(Consumer<FinishedRecipe> consumer, ICondition... conditions) {
+    public static Consumer<FinishedRecipe> withCondition(Consumer<FinishedRecipe> consumer, ICondition... conditions) {
         ConsumerWrapperBuilder builder = ConsumerWrapperBuilder.wrap();
 
         for (ICondition condition : conditions) {

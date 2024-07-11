@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "sewingkit:wool_hat",
+      "required": false
+    },
+    {
+      "id": "sewingkit:wool_shirt",
+      "required": false
+    },
+    {
+      "id": "sewingkit:wool_pants",
+      "required": false
+    },
+    {
+      "id": "sewingkit:wool_shoes",
+      "required": false
+    }
+  ]
+}
