@@ -1,5 +1,6 @@
 package homeostatic.data;
 
+import homeostatic.data.integration.sewingkit.SewingKitRecipeProvider;
 import net.minecraft.data.DataGenerator;
 
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -41,6 +42,7 @@ public final class DataGenerators {
         gen.addProvider(new ModBookProvider(gen));
         gen.addProvider(new ModLanguageProvider(gen));
         gen.addProvider(new SpecialRecipeProvider(gen));
+        gen.addProvider(new SewingKitRecipeProvider(gen));
     }
 
 }

@@ -22,6 +22,7 @@ public class ModIntegration {
     public static final String PW_MODID = "primalwinter";
     public static final String SPROUT_MODID = "sprout";
     public static final String SCUBA_GEAR_MODID = "scuba_gear";
+    public static final String SK_MODID = "sewingkit";
     public static final String SS_MODID = "sereneseasons";
     public static final String TCON_MODID = "tconstruct";
     public static final String TF_MODID = "twilightforest";
@@ -106,6 +107,10 @@ public class ModIntegration {
 
     public static ResourceLocation tconLoc(String path) {
         return new ResourceLocation(TCON_MODID, path);
+    }
+
+    public static ResourceLocation skLoc(String name) {
+        return new ResourceLocation(SK_MODID, name);
     }
 
 }
