@@ -16,6 +16,7 @@
     {
       "id": "scuba_gear:scuba_boots",
       "required": false
-    }
+    },
+    "#homeostatic:sewingkit_wearable"
   ]
 }

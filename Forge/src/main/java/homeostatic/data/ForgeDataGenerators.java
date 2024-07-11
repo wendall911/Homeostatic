@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import homeostatic.data.integration.create.FillingRecipeProvider;
 import homeostatic.data.integration.create.MixingRecipeProvider;
 import homeostatic.data.integration.patchouli.HomeostaticBookProvider;
+import homeostatic.data.integration.sewingkit.SewingKitRecipeProvider;
 import homeostatic.data.recipe.ForgeRecipeProvider;
 import homeostatic.Homeostatic;
 
@@ -26,6 +27,7 @@ public final class ForgeDataGenerators {
         gen.addProvider(event.includeServer(), new FillingRecipeProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new HomeostaticBookProvider(gen.getPackOutput()));
         RegistryDataGenerator.addProviders(event.includeServer(), gen, gen.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
+        gen.addProvider(event.includeServer(), new SewingKitRecipeProvider(gen.getPackOutput()));
     }
 
 }

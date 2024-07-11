@@ -9,11 +9,15 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 
 import homeostatic.common.TagManager;
+import homeostatic.data.integration.ModIntegration;
+import homeostatic.platform.Services;
 
 public class TooltipEventHandler {
 
     public static void onItemToolTip(ItemStack itemStack, List<Component> toolTip) {
-        if (itemStack.getItem() instanceof ArmorItem) {
+        boolean sewingKitItem = Services.PLATFORM.isModLoaded(ModIntegration.SK_MODID) && itemStack.is(TagManager.Items.SEWINGKIT_WEARABLE);
+
+        if (itemStack.getItem() instanceof ArmorItem || sewingKitItem) {
             CompoundTag tags = itemStack.getTag();
 
             if ((tags != null && tags.contains("insulation")) || itemStack.is(TagManager.Items.INSULATED_ARMOR)) {

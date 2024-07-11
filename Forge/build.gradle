@@ -89,13 +89,16 @@ dependencies {
     compileOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE-SNAPSHOT")
     implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
+    compileOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}")
 
     if (System.getenv('DATA_GEN') != null) {
         runtimeOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
+        runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}")
     }
     else {
         //runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}-FORGE-SNAPSHOT"
         runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_forge_version}")
+        //runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}")
         //runtimeOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
         //runtimeOnly fg.deobf("curse.maven:configured-457570:4462839")
         //runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:${bop_forge_version}")
@@ -240,6 +243,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('kobolds')
         mainFile.addOptional('primal-winter')
         mainFile.addOptional('tinkers-construct')
+        mainFile.addOptional('sewing-kit')
     }
 }
 

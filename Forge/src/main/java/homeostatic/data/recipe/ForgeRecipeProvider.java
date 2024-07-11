@@ -33,7 +33,7 @@ public class ForgeRecipeProvider extends RecipeProviderBase {
         book().save(wrapped, loc("book_from_dirt"));
     }
 
-    private static Consumer<FinishedRecipe> withCondition(Consumer<FinishedRecipe> consumer, ICondition... conditions) {
+    public static Consumer<FinishedRecipe> withCondition(Consumer<FinishedRecipe> consumer, ICondition... conditions) {
         ConsumerWrapperBuilder builder = ConsumerWrapperBuilder.wrap();
 
         for (ICondition condition : conditions) {

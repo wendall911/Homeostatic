@@ -1,4 +1,4 @@
-// 1.20.1	2024-06-23T16:53:08.429425563	Homeostatic/Homeostatic - Drinkable Items
+// 1.20.1	2024-07-11T10:48:11.347552564	Homeostatic/Homeostatic - Drinkable Items
 c067a0ef93faf03cbe8064808470d50ef28e407c data/farmersdelight/environment/drinkable/wild_beetroots.json
 8da3e66ba54c4a706ae6567a45f92f80dcd861c5 data/xercamod/environment/drinkable/item_full_teacup_4.json
 627a879b120bf96cb542f4c13caaba1efa59a1c2 data/croptopia/environment/drinkable/kumquat.json
@@ -419,8 +419,8 @@ c3932789b10276a180097c498e76b97d488879e1 data/croptopia/environment/drinkable/st
 16949d5a7beb597c1f678b0b8332083096bccd95 data/croptopia/environment/drinkable/wine.json
 15040e6908f14b3c8493b9cf7556de92a232ff6a data/xercamod/environment/drinkable/raw_pizza_mushroom_pepperoni.json
 6626893527a5d54170e5fbde50693253c31bbae7 data/morecraft/environment/drinkable/sweetberry_pie.json
-9a0fee7c2fb14cd725bf7153a4f2e7f031e4c204 data/croptopia/environment/drinkable/roasted_radishes.json
 56fe826e364eaed38e191dadfa8b64815c33bf6a data/minecraft/environment/drinkable/golden_carrot.json
+9a0fee7c2fb14cd725bf7153a4f2e7f031e4c204 data/croptopia/environment/drinkable/roasted_radishes.json
 849d76af9406506fdbe7c4adb25c1df049cd1a51 data/xercamod/environment/drinkable/pizza_chicken_fish.json
 250e4791e5746305940f6774f3991d58f1b0019f data/xercamod/environment/drinkable/raw_pizza_fish_fish_pepperoni.json
 92db4a7a32673f69aaf85949917554e2104b2977 data/byg/environment/drinkable/crimson_berries.json
