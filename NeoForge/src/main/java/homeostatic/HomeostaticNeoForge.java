@@ -82,18 +82,6 @@ public class HomeostaticNeoForge {
             }
         }
 
-        @SubscribeEvent(priority = EventPriority.LOWEST)
-        public static void registerCreativeTab(BuildCreativeModeTabContentsEvent event) {
-            if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES
-                    || event.getTab() == CreativeTabs.ALL_ITEMS_TAB) {
-                for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
-                    Item item = entry.getValue();
-
-                    event.accept(new ItemStack(item));
-                }
-            }
-        }
-
     }
 
     private void registryInit(IEventBus bus) {
