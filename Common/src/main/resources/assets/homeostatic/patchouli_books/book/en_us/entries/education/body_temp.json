@@ -1,0 +1,12 @@
+{
+  "category": "homeostatic:education",
+  "icon": "minecraft:green_wool",
+  "name": "info.homeostatic.book.education.body_temp.name",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "info.homeostatic.book.education.body_temp.intro"
+    }
+  ],
+  "sortnum": 3
+}

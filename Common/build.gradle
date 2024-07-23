@@ -20,7 +20,7 @@ dependencies {
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
     implementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-common', version: "${spectrelib_version}+${minecraft_version}"
 
-    //compileOnly "vazkii.patchouli:Patchouli-xplat:${patchouli_version}-SNAPSHOT"
+    compileOnly "vazkii.patchouli:Patchouli-xplat:${patchouli_version}-SNAPSHOT"
 
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
 

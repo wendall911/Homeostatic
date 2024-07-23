@@ -28,8 +28,7 @@ public class HomeostaticBook extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player playerIn, InteractionHand handIn) {
         if (Services.PLATFORM.isModLoaded(ModIntegration.PATCHOULI_MODID)) {
             if (level.isClientSide()) {
-                // TODO add back once Patchoili has an update
-                //vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(book);
+                vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(book);
             }
         }
 

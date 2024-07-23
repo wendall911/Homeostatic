@@ -48,7 +48,7 @@ dependencies {
     implementation "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
     implementation "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
     //compileOnly "curse.maven:create-328085:${create_forge_version}"
-    //implementation "vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT"
+    implementation "vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT"
     //implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
     compileOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"
 

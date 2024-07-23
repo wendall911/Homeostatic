@@ -38,7 +38,7 @@ dependencies {
     //modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
     modImplementation "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
     modImplementation "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
-    //modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
+    modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
     modRuntimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
     modRuntimeOnly "net.jodah:typetools:0.6.3"
     modImplementation "com.electronwill.night-config:core:3.6.7"
