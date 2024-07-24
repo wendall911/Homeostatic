@@ -91,6 +91,7 @@ dependencies {
         //runtimeOnly "curse.maven:leavemybarsalone-281715:4613509"
         //runtimeOnly "curse.maven:scuba_gear-399090:4593711"
         //runtimeOnly "curse.maven:kobolds-484967:4632499"
+        //runtimeOnly "curse.maven:more_food-874343:${more_food_neoforge_version}"
     }
 }
 
@@ -167,6 +168,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('primal-winter')
         mainFile.addOptional('tinkers-construct')
         mainFile.addOptional('sewing-kit')
+        mainFile.addOptional('more-food-xd')
     }
 }
 
@@ -198,6 +200,7 @@ modrinth {
             optional.project 'primal-winter'
             optional.project 'tinkers-construct'
             optional.project 'fruitful-fun'
+            optional.project 'more-food-xd'
         }
     }
 }

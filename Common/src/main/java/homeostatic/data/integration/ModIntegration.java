@@ -17,6 +17,7 @@ public class ModIntegration {
     public static final String IE_MODID = "immersiveengineering";
     public static final String KOBOLDS_MODID = "kobolds";
     public static final String MC_MODID = "minecraft";
+    public static final String MORE_FOOD_MODID = "more_food";
     public static final String MORECRAFT_MODID = "morecraft";
     public static final String PATCHOULI_MODID = "patchouli";
     public static final String PW_MODID = "primalwinter";
@@ -107,6 +108,10 @@ public class ModIntegration {
 
     public static ResourceLocation skLoc(String name) {
         return ResourceLocation.fromNamespaceAndPath(SK_MODID, name);
+    }
+
+    public static ResourceLocation mfLoc(String name) {
+        return ResourceLocation.fromNamespaceAndPath(MORE_FOOD_MODID, name);
     }
 
 }

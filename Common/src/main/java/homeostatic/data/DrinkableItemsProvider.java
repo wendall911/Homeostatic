@@ -547,6 +547,49 @@ public class DrinkableItemsProvider implements DataProvider {
         addDrink(ModIntegration.koboldsLoc("kobold_potion_leaping"));
         addDrink(ModIntegration.koboldsLoc("kobold_potion_levitation"));
         addDrink(ModIntegration.koboldsLoc("kobold_potion_mining"));
+
+        // More Food xD
+        addMeal(ModIntegration.mfLoc("apple_bread"));
+        addPie(ModIntegration.mfLoc("apple_pie"));
+        addSoup(ModIntegration.mfLoc("apple_soup"));
+        addSoup(ModIntegration.mfLoc("bamboo_soup"));
+        addMeal(ModIntegration.mfLoc("carrot_bread"));
+        addPie(ModIntegration.mfLoc("carrot_pie"));
+        addSoup(ModIntegration.mfLoc("carrot_soup"));
+        addMeal(ModIntegration.mfLoc("chocolate"));
+        addMeal(ModIntegration.mfLoc("chocolate_bar"));
+        addFruit(ModIntegration.mfLoc("cooked_apple"));
+        add(ModIntegration.mfLoc("diamond_apple"), 6, 1.2F,  0, 0, 0.0F);
+        addVeggie(ModIntegration.mfLoc("diamond_carrot"));
+        addVeggie(ModIntegration.mfLoc("diamond_kelp"));
+        addFruit(ModIntegration.mfLoc("diamond_melon_slice"));
+        addVeggie(ModIntegration.mfLoc("diamond_potato"));
+        addVeggie(ModIntegration.mfLoc("emerald_carrot"));
+        addVeggie(ModIntegration.mfLoc("emerald_kelp"));
+        addFruit(ModIntegration.mfLoc("emerald_melon_slice"));
+        addVeggie(ModIntegration.mfLoc("emerald_potato"));
+        addVeggie(ModIntegration.mfLoc("golden_kelp"));
+        addFruit(ModIntegration.mfLoc("golden_melon_slice"));
+        addVeggie(ModIntegration.mfLoc("golden_potato"));
+        addVeggie(ModIntegration.mfLoc("iron_carrot"));
+        addVeggie(ModIntegration.mfLoc("iron_kelp"));
+        addFruit(ModIntegration.mfLoc("iron_melon_slice"));
+        addVeggie(ModIntegration.mfLoc("iron_potato"));
+        addSoup(ModIntegration.mfLoc("kelp_soup"));
+        addSoup(ModIntegration.mfLoc("phantom_soup"));
+        addMeal(ModIntegration.mfLoc("potato_bread"));
+        addSoup(ModIntegration.mfLoc("potato_soup"));
+        addSoup(ModIntegration.mfLoc("pufferfish_soup"));
+        addSoup(ModIntegration.mfLoc("pumpking_soup"));
+        addMeal(ModIntegration.mfLoc("rice_chicken_bowl"));
+        addMeal(ModIntegration.mfLoc("rice_cod_bowl"));
+        addMeal(ModIntegration.mfLoc("rice_honey_pudding"));
+        addMeal(ModIntegration.mfLoc("rice_salmon_bowl"));
+        addMeal(ModIntegration.mfLoc("rice_vegetable_bowl"));
+        addMeal(ModIntegration.mfLoc("sushi_bamboo"));
+        addMeal(ModIntegration.mfLoc("sushi_beetroot"));
+        addMeal(ModIntegration.mfLoc("sushi_carrot"));
+        addMeal(ModIntegration.mfLoc("sushi_salmon"));
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {

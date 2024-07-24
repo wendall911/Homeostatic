@@ -54,8 +54,10 @@ dependencies {
         // Runtime testing mods
         // This doesn't work for whatever reason. Such a strange port
         //modRuntimeOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
-        //runtimeOnly "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
-        //runtimeOnly "curse.maven:terrablender-565956:${terrablender_fabric_version}"
+        //modRuntimeOnly "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
+        //modRuntimeOnly "curse.maven:terrablender-565956:${terrablender_fabric_version}"
+        modRuntimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
+        modRuntimeOnly "curse.maven:more_food-874343:${more_food_fabric_version}"
     }
 }
 
@@ -133,18 +135,14 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('kitteh6660s-morecraft')
         mainFile.addOptional('sophisticated-backpacks')
         mainFile.addOptional('ecologics')
-        mainFile.addOptional('ars-nouveau')
         mainFile.addOptional('sprout')
         mainFile.addOptional('create-cafe')
         mainFile.addOptional('fruit-trees')
         mainFile.addOptional('leave-my-bars-alone')
         mainFile.addOptional('create')
         mainFile.addOptional('patchouli')
-        mainFile.addOptional('scuba-gear')
-        mainFile.addOptional('kobolds')
-        mainFile.addOptional('the-twilight-forest')
         mainFile.addOptional('primal-winter')
-        mainFile.addOptional('tinkers-construct')
+        mainFile.addOptional('more-food-xd')
     }
 }
 
@@ -172,10 +170,8 @@ modrinth {
             optional.project 'patchouli'
             optional.project 'jei'
             optional.project 'biomesyougo'
-            optional.project 'kobolds'
-            optional.project 'primal-winter'
-            optional.project 'tinkers-construct'
             optional.project 'fruitful-fun'
+            optional.project 'more-food-xd'
         }
     }
 }
