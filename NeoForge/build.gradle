@@ -92,6 +92,13 @@ dependencies {
         //runtimeOnly "curse.maven:scuba_gear-399090:4593711"
         //runtimeOnly "curse.maven:kobolds-484967:4632499"
         //runtimeOnly "curse.maven:more_food-874343:${more_food_neoforge_version}"
+        //runtimeOnly "curse.maven:kubejs-238086:${kubejs_neoforge_version}"
+        //runtimeOnly "curse.maven:rhino-416294:${rhino_neoforge_version}"
+        //runtimeOnly "curse.maven:crafttweaker-239197:${crafttweaker_neoforge_version}"
+        //runtimeOnly "curse.maven:phc_food_core-372534:${phc_food_core_neoforge_version}"
+        //runtimeOnly "curse.maven:phc_crops-361385:${phc_crops_neoforge_version}"
+        //runtimeOnly "curse.maven:phc_trees-365460:${phc_trees_neoforge_version}"
+        //runtimeOnly "curse.maven:phc_food_extended-402231:${phc_food_extended_neoforge_version}"
     }
 }
 
@@ -169,6 +176,10 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('tinkers-construct')
         mainFile.addOptional('sewing-kit')
         mainFile.addOptional('more-food-xd')
+        mainFile.addOptional('pams-harvestcraft-2-food-core')
+        mainFile.addOptional('pams-harvestcraft-2-crops')
+        mainFile.addOptional('pams-harvestcraft-2-trees')
+        mainFile.addOptional('pams-harvestcraft-2-food-extended')
     }
 }
 

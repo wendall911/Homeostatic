@@ -20,6 +20,9 @@ public class ModIntegration {
     public static final String MORE_FOOD_MODID = "more_food";
     public static final String MORECRAFT_MODID = "morecraft";
     public static final String PATCHOULI_MODID = "patchouli";
+    public static final String PHC_CORE_MODID = "pamhc2foodcore";
+    public static final String PHC_CROPS_MODID = "pamhc2crops";
+    public static final String PHC_FOOD_EXTENDED_MODID = "pamhc2foodextended";
     public static final String PW_MODID = "primalwinter";
     public static final String SEASONS_MODID = "seasons";
     public static final String SPROUT_MODID = "sprout";
@@ -112,6 +115,18 @@ public class ModIntegration {
 
     public static ResourceLocation mfLoc(String name) {
         return ResourceLocation.fromNamespaceAndPath(MORE_FOOD_MODID, name);
+    }
+
+    public static ResourceLocation phcLoc(String name) {
+        return ResourceLocation.fromNamespaceAndPath(PHC_CORE_MODID, name);
+    }
+
+    public static ResourceLocation pcropsLoc(String name) {
+        return ResourceLocation.fromNamespaceAndPath(PHC_CROPS_MODID, name);
+    }
+
+    public static ResourceLocation pheLoc(String name) {
+        return ResourceLocation.fromNamespaceAndPath(PHC_FOOD_EXTENDED_MODID, name);
     }
 
 }

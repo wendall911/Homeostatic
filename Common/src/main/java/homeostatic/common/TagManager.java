@@ -20,6 +20,8 @@ public final class TagManager {
         public static final TagKey<Item> RADIATION_PROTECTED_ARMOR = create("radiation_protected_armor");
         public static final TagKey<Item> WATERPROOF_ARMOR = create("waterproof_armor");
         public static final TagKey<Item> SEWINGKIT_WEARABLE = create("sewingkit_wearable");
+        public static final TagKey<Item> ROOT_VEGETABLES = createCommon("rootvegetables");
+        public static final TagKey<Item> VEGETABLES = createCommon("vegetables");
 
         private static TagKey<Item> create(String id) {
             return TagKey.create(Registries.ITEM, identifier(id));

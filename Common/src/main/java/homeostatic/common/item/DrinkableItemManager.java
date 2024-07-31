@@ -25,7 +25,9 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
     private static final Map<Item, DrinkableItem> ITEMS = new HashMap<>();
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(DrinkableItem.class, new DrinkableItem.Serializer()).create();
 
-    private static final DrinkableItem FRUIT = new DrinkableItem(ResourceLocation.tryBySeparator("c:fruits", ':'), 2, 0.6F, 0, 0, 0.0F);
+    private static final DrinkableItem FRUIT = new DrinkableItem(TagManager.Items.FRUITS.location(), 2, 0.6F, 0, 0, 0.0F);
+    private static final DrinkableItem ROOT_VEGETABLE = new DrinkableItem(TagManager.Items.ROOT_VEGETABLES.location(), 1, 0.1F, 0, 0, 0.0F);
+    private static final DrinkableItem VEGETABLE = new DrinkableItem(TagManager.Items.VEGETABLES.location(), 1, 0.1F, 0, 0, 0.0F);
 
     public DrinkableItemManager() {
         super(GSON, "environment/drinkable");
@@ -43,6 +45,12 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
         }
         else if(stack.is(TagManager.Items.FRUITS)) {
             return FRUIT;
+        }
+        else if(stack.is(TagManager.Items.ROOT_VEGETABLES)) {
+            return ROOT_VEGETABLE;
+        }
+        else if(stack.is(TagManager.Items.VEGETABLES)) {
+            return VEGETABLE;
         }
 
         return null;
