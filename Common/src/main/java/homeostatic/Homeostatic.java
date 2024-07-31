@@ -29,11 +29,11 @@ public class Homeostatic {
     }
    
     public static void initConfig() {
-        SpectreConfig commonConfig = SpectreConfigLoader.add(SpectreConfig.Type.COMMON, ConfigHandler.COMMON_SPEC, MODID);
+        SpectreConfigLoader.add(SpectreConfig.Type.COMMON, ConfigHandler.COMMON_SPEC, MODID);
 
         if (Services.PLATFORM.isPhysicalClient()) {
-            SpectreConfigLoader.add(SpectreConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC, MODID);
-            commonConfig.addLoadListener((config, flag) -> ConfigHandler.Client.init());
+            SpectreConfig clientConfig = SpectreConfigLoader.add(SpectreConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC, MODID);
+            clientConfig.addLoadListener((config, flag) -> ConfigHandler.Client.init());
         }
     }
 
