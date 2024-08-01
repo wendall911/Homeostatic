@@ -11,7 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -25,7 +24,12 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
     private static final Map<Item, DrinkableItem> ITEMS = new HashMap<>();
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(DrinkableItem.class, new DrinkableItem.Serializer()).create();
 
-    private static final DrinkableItem FRUIT = new DrinkableItem(new ResourceLocation("forge:fruits"), 2, 0.6F, 0, 0, 0.0F);
+    private static final DrinkableItem FRUIT = new DrinkableItem(TagManager.Items.FRUITS.location(), 2, 0.6F, 0, 0, 0.0F);
+    private static final DrinkableItem ROOT_VEGETABLE = new DrinkableItem(TagManager.Items.ROOT_VEGETABLES.location(), 1, 0.1F, 0, 0, 0.0F);
+    private static final DrinkableItem VEGETABLE = new DrinkableItem(TagManager.Items.VEGETABLES.location(), 1, 0.1F, 0, 0, 0.0F);
+    private static final DrinkableItem FRUIT_COMMON = new DrinkableItem(TagManager.Items.FRUITS_COMMON.location(), 2, 0.6F, 0, 0, 0.0F);
+    private static final DrinkableItem ROOT_VEGETABLE_COMMON = new DrinkableItem(TagManager.Items.ROOT_VEGETABLES_COMMON.location(), 1, 0.1F, 0, 0, 0.0F);
+    private static final DrinkableItem VEGETABLE_COMMON = new DrinkableItem(TagManager.Items.VEGETABLES_COMMON.location(), 1, 0.1F, 0, 0, 0.0F);
 
     public DrinkableItemManager() {
         super(GSON, "environment/drinkable");
@@ -41,8 +45,23 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
         if (drinkableItem != null) {
             return drinkableItem;
         }
-        else if(stack.is(TagManager.Items.FRUITS)) {
+        else if (stack.is(TagManager.Items.FRUITS)) {
             return FRUIT;
+        }
+        else if (stack.is(TagManager.Items.FRUITS_COMMON)) {
+            return FRUIT_COMMON;
+        }
+        else if (stack.is(TagManager.Items.ROOT_VEGETABLES)) {
+            return ROOT_VEGETABLE;
+        }
+        else if (stack.is(TagManager.Items.ROOT_VEGETABLES_COMMON)) {
+            return ROOT_VEGETABLE_COMMON;
+        }
+        else if (stack.is(TagManager.Items.VEGETABLES)) {
+            return VEGETABLE;
+        }
+        else if (stack.is(TagManager.Items.VEGETABLES_COMMON)) {
+            return VEGETABLE_COMMON;
         }
 
         return null;

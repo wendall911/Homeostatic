@@ -17,8 +17,13 @@ public class ModIntegration {
     public static final String IE_MODID = "immersiveengineering";
     public static final String KOBOLDS_MODID = "kobolds";
     public static final String MC_MODID = "minecraft";
+    public static final String MORE_FOOD_MODID = "more_food";
+    public static final String MORE_FOOD_FABRIC_MODID = "morefood";
     public static final String MORECRAFT_MODID = "morecraft";
     public static final String PATCHOULI_MODID = "patchouli";
+    public static final String PHC_CORE_MODID = "pamhc2foodcore";
+    public static final String PHC_CROPS_MODID = "pamhc2crops";
+    public static final String PHC_FOOD_EXTENDED_MODID = "pamhc2foodextended";
     public static final String PW_MODID = "primalwinter";
     public static final String SEASONS_MODID = "seasons";
     public static final String SPROUT_MODID = "sprout";
@@ -107,6 +112,26 @@ public class ModIntegration {
 
     public static ResourceLocation skLoc(String name) {
         return new ResourceLocation(SK_MODID, name);
+    }
+
+    public static ResourceLocation mfLoc(String name) {
+        return new ResourceLocation(MORE_FOOD_MODID, name);
+    }
+
+    public static ResourceLocation mffLoc(String name) {
+        return new ResourceLocation(MORE_FOOD_FABRIC_MODID, name);
+    }
+
+    public static ResourceLocation phcLoc(String name) {
+        return new ResourceLocation(PHC_CORE_MODID, name);
+    }
+
+    public static ResourceLocation pcropsLoc(String name) {
+        return new ResourceLocation(PHC_CROPS_MODID, name);
+    }
+
+    public static ResourceLocation pheLoc(String name) {
+        return new ResourceLocation(PHC_FOOD_EXTENDED_MODID, name);
     }
 
 }

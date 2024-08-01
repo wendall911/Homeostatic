@@ -53,8 +53,11 @@ dependencies {
     }
     else {
         // Runtime testing mods
+        //modRuntimeOnly "curse.maven:-:${}"
         // This doesn't work for whatever reason. Such a strange port
         //modRuntimeOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
+        //modRuntimeOnly "curse.maven:more_food-874343:${more_food_fabric_version}"
+        //modRuntimeOnly "curse.maven:farmers_delight-993166:5568031"
     }
 }
 
@@ -154,7 +157,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('biomes-o-plenty')
         mainFile.addOptional('oh-the-biomes-youll-go')
         mainFile.addOptional('croptopia')
-        mainFile.addOptional('farmers-delight')
+        mainFile.addOptional('farmers-delight-refabricated')
         mainFile.addOptional('xercamod')
         mainFile.addOptional('kitteh6660s-morecraft')
         mainFile.addOptional('sophisticated-backpacks')
@@ -170,7 +173,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('kobolds')
         mainFile.addOptional('the-twilight-forest')
         mainFile.addOptional('primal-winter')
-        mainFile.addOptional('tinkers-construct')
+        mainFile.addOptional('more-food-xd')
     }
 }
 
@@ -191,7 +194,7 @@ modrinth {
             optional.project 'ecologics'
             optional.project 'create-cafe'
             optional.project 'scuba-gear'
-            optional.project 'farmers-delight'
+            optional.project 'farmers-delight-refabricated'
             optional.project 'xercamod'
             optional.project 'leave-my-bars-alone'
             optional.project 'sprout'
@@ -202,6 +205,7 @@ modrinth {
             optional.project 'primal-winter'
             optional.project 'tinkers-construct'
             optional.project 'fruitful-fun'
+            optional.project 'more-food-xd'
         }
     }
 }

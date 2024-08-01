@@ -1,0 +1,8 @@
+{
+  "type": "pamhc2foodcore:freshwateritem",
+  "amount": 1,
+  "effect_chance": 0.2,
+  "effect_duration": 200,
+  "effect_potency": 45,
+  "saturation": 0.0
+}

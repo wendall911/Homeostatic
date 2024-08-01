@@ -16,10 +16,15 @@ public final class TagManager {
         public static final TagKey<Item> RADIATION_PROTECTION = create("radiation_protection");
         public static final TagKey<Item> WATERPROOF = create("waterproof");
         public static final TagKey<Item> FRUITS = createForge("fruits");
+        public static final TagKey<Item> FRUITS_COMMON = createCommon("fruits");
         public static final TagKey<Item> INSULATED_ARMOR = create("insulated_armor");
         public static final TagKey<Item> RADIATION_PROTECTED_ARMOR = create("radiation_protected_armor");
         public static final TagKey<Item> WATERPROOF_ARMOR = create("waterproof_armor");
         public static final TagKey<Item> SEWINGKIT_WEARABLE = create("sewingkit_wearable");
+        public static final TagKey<Item> ROOT_VEGETABLES = createForge("rootvegetables");
+        public static final TagKey<Item> VEGETABLES = createForge("vegetables");
+        public static final TagKey<Item> ROOT_VEGETABLES_COMMON = createCommon("rootvegetables");
+        public static final TagKey<Item> VEGETABLES_COMMON = createCommon("vegetables");
 
         private static TagKey<Item> create(String id) {
             return TagKey.create(Registries.ITEM, identifier(id));
@@ -27,6 +32,10 @@ public final class TagManager {
 
         private static TagKey<Item> createForge(String id) {
             return TagKey.create(Registries.ITEM, new ResourceLocation("forge", id));
+        }
+
+        private static TagKey<Item> createCommon(String id) {
+            return TagKey.create(Registries.ITEM, new ResourceLocation("c", id));
         }
 
     }
