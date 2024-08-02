@@ -1622,6 +1622,40 @@ public class DrinkableItemsProvider implements DataProvider {
         addMeal(ModIntegration.phcLoc("caramelappleitem"));
         addMeal(ModIntegration.phcLoc("friedeggitem"));
         addMeal(ModIntegration.pcropsLoc("barrelcactusitem"));
+
+        // The Veggie Way
+        // Drinks
+        addDrink(ModIntegration.veggieLoc("energy_drink"));
+
+        // Fruit
+        addFruit(ModIntegration.veggieLoc("melon_chunk"));
+        addFruit(ModIntegration.veggieLoc("cactus_chunk"));
+
+        // Pie
+        addPie(ModIntegration.veggieLoc("apple_pie"));
+        addPie(ModIntegration.veggieLoc("melon_pie"));
+        addPie(ModIntegration.veggieLoc("sweet_berry_pie"));
+        addPie(ModIntegration.veggieLoc("cactus_pie"));
+
+        // Shake
+        addShake(ModIntegration.veggieLoc("superfood_shake"));
+        addShake(ModIntegration.veggieLoc("superfood_smoothie"));
+
+        // Soup
+        addSoup(ModIntegration.veggieLoc("cactus_soup"));
+        addSoup(ModIntegration.veggieLoc("pumpkin_soup"));
+        addSoup(ModIntegration.veggieLoc("melon_soup"));
+        addSoup(ModIntegration.veggieLoc("carrot_soup"));
+        addSoup(ModIntegration.veggieLoc("lentil_soup"));
+
+        // Veggies
+        addVeggie(ModIntegration.veggieLoc("corn"));
+        addVeggie(ModIntegration.veggieLoc("cooked_carrot"));
+        addVeggie(ModIntegration.veggieLoc("cooked_beetroot"));
+        addVeggie(ModIntegration.veggieLoc("chocolate_bar"));
+        addVeggie(ModIntegration.veggieLoc("pumpkin_chunk"));
+        addVeggie(ModIntegration.veggieLoc("soybean"));
+        addVeggie(ModIntegration.veggieLoc("lentil"));
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
