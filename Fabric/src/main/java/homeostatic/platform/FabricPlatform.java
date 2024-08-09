@@ -128,7 +128,7 @@ public class FabricPlatform implements IPlatform {
     @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
         if (isModLoaded(ModIntegration.SS_MODID) && SereneSeasonsFabricHelper.isSeasonDimension(level)) {
-            return SubSeason.getSubSeason(level, SereneSeasonsFabricHelper.getSeasonDuration(level));
+            return SereneSeasonsFabricHelper.getSubSeason(level);
         }
         else if (isModLoaded(ModIntegration.SEASONS_MODID) && FabricSeasonsHelper.isSeasonDimension(level)) {
             return SubSeason.getSubSeason(level, FabricSeasonsHelper.getSeasonDuration());
