@@ -120,7 +120,7 @@ dependencies {
         //runtimeOnly fg.deobf("slimeknights.tconstruct:TConstruct:${minecraft_version}-${tic_version}")
         //runtimeOnly fg.deobf("slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}")
         //runtimeOnly fg.deobf("curse.maven:create-328085:4625533")
-        //runtimeOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
+        runtimeOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
         //runtimeOnly fg.deobf("curse.maven:primalwinter-393321:4044096")
         //runtimeOnly fg.deobf("curse.maven:crafttweaker-239197:${crafttweaker_version}")
         //runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_version}")
