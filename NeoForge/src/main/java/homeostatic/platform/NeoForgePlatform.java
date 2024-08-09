@@ -3,7 +3,6 @@ package homeostatic.platform;
 import java.util.Objects;
 import java.util.Optional;
 
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.Holder;
@@ -28,6 +27,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import homeostatic.common.attachments.TemperatureData;
 import homeostatic.common.attachments.ThermometerData;
@@ -148,7 +148,7 @@ public class NeoForgePlatform implements IPlatform {
     @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
         if (isModLoaded(ModIntegration.SS_MODID) && SereneSeasonsForgeHelper.isSeasonDimension(level)) {
-            return SubSeason.getSubSeason(level, SereneSeasonsForgeHelper.getSeasonDuration(level));
+            return SereneSeasonsForgeHelper.getSubSeason(level);
         }
 
         return null;
