@@ -165,7 +165,7 @@ public class ForgePlatform implements IPlatform {
     @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
         if (isModLoaded(ModIntegration.SS_MODID) && SereneSeasonsHelper.isSeasonDimension(level)) {
-            return SubSeason.getSubSeason(level, SereneSeasonsHelper.getSeasonDuration(level));
+            return SereneSeasonsHelper.getSubSeason(level);
         }
 
         return null;
