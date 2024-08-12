@@ -38,11 +38,11 @@ neoForge {
 }
 
 dependencies {
-    implementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge', version: "${spectrelib_version}+${minecraft_version}"
-    jarJar group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge', version: "${spectrelib_version}+${minecraft_version}"
+    implementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge', version: "${spectrelib_version}"
+    jarJar group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge', version: "${spectrelib_version}"
 
-    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
-    implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    compileOnly "mezz.jei:jei-1.21-common-api:${jei_version}"
+    implementation "mezz.jei:jei-1.21-neoforge:${jei_version}"
 
     compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
     implementation "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
@@ -50,11 +50,11 @@ dependencies {
     //compileOnly "curse.maven:create-328085:${create_forge_version}"
     implementation "vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT"
     //implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
-    compileOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"
+    compileOnly "dev.gigaherz.sewingkit:SewingKit-1.21:${sewingkit_version}"
 
     if (System.getenv('DATA_GEN') != null) {
         //runtimeOnly "curse.maven:create-328085:${create_neoforge_version}"
-        runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"
+        runtimeOnly "dev.gigaherz.sewingkit:SewingKit-1.21:${sewingkit_version}"
     }
     else {
         //runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
