@@ -89,7 +89,7 @@ public class EnvironmentData {
          * Since we can literally jump vertically out of the water, check the block under the player to see if they are
          * "swimming" ... mc mechanics are so weird, lol.
          */
-        if (!this.isPartialSubmersion) {
+        if (!this.isPartialSubmersion && !sp.isPassenger()) {
             this.isPartialSubmersion = sp.getFeetBlockState().is(Blocks.WATER);
         }
 
