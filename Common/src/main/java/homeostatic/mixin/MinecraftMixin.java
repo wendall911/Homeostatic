@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import homeostatic.event.ClientPlayerEventHandler;
 
 @Mixin(Minecraft.class)
-public class FabricMinecraftMixin {
+public class MinecraftMixin {
 
     @Shadow @Nullable
     public LocalPlayer player;
@@ -28,8 +28,8 @@ public class FabricMinecraftMixin {
 
     @Inject(method = "startUseItem", at = @At(value = "HEAD"))
     private void homeostatic$rightClickAir(CallbackInfo ci) {
-        if (!this.gameMode.isDestroying()) {
-            if (!this.player.isHandsBusy()) {
+        if (this.gameMode != null && !this.gameMode.isDestroying()) {
+            if (this.player != null && !this.player.isHandsBusy()) {
                 for(InteractionHand interactionHand : InteractionHand.values()) {
                     ItemStack itemstack = this.player.getItemInHand(interactionHand);
                     boolean drinkWater = false;
