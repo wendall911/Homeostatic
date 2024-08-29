@@ -7,12 +7,16 @@
     "FabricBiomeAccessor",
     "FabricItemStackInject",
     "FabricServerLevelMixin",
-    "FabricServerPlayerMixin"
+    "FabricServerPlayerMixin",
+    "CakeBlockMixin",
+    "LivingEntityMixin",
+    "ServerLevelAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "FabricGuiMixin"
+    "FabricGuiMixin",
+    "MinecraftMixin"
   ]
 }
