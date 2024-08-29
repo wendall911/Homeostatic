@@ -150,6 +150,7 @@ processResources {
         'mod_url': mod_url,
         'minecraft_version': minecraft_version,
         'fabric_loader_min_version': fabric_loader_min_version,
+        'fabric_mc_version_range': fabric_mc_version_range,
         'neoforge_loader_version_range': neoforge_loader_version_range,
         'neoforge_mc_version_range': neoforge_mc_version_range
     ]
