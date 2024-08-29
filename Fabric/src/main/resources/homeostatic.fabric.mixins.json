@@ -7,10 +7,7 @@
     "FabricBiomeAccessor",
     "FabricItemStackInject",
     "FabricServerLevelMixin",
-    "FabricServerPlayerMixin",
-    "ServerLevelAccessor",
-    "CakeBlockMixin",
-    "LivingEntityMixin"
+    "FabricServerPlayerMixin"
   ],
   "client": [
     "FabricGuiMixin"
