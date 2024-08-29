@@ -14,8 +14,6 @@ import homeostatic.network.Wetness;
 
 public class WetnessData {
 
-    public static final WetnessData.WetnessDataProvider WETNESS_DATA_INSTANCE = new WetnessData.WetnessDataProvider();
-
     public static Optional<Wetness> getData(final Player player) {
         return Optional.of(player.getData(AttachmentsRegistry.WETNESS_DATA.get()));
     }
@@ -26,12 +24,12 @@ public class WetnessData {
 
         @Override
         public ListTag serializeNBT(HolderLookup.@NotNull Provider provider) {
-            return WETNESS_DATA_INSTANCE.write();
+            return write();
         }
 
         @Override
         public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull ListTag nbt) {
-            WETNESS_DATA_INSTANCE.read(nbt);
+            read(nbt);
         }
 
     }

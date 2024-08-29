@@ -14,8 +14,6 @@ import homeostatic.network.Water;
 
 public class WaterData {
 
-    public static final WaterData.WaterDataProvider WATER_DATA_INSTANCE = new WaterData.WaterDataProvider();
-
     public static Optional<Water> getData(final Player player) {
         return Optional.of(player.getData(AttachmentsRegistry.WATER_DATA.get()));
     }
@@ -26,12 +24,12 @@ public class WaterData {
 
         @Override
         public ListTag serializeNBT(HolderLookup.@NotNull Provider provider) {
-            return WATER_DATA_INSTANCE.write();
+            return write();
         }
 
         @Override
         public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull ListTag nbt) {
-            WATER_DATA_INSTANCE.read(nbt);
+            read(nbt);
         }
 
     }

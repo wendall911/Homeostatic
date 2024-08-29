@@ -14,8 +14,6 @@ import homeostatic.network.Thermometer;
 
 public class ThermometerData {
 
-    public static final ThermometerData.ThermometerDataProvider THERMOMETER_DATA_INSTANCE = new ThermometerData.ThermometerDataProvider();
-
     public static Optional<Thermometer> getData(final Player player) {
         return Optional.of(player.getData(AttachmentsRegistry.THERMOMETER_DATA.get()));
     }
@@ -26,12 +24,12 @@ public class ThermometerData {
 
         @Override
         public ListTag serializeNBT(HolderLookup.@NotNull Provider provider) {
-            return THERMOMETER_DATA_INSTANCE.write();
+            return write();
         }
 
         @Override
         public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull ListTag nbt) {
-            THERMOMETER_DATA_INSTANCE.read(nbt);
+            read(nbt);
         }
 
     }

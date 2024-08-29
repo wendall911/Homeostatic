@@ -14,8 +14,6 @@ import homeostatic.network.Temperature;
 
 public class TemperatureData {
 
-    public static final TemperatureDataProvider TEMPERATURE_DATA_INSTANCE = new TemperatureDataProvider();
-
     public static Optional<Temperature> getData(final Player player) {
         return Optional.of(player.getData(AttachmentsRegistry.TEMPERATURE_DATA.get()));
     }
@@ -26,12 +24,12 @@ public class TemperatureData {
 
         @Override
         public ListTag serializeNBT(HolderLookup.@NotNull Provider provider) {
-            return TEMPERATURE_DATA_INSTANCE.write();
+            return write();
         }
 
         @Override
         public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull ListTag nbt) {
-            TEMPERATURE_DATA_INSTANCE.read(nbt);
+            read(nbt);
         }
 
     }
