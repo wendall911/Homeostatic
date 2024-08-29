@@ -144,6 +144,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('primal-winter')
         mainFile.addOptional('more-food-xd')
         mainFile.addOptional('eternal-starlight')
+        mainFile.addOptional('terralith')
     }
 }
 
@@ -174,6 +175,7 @@ modrinth {
             optional.project 'fruitful-fun'
             optional.project 'more-food-xd'
             optional.project 'eternal-starlight'
+            optional.project 'terralith'
         }
     }
 }
