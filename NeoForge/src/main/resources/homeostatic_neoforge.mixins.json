@@ -6,7 +6,9 @@
   "mixins": [
     "PurifiedWaterMixin"
   ],
-  "client": [],
+  "client": [
+    "NeoForgeGuiMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   },

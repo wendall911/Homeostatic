@@ -9,10 +9,10 @@
     "FabricServerLevelMixin",
     "FabricServerPlayerMixin"
   ],
-  "client": [
-    "FabricGuiMixin"
-  ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "client": [
+    "FabricGuiMixin"
+  ]
 }

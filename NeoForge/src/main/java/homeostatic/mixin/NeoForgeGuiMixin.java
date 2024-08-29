@@ -18,14 +18,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import homeostatic.event.GameOverlayEventHandler;
 
 @Mixin(Gui.class)
-public abstract class FabricGuiMixin {
+public abstract class NeoForgeGuiMixin {
 
     @Shadow private int tickCount;
     @Shadow
     @Final
     private Minecraft minecraft;
 
-    @Inject(method = "renderPlayerHealth", at = @At("HEAD"))
+    @Inject(method = "renderHealthLevel", at = @At("HEAD"))
     private void homeostatic$renderPlayerHealth(GuiGraphics guiGraphics, CallbackInfo ci) {
         Player player = this.getCameraPlayer();
 

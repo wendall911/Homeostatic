@@ -36,7 +36,6 @@ import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.HomeostaticModule;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.HomeostaticRecipes;
-import homeostatic.event.GameOverlayEventHandler;
 import homeostatic.event.ServerEventListener;
 import homeostatic.network.DrinkWater;
 import homeostatic.network.NeoForgeNetworkManager;
@@ -59,7 +58,6 @@ public class HomeostaticNeoForge {
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             HomeostaticClientNeoForge.init(bus);
-            bus.addListener(GameOverlayEventHandler.INSTANCE::onRegisterOverlays);
         }
 
         HomeostaticModule.initRegistries(bus);
