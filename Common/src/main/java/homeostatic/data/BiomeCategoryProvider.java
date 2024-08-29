@@ -290,6 +290,24 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.esLoc("the_abyss"), BiomeCategory.Type.DEEP_COLD_OCEAN);
         add(ModIntegration.esLoc("torreya_forest"), BiomeCategory.Type.FOREST);
         add(ModIntegration.esLoc("warm_shore"), BiomeCategory.Type.BEACH);
+
+        // The Undergarden
+        add(ModIntegration.ugLoc("ancient_sea"), BiomeCategory.Type.WARM_OCEAN);
+        add(ModIntegration.ugLoc("barren_abyss"), BiomeCategory.Type.DRYLAND);
+        add(ModIntegration.ugLoc("blood_mushroom_bog"), BiomeCategory.Type.BOG);
+        add(ModIntegration.ugLoc("dead_sea"), BiomeCategory.Type.DEAD_SEA);
+        add(ModIntegration.ugLoc("dense_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.ugLoc("forgotten_field"), BiomeCategory.Type.PLAINS);
+        add(ModIntegration.ugLoc("frostfields"), BiomeCategory.Type.PLAINS);
+        add(ModIntegration.ugLoc("frosty_smogstem_forest"), BiomeCategory.Type.COLD_FOREST);
+        add(ModIntegration.ugLoc("gronglegrowth"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.ugLoc("icy_sea"), BiomeCategory.Type.COLD_OCEAN);
+        add(ModIntegration.ugLoc("indigo_mushroom_bog"), BiomeCategory.Type.BOG);
+        add(ModIntegration.ugLoc("ink_mushroom_bog"), BiomeCategory.Type.BOG);
+        add(ModIntegration.ugLoc("smog_spires"), BiomeCategory.Type.DRYLAND);
+        add(ModIntegration.ugLoc("smogstem_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.ugLoc("veil_mushroom_bog"), BiomeCategory.Type.BOG);
+        add(ModIntegration.ugLoc("wigglewood_forest"), BiomeCategory.Type.FOREST);
     }
     
     protected void add (ResourceKey<Biome> biomeResourceKey, BiomeCategory.Type type) {
