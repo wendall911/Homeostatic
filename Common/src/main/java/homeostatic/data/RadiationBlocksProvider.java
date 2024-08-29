@@ -61,6 +61,9 @@ public class RadiationBlocksProvider implements DataProvider {
         add(ModIntegration.tconLoc("seared_melter"), 2450);
         add(ModIntegration.tconLoc("seared_heater"), 2450);
         add(ModIntegration.tconLoc("scorched_alloyer"), 2450);
+
+        // Eternal Starlight
+        add(ModIntegration.esLoc("torreya_campfire"), 5550);
     }
 
     protected void add(ResourceLocation loc, double maxRadiation) {

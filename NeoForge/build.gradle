@@ -100,6 +100,7 @@ dependencies {
         //runtimeOnly "curse.maven:phc_trees-365460:${phc_trees_neoforge_version}"
         //runtimeOnly "curse.maven:phc_food_extended-402231:${phc_food_extended_neoforge_version}"
         //runtimeOnly "curse.maven:the_veggie_way-270684:${the_veggie_way_neoforge_version}"
+        //runtimeOnly "curse.maven:eternal_starlight-1080592:5673629"
     }
 }
 
@@ -182,6 +183,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('pams-harvestcraft-2-trees')
         mainFile.addOptional('pams-harvestcraft-2-food-extended')
         mainFile.addOptional('the-veggie-way')
+        mainFile.addOptional('eternal-starlight')
     }
 }
 
@@ -214,6 +216,7 @@ modrinth {
             optional.project 'tinkers-construct'
             optional.project 'fruitful-fun'
             optional.project 'more-food-xd'
+            optional.project 'eternal-starlight'
         }
     }
 }

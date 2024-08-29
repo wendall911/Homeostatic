@@ -12,6 +12,7 @@ public class ModIntegration {
     public static final String CC_MODID = "createcafe";
     public static final String CROPTOPIA_MODID = "croptopia";
     public static final String ECO_MODID = "ecologics";
+    public static final String ES_MODID = "eternal_starlight";
     public static final String FD_MODID = "farmersdelight";
     public static final String FT_MODID = "fruitfulfun";
     public static final String IE_MODID = "immersiveengineering";
@@ -132,6 +133,10 @@ public class ModIntegration {
 
     public static ResourceLocation veggieLoc(String name) {
         return ResourceLocation.fromNamespaceAndPath(VEGGIE_MODID, name);
+    }
+
+    public static ResourceLocation esLoc(String name) {
+        return ResourceLocation.fromNamespaceAndPath(ES_MODID, name);
     }
 
 }
