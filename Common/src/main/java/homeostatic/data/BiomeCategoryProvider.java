@@ -276,6 +276,20 @@ public class BiomeCategoryProvider implements DataProvider {
 
         // Ars Nouveau
         add(ModIntegration.arsLoc("archwood_forest"), BiomeCategory.Type.FOREST);
+
+        // Eternal Starlight
+        add(ModIntegration.esLoc("crystallized_desert"), BiomeCategory.Type.DESERT);
+        add(ModIntegration.esLoc("dark_swamp"), BiomeCategory.Type.SWAMP);
+        add(ModIntegration.esLoc("ether_river"), BiomeCategory.Type.RIVER);
+        add(ModIntegration.esLoc("scarlet_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.esLoc("shimmer_river"), BiomeCategory.Type.RIVER);
+        add(ModIntegration.esLoc("starlight_dense_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.esLoc("starlight_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.esLoc("starlight_permafrost_forest"), BiomeCategory.Type.COLD_FOREST);
+        add(ModIntegration.esLoc("starlit_sea"), BiomeCategory.Type.WARM_OCEAN);
+        add(ModIntegration.esLoc("the_abyss"), BiomeCategory.Type.DEEP_COLD_OCEAN);
+        add(ModIntegration.esLoc("torreya_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.esLoc("warm_shore"), BiomeCategory.Type.BEACH);
     }
     
     protected void add (ResourceKey<Biome> biomeResourceKey, BiomeCategory.Type type) {
