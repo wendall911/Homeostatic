@@ -72,7 +72,7 @@ dependencies {
         //runtimeOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_neoforge_version}"
         //runtimeOnly "curse.maven:twilightforest-227639:${twilight_forest_neoforge_version}"
         //runtimeOnly "curse.maven:botania-225643:???"
-        //runtimeOnly "curse.maven:curios-309927:4583413"
+        //runtimeOnly "curse.maven:curios-1037991:5657610"
         //runtimeOnly "curse.maven:croptopia-415438:4512807"
         //runtimeOnly "curse.maven:farmers_delight-398521:???"
         //runtimeOnly "curse.maven:xerca-341575:???"
@@ -82,6 +82,7 @@ dependencies {
         //runtimeOnly "curse.maven:ecologics-570463:???"
         //runtimeOnly "curse.maven:sprout-565856:???"
         //runtimeOnly "curse.maven:arsnouveau-401955:${ars_neoforge_version}"
+        //runtimeOnly "curse.maven:ars_elemental-561470:5652442"
         //runtimeOnly "curse.maven:create-328085:${create_neoforge_version}"
         //runtimeOnly "curse.maven:create_cafe-542235:???"
         //runtimeOnly "curse.maven:kiwi-303657:???"
@@ -167,6 +168,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('sophisticated-backpacks')
         mainFile.addOptional('ecologics')
         mainFile.addOptional('ars-nouveau')
+        mainFile.addOptional('ars-elemental')
         mainFile.addOptional('sprout')
         mainFile.addOptional('create-cafe')
         mainFile.addOptional('fruit-trees')
