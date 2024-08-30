@@ -267,12 +267,131 @@ public class BiomeCategoryProvider implements DataProvider {
 
         // Ars Nouveau
         add(ModIntegration.arsLoc("archwood_forest"), BiomeCategory.Type.FOREST);
+
+        // The Undergarden
+        add(ModIntegration.ugLoc("ancient_sea"), BiomeCategory.Type.WARM_OCEAN);
+        add(ModIntegration.ugLoc("barren_abyss"), BiomeCategory.Type.DRYLAND);
+        add(ModIntegration.ugLoc("blood_mushroom_bog"), BiomeCategory.Type.BOG);
+        add(ModIntegration.ugLoc("dead_sea"), BiomeCategory.Type.DEAD_SEA);
+        add(ModIntegration.ugLoc("dense_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.ugLoc("forgotten_field"), BiomeCategory.Type.PLAINS);
+        add(ModIntegration.ugLoc("frostfields"), BiomeCategory.Type.PLAINS);
+        add(ModIntegration.ugLoc("frosty_smogstem_forest"), BiomeCategory.Type.COLD_FOREST);
+        add(ModIntegration.ugLoc("gronglegrowth"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.ugLoc("icy_sea"), BiomeCategory.Type.COLD_OCEAN);
+        add(ModIntegration.ugLoc("indigo_mushroom_bog"), BiomeCategory.Type.BOG);
+        add(ModIntegration.ugLoc("ink_mushroom_bog"), BiomeCategory.Type.BOG);
+        add(ModIntegration.ugLoc("smog_spires"), BiomeCategory.Type.DRYLAND);
+        add(ModIntegration.ugLoc("smogstem_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.ugLoc("veil_mushroom_bog"), BiomeCategory.Type.BOG);
+        add(ModIntegration.ugLoc("wigglewood_forest"), BiomeCategory.Type.FOREST);
+
+        // Terralith
+        add(ModIntegration.terralithLoc("alpha_islands"), BiomeCategory.Type.BEACH);
+        add(ModIntegration.terralithLoc("alpha_islands_winter"), BiomeCategory.Type.BEACH);
+        add(ModIntegration.terralithLoc("alpine_grove"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("alpine_highlands"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("amethyst_canyon"), BiomeCategory.Type.JUNGLE);
+        add(ModIntegration.terralithLoc("amethyst_rainforest"), BiomeCategory.Type.RAINFOREST);
+        add(ModIntegration.terralithLoc("ancient_sands"), BiomeCategory.Type.DESERT);
+        add(ModIntegration.terralithLoc("arid_highlands"), BiomeCategory.Type.DRYLAND);
+        add(ModIntegration.terralithLoc("ashen_savanna"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("basalt_cliffs"), BiomeCategory.Type.DRYLAND);
+        add(ModIntegration.terralithLoc("birch_taiga"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("blooming_plateau"), BiomeCategory.Type.PLAINS);
+        add(ModIntegration.terralithLoc("blooming_valley"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("brushland"), BiomeCategory.Type.SAVANNA);
+        add(ModIntegration.terralithLoc("bryce_canyon"), BiomeCategory.Type.MESA);
+        add(ModIntegration.terralithLoc("caldera"), BiomeCategory.Type.VOLCANIC);
+        add(ModIntegration.terralithLoc("cave/andesite_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/crystal_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/deep_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/desert_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/diorite_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/frostfire_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/fungal_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/granite_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/ice_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/infested_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/mantle_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/thermal_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/tuff_caves"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cave/underground_jungle"), BiomeCategory.Type.UNDERGROUND);
+        add(ModIntegration.terralithLoc("cloud_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("cold_shrubland"), BiomeCategory.Type.SAVANNA);
+        add(ModIntegration.terralithLoc("desert_canyon"), BiomeCategory.Type.DESERT);
+        add(ModIntegration.terralithLoc("desert_oasis"), BiomeCategory.Type.DESERT);
+        add(ModIntegration.terralithLoc("desert_spires"), BiomeCategory.Type.MESA);
+        add(ModIntegration.terralithLoc("emerald_peaks"), BiomeCategory.Type.EXTREME_HILLS);
+        add(ModIntegration.terralithLoc("forested_highlands"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("fractured_savanna"), BiomeCategory.Type.SAVANNA);
+        add(ModIntegration.terralithLoc("frozen_cliffs"), BiomeCategory.Type.COLD_FOREST);
+        add(ModIntegration.terralithLoc("glacial_chasm"), BiomeCategory.Type.ICY);
+        add(ModIntegration.terralithLoc("granite_cliffs"), BiomeCategory.Type.COLD_FOREST);
+        add(ModIntegration.terralithLoc("gravel_beach"), BiomeCategory.Type.BEACH);
+        add(ModIntegration.terralithLoc("gravel_desert"), BiomeCategory.Type.DESERT);
+        add(ModIntegration.terralithLoc("haze_mountain"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("highlands"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("hot_shrubland"), BiomeCategory.Type.DRYLAND);
+        add(ModIntegration.terralithLoc("ice_marsh"), BiomeCategory.Type.BOG);
+        add(ModIntegration.terralithLoc("jungle_mountains"), BiomeCategory.Type.JUNGLE);
+        add(ModIntegration.terralithLoc("lavender_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("lavender_valley"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("lush_desert"), BiomeCategory.Type.LUSH_DESERT);
+        add(ModIntegration.terralithLoc("lush_valley"), BiomeCategory.Type.PLAINS);
+        add(ModIntegration.terralithLoc("mirage_isles"), BiomeCategory.Type.BEACH);
+        add(ModIntegration.terralithLoc("moonlight_grove"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("moonlight_valley"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("mountain_steppe"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("orchid_swamp"), BiomeCategory.Type.SWAMP);
+        add(ModIntegration.terralithLoc("painted_mountains"), BiomeCategory.Type.EXTREME_HILLS);
+        add(ModIntegration.terralithLoc("red_oasis"), BiomeCategory.Type.DESERT);
+        add(ModIntegration.terralithLoc("rocky_jungle"), BiomeCategory.Type.JUNGLE);
+        add(ModIntegration.terralithLoc("rocky_mountains"), BiomeCategory.Type.EXTREME_HILLS);
+        add(ModIntegration.terralithLoc("rocky_shrubland"), BiomeCategory.Type.LUSH_DESERT);
+        add(ModIntegration.terralithLoc("sakura_grove"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("sakura_valley"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("sandstone_valley"), BiomeCategory.Type.DESERT);
+        add(ModIntegration.terralithLoc("savanna_badlands"), BiomeCategory.Type.MESA);
+        add(ModIntegration.terralithLoc("savanna_slopes"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("scarlet_mountains"), BiomeCategory.Type.EXTREME_HILLS);
+        add(ModIntegration.terralithLoc("shield"), BiomeCategory.Type.EXTREME_HILLS);
+        add(ModIntegration.terralithLoc("shield_clearing"), BiomeCategory.Type.EXTREME_HILLS);
+        add(ModIntegration.terralithLoc("shrubland"), BiomeCategory.Type.LUSH_DESERT);
+        add(ModIntegration.terralithLoc("siberian_grove"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("siberian_taiga"), BiomeCategory.Type.TAIGA);
+        add(ModIntegration.terralithLoc("skylands_autumn"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("skylands_spring"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("skylands_summer"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("skylands_winter"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("skylands"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("snowy_badlands"), BiomeCategory.Type.COLD_DESERT);
+        add(ModIntegration.terralithLoc("snowy_cherry_grove"), BiomeCategory.Type.COLD_FOREST);
+        add(ModIntegration.terralithLoc("snowy_maple_forest"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("snowy_shield"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("steppe"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("stony_spires"), BiomeCategory.Type.EXTREME_HILLS);
+        add(ModIntegration.terralithLoc("temperate_highlands"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.terralithLoc("tropical_jungle"), BiomeCategory.Type.RAINFOREST);
+        add(ModIntegration.terralithLoc("valley_clearing"), BiomeCategory.Type.PLAINS);
+        add(ModIntegration.terralithLoc("volcanic_crater"), BiomeCategory.Type.VOLCANIC);
+        add(ModIntegration.terralithLoc("volcanic_peaks"), BiomeCategory.Type.EXTREME_HILLS);
+        add(ModIntegration.terralithLoc("warm_river"), BiomeCategory.Type.RIVER);
+        add(ModIntegration.terralithLoc("warped_mesa"), BiomeCategory.Type.MESA);
+        add(ModIntegration.terralithLoc("white_cliffs"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("white_mesa"), BiomeCategory.Type.MESA);
+        add(ModIntegration.terralithLoc("windswept_spires"), BiomeCategory.Type.DESERT);
+        add(ModIntegration.terralithLoc("wintry_forest"), BiomeCategory.Type.COLD_FOREST);
+        add(ModIntegration.terralithLoc("wintry_lowlands"), BiomeCategory.Type.PLAINS);
+        add(ModIntegration.terralithLoc("yellowstone"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("yosemite_cliffs"), BiomeCategory.Type.MOUNTAIN);
+        add(ModIntegration.terralithLoc("yosemite_lowlands"), BiomeCategory.Type.FOREST);
     }
-    
+
     protected void add (ResourceKey<Biome> biomeResourceKey, BiomeCategory.Type type) {
         BIOME_CATEGORY_MAP.put(biomeResourceKey.location(), new BiomeCategory(biomeResourceKey.location(), type.name()));
     }
-    
+
     protected void add(ResourceLocation loc, BiomeCategory.Type type) {
         BIOME_CATEGORY_MAP.put(loc, new BiomeCategory(loc, type.name()));
     }
