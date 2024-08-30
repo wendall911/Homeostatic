@@ -277,6 +277,12 @@ public class BiomeCategoryProvider implements DataProvider {
         // Ars Nouveau
         add(ModIntegration.arsLoc("archwood_forest"), BiomeCategory.Type.FOREST);
 
+        // Ars Elemental
+        add(ModIntegration.arseLoc("blazing_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.arseLoc("cascading_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.arseLoc("flourishing_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.arseLoc("flashing_forest"), BiomeCategory.Type.FOREST);
+
         // Eternal Starlight
         add(ModIntegration.esLoc("crystallized_desert"), BiomeCategory.Type.DESERT);
         add(ModIntegration.esLoc("dark_swamp"), BiomeCategory.Type.SWAMP);
