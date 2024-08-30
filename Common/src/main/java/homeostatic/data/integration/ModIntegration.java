@@ -31,7 +31,9 @@ public class ModIntegration {
     public static final String SK_MODID = "sewingkit";
     public static final String SS_MODID = "sereneseasons";
     public static final String TCON_MODID = "tconstruct";
+    public static final String TL_MODID = "terralith";
     public static final String TF_MODID = "twilightforest";
+    public static final String UG_MODID = "undergarden";
     public static final String VEGGIE_MODID = "veggie_way";
     public static final String XERCA_MODID = "xercamod";
 
@@ -137,6 +139,14 @@ public class ModIntegration {
 
     public static ResourceLocation veggieLoc(String name) {
         return new ResourceLocation(VEGGIE_MODID, name);
+    }
+
+    public static ResourceLocation terralithLoc(String name) {
+        return new ResourceLocation(TL_MODID, name);
+    }
+
+    public static ResourceLocation ugLoc(String name) {
+        return new ResourceLocation(UG_MODID, name);
     }
 
 }
