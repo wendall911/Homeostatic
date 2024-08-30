@@ -1,10 +1,10 @@
-// 1.20.1	2024-08-01T18:36:31.357070679	Homeostatic/Homeostatic - Custom Recipes
+// 1.20.1	2024-08-30T09:29:52.255458998	Homeostatic/Homeostatic - Custom Recipes
 4bbc97bde71b2408fdb6f3eddf7c493cd2f7f6fc data/homeostatic/recipes/thermometer.json
 9543881439fa2982f079cebe96310a12a234f2de data/homeostatic/recipes/campfire_purified_leather_flask.json
 9e7329ace34e3310363469aa8457a621fe546bd5 data/homeostatic/recipes/leather_flask.json
 91a69d88126e404924393814d4ce8be185ddaf09 data/homeostatic/recipes/dynamic/purified_leather_flask.json
-42cade2e063fbad9f73ab673c8258f32d176052b data/homeostatic/advancements/recipes/campfire_purified_leather_flask.json
 32aacb44e9cd3cd94ccce3e3d59415228a4fa788 data/homeostatic/advancements/recipes/smoking_purified_leather_flask.json
+42cade2e063fbad9f73ab673c8258f32d176052b data/homeostatic/advancements/recipes/campfire_purified_leather_flask.json
 0d6b7a1be04057c90c81e7f811a19bdec529d2a5 data/homeostatic/recipes/smoking_purified_leather_flask.json
 bb81e15f8e1fe47d7278b44dbc8ba6df7eab693f data/homeostatic/recipes/dynamic/remove_armor_enhancement.json
 b1e396d7210f6413190cf167885a87d2443940c0 data/homeostatic/advancements/recipes/misc/water_filter.json
