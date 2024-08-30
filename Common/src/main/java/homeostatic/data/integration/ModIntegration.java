@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 public class ModIntegration {
 
     public static final String ALEX_MODID = "alexsmobs";
+    public static final String ARSE_MODID = "ars_elemental";
     public static final String ARS_MODID = "ars_nouveau";
     public static final String BOP_MODID = "biomesoplenty";
     public static final String BYG_MODID = "byg";
@@ -34,6 +35,10 @@ public class ModIntegration {
 
     public static ResourceLocation alexLoc(String path) {
         return new ResourceLocation(ALEX_MODID, path);
+    }
+
+    public static ResourceLocation arseLoc(String path) {
+        return new ResourceLocation(ARSE_MODID, path);
     }
 
     public static ResourceLocation arsLoc(String path) {
