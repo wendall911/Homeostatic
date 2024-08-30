@@ -174,6 +174,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('the-twilight-forest')
         mainFile.addOptional('primal-winter')
         mainFile.addOptional('more-food-xd')
+        mainFile.addOptional('terralith')
     }
 }
 
@@ -206,6 +207,7 @@ modrinth {
             optional.project 'tinkers-construct'
             optional.project 'fruitful-fun'
             optional.project 'more-food-xd'
+            optional.project 'terralith'
         }
     }
 }

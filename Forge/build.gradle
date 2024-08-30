@@ -103,13 +103,14 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:configured-457570:4462839")
         //runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:${bop_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:terralith-513688:5512076")
         //runtimeOnly fg.deobf("curse.maven:primalwinter-393321:4575861")
         //runtimeOnly fg.deobf("curse.maven:byg-247560:${byg_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:corgilib-693313:${corgilib_forge_version}")
         //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:twilightforest-227639:${twilight_forest_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:botania-225643:???")
-        //runtimeOnly fg.deobf("curse.maven:curios-309927:4583413")
+        //runtimeOnly fg.deobf("curse.maven:curios-309927:5367944")
         //runtimeOnly fg.deobf("curse.maven:croptopia-415438:4512807")
         //runtimeOnly fg.deobf("curse.maven:farmers_delight-398521:5051242")
         //runtimeOnly fg.deobf("curse.maven:xerca-341575:???")
@@ -119,6 +120,7 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:ecologics-570463:???")
         //runtimeOnly fg.deobf("curse.maven:sprout-565856:???")
         //runtimeOnly fg.deobf("curse.maven:arsnouveau-401955:${ars_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:ars_elemental-561470:5609198")
         //runtimeOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:create_cafe-542235:???")
         //runtimeOnly fg.deobf("curse.maven:kiwi-303657:???")
@@ -137,9 +139,10 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:phc_trees-365460:${phc_trees_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:phc_food_extended-402231:${phc_food_extended_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:the_veggie_way-270684:${the_veggie_way_forge_version}")
-        runtimeOnly fg.deobf("curse.maven:kotlin-351264:5402061")
-        runtimeOnly fg.deobf("curse.maven:valkyrien_skies-258371:5212232")
-        runtimeOnly fg.deobf("curse.maven:eureka_ships-654384:5321630")
+        //runtimeOnly fg.deobf("curse.maven:kotlin-351264:5402061")
+        //runtimeOnly fg.deobf("curse.maven:valkyrien_skies-258371:5212232")
+        //runtimeOnly fg.deobf("curse.maven:eureka_ships-654384:5321630")
+        //runtimeOnly fg.deobf("curse.maven:undergarden-379849:5182632")
     }
 }
 
@@ -262,6 +265,8 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
         mainFile.addOptional('pams-harvestcraft-2-trees')
         mainFile.addOptional('pams-harvestcraft-2-food-extended')
         mainFile.addOptional('the-veggie-way')
+        mainFile.addOptional('the-undergarden')
+        mainFile.addOptional('terralith')
     }
 }
 
@@ -294,6 +299,8 @@ modrinth {
             optional.project 'tinkers-construct'
             optional.project 'fruitful-fun'
             optional.project 'more-food-xd'
+            optional.project 'the-undergarden'
+            optional.project 'terralith'
         }
     }
 }
