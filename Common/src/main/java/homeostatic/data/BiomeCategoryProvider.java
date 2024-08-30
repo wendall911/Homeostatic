@@ -268,6 +268,12 @@ public class BiomeCategoryProvider implements DataProvider {
         // Ars Nouveau
         add(ModIntegration.arsLoc("archwood_forest"), BiomeCategory.Type.FOREST);
 
+        // Ars Elemental
+        add(ModIntegration.arseLoc("blazing_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.arseLoc("cascading_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.arseLoc("flourishing_forest"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.arseLoc("flashing_forest"), BiomeCategory.Type.FOREST);
+
         // The Undergarden
         add(ModIntegration.ugLoc("ancient_sea"), BiomeCategory.Type.WARM_OCEAN);
         add(ModIntegration.ugLoc("barren_abyss"), BiomeCategory.Type.DRYLAND);
