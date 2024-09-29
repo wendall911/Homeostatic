@@ -252,7 +252,7 @@ publishMods {
     if (file(changelogFile).exists()) {
         changelog = file(changelogFile).text
     }
-    type = "${release_type}".contains("release") ? STABLE : ("${release_type}".contains("beta") ? BETA : ALPHA)
+    type = "${release_type}".startsWith("release") ? STABLE : ("${release_type}".startsWith("beta") ? BETA : ALPHA)
     modLoaders.addAll(['forge'])
 
     if (project.hasProperty('hscurseApiKey')) {
