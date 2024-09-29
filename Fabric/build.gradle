@@ -111,71 +111,70 @@ processResources {
 }
 
 def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
+def publishFile = project(":").projectDir.toString() + "/Fabric/build/libs/${archivesBaseName}-${version}.jar"
 
-task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
-    if (project.hasProperty('hscurseApiKey')) {
-        apiToken = project.hscurseApiKey
-        def mainFile = upload(project.hscurseId, file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
-        mainFile.changelog = file(changelogFile)
-        mainFile.addJavaVersion('Java 17')
-        mainFile.addModLoader('Fabric')
-        mainFile.releaseType = "${release_type}"
-        "${release_versions}".split(',').each {
-            mainFile.addGameVersion("${it}")
+publishMods {
+    file = file(publishFile)
+    changelog = file(changelogFile).text
+    type = "${release_type}".startsWith("release") ? STABLE : ("${release_type}".startsWith("beta") ? BETA : ALPHA)
+    modLoaders.add('fabric')
+
+    if (project.hasProperty('ahcurseApiKey')) {
+        curseforge {
+            accessToken = project.ahcurseApiKey
+            projectId = project.ahcurseId
+            javaVersions.add(JavaVersion.toVersion("${java_version}"))
+            clientRequired = true
+            serverRequired = true
+            minecraftVersions.addAll("${release_versions}".split(','))
+            embeds('spectrelib')
+			requires('fabric-api')
+			optional('jei')
+			optional('simpletextoverlay')
+			optional('serene-seasons')
+			optional('biomes-o-plenty')
+			optional('oh-the-biomes-youll-go')
+			optional('croptopia')
+			optional('farmers-delight-refabricated')
+			optional('xercamod')
+			optional('kitteh6660s-morecraft')
+			optional('sophisticated-backpacks')
+			optional('ecologics')
+			optional('sprout')
+			optional('create-cafe')
+			optional('fruit-trees')
+			optional('leave-my-bars-alone')
+			optional('create')
+			optional('patchouli')
+			optional('primal-winter')
+			optional('more-food-xd')
+			optional('eternal-starlight')
+			optional('terralith')
         }
-        mainFile.addRequirement('fabric-api')
-        mainFile.addOptional('jei')
-        mainFile.addOptional('simpletextoverlay')
-        mainFile.addOptional('serene-seasons')
-        mainFile.addOptional('biomes-o-plenty')
-        mainFile.addOptional('oh-the-biomes-youll-go')
-        mainFile.addOptional('croptopia')
-        mainFile.addOptional('farmers-delight-refabricated')
-        mainFile.addOptional('xercamod')
-        mainFile.addOptional('kitteh6660s-morecraft')
-        mainFile.addOptional('sophisticated-backpacks')
-        mainFile.addOptional('ecologics')
-        mainFile.addOptional('sprout')
-        mainFile.addOptional('create-cafe')
-        mainFile.addOptional('fruit-trees')
-        mainFile.addOptional('leave-my-bars-alone')
-        mainFile.addOptional('create')
-        mainFile.addOptional('patchouli')
-        mainFile.addOptional('primal-winter')
-        mainFile.addOptional('more-food-xd')
-        mainFile.addOptional('eternal-starlight')
-        mainFile.addOptional('terralith')
     }
-}
-
-modrinth {
-    if (project.hasProperty('hsModrinthId')) {
-        token = project.modrinthKey
-        projectId = project.hsModrinthId
-        version = getVersion()
-        versionType = "${release_type}"
-        if (file(changelogFile).exists()) {
-            changelog = file(changelogFile).text
+    if (project.hasProperty('ahModrinthId')) {
+        modrinth {
+            accessToken = project.modrinthKey
+            projectId = project.ahModrinthId
+            minecraftVersions.addAll("${release_versions}".split(','))
+            requires('fabric-api')
+            optional('create')
+            optional('ecologics')
+            optional('create-cafe')
+            optional('scuba-gear')
+            optional('farmers-delight-refabricated')
+            optional('xercamod')
+            optional('leave-my-bars-alone')
+            optional('sprout')
+            optional('patchouli')
+            optional('jei')
+            optional('biomesyougo')
+            optional('fruitful-fun')
+            optional('more-food-xd')
+            optional('eternal-starlight')
+            optional('terralith')
         }
-        uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
-        gameVersions = "${release_versions}".split(",") as List<String>
-        dependencies {
-            required.project 'fabric-api'
-            optional.project 'create'
-            optional.project 'ecologics'
-            optional.project 'create-cafe'
-            optional.project 'scuba-gear'
-            optional.project 'farmers-delight-refabricated'
-            optional.project 'xercamod'
-            optional.project 'leave-my-bars-alone'
-            optional.project 'sprout'
-            optional.project 'patchouli'
-            optional.project 'jei'
-            optional.project 'biomesyougo'
-            optional.project 'fruitful-fun'
-            optional.project 'more-food-xd'
-            optional.project 'eternal-starlight'
-            optional.project 'terralith'
-        }
+    }
+    if (project.hasProperty('ahGithubToken')) {
     }
 }

@@ -140,90 +140,86 @@ tasks.generateUpdates.mustRunAfter('jar', 'sourcesJar')
 tasks.build.dependsOn('changelog', 'generateUpdates')
 
 def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
+def publishFile = project(":").projectDir.toString() + "/NeoForge/build/libs/${archivesBaseName}-${version}.jar"
 
-task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+publishMods {
+    file = file(publishFile)
+    changelog = file(changelogFile).text
+    type = "${release_type}".startsWith("release") ? STABLE : ("${release_type}".startsWith("beta") ? BETA : ALPHA)
+    modLoaders.add('neoforge')
+
     if (project.hasProperty('hscurseApiKey')) {
-        apiToken = project.hscurseApiKey
-        def mainFile = upload(project.hscurseId, file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
-        if (file(changelogFile).exists()) {
-            mainFile.changelog = file(changelogFile)
+        curseforge {
+            accessToken = project.hscurseApiKey
+            projectId = project.hscurseId
+            javaVersions.add(JavaVersion.toVersion("${java_version}"))
+            clientRequired = true
+            serverRequired = true
+            minecraftVersions.addAll("${release_versions}".split(','))
+            embeds('spectrelib')
+            optional('configured')
+            optional('catalogue')
+            optional('jei')
+            optional('simpletextoverlay')
+            optional('serene-seasons')
+            optional('biomes-o-plenty')
+            optional('oh-the-biomes-youll-go')
+            optional('croptopia')
+            optional('farmers-delight')
+            optional('xercamod')
+            optional('kitteh6660s-morecraft')
+            optional('sophisticated-backpacks')
+            optional('ecologics')
+            optional('ars-nouveau')
+            optional('ars-elemental')
+            optional('sprout')
+            optional('create-cafe')
+            optional('fruit-trees')
+            optional('leave-my-bars-alone')
+            optional('create')
+            optional('patchouli')
+            optional('scuba-gear')
+            optional('kobolds')
+            optional('primal-winter')
+            optional('tinkers-construct')
+            optional('sewing-kit')
+            optional('more-food-xd')
+            optional('pams-harvestcraft-2-food-core')
+            optional('pams-harvestcraft-2-crops')
+            optional('pams-harvestcraft-2-trees')
+            optional('pams-harvestcraft-2-food-extended')
+            optional('the-veggie-way')
+            optional('eternal-starlight')
+            optional('the-undergarden')
+            optional('terralith')
         }
-        mainFile.addJavaVersion('Java 17')
-        mainFile.addModLoader('NeoForge')
-        mainFile.releaseType = "${release_type}"
-        "${release_versions}".split(',').each {
-            mainFile.addGameVersion("${it}")
-        }
-        mainFile.addOptional('configured')
-        mainFile.addOptional('catalogue')
-        mainFile.addOptional('jei')
-        mainFile.addOptional('simpletextoverlay')
-        mainFile.addOptional('serene-seasons')
-        mainFile.addOptional('biomes-o-plenty')
-        mainFile.addOptional('oh-the-biomes-youll-go')
-        mainFile.addOptional('croptopia')
-        mainFile.addOptional('farmers-delight')
-        mainFile.addOptional('xercamod')
-        mainFile.addOptional('kitteh6660s-morecraft')
-        mainFile.addOptional('sophisticated-backpacks')
-        mainFile.addOptional('ecologics')
-        mainFile.addOptional('ars-nouveau')
-        mainFile.addOptional('ars-elemental')
-        mainFile.addOptional('sprout')
-        mainFile.addOptional('create-cafe')
-        mainFile.addOptional('fruit-trees')
-        mainFile.addOptional('leave-my-bars-alone')
-        mainFile.addOptional('create')
-        mainFile.addOptional('patchouli')
-        mainFile.addOptional('scuba-gear')
-        mainFile.addOptional('kobolds')
-        mainFile.addOptional('primal-winter')
-        mainFile.addOptional('tinkers-construct')
-        mainFile.addOptional('sewing-kit')
-        mainFile.addOptional('more-food-xd')
-        mainFile.addOptional('pams-harvestcraft-2-food-core')
-        mainFile.addOptional('pams-harvestcraft-2-crops')
-        mainFile.addOptional('pams-harvestcraft-2-trees')
-        mainFile.addOptional('pams-harvestcraft-2-food-extended')
-        mainFile.addOptional('the-veggie-way')
-        mainFile.addOptional('eternal-starlight')
-        mainFile.addOptional('the-undergarden')
-        mainFile.addOptional('terralith')
     }
-}
-
-modrinth {
     if (project.hasProperty('hsModrinthId')) {
-        token = project.modrinthKey
-        projectId = project.hsModrinthId
-        version = getVersion()
-        versionType = "${release_type}"
-        if (file(changelogFile).exists()) {
-            changelog = file(changelogFile).text
+        modrinth {
+            accessToken = project.modrinthKey
+            projectId = project.hsModrinthId
+            minecraftVersions.addAll("${release_versions}".split(','))
+            optional('create')
+            optional('ecologics')
+            optional('create-cafe')
+            optional('scuba-gear')
+            optional('farmers-delight')
+            optional('xercamod')
+            optional('leave-my-bars-alone')
+            optional('sprout')
+            optional('patchouli')
+            optional('jei')
+            optional('biomesyougo')
+            optional('kobolds')
+            optional('primal-winter')
+            optional('tinkers-construct')
+            optional('fruitful-fun')
+            optional('more-food-xd')
+            optional('eternal-starlight')
+            optional('the-undergarden')
+            optional('terralith')
         }
-        uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
-        gameVersions = "${release_versions}".split(",") as List<String>
-        loaders = ['neoforge']
-        dependencies {
-            optional.project 'create'
-            optional.project 'ecologics'
-            optional.project 'create-cafe'
-            optional.project 'scuba-gear'
-            optional.project 'farmers-delight'
-            optional.project 'xercamod'
-            optional.project 'leave-my-bars-alone'
-            optional.project 'sprout'
-            optional.project 'patchouli'
-            optional.project 'jei'
-            optional.project 'biomesyougo'
-            optional.project 'kobolds'
-            optional.project 'primal-winter'
-            optional.project 'tinkers-construct'
-            optional.project 'fruitful-fun'
-            optional.project 'more-food-xd'
-            optional.project 'eternal-starlight'
-            optional.project 'the-undergarden'
-            optional.project 'terralith'
-        }
+    }
+    if (project.hasProperty('hsGithubToken')) {
     }
 }
