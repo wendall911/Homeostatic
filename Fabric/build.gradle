@@ -119,10 +119,10 @@ publishMods {
     type = "${release_type}".startsWith("release") ? STABLE : ("${release_type}".startsWith("beta") ? BETA : ALPHA)
     modLoaders.add('fabric')
 
-    if (project.hasProperty('ahcurseApiKey')) {
+    if (project.hasProperty('hscurseApiKey')) {
         curseforge {
-            accessToken = project.ahcurseApiKey
-            projectId = project.ahcurseId
+            accessToken = project.hscurseApiKey
+            projectId = project.hscurseId
             javaVersions.add(JavaVersion.toVersion("${java_version}"))
             clientRequired = true
             serverRequired = true
@@ -152,10 +152,10 @@ publishMods {
 			optional('terralith')
         }
     }
-    if (project.hasProperty('ahModrinthId')) {
+    if (project.hasProperty('hsModrinthId')) {
         modrinth {
             accessToken = project.modrinthKey
-            projectId = project.ahModrinthId
+            projectId = project.hsModrinthId
             minecraftVersions.addAll("${release_versions}".split(','))
             requires('fabric-api')
             optional('create')
@@ -175,6 +175,6 @@ publishMods {
             optional('terralith')
         }
     }
-    if (project.hasProperty('ahGithubToken')) {
+    if (project.hasProperty('hsGithubToken')) {
     }
 }
