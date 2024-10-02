@@ -6,7 +6,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
-//import homeostatic.data.integration.patchouli.HomeostaticBookProvider;
+import homeostatic.data.integration.patchouli.HomeostaticBookProvider;
 import homeostatic.data.recipe.NeoForgeRecipeProvider;
 import homeostatic.Homeostatic;
 
@@ -22,7 +22,7 @@ public final class NeoForgeDataGenerators {
         gen.addProvider(event.includeServer(), new NeoForgeRecipeProvider(gen.getPackOutput(), event.getLookupProvider()));
         //gen.addProvider(event.includeServer(), new MixingRecipeProvider(gen.getPackOutput()));
         //gen.addProvider(event.includeServer(), new FillingRecipeProvider(gen.getPackOutput()));
-        //gen.addProvider(event.includeServer(), new HomeostaticBookProvider(gen.getPackOutput()));
+        gen.addProvider(event.includeServer(), new HomeostaticBookProvider(gen.getPackOutput(), event.getLookupProvider()));
         RegistryDataGenerator.addProviders(event.includeServer(), gen, gen.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
     }
 

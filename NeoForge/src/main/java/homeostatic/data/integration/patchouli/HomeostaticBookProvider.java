@@ -1,9 +1,11 @@
 package homeostatic.data.integration.patchouli;
-/*
+
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -25,13 +27,13 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
     private int categorySortNum = -1;
     private int entrySortNum = -1;
 
-    public HomeostaticBookProvider(@NotNull final PackOutput packOutput) {
-        super(packOutput, Homeostatic.MODID, "en_us");
+    public HomeostaticBookProvider(@NotNull final PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, Homeostatic.MODID, "en_us", lookupProvider);
     }
 
     @Override
-    protected void addBooks(Consumer<BookBuilder> consumer) {
-        BookBuilder bookBuilder = createBookBuilder("book", translationLoc, prefix("intro"))
+    protected void addBooks(Consumer<BookBuilder> consumer, HolderLookup.Provider provider) {
+        BookBuilder bookBuilder = createBookBuilder("book", translationLoc, prefix("intro"), provider)
             .setSubtitle(prefix("subtitle"))
             .setCustomBookItem(new ItemStack(HomeostaticItems.BOOK))
             .setCreativeTab(Homeostatic.MODID + ".items")
@@ -49,11 +51,17 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
     }
 
     private BookBuilder addGameplay(BookBuilder bookBuilder) {
+        ItemStack sword = new ItemStack(Items.IRON_SWORD);
+        ItemStack flask = new ItemStack(HomeostaticItems.LEATHER_FLASK);
+
+        flask.setDamageValue(0);
+        sword.setDamageValue(0);
+
         CategoryBuilder category = bookBuilder.addCategory(
             "gameplay",
             prefix("gameplay.name"),
             prefix("gameplay.desc"),
-            new ItemStack(Items.IRON_SWORD)
+            sword
         )
         .setSortnum(categorySortNum++);
 
@@ -123,7 +131,7 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
         EntryBuilder gameplayHydrationEntry = category.addEntry(
             "gameplay/hydration",
             prefix("gameplay.hydration.name"),
-            new ItemStack(HomeostaticItems.LEATHER_FLASK)
+            flask
         ).setSortnum(entrySortNum++);
 
         gameplayHydrationEntry.addImagePage(bookImage("water_bar"))
@@ -182,9 +190,7 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
     }
 
     private ResourceLocation bookImage(String id) {
-        return new ResourceLocation(Homeostatic.MODID, "textures/gui/book/" + id + ".png");
+        return ResourceLocation.fromNamespaceAndPath(Homeostatic.MODID, "textures/gui/book/" + id + ".png");
     }
 
 }
-
- */

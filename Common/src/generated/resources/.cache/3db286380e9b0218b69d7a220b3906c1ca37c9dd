@@ -1,7 +1,7 @@
-// 1.21.1	2024-08-30T10:02:29.735021668	Homeostatic/Homoestatic - Item Models
+// 1.21.1	2024-10-02T10:11:44.201328543	Homeostatic/Homoestatic - Item Models
 09de1c08b69c3c1309825990c42ef98d58a4d78c assets/homeostatic/blockstates/purified_water_fluid.json
-8ac3c5d38e390c03e470ffc6a8c4bbf4ed8402a7 assets/homeostatic/models/item/book.json
 70905d30419583b4a5d5062274ba86750e4b139b assets/homeostatic/models/item/thermometer.json
+8ac3c5d38e390c03e470ffc6a8c4bbf4ed8402a7 assets/homeostatic/models/item/book.json
 d47c64dd200def16af9520876b77dec15bf982a3 assets/homeostatic/models/item/leather_flask.json
 1212d49e505408eebee340b8bbdf538c509d9cfd assets/homeostatic/models/block/purified_water_fluid.json
 89c7619f7c711eafbb7cab37d1fc6ca00286a299 assets/homeostatic/models/item/purified_water_bucket.json

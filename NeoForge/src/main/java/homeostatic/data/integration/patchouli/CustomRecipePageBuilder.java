@@ -1,5 +1,5 @@
 package homeostatic.data.integration.patchouli;
-/*
+
 import net.minecraft.resources.ResourceLocation;
 
 import xyz.brassgoggledcoders.patchouliprovider.EntryBuilder;
@@ -14,5 +14,3 @@ public class CustomRecipePageBuilder extends RecipePageBuilder<CustomRecipePageB
     }
 
 }
-
- */
