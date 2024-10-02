@@ -25,8 +25,8 @@ public abstract class NeoForgeGuiMixin {
     @Final
     private Minecraft minecraft;
 
-    @Inject(method = "renderHealthLevel", at = @At("HEAD"))
-    private void homeostatic$renderPlayerHealth(GuiGraphics guiGraphics, CallbackInfo ci) {
+    @Inject(method = "renderAirLevel", at = @At("TAIL"))
+    private void homeostatic$renderAirLevel(GuiGraphics guiGraphics, CallbackInfo ci) {
         Player player = this.getCameraPlayer();
 
         if (player != null) {
@@ -41,7 +41,7 @@ public abstract class NeoForgeGuiMixin {
 
         if (!this.minecraft.gameMode.canHurtPlayer()) return x * 10;
 
-        int rightHeight = Math.max(1, x) * 10;
+        int rightHeight = Math.max(1, x + 1) * 10;
         int y = player.getMaxAirSupply();
         int z = Math.min(player.getAirSupply(), y);
 

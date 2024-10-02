@@ -41,7 +41,7 @@ public abstract class FabricGuiMixin {
 
         if (!this.minecraft.gameMode.canHurtPlayer()) return x * 10;
 
-        int rightHeight = Math.max(1, x) * 10;
+        int rightHeight = Math.max(1, x + 1) * 10;
         int y = player.getMaxAirSupply();
         int z = Math.min(player.getAirSupply(), y);
 
