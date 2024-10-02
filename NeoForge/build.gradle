@@ -103,6 +103,9 @@ dependencies {
         //runtimeOnly "curse.maven:the_veggie_way-270684:${the_veggie_way_neoforge_version}"
         //runtimeOnly "curse.maven:eternal_starlight-1080592:5673629"
         //runtimeOnly "curse.maven:undergarden-379849:5651032"
+        //runtimeOnly "curse.maven:colorful_hearts-854213:${colorful_hearts_neoforge_version}"
+        //runtimeOnly "curse.maven:puzzles_lib-495476:${puzzles_lib_neoforge_version}"
+        //runtimeOnly "curse.maven:lmba-281715:${lmba_neoforge_version}"
     }
 }
 
