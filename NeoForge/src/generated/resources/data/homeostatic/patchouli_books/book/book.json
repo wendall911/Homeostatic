@@ -1,0 +1,13 @@
+{
+  "creative_tab": "homeostatic.items",
+  "custom_book_item": "homeostatic:book",
+  "dont_generate_book": true,
+  "i18n": true,
+  "landing_text": "info.homeostatic.book.intro",
+  "model": "homeostatic:book",
+  "name": "info.homeostatic.book",
+  "show_progress": false,
+  "subtitle": "info.homeostatic.book.subtitle",
+  "use_blocky_font": false,
+  "use_resource_pack": true
+}

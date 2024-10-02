@@ -1,0 +1,12 @@
+{
+  "category": "homeostatic:education",
+  "icon": "minecraft:soul_campfire",
+  "name": "info.homeostatic.book.education.environment.name",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "info.homeostatic.book.education.environment.intro"
+    }
+  ],
+  "sortnum": 2
+}

@@ -1,0 +1,102 @@
+{
+  "category": "homeostatic:gameplay",
+  "icon": "minecraft:light_gray_wool",
+  "name": "info.homeostatic.book.gameplay.body_temp.name",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "homeostatic:textures/gui/book/normal_body.png"
+      ],
+      "text": "info.homeostatic.book.gameplay.body_temp.intro",
+      "title": "info.homeostatic.book.gameplay.body_temp.title"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.homeostatic.book.gameplay.body_temp.details"
+    },
+    {
+      "type": "patchouli:image",
+      "anchor": "wetness",
+      "images": [
+        "homeostatic:textures/gui/book/wetness_hud.png"
+      ],
+      "text": "info.homeostatic.book.gameplay.body_temp.wetness.intro",
+      "title": "info.homeostatic.book.gameplay.body_temp.wetness.title"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.homeostatic.book.gameplay.body_temp.wetness.details"
+    },
+    {
+      "type": "patchouli:image",
+      "anchor": "scalding",
+      "images": [
+        "homeostatic:textures/gui/book/scalding_hud.png"
+      ],
+      "text": "info.homeostatic.book.gameplay.body_temp.scalding.intro",
+      "title": "info.homeostatic.book.gameplay.body_temp.scalding.title"
+    },
+    {
+      "type": "patchouli:image",
+      "anchor": "hyperthermia",
+      "images": [
+        "homeostatic:textures/gui/book/hyperthermia_hud.png"
+      ],
+      "text": "info.homeostatic.book.gameplay.body_temp.hyperthermia.intro",
+      "title": "info.homeostatic.book.gameplay.body_temp.hyperthermia.title"
+    },
+    {
+      "type": "patchouli:image",
+      "anchor": "hypothermia",
+      "images": [
+        "homeostatic:textures/gui/book/hypothermia_hud.png"
+      ],
+      "text": "info.homeostatic.book.gameplay.body_temp.hypothermia.intro",
+      "title": "info.homeostatic.book.gameplay.body_temp.hypothermia.title"
+    },
+    {
+      "type": "homeostatic:custom_crafting",
+      "anchor": "insulation",
+      "recipe": "homeostatic:insulation",
+      "text": "info.homeostatic.book.gameplay.body_temp.insulation.text",
+      "title": "info.homeostatic.book.gameplay.body_temp.insulation.title"
+    },
+    {
+      "type": "homeostatic:custom_crafting",
+      "anchor": "remove_insulation",
+      "recipe": "homeostatic:remove_insulation",
+      "text": "info.homeostatic.book.gameplay.body_temp.remove_insulation.text",
+      "title": "info.homeostatic.book.gameplay.body_temp.remove_insulation.title"
+    },
+    {
+      "type": "homeostatic:custom_crafting",
+      "anchor": "radiation_protection",
+      "recipe": "homeostatic:radiation_protection",
+      "text": "info.homeostatic.book.gameplay.body_temp.radiation_protection.text",
+      "title": "info.homeostatic.book.gameplay.body_temp.radiation_protection.title"
+    },
+    {
+      "type": "homeostatic:custom_crafting",
+      "anchor": "remove_radiation_protection",
+      "recipe": "homeostatic:remove_radiation_protection",
+      "text": "info.homeostatic.book.gameplay.body_temp.remove_radiation_protection.text",
+      "title": "info.homeostatic.book.gameplay.body_temp.remove_radiation_protection.title"
+    },
+    {
+      "type": "homeostatic:custom_crafting",
+      "anchor": "waterproofing",
+      "recipe": "homeostatic:waterproof",
+      "text": "info.homeostatic.book.gameplay.body_temp.waterproof.text",
+      "title": "info.homeostatic.book.gameplay.body_temp.waterproof.title"
+    },
+    {
+      "type": "homeostatic:custom_crafting",
+      "anchor": "remove_waterproofing",
+      "recipe": "homeostatic:remove_waterproof",
+      "text": "info.homeostatic.book.gameplay.body_temp.remove_waterproof.text",
+      "title": "info.homeostatic.book.gameplay.body_temp.remove_waterproof.title"
+    }
+  ],
+  "sortnum": 0
+}
