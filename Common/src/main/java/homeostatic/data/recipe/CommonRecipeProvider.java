@@ -52,6 +52,9 @@ public class CommonRecipeProvider extends RecipeProvider {
         RecipeProviderBase.leatherFlask().save(recipeOutput);
         RecipeProviderBase.waterFilter().save(recipeOutput);
         RecipeProviderBase.thermometer().save(recipeOutput);
+        RecipeProviderBase.cleanWaterBottleSmelting().save(recipeOutput, loc("furnace_purified_water_bottle"));
+        RecipeProviderBase.cleanWaterBottleCampfire().save(recipeOutput, loc("campfire_purified_water_bottle"));
+        RecipeProviderBase.cleanWaterBottleSmoking().save(recipeOutput, loc("smoking_purified_water_bottle"));
     }
 
 }

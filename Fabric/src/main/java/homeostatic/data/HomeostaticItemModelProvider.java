@@ -30,6 +30,7 @@ public class HomeostaticItemModelProvider extends FabricModelProvider {
         itemModelGenerator.generateFlatItem(HomeostaticItems.WATER_FILTER, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(HomeostaticItems.BOOK, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(HomeostaticItems.THERMOMETER, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(HomeostaticItems.PURIFIED_WATER_BOTTLE, ModelTemplates.FLAT_ITEM);
     }
 
     @Override

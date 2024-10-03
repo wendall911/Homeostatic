@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.Homeostatic;
+import net.minecraft.world.item.Items;
 
 public final class HomeostaticItems {
 
@@ -34,6 +35,10 @@ public final class HomeostaticItems {
     public static final Item THERMOMETER = make(
         "thermometer",
         new Item(new Item.Properties())
+    );
+    public static final Item PURIFIED_WATER_BOTTLE = make(
+        "purified_water_bottle",
+        new PurifiedWaterBottle(new Item.Properties().craftRemainder(Items.GLASS_BOTTLE))
     );
 
     public static void init(BiConsumer<Item, ResourceLocation> consumer) {

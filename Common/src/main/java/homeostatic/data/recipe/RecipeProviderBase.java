@@ -13,7 +13,6 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Recipe;
-
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,13 +20,17 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 
@@ -39,6 +42,7 @@ import static homeostatic.Homeostatic.loc;
 public abstract class RecipeProviderBase {
 
     private final PackOutput packOutput;
+    private static final ItemStack waterBottle = PotionContents.createItemStack(Items.POTION, Potions.WATER);
 
     protected RecipeProviderBase(@NotNull final PackOutput packOutput) {
         this.packOutput = packOutput;
@@ -135,6 +139,36 @@ public abstract class RecipeProviderBase {
             0.15F,
             200
         ).unlockedBy("has_leather_flask", has(HomeostaticItems.LEATHER_FLASK));
+    }
+
+    public static RecipeBuilder cleanWaterBottleSmelting() {
+        return SimpleCookingRecipeBuilder.smelting(
+            Ingredient.of(waterBottle),
+            RecipeCategory.MISC,
+            HomeostaticItems.PURIFIED_WATER_BOTTLE,
+            0.05F,
+            100
+        ).unlockedBy("has_glass_bottle", has(Items.GLASS_BOTTLE));
+    }
+
+    public static RecipeBuilder cleanWaterBottleCampfire() {
+        return SimpleCookingRecipeBuilder.campfireCooking(
+            Ingredient.of(waterBottle),
+            RecipeCategory.MISC,
+            HomeostaticItems.PURIFIED_WATER_BOTTLE,
+            0.05F,
+            100
+        ).unlockedBy("has_glass_bottle", has(Items.GLASS_BOTTLE));
+    }
+
+    public static RecipeBuilder cleanWaterBottleSmoking() {
+        return SimpleCookingRecipeBuilder.smoking(
+            Ingredient.of(waterBottle),
+            RecipeCategory.MISC,
+            HomeostaticItems.PURIFIED_WATER_BOTTLE,
+            0.05F,
+            100
+        ).unlockedBy("has_glass_bottle", has(Items.GLASS_BOTTLE));
     }
 
 }
