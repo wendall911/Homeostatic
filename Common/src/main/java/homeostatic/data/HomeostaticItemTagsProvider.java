@@ -2,6 +2,7 @@ package homeostatic.data;
 
 import java.util.concurrent.CompletableFuture;
 
+import homeostatic.common.item.HomeostaticItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -59,6 +60,8 @@ public class HomeostaticItemTagsProvider extends ItemTagsProvider {
             .addOptional(ModIntegration.skLoc("wool_shirt"))
             .addOptional(ModIntegration.skLoc("wool_pants"))
             .addOptional(ModIntegration.skLoc("wool_shoes"));
+
+        this.tag(ItemTags.BOOKSHELF_BOOKS).add(HomeostaticItems.BOOK);
     }
 
 }
