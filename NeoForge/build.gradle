@@ -191,7 +191,6 @@ publishMods {
             optional('pams-harvestcraft-2-crops')
             optional('pams-harvestcraft-2-trees')
             optional('pams-harvestcraft-2-food-extended')
-            optional('the-veggie-way')
             optional('eternal-starlight')
             optional('the-undergarden')
             optional('terralith')
