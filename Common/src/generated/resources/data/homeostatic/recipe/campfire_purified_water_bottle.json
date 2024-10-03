@@ -1,6 +1,6 @@
 {
-  "type": "minecraft:campfire_cooking",
-  "category": "food",
+  "type": "homeostatic:campfire_purified_water_bottle",
+  "category": "misc",
   "cookingtime": 100,
   "experience": 0.05,
   "ingredient": {

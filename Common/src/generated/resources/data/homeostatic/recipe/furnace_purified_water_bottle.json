@@ -1,7 +1,7 @@
 {
-  "type": "minecraft:smelting",
+  "type": "homeostatic:smelting_purified_water_bottle",
   "category": "misc",
-  "cookingtime": 100,
+  "cookingtime": 75,
   "experience": 0.05,
   "ingredient": {
     "item": "minecraft:potion"
