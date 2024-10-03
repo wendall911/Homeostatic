@@ -38,7 +38,7 @@ public final class HomeostaticItems {
     );
     public static final Item PURIFIED_WATER_BOTTLE = make(
         "purified_water_bottle",
-        new PurifiedWaterBottle(new Item.Properties().craftRemainder(Items.GLASS_BOTTLE))
+        new PurifiedWaterBottle(new Item.Properties().craftRemainder(Items.GLASS_BOTTLE).stacksTo(16))
     );
 
     public static void init(BiConsumer<Item, ResourceLocation> consumer) {
