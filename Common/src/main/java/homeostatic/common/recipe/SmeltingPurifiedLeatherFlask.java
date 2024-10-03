@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 
-public class SmeltingPurifiedLeatherFlask extends SmeltingRecipe implements ICookingRecipe {
+public class SmeltingPurifiedLeatherFlask extends SmeltingRecipe implements IWaterContainerCookingRecipe {
 
     public SmeltingPurifiedLeatherFlask(String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
         super(group, category, ingredient, result, experience, cookingTime);

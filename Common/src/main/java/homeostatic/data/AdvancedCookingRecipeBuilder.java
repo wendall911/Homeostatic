@@ -4,6 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import homeostatic.common.recipe.CampfirePurifiedWaterBottle;
+import homeostatic.common.recipe.SmeltingPurifiedWaterBottle;
+import homeostatic.common.recipe.SmokingPurifiedWaterBottle;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,16 +56,28 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
       return new AdvancedCookingRecipeBuilder(pBookCategory, pCookingBookCategory, pResult, pIngredient, pExperience, pCookingTime, pFactory);
    }
 
-   public static AdvancedCookingRecipeBuilder campfireCooking(Ingredient pIngredient, RecipeCategory recipeCategory, ItemLike pResult, float pExperience, int pCookingTime) {
+   public static AdvancedCookingRecipeBuilder campfireLeatherFlaskCooking(Ingredient pIngredient, RecipeCategory recipeCategory, ItemLike pResult, float pExperience, int pCookingTime) {
       return cooking(recipeCategory, CookingBookCategory.MISC, pResult, pIngredient, pExperience, pCookingTime, CampfirePurifiedLeatherFlask::new);
    }
 
-   public static AdvancedCookingRecipeBuilder smelting(Ingredient pIngredient, RecipeCategory recipeCategory, ItemLike pResult, float pExperience, int pCookingTime) {
+   public static AdvancedCookingRecipeBuilder leatherFlaskSmelting(Ingredient pIngredient, RecipeCategory recipeCategory, ItemLike pResult, float pExperience, int pCookingTime) {
       return cooking(recipeCategory, CookingBookCategory.MISC, pResult, pIngredient, pExperience, pCookingTime, SmeltingPurifiedLeatherFlask::new);
    }
 
-   public static AdvancedCookingRecipeBuilder smoking(Ingredient pIngredient, RecipeCategory recipeCategory, ItemLike pResult, float pExperience, int pCookingTime) {
+   public static AdvancedCookingRecipeBuilder leatherFlaskSmoking(Ingredient pIngredient, RecipeCategory recipeCategory, ItemLike pResult, float pExperience, int pCookingTime) {
       return cooking(recipeCategory, CookingBookCategory.MISC, pResult, pIngredient, pExperience, pCookingTime, SmokingPurifiedLeatherFlask::new);
+   }
+
+   public static AdvancedCookingRecipeBuilder campfireWaterBottleCooking(Ingredient pIngredient, RecipeCategory recipeCategory, ItemLike pResult, float pExperience, int pCookingTime) {
+      return cooking(recipeCategory, CookingBookCategory.MISC, pResult, pIngredient, pExperience, pCookingTime, CampfirePurifiedWaterBottle::new);
+   }
+
+   public static AdvancedCookingRecipeBuilder waterBottleSmelting(Ingredient pIngredient, RecipeCategory recipeCategory, ItemLike pResult, float pExperience, int pCookingTime) {
+      return cooking(recipeCategory, CookingBookCategory.MISC, pResult, pIngredient, pExperience, pCookingTime, SmeltingPurifiedWaterBottle::new);
+   }
+
+   public static AdvancedCookingRecipeBuilder waterBottleSmoking(Ingredient pIngredient, RecipeCategory recipeCategory, ItemLike pResult, float pExperience, int pCookingTime) {
+      return cooking(recipeCategory, CookingBookCategory.MISC, pResult, pIngredient, pExperience, pCookingTime, SmokingPurifiedWaterBottle::new);
    }
 
    @Override

@@ -42,7 +42,7 @@ import static homeostatic.Homeostatic.loc;
 public abstract class RecipeProviderBase {
 
     private final PackOutput packOutput;
-    private static final ItemStack waterBottle = PotionContents.createItemStack(Items.POTION, Potions.WATER);
+    public static final ItemStack waterBottle = PotionContents.createItemStack(Items.POTION, Potions.WATER);
 
     protected RecipeProviderBase(@NotNull final PackOutput packOutput) {
         this.packOutput = packOutput;
@@ -112,17 +112,17 @@ public abstract class RecipeProviderBase {
     }
 
     public static RecipeBuilder cleanWaterFlaskSmelting() {
-        return AdvancedCookingRecipeBuilder.smelting(
+        return AdvancedCookingRecipeBuilder.leatherFlaskSmelting(
             Ingredient.of(HomeostaticItems.LEATHER_FLASK),
             RecipeCategory.MISC,
             HomeostaticItems.LEATHER_FLASK,
             0.15F,
-            200
+            150
         ).unlockedBy("has_leather_flask", has(HomeostaticItems.LEATHER_FLASK));
     }
 
     public static RecipeBuilder cleanWaterFlaskCampfire() {
-        return AdvancedCookingRecipeBuilder.campfireCooking(
+        return AdvancedCookingRecipeBuilder.campfireLeatherFlaskCooking(
             Ingredient.of(HomeostaticItems.LEATHER_FLASK),
             RecipeCategory.MISC,
             HomeostaticItems.LEATHER_FLASK,
@@ -132,27 +132,27 @@ public abstract class RecipeProviderBase {
     }
 
     public static RecipeBuilder cleanWaterFlaskSmoking() {
-        return AdvancedCookingRecipeBuilder.smoking(
+        return AdvancedCookingRecipeBuilder.leatherFlaskSmoking(
             Ingredient.of(HomeostaticItems.LEATHER_FLASK),
             RecipeCategory.MISC,
             HomeostaticItems.LEATHER_FLASK,
             0.15F,
-            200
+            100
         ).unlockedBy("has_leather_flask", has(HomeostaticItems.LEATHER_FLASK));
     }
 
     public static RecipeBuilder cleanWaterBottleSmelting() {
-        return SimpleCookingRecipeBuilder.smelting(
+        return AdvancedCookingRecipeBuilder.waterBottleSmelting(
             Ingredient.of(waterBottle),
             RecipeCategory.MISC,
             HomeostaticItems.PURIFIED_WATER_BOTTLE,
             0.05F,
-            100
+            75
         ).unlockedBy("has_glass_bottle", has(Items.GLASS_BOTTLE));
     }
 
     public static RecipeBuilder cleanWaterBottleCampfire() {
-        return SimpleCookingRecipeBuilder.campfireCooking(
+        return AdvancedCookingRecipeBuilder.campfireWaterBottleCooking(
             Ingredient.of(waterBottle),
             RecipeCategory.MISC,
             HomeostaticItems.PURIFIED_WATER_BOTTLE,
@@ -162,12 +162,12 @@ public abstract class RecipeProviderBase {
     }
 
     public static RecipeBuilder cleanWaterBottleSmoking() {
-        return SimpleCookingRecipeBuilder.smoking(
+        return AdvancedCookingRecipeBuilder.waterBottleSmoking(
             Ingredient.of(waterBottle),
             RecipeCategory.MISC,
             HomeostaticItems.PURIFIED_WATER_BOTTLE,
             0.05F,
-            100
+            50
         ).unlockedBy("has_glass_bottle", has(Items.GLASS_BOTTLE));
     }
 
