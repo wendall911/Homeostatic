@@ -1,5 +1,6 @@
-// 1.21.1	2024-10-02T17:35:45.806958289	Homeostatic/Tags for minecraft:item
+// 1.21.1	2024-10-03T07:28:52.052847433	Homeostatic/Tags for minecraft:item
 1b94bea5746759a465c690884ea66a9506a55990 data/homeostatic/tags/item/radiation_protected_armor.json
+dba9dd18dda7d4243587264d7c87009c354089b8 data/minecraft/tags/item/bookshelf_books.json
 f8accb4fa1c1d78e57a174840f6c4bef2f1b4b20 data/homeostatic/tags/item/insulated_armor.json
 652c4f442d4a0099b0f1ff1599d48f46c931197d data/homeostatic/tags/item/sewingkit_wearable.json
 fe636b6454502909f3eac04a941dd15080c8b0d8 data/homeostatic/tags/item/waterproof.json
