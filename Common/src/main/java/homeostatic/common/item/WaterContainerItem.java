@@ -6,10 +6,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -92,6 +94,10 @@ public class WaterContainerItem extends Item implements IItemStackFluid {
 
     @Override
     public @NotNull ItemStack finishUsingItem(ItemStack stack, @NotNull Level level, @NotNull LivingEntity entity) {
+        if (entity instanceof ServerPlayer sp) {
+            CriteriaTriggers.CONSUME_ITEM.trigger(sp, stack);
+        }
+
         return Services.PLATFORM.drainFluid(stack, getCapacity() / getUses());
     }
 

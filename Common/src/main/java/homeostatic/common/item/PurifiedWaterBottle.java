@@ -53,8 +53,8 @@ public class PurifiedWaterBottle extends Item {
     public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity entity) {
         Player player = entity instanceof Player ? (Player) entity : null;
 
-        if (player instanceof ServerPlayer) {
-            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
+        if (player instanceof ServerPlayer sp) {
+            CriteriaTriggers.CONSUME_ITEM.trigger(sp, stack);
         }
 
         stack.setCount(stack.getCount() - 1);
