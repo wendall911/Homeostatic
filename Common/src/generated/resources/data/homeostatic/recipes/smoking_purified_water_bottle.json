@@ -1,0 +1,11 @@
+{
+  "type": "homeostatic:smoking_purified_water_bottle",
+  "cookingtime": 50,
+  "experience": 0.05,
+  "ingredient": {
+    "item": "minecraft:potion"
+  },
+  "result": {
+    "item": "homeostatic:purified_water_bottle"
+  }
+}
