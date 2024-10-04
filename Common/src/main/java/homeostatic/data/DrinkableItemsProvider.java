@@ -17,6 +17,8 @@ import homeostatic.common.item.DrinkableItem;
 import homeostatic.common.item.DrinkableItemManager;
 import homeostatic.data.integration.ModIntegration;
 
+import static homeostatic.Homeostatic.loc;
+
 public class DrinkableItemsProvider implements DataProvider {
 
     private final Map<ResourceLocation, DrinkableItem> DRINKABLE_ITEMS = new HashMap<>();
@@ -27,6 +29,9 @@ public class DrinkableItemsProvider implements DataProvider {
     }
 
     protected void addDrinkableItems() {
+        // Homeostatic
+        add(loc("purified_water_bottle"), 3, 0.7F,  0, 0, 0.0F);
+
         // Minecraft
         add(ModIntegration.mcLoc("honey_bottle"), 4, 1.0F,  0, 0, 0.0F);
         add(ModIntegration.mcLoc("milk_bucket"), 9, 2.1F,  0, 0, 0.0F);

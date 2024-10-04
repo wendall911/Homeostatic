@@ -37,18 +37,24 @@ import homeostatic.util.WaterHelper;
 public class WaterContainerItem extends Item implements IItemStackFluid {
 
     protected final int capacity;
+    protected final int uses;
 
-    public WaterContainerItem(Properties properties, int capacity) {
+    public WaterContainerItem(Properties properties, int capacity, int uses) {
         super(properties.durability(capacity));
         this.capacity = capacity;
+        this.uses = uses;
     }
 
     public int getCapacity() {
         return capacity;
     }
 
+    public int getUses() {
+        return uses;
+    }
+
     public int getSingleUse() {
-        return capacity / 20;
+        return capacity / uses;
     }
 
     @Override
@@ -87,7 +93,7 @@ public class WaterContainerItem extends Item implements IItemStackFluid {
 
     @Override
     public @NotNull ItemStack finishUsingItem(ItemStack stack, @NotNull Level level, @NotNull LivingEntity entity) {
-        return Services.PLATFORM.drainFluid(stack, getCapacity() / 20L);
+        return Services.PLATFORM.drainFluid(stack, getCapacity() / getUses());
     }
 
     @Override

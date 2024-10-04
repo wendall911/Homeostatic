@@ -29,9 +29,12 @@ import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 
@@ -43,6 +46,7 @@ import static homeostatic.Homeostatic.loc;
 public abstract class RecipeProviderBase implements DataProvider {
 
     private final PackOutput packOutput;
+    public static final ItemStack waterBottle = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
 
     protected RecipeProviderBase(@NotNull final PackOutput packOutput) {
         this.packOutput = packOutput;
@@ -145,16 +149,16 @@ public abstract class RecipeProviderBase implements DataProvider {
     }
 
     public static AdvancedCookingRecipeBuilder cleanWaterFlaskSmelting() {
-        return AdvancedCookingRecipeBuilder.smelting(
+        return AdvancedCookingRecipeBuilder.leatherFlaskSmelting(
             Ingredient.of(HomeostaticItems.LEATHER_FLASK),
             Ingredient.of(HomeostaticItems.LEATHER_FLASK),
             0.15F,
-            200
+            150
         ).unlockedBy("has_leather_flask", has(HomeostaticItems.LEATHER_FLASK));
     }
 
     public static AdvancedCookingRecipeBuilder cleanWaterFlaskCampfire() {
-        return AdvancedCookingRecipeBuilder.campfireCooking(
+        return AdvancedCookingRecipeBuilder.campfireLeatherFlaskCooking(
             Ingredient.of(HomeostaticItems.LEATHER_FLASK),
             Ingredient.of(HomeostaticItems.LEATHER_FLASK),
             0.15F,
@@ -163,12 +167,39 @@ public abstract class RecipeProviderBase implements DataProvider {
     }
 
     public static AdvancedCookingRecipeBuilder cleanWaterFlaskSmoking() {
-        return AdvancedCookingRecipeBuilder.smoking(
+        return AdvancedCookingRecipeBuilder.leatherFlaskSmoking(
             Ingredient.of(HomeostaticItems.LEATHER_FLASK),
             Ingredient.of(HomeostaticItems.LEATHER_FLASK),
             0.15F,
-            200
+            100
         ).unlockedBy("has_leather_flask", has(HomeostaticItems.LEATHER_FLASK));
+    }
+
+    public static AdvancedCookingRecipeBuilder cleanWaterBottleSmelting() {
+        return AdvancedCookingRecipeBuilder.waterBottleSmelting(
+            Ingredient.of(waterBottle),
+            Ingredient.of(HomeostaticItems.PURIFIED_WATER_BOTTLE),
+            0.05F,
+            75
+        ).unlockedBy("has_glass_bottle", has(Items.GLASS_BOTTLE));
+    }
+
+    public static AdvancedCookingRecipeBuilder cleanWaterBottleCampfire() {
+        return AdvancedCookingRecipeBuilder.campfireWaterBottleCooking(
+            Ingredient.of(waterBottle),
+            Ingredient.of(HomeostaticItems.PURIFIED_WATER_BOTTLE),
+            0.05F,
+            100
+        ).unlockedBy("has_glass_bottle", has(Items.GLASS_BOTTLE));
+    }
+
+    public static AdvancedCookingRecipeBuilder cleanWaterBottleSmoking() {
+        return AdvancedCookingRecipeBuilder.waterBottleSmoking(
+            Ingredient.of(waterBottle),
+            Ingredient.of(HomeostaticItems.PURIFIED_WATER_BOTTLE),
+            0.05F,
+            50
+        ).unlockedBy("has_glass_bottle", has(Items.GLASS_BOTTLE));
     }
 
 }

@@ -9,7 +9,7 @@ import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.WaterContainerItem;
 import homeostatic.platform.Services;
 
-public interface ICookingRecipe {
+public interface IWaterContainerCookingRecipe {
 
     default ItemStack assemble(Container container, ItemStack result) {
         ItemStack filledFlask = result.copy();

@@ -19,7 +19,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 
 import homeostatic.common.recipe.HomeostaticRecipes;
 
@@ -45,20 +44,28 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
       return new AdvancedCookingRecipeBuilder(pResult, pIngredient, pExperience, pCookingTime, pSerializer);
    }
 
-   public static AdvancedCookingRecipeBuilder campfireCooking(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
+   public static AdvancedCookingRecipeBuilder campfireLeatherFlaskCooking(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
       return cooking(pIngredient, pResult, pExperience, pCookingTime, HomeostaticRecipes.CAMPFIRE_PURIFIED_LEATHER_FLASK_SERIALIZER);
    }
 
-   public static AdvancedCookingRecipeBuilder blasting(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
-      return cooking(pIngredient, pResult, pExperience, pCookingTime, SimpleCookingSerializer.BLASTING_RECIPE);
-   }
-
-   public static AdvancedCookingRecipeBuilder smelting(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
+   public static AdvancedCookingRecipeBuilder leatherFlaskSmelting(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
       return cooking(pIngredient, pResult, pExperience, pCookingTime, HomeostaticRecipes.SMELTING_PURIFIED_LEATHER_FLASK_SERIALIZER);
    }
 
-   public static AdvancedCookingRecipeBuilder smoking(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
+   public static AdvancedCookingRecipeBuilder leatherFlaskSmoking(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
       return cooking(pIngredient, pResult, pExperience, pCookingTime, HomeostaticRecipes.SMOKING_PURIFIED_LEATHER_FLASK_SERIALIZER);
+   }
+
+   public static AdvancedCookingRecipeBuilder campfireWaterBottleCooking(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
+      return cooking(pIngredient, pResult, pExperience, pCookingTime, HomeostaticRecipes.CAMPFIRE_PURIFIED_WATER_BOTTLE_SERIALIZER);
+   }
+
+   public static AdvancedCookingRecipeBuilder waterBottleSmelting(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
+      return cooking(pIngredient, pResult, pExperience, pCookingTime, HomeostaticRecipes.SMELTING_PURIFIED_WATER_BOTTLE_SERIALIZER);
+   }
+
+   public static AdvancedCookingRecipeBuilder waterBottleSmoking(Ingredient pIngredient, Ingredient pResult, float pExperience, int pCookingTime) {
+      return cooking(pIngredient, pResult, pExperience, pCookingTime, HomeostaticRecipes.SMOKING_PURIFIED_WATER_BOTTLE_SERIALIZER);
    }
 
    public AdvancedCookingRecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {

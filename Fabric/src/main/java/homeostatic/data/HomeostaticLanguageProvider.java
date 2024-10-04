@@ -35,6 +35,7 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
         addItem(translationBuilder, "purified_water_bucket", "Purified Water Bucket");
         addItem(translationBuilder, "water_filter", "Water Filter");
         addItem(translationBuilder, "thermometer", "Thermometer");
+        addItem(translationBuilder, "purified_water_bottle", "Purified Water Bottle");
         addFluid(translationBuilder, "purified_water_type", "Purified Water");
         addBlock(translationBuilder, "purified_water_fluid", "Purified Water");
         addBookEntry(translationBuilder, "intro", "Temperature and hydration dynamics that don't defy logic...$(br)" +

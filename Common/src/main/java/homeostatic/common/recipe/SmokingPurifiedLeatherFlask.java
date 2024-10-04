@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmokingRecipe;
 import net.minecraft.world.level.Level;
 
-public class SmokingPurifiedLeatherFlask extends SmokingRecipe implements ICookingRecipe {
+public class SmokingPurifiedLeatherFlask extends SmokingRecipe implements IWaterContainerCookingRecipe {
 
     public SmokingPurifiedLeatherFlask(ResourceLocation id, String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
         super(id, group, category, ingredient, result, experience, cookingTime);

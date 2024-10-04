@@ -27,6 +27,9 @@ public class CommonRecipeProvider extends RecipeProviderBase {
         cleanWaterFlaskSmelting().save(consumer, loc("furnace_purified_leather_flask"));
         cleanWaterFlaskCampfire().save(consumer, loc("campfire_purified_leather_flask"));
         cleanWaterFlaskSmoking().save(consumer, loc("smoking_purified_leather_flask"));
+        cleanWaterBottleSmelting().save(consumer, loc("furnace_purified_water_bottle"));
+        cleanWaterBottleCampfire().save(consumer, loc("campfire_purified_water_bottle"));
+        cleanWaterBottleSmoking().save(consumer, loc("smoking_purified_water_bottle"));
         leatherFlask().save(consumer);
         waterFilter().save(consumer);
         thermometer().save(consumer);

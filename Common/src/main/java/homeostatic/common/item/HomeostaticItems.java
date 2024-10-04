@@ -7,6 +7,7 @@ import java.util.function.BiConsumer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.Homeostatic;
@@ -34,6 +35,10 @@ public final class HomeostaticItems {
     public static final Item THERMOMETER = make(
         "thermometer",
         new Item(new Item.Properties())
+    );
+    public static final Item PURIFIED_WATER_BOTTLE = make(
+        "purified_water_bottle",
+        new PurifiedWaterBottle(new Item.Properties().craftRemainder(Items.GLASS_BOTTLE))
     );
 
     public static void init(BiConsumer<Item, ResourceLocation> consumer) {
