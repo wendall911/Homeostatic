@@ -1,4 +1,4 @@
-// 1.21.1	2024-10-02T10:05:07.087220854	Patchouli Book Provider
+// 1.21.1	2024-10-04T08:42:20.843652714	Patchouli Book Provider
 9133366ae71b49245fe1f0a62e89c6c4dd5c77b3 assets/homeostatic/patchouli_books/book/en_us/categories/education.json
 2e3b16509ea1a5e4bb7534d942dc2493ab2ed7af assets/homeostatic/patchouli_books/book/en_us/categories/gameplay.json
 e4fa82419913a2329f39d7092fdb2556371a275c assets/homeostatic/patchouli_books/book/en_us/entries/education/body_temp.json
@@ -6,5 +6,5 @@ affb8a390d26fe6c35441c1f50bfa5d3c5d9c684 assets/homeostatic/patchouli_books/book
 b3c068d4dc0aaa75b7458fe2b3cd06d4a130f954 assets/homeostatic/patchouli_books/book/en_us/entries/education/hydration.json
 e9c8afd37265a321723c22a85f0588058bdd860b assets/homeostatic/patchouli_books/book/en_us/entries/gameplay/body_temp.json
 590050324248e43b17e9b7ae77d0e5ca4c9d84c1 assets/homeostatic/patchouli_books/book/en_us/entries/gameplay/environment.json
-760e59b97c63409784d14ff42b9a7672b4926445 assets/homeostatic/patchouli_books/book/en_us/entries/gameplay/hydration.json
+861a6bc7fc5e36ae8630846842307a2dec22ad38 assets/homeostatic/patchouli_books/book/en_us/entries/gameplay/hydration.json
 07636133c801cf2ab1bc78fccf457034d68fd245 data/homeostatic/patchouli_books/book/book.json

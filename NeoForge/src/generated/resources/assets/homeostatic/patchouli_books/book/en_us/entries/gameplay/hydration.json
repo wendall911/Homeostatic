@@ -17,6 +17,18 @@
     },
     {
       "type": "patchouli:crafting",
+      "recipe": "minecraft:glass_bottle",
+      "text": "info.homeostatic.book.gameplay.hydration.water_bottle.text",
+      "title": "info.homeostatic.book.gameplay.hydration.water_bottle.title"
+    },
+    {
+      "type": "patchouli:campfire",
+      "recipe": "homeostatic:campfire_purified_water_bottle",
+      "text": "info.homeostatic.book.gameplay.hydration.water_bottle.campfire.text",
+      "title": "info.homeostatic.book.gameplay.hydration.water_bottle.campfire.title"
+    },
+    {
+      "type": "patchouli:crafting",
       "recipe": "homeostatic:leather_flask",
       "text": "info.homeostatic.book.gameplay.hydration.leather_flask.text",
       "title": "info.homeostatic.book.gameplay.hydration.leather_flask.title"

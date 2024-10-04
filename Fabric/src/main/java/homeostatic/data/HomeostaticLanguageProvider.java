@@ -133,6 +133,16 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
                 "$(li)Obtain a flask. Recipe and details on following pages." +
                 "$(li)Eat foods or drinkable items with water content. A small preview will flash over the water bar " +
                 "if holding any hydration item.");
+        addBookEntry(translationBuilder, "gameplay.hydration.water_bottle.title", "Water Bottle");
+        addBookEntry(translationBuilder, "gameplay.hydration.water_bottle.text", "Using a Water Bottle can be helpful in the " +
+                "early game. To fill, simply interact with any water source block and it will be \"filled\". " +
+                "However, this is dirty water. See following page to purify.");
+        addBookEntry(translationBuilder, "gameplay.hydration.water_bottle.campfire.title", "Water Bottle Purification");
+        addBookEntry(translationBuilder, "gameplay.hydration.water_bottle.campfire.text", "To purify the dirty water in a " +
+                "water bottle, there are several methods: " +
+                "$(li)Smelt in a Furnace" +
+                "$(li)Cook over a Campfire (shown above)" +
+                "$(li)Smoke in a Smoker");
         addBookEntry(translationBuilder, "gameplay.hydration.leather_flask.title", "Leather Flask");
         addBookEntry(translationBuilder, "gameplay.hydration.leather_flask.text", "Leather flask is critical in environments " +
                 "where water is limited. To fill, simply interact with any water source block and it will be \"filled\". " +
