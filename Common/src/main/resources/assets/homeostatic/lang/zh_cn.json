@@ -59,7 +59,7 @@
   "info.homeostatic.book.gameplay.hydration.title": "口渴值 HUD",
   "info.homeostatic.book.gameplay.hydration.water_bottle.campfire.text": "以下几种方法可以净化水瓶中的脏水：$(li)在熔炉中加热$(li)在篝火上烤（如上所示）$(li)在烟熏炉中加热",
   "info.homeostatic.book.gameplay.hydration.water_bottle.campfire.title": "水瓶净化",
-  "info.homeostatic.book.gameplay.hydration.water_bottle.text": "在游戏的早期使用水瓶是很有帮助的. 只需要用它右击任何水源方块就可以完成 \"填充\"。然而这样获得的是脏水。请参阅下页方法净化。",
+  "info.homeostatic.book.gameplay.hydration.water_bottle.text": "在游戏的早期使用水瓶是很有帮助的。 只需要用它右击任何水源方块就可以完成“填充”。然而这样获得的是脏水。请参阅下页方法净化。",
   "info.homeostatic.book.gameplay.hydration.water_bottle.title": "水瓶",
   "info.homeostatic.book.gameplay.hydration.water_filter.text": "也可以合成滤水纸来过滤皮革水袋中的脏水。",
   "info.homeostatic.book.gameplay.hydration.water_filter.title": "滤水纸",
