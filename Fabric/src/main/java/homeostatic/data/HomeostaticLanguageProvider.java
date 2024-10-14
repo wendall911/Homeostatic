@@ -82,8 +82,8 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
                 "$(li2)$(l:homeostatic:gameplay/body_temp#waterproofing)Waterproofing$()" +
                 "$(li)$(l:homeostatic:gameplay/body_temp#wetness)Wetness$()" +
                 "$(li2)How wet a player is determines how quickly they can cool down or heat up." +
-                "$(li)$(l:homeostatic:gameplay/body_temp#scalding)Scalding$() / $(l:homeostatic:gameplay/body_temp#hyperthermia)Hyperthermia$()" +
-                "$(li)$(l:homeostatic:gameplay/body_temp#hypothermia)Freezing / Hypothermia$()");
+                "$(li)$(l:homeostatic:gameplay/body_temp#scalding)Scalding$() / Hypothermia$()" +
+                "$(li)$(l:homeostatic:gameplay/body_temp#hypothermia)Freezing / $(l:homeostatic:gameplay/body_temp#hyperthermia)Hyperthermia$()");
         addBookEntry(translationBuilder, "gameplay.body_temp.wetness.title", "Wetness");
         addBookEntry(translationBuilder, "gameplay.body_temp.wetness.intro", "When wet, droplets will appear as an overlay on the edges " +
                 "of the screen as shown in the above image.");
