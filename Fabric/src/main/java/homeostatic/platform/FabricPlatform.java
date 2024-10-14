@@ -193,4 +193,9 @@ public class FabricPlatform implements IPlatform {
         );
     }
 
+    @Override
+    public boolean isVampire(Player player) {
+        return false;
+    }
+
 }

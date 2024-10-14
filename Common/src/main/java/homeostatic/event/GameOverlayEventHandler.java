@@ -5,12 +5,15 @@ import net.minecraft.client.gui.GuiGraphics;
 
 import homeostatic.config.ConfigHandler;
 import homeostatic.overlay.OverlayManager;
+import homeostatic.util.ClientGameModeHelper;
 
 public class GameOverlayEventHandler {
 
     public static void onHudRender(GuiGraphics guiGraphics, float tickDelta, int rightHeight) {
         OverlayManager overlayManager = OverlayManager.INSTANCE;
         Minecraft mc = Minecraft.getInstance();
+
+        if (!ClientGameModeHelper.shouldLoad()) return;
 
         if (ConfigHandler.loaded && !mc.options.hideGui) {
             if (ConfigHandler.Common.debugEnabled()) {

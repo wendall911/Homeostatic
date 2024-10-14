@@ -74,4 +74,6 @@ public interface IPlatform {
 
     <T> void registerDataComponent(ResourceLocation name, DataComponentType<T> component);
 
+    boolean isVampire(Player player);
+
 }

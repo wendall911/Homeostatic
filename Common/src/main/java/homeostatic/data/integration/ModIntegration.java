@@ -37,6 +37,7 @@ public class ModIntegration {
     public static final String UG_MODID = "undergarden";
     public static final String VEGGIE_MODID = "veggie_way";
     public static final String XERCA_MODID = "xercamod";
+    public static final String VAMPIRISM_MODID = "vampirism";
 
     public static ResourceLocation alexLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath(ALEX_MODID, path);

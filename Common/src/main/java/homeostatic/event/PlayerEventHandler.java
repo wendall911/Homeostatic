@@ -11,7 +11,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
 
@@ -23,6 +22,7 @@ import homeostatic.common.water.WaterInfo;
 import homeostatic.config.ConfigHandler;
 import homeostatic.network.Temperature;
 import homeostatic.platform.Services;
+import homeostatic.util.GameModeHelper;
 import homeostatic.util.WaterHelper;
 import homeostatic.util.WetnessHelper;
 
@@ -31,7 +31,7 @@ public class PlayerEventHandler {
     public static void onEntityJoinLevel(ServerPlayer sp) {
         ServerLevel world = sp.serverLevel();
 
-        if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
+        if (!GameModeHelper.shouldLoad(sp)) return;
 
         WaterHelper.updateWaterInfo(sp, 0.0F);
         WetnessHelper.updateWetnessInfo(sp, 0.0F, true);
@@ -49,7 +49,7 @@ public class PlayerEventHandler {
     }
 
     public static void onPlayerTickEvent(ServerPlayer sp) {
-        if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
+        if (!GameModeHelper.shouldLoad(sp)) return;
 
         ServerLevel world = sp.serverLevel();
         ProfilerFiller profilerfiller = world.getProfiler();
@@ -82,7 +82,7 @@ public class PlayerEventHandler {
     public static void onPlayerRespawn(ServerPlayer sp) {
         ServerLevel world = sp.serverLevel();
 
-        if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
+        if (!GameModeHelper.shouldLoad(sp)) return;
 
         Services.PLATFORM.getWaterCapabilty(sp).ifPresent(data -> {
             WaterInfo waterInfo = new WaterInfo(
@@ -114,6 +114,8 @@ public class PlayerEventHandler {
         if (ConfigHandler.Common.showTemperatureValues() && ConfigHandler.Common.requireThermometer() && slot == EquipmentSlot.HEAD) {
             if (entity instanceof Player player && !player.level().isClientSide) {
                 ServerPlayer sp = (ServerPlayer) player;
+
+                if (!GameModeHelper.shouldLoad(sp)) return;
 
                 Services.PLATFORM.getThermometerCapability(sp).ifPresent(data -> {
                     boolean equippedHasThermometer = hasThermometer(equippedItem);

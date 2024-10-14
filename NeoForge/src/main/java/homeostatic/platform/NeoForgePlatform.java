@@ -50,6 +50,7 @@ import homeostatic.registries.HomeostaticNeoForgeRegistries;
 import homeostatic.util.CreateHelper;
 import homeostatic.util.ItemStackFluidHelper;
 import homeostatic.util.SereneSeasonsForgeHelper;
+import homeostatic.util.VampirismHelperNeoForge;
 
 public class NeoForgePlatform implements IPlatform {
 
@@ -195,6 +196,11 @@ public class NeoForgePlatform implements IPlatform {
             name.getPath(),
             () -> component
         );
+    }
+
+    @Override
+    public boolean isVampire(Player player) {
+        return VampirismHelperNeoForge.isVampire(player);
     }
 
 }

@@ -51,6 +51,7 @@ dependencies {
     implementation "vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT"
     implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
     compileOnly "dev.gigaherz.sewingkit:SewingKit-1.21:${sewingkit_version}"
+    compileOnly "curse.maven:vampirism-233029:${vampirism_neoforge_version}"
 
     if (System.getenv('DATA_GEN') != null) {
         //runtimeOnly "curse.maven:create-328085:${create_neoforge_version}"
@@ -106,6 +107,7 @@ dependencies {
         //runtimeOnly "curse.maven:colorful_hearts-854213:${colorful_hearts_neoforge_version}"
         //runtimeOnly "curse.maven:puzzles_lib-495476:${puzzles_lib_neoforge_version}"
         //runtimeOnly "curse.maven:lmba-281715:${lmba_neoforge_version}"
+        //runtimeOnly "curse.maven:vampirism-233029:${vampirism_neoforge_version}"
     }
 }
 

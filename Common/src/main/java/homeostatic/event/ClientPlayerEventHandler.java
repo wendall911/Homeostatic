@@ -13,13 +13,15 @@ import net.minecraft.world.phys.HitResult;
 
 import homeostatic.common.water.WaterInfo;
 import homeostatic.platform.Services;
+import homeostatic.util.ClientGameModeHelper;
 
 public class ClientPlayerEventHandler {
 
     public static void drinkWater(Player player, LevelAccessor level, InteractionHand hand) {
         if (hand != InteractionHand.OFF_HAND
                 || player.getPose() != Pose.CROUCHING
-                || !player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) return;
+                || !player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()
+                || !ClientGameModeHelper.shouldLoad()) return;
 
         final HitResult hitresult = player.pick(2.0D, 0.0F, true);
         BlockPos pos = ((BlockHitResult)hitresult).getBlockPos();
