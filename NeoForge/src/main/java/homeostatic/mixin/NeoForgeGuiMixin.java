@@ -16,7 +16,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import homeostatic.data.integration.ModIntegration;
 import homeostatic.event.GameOverlayEventHandler;
+import homeostatic.platform.Services;
 
 @Mixin(Gui.class)
 public abstract class NeoForgeGuiMixin {
@@ -47,9 +49,13 @@ public abstract class NeoForgeGuiMixin {
         LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
         int x = this.getVisibleVehicleHeartRows(this.getVehicleMaxHearts(livingEntity));
 
+        if (Services.PLATFORM.isModLoaded(ModIntegration.LMBA_MODID)) {
+            x = x + 1;
+        }
+
         if (!this.minecraft.gameMode.canHurtPlayer()) return x * 10;
 
-        int rightHeight = Math.max(1, x + 1) * 10;
+        int rightHeight = Math.max(1, x) * 10;
         int y = player.getMaxAirSupply();
         int z = Math.min(player.getAirSupply(), y);
 
