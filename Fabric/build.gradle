@@ -35,8 +35,7 @@ dependencies {
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     include "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     include "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-    // Not available for 1.20.4 :(
-    //modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
+    modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
     modCompileOnly "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
     modCompileOnly "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
@@ -62,6 +61,8 @@ dependencies {
         //modRuntimeOnly "curse.maven:puzzles_lib-495476:${puzzles_lib_fabric_version}"
         //modRuntimeOnly "curse.maven:forge_config_api_port-547434:${forge_config_api_fabric_version}"
         //modRuntimeOnly "curse.maven:lmba-281715:${lmba_fabric_version}"
+        //modRuntimeOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
+        //modRuntimeOnly "curse.maven:fabric_seasons_extras-839878:${fabric_seasons_extras_version}"
     }
 }
 
