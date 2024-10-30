@@ -41,8 +41,10 @@ dependencies {
     implementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge', version: "${spectrelib_version}"
     jarJar group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge', version: "${spectrelib_version}"
 
-    compileOnly "mezz.jei:jei-1.21-common-api:${jei_version}"
-    implementation "mezz.jei:jei-1.21-neoforge:${jei_version}"
+    //compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    //implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    compileOnly "mezz.jei:jei-1.21.1-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-1.21.1-neoforge:${jei_version}"
 
     compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
     implementation "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
