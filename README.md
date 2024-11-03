@@ -1,6 +1,6 @@
-# Homeostatic [![Project](http://cf.way2muchnoise.eu/full_634466_downloads.svg)](https://minecraft.curseforge.com/projects/634466)
-[![](http://cf.way2muchnoise.eu/versions/634466.svg)](https://www.curseforge.com/minecraft/mc-mods/homeostatic/files)
-[![](https://img.shields.io/badge/NeoForge-20.4+-orange.svg?longCache=true&style=flat)](https://www.curseforge.com/minecraft/mc-mods/homeostatic/files?gameVersionTypeId=6)
+# Homeostatic [![Project](http://cf.way2muchnoise.eu/full_634466_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/homeostatic) [![Project](https://modrinth.roughness.technology/full_homeostatic_downloads.svg)](https://modrinth.com/mod/homeostatic)
+[![](https://modrinth.roughness.technology/versions/homeostatic.svg)](https://modrinth.com/mod/homeostatic/versions)
+[![](https://img.shields.io/badge/NeoForge-20+-orange.svg?longCache=true&style=flat)](https://www.curseforge.com/minecraft/mc-mods/homeostatic/files?gameVersionTypeId=6)
 [![](https://img.shields.io/badge/Fabric-0.46.0+-yellowgreen.svg?longCache=true&style=flat)](https://www.curseforge.com/minecraft/mc-mods/homeostatic/files?gameVersionTypeId=4)
 ![MIT](https://img.shields.io/badge/license-MIT-blue.svg?longCache=true&style=flat)
 
