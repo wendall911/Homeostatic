@@ -41,10 +41,8 @@ dependencies {
     implementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge', version: "${spectrelib_version}"
     jarJar group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge', version: "${spectrelib_version}"
 
-    //compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
-    //implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-    compileOnly "mezz.jei:jei-1.21.1-common-api:${jei_version}"
-    compileOnly "mezz.jei:jei-1.21.1-neoforge:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
     compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
     compileOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
@@ -71,12 +69,13 @@ dependencies {
         //runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"
         //runtimeOnly "curse.maven:configured-457570:4462839"
         //runtimeOnly "curse.maven:biomesoplenty-220318:${bop_neoforge_version}"
-        //runtimeOnly "curse.maven:terrablender-940057:${terrablender_neoforge_version}"
+        runtimeOnly "curse.maven:terrablender-940057:${terrablender_neoforge_version}"
         //runtimeOnly "curse.maven:terralith-513688:5512077"
         //runtimeOnly "curse.maven:primalwinter-393321:4575861"
-        //runtimeOnly "curse.maven:byg-247560:${byg_neoforge_version}"
-        //runtimeOnly "curse.maven:corgilib-693313:${corgilib_neoforge_version}"
-        //runtimeOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_neoforge_version}"
+        runtimeOnly "curse.maven:byg-1070751:${byg_neoforge_version}"
+        runtimeOnly "curse.maven:tyg-962544:${tyg_neoforge_version}"
+        runtimeOnly "curse.maven:corgilib-693313:${corgilib_neoforge_version}"
+        runtimeOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_neoforge_version}"
         //runtimeOnly "curse.maven:twilightforest-227639:${twilight_forest_neoforge_version}"
         //runtimeOnly "curse.maven:botania-225643:???"
         //runtimeOnly "curse.maven:curios-1037991:5657610"
@@ -174,7 +173,7 @@ publishMods {
             optional('simpletextoverlay')
             optional('serene-seasons')
             optional('biomes-o-plenty')
-            optional('oh-the-biomes-youll-go')
+            optional('oh-the-biomes-weve-gone')
             optional('croptopia')
             optional('farmers-delight')
             optional('xercamod')
@@ -220,7 +219,7 @@ publishMods {
             optional('sprout')
             optional('patchouli')
             optional('jei')
-            optional('biomesyougo')
+            optional('oh-the-biomes-weve-gone')
             optional('kobolds')
             optional('primal-winter')
             optional('tinkers-construct')

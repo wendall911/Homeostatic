@@ -56,7 +56,7 @@ dependencies {
         // This doesn't work for whatever reason. Such a strange port
         //modRuntimeOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
         //modRuntimeOnly "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
-        //modRuntimeOnly "curse.maven:terrablender-565956:${terrablender_fabric_version}"
+        modRuntimeOnly "curse.maven:terrablender-565956:${terrablender_fabric_version}"
         //modRuntimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
         //modRuntimeOnly "curse.maven:more_food-874343:${more_food_fabric_version}"
         //modRuntimeOnly "curse.maven:colorful_hearts-854213:${colorful_hearts_fabric_version}"
@@ -65,6 +65,10 @@ dependencies {
         //modRuntimeOnly "curse.maven:lmba-281715:${lmba_fabric_version}"
         //modRuntimeOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
         //modRuntimeOnly "curse.maven:fabric_seasons_extras-839878:${fabric_seasons_extras_version}"
+        modRuntimeOnly "curse.maven:byg-1070751:${byg_fabric_version}"
+        modRuntimeOnly "curse.maven:tyg-962544:${tyg_fabric_version}"
+        modRuntimeOnly "curse.maven:corgilib-693313:${corgilib_fabric_version}"
+        modRuntimeOnly "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_fabric_version}"
     }
 }
 
@@ -140,7 +144,7 @@ publishMods {
 			optional('simpletextoverlay')
 			optional('serene-seasons')
 			optional('biomes-o-plenty')
-			optional('oh-the-biomes-youll-go')
+            optional('oh-the-biomes-weve-gone')
 			optional('croptopia')
 			optional('farmers-delight-refabricated')
 			optional('xercamod')
@@ -175,7 +179,7 @@ publishMods {
             optional('sprout')
             optional('patchouli')
             optional('jei')
-            optional('biomesyougo')
+            optional('oh-the-biomes-weve-gone')
             optional('fruitful-fun')
             optional('more-food-xd')
             optional('eternal-starlight')
