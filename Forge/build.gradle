@@ -85,10 +85,13 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     implementation fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
     compileOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_forge_version}")
+    compileOnly fg.deobf("curse.maven:glitchcore-955399:${glitchcore_forge_version}")
     compileOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE-SNAPSHOT")
     implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
     compileOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}")
+    compileOnly fg.deobf("curse.maven:ecliptic_seasons-1118306:${ecliptic_seasons_forge_version}")
+    //compileOnly fg.deobf("curse.maven:-:")
 
     if (System.getenv('DATA_GEN') != null) {
         runtimeOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
@@ -98,7 +101,9 @@ dependencies {
         //runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}-FORGE-SNAPSHOT"
         runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_forge_version}")
         //runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}")
+        runtimeOnly fg.deobf("curse.maven:ecliptic_seasons-1118306:${ecliptic_seasons_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:glitchcore-955399:${glitchcore_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:configured-457570:4462839")
         //runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:${bop_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_forge_version}")
@@ -267,6 +272,7 @@ publishMods {
             optional('pams-harvestcraft-2-food-extended')
             optional('the-undergarden')
             optional('terralith')
+            optional('ecliptic-seasons')
         }
     }
     if (project.hasProperty('hsModrinthId')) {
