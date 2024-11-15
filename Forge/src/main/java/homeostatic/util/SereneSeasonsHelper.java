@@ -1,20 +1,18 @@
 package homeostatic.util;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 
 import sereneseasons.api.season.SeasonHelper;
-import sereneseasons.config.ServerConfig;
+
+import static sereneseasons.init.ModConfig.seasons;
 
 import homeostatic.common.temperature.SubSeason;
 
 public class SereneSeasonsHelper {
 
-    public static int getSeasonDuration(Level level) {
-        return SeasonHelper.getSeasonState(level).getSeasonDuration();
-    }
-
-    public static boolean isSeasonDimension(Level level) {
-        return ServerConfig.isDimensionWhitelisted(level.dimension());
+    public static boolean isDimensionWhitelisted(ResourceKey<Level> levelResourceKey) {
+        return seasons.isDimensionWhitelisted(levelResourceKey);
     }
 
     public static SubSeason getSubSeason(Level level) {
