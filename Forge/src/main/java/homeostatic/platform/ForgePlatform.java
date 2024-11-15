@@ -2,6 +2,7 @@ package homeostatic.platform;
 
 import java.util.Optional;
 
+import homeostatic.util.EclipticSeasonsHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -164,8 +165,11 @@ public class ForgePlatform implements IPlatform {
 
     @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
-        if (isModLoaded(ModIntegration.SS_MODID) && SereneSeasonsHelper.isSeasonDimension(level)) {
+        if (Services.PLATFORM.isModLoaded(ModIntegration.SS_MODID)) {
             return SereneSeasonsHelper.getSubSeason(level);
+        }
+        else if (Services.PLATFORM.isModLoaded(ModIntegration.ECLIPTIC_MODID)) {
+            return EclipticSeasonsHelper.getSubSeason(level);
         }
 
         return null;

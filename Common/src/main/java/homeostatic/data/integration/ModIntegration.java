@@ -12,6 +12,7 @@ public class ModIntegration {
     public static final String CREATE_MODID = "create";
     public static final String CC_MODID = "createcafe";
     public static final String CROPTOPIA_MODID = "croptopia";
+    public static final String ECLIPTIC_MODID = "eclipticseasons";
     public static final String ECO_MODID = "ecologics";
     public static final String FD_MODID = "farmersdelight";
     public static final String FT_MODID = "fruitfulfun";
