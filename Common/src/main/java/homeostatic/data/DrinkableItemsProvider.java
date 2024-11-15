@@ -51,17 +51,19 @@ public class DrinkableItemsProvider implements DataProvider {
         addVeggie(ModIntegration.mcLoc("golden_carrot"));
         addFruit(ModIntegration.mcLoc("glistering_melon_slice"));
 
-        // Oh The Biomes You'll Go
-        add(ModIntegration.bygLoc("holly_berries"), 1, 0.0F, 45, 200, 0.5F);
-        addBerries(ModIntegration.bygLoc("nightshade_berries"));
+        // Oh The Biomes You've Gone
         addBerries(ModIntegration.bygLoc("blueberries"));
-        addPie(ModIntegration.bygLoc("nightshade_berry_pie"));
         addPie(ModIntegration.bygLoc("blueberry_pie"));
-        add(ModIntegration.bygLoc("crimson_berries"), 1, 0.0F,  0, 0, 0.0F);
-        add(ModIntegration.bygLoc("crimson_berry_pie"), 2, 0.0F,  0, 0, 0.0F);
         addFruit(ModIntegration.bygLoc("baobab_fruit"));
         addFruit(ModIntegration.bygLoc("green_apple"));
+        addFruit(ModIntegration.bygLoc("soul_fruit"));
+        addFruit(ModIntegration.bygLoc("yucca_fruit"));
+        addFruit(ModIntegration.bygLoc("cooked_yucca_fruit"));
         addPie(ModIntegration.bygLoc("green_apple_pie"));
+        addVeggie(ModIntegration.bygLoc("oddion_bulb"));
+        addVeggie(ModIntegration.bygLoc("cooked_oddion_bulb"));
+        addVeggie(ModIntegration.bygLoc("blooming_oddion"));
+        addSoup(ModIntegration.bygLoc("allium_oddion_soup"));
         add(ModIntegration.bygLoc("aloe_vera_juice"), 4, 1.0F,  0, 0, 0.0F);
         add(ModIntegration.bygLoc("white_puffball_cap"), 1, 0.0F,  0, 0, 0.0F);
         add(ModIntegration.bygLoc("cooked_white_puffball_cap"), 1, 0.0F,  0, 0, 0.0F);

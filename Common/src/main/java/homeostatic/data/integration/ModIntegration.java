@@ -8,7 +8,7 @@ public class ModIntegration {
     public static final String ARSE_MODID = "ars_elemental";
     public static final String ARS_MODID = "ars_nouveau";
     public static final String BOP_MODID = "biomesoplenty";
-    public static final String BYG_MODID = "byg";
+    public static final String BYG_MODID = "biomeswevegone";
     public static final String CREATE_MODID = "create";
     public static final String CC_MODID = "createcafe";
     public static final String CROPTOPIA_MODID = "croptopia";

@@ -44,13 +44,6 @@ public class RadiationBlocksProvider implements DataProvider {
         add(ModIntegration.mcLoc("wall_torch"), 350);
         add(ModIntegration.mcLoc("lantern"), 350);
 
-        // Oh The Biomes You'll Go
-        add(ModIntegration.bygLoc("cryptic_campfire"), 7250);
-        add(ModIntegration.bygLoc("boric_campfire"), 6250);
-        add(ModIntegration.bygLoc("cryptic_magma_block"), 1200);
-        add(ModIntegration.bygLoc("boric_lantern"), 400);
-        add(ModIntegration.bygLoc("cryptic_lantern"), 470);
-
         // Create
         add(ModIntegration.createLoc("blaze_burner"), 8325);
         add(ModIntegration.createLoc("lit_blaze_burner"), 8325);
