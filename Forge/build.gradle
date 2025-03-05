@@ -77,9 +77,10 @@ dependencies {
     compileOnly project(":Common")
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
-    implementation fg.deobf(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_range}")
-    jarJar fg.deobf(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_range}") {
-        jarJar.pin(it, "${spectrelib_version}")
+    implementation fg.deobf(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_version}+${minecraft_version}")
+    jarJar fg.deobf(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_version}+${minecraft_version}") {
+        jarJar.pin(it, "${spectrelib_version}+${minecraft_version}")
+        jarJar.ranged(it, "${spectrelib_range}")
     }
 
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
@@ -107,6 +108,7 @@ dependencies {
         //runtimeOnly fg.deobf("curse.maven:configured-457570:4462839")
         //runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:${bop_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:terrablender-563928:${terrablender_forge_version}")
+        //runtimeOnly fg.deobf("curse.maven:regions-659110:${regions_forge_version}")
         //runtimeOnly fg.deobf("curse.maven:terralith-513688:5512076")
         //runtimeOnly fg.deobf("curse.maven:primalwinter-393321:4575861")
         //runtimeOnly fg.deobf("curse.maven:byg-1070751:${byg_forge_version}")
@@ -274,6 +276,7 @@ publishMods {
             optional('the-undergarden')
             optional('terralith')
             optional('ecliptic-seasons')
+            optional('regions-unexplored')
         }
     }
     if (project.hasProperty('hsModrinthId')) {
@@ -299,6 +302,7 @@ publishMods {
             optional('more-food-xd')
             optional('the-undergarden')
             optional('terralith')
+            optional('regions-unexplored')
         }
     }
     if (project.hasProperty('hsGithubToken')) {
