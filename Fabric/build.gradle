@@ -57,6 +57,8 @@ dependencies {
         //modRuntimeOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
         //modRuntimeOnly "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
         modRuntimeOnly "curse.maven:terrablender-565956:${terrablender_fabric_version}"
+        //modRuntimeOnly "curse.maven:regions-659110:${regions_fabric_version}"
+        //modRuntimeOnly "curse.maven:forge_config-547434:${forge_config_fabric_version}"
         //modRuntimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
         //modRuntimeOnly "curse.maven:more_food-874343:${more_food_fabric_version}"
         //modRuntimeOnly "curse.maven:colorful_hearts-854213:${colorful_hearts_fabric_version}"
@@ -161,6 +163,7 @@ publishMods {
 			optional('more-food-xd')
 			optional('eternal-starlight')
 			optional('terralith')
+            optional('regions-unexplored')
         }
     }
     if (project.hasProperty('hsModrinthId')) {
@@ -184,6 +187,7 @@ publishMods {
             optional('more-food-xd')
             optional('eternal-starlight')
             optional('terralith')
+            optional('regions-unexplored')
         }
     }
     if (project.hasProperty('hsGithubToken')) {

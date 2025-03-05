@@ -70,6 +70,7 @@ dependencies {
         //runtimeOnly "curse.maven:configured-457570:4462839"
         //runtimeOnly "curse.maven:biomesoplenty-220318:${bop_neoforge_version}"
         runtimeOnly "curse.maven:terrablender-940057:${terrablender_neoforge_version}"
+        runtimeOnly "curse.maven:regions-659110:${regions_neoforge_version}"
         //runtimeOnly "curse.maven:terralith-513688:5512077"
         //runtimeOnly "curse.maven:primalwinter-393321:4575861"
         runtimeOnly "curse.maven:byg-1070751:${byg_neoforge_version}"
@@ -202,6 +203,7 @@ publishMods {
             optional('the-undergarden')
             optional('terralith')
             optional('ecliptic-seasons')
+            optional('regions-unexplored')
         }
     }
     if (project.hasProperty('hsModrinthId')) {
@@ -228,6 +230,7 @@ publishMods {
             optional('eternal-starlight')
             optional('the-undergarden')
             optional('terralith')
+            optional('regions-unexplored')
         }
     }
     if (project.hasProperty('hsGithubToken')) {

@@ -27,6 +27,7 @@ public class ModIntegration {
     public static final String PHC_CROPS_MODID = "pamhc2crops";
     public static final String PHC_FOOD_EXTENDED_MODID = "pamhc2foodextended";
     public static final String PW_MODID = "primalwinter";
+    public static final String REGIONS_MODID = "regions_unexplored";
     public static final String SEASONS_MODID = "seasons";
     public static final String SPROUT_MODID = "sprout";
     public static final String SCUBA_GEAR_MODID = "scuba_gear";
@@ -155,6 +156,10 @@ public class ModIntegration {
 
     public static ResourceLocation ugLoc(String name) {
         return ResourceLocation.fromNamespaceAndPath(UG_MODID, name);
+    }
+
+    public static ResourceLocation regionsLoc(String name) {
+        return ResourceLocation.fromNamespaceAndPath(REGIONS_MODID, name);
     }
 
 }
