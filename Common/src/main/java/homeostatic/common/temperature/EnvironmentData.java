@@ -310,10 +310,18 @@ public class EnvironmentData {
 
         if (pos.getY() > 80) {
             float noise = (float)(TEMPERATURE_NOISE.getValue((double)((float)pos.getX() / 8.0F), (double)((float)pos.getZ() / 8.0F), false) * 8.0D);
-            return temperature - (noise + (float)pos.getY() - 80.0F) * 0.05F / 40.0F;
+            return temperature - (noise + getAdjustedHeight(world, (float)pos.getY()) - 80.0F) * 0.05F / 40.0F;
         } else {
             return temperature;
         }
+    }
+
+    /*
+     * Adjust height based on default max build height of 256.
+     * Fixes math to give a corrected height even if max height has been modified.
+     */
+    private static float getAdjustedHeight(ServerLevel world, float y) {
+        return y / (world.getMaxBuildHeight() / 256.0F);
     }
 
     private static float getSeasonAdjustedTemperature(ServerLevel level, Holder<Biome> biomeHolder, float biomeTemp, BlockPos pos) {
