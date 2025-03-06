@@ -1,11 +1,13 @@
 package homeostatic.common.temperature;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
 
 import homeostatic.common.biome.BiomeData;
-import homeostatic.network.ITemperature;
+import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
+import homeostatic.network.ITemperature;
 import homeostatic.util.InsulationHelper;
 import homeostatic.util.TempHelper;
 import homeostatic.util.WaterHelper;
@@ -35,7 +37,7 @@ public class BodyTemperature {
         this.setSkinTemperature(sp, tempData.getSkinTemperature(), updateSkin);
 
         if (updateCore) {
-            this.updateCoreTemperature();
+            this.updateCoreTemperature(sp);
         }
     }
 
@@ -55,7 +57,7 @@ public class BodyTemperature {
      * Changes based on skinTemperature and ability to stabilize body temperature with food and water.
      * If sufficient levels of either food or water are met, core temperature changes at a slower rate.
      */
-    public void updateCoreTemperature() {
+    public void updateCoreTemperature(ServerPlayer sp) {
         final TemperatureDirection coreTemperatureDirection = TempHelper.getCoreTemperatureDirection(
                 this.lastSkinTemperature, this.coreTemperature, this.skinTemperature);
         float diff = Math.abs(this.skinTemperature - this.coreTemperature);
@@ -71,11 +73,15 @@ public class BodyTemperature {
         //Homeostatic.LOGGER.debug("updateCore: %s %s %s", this.coreTemperatureDirection, this.coreTemperatureDirection.coreRate, change);
 
         if (this.skinTemperature < this.coreTemperature) {
-            this.coreTemperature -= change;
+            boolean hasFrostResistance = sp.hasEffect(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(HomeostaticEffects.FROST_RESISTANCE));
 
-            // Only cool core rapidly down to NORMAL, then clamp
-            if (coreTemperatureDirection == TemperatureDirection.COOLING_RAPIDLY) {
-                this.coreTemperature = Math.max(this.coreTemperature, NORMAL);
+            if (!hasFrostResistance) {
+                this.coreTemperature -= change;
+
+                // Only cool core rapidly down to NORMAL, then clamp
+                if (coreTemperatureDirection == TemperatureDirection.COOLING_RAPIDLY) {
+                    this.coreTemperature = Math.max(this.coreTemperature, NORMAL);
+                }
             }
         }
         else {

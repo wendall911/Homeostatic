@@ -48,6 +48,7 @@ import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.platform.services.IPlatform;
 import homeostatic.registries.HomeostaticNeoForgeRegistries;
 import homeostatic.util.CreateHelper;
+import homeostatic.util.EclipticSeasonsHelper;
 import homeostatic.util.ItemStackFluidHelper;
 import homeostatic.util.SereneSeasonsForgeHelper;
 import homeostatic.util.VampirismHelperNeoForge;
@@ -138,6 +139,9 @@ public class NeoForgePlatform implements IPlatform {
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
         if (isModLoaded(ModIntegration.SS_MODID) && SereneSeasonsForgeHelper.isSeasonDimension(level)) {
             return SereneSeasonsForgeHelper.getSubSeason(level);
+        }
+        else if(isModLoaded(ModIntegration.ECLIPTIC_MODID) && EclipticSeasonsHelper.isSeasonDimension(level)) {
+            return EclipticSeasonsHelper.getSubSeason(level);
         }
 
         return null;

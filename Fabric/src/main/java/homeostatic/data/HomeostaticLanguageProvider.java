@@ -27,6 +27,9 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
         addAttack(translationBuilder, "hasDehydration", "%1$s turned into dead dried %1$s");
         addAttack(translationBuilder, "hasDehydration.player", "%1$s turned into dead dried %1$s whilst fighting %2$s");
         addEffect(translationBuilder, "thirst", "Thirst");
+        addEffect(translationBuilder, "frost_resistance", "Frost Resistance");
+        addPotion(translationBuilder, "frost_resistance", "Frost Resistance");
+        addPotion(translationBuilder, "long_frost_resistance", "Frost Resistance");
         addTooltip(translationBuilder,"insulation", "Insulation");
         addTooltip(translationBuilder, "waterproof", "Waterproof");
         addTooltip(translationBuilder, "radiation_protection", "Radiation Protection");
@@ -102,7 +105,7 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
                 "temperature is above 106°F or 41°C.");
         addBookEntry(translationBuilder, "gameplay.body_temp.hypothermia.title", "Freezing / Hypothermia");
         addBookEntry(translationBuilder, "gameplay.body_temp.hypothermia.intro", "Hypothermia can occur when the core " +
-                "temperature is below 95°F or 35°C.");
+                "temperature is below 95°F or 35°C. Freezing can be prevented with a Frost Resistance Potion.");
         addBookEntry(translationBuilder, "gameplay.body_temp.insulation.title", "Insulation");
         addBookEntry(translationBuilder, "gameplay.body_temp.insulation.text", "Any armor piece can be insulated. The more " +
                 "pieces that are insulated, the better the player is insulated. See JEI/REI for recipes.");
@@ -184,6 +187,12 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("effect." + Homeostatic.MODID + "." + name, text);
     }
 
+    protected void addPotion(TranslationBuilder translationBuilder, String name, String text) {
+        translationBuilder.add("item.minecraft.potion.effect." + name, "Potion of " + text);
+        translationBuilder.add("item.minecraft.splash_potion.effect." + name, "Splash Potion of " + text);
+        translationBuilder.add("item.minecraft.lingering_potion.effect." + name, "Lingering Potion of " + text);
+        translationBuilder.add("item.minecraft.tipped_arrow.effect." + name, "Arrow of " + text);
+    }
     protected void addTooltip(TranslationBuilder translationBuilder, String name, String text) {
         translationBuilder.add("tooltip." + name, text);
     }
