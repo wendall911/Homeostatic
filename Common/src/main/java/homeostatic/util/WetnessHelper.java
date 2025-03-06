@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.GameType;
 
 import homeostatic.common.TagManager;
@@ -13,7 +14,7 @@ import homeostatic.platform.Services;
 public class WetnessHelper {
 
     public static void updateWetnessInfo(ServerPlayer sp, float moistureLevel, boolean increase) {
-        if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) return;
+        if (sp.gameMode.getGameModeForPlayer() != GameType.SURVIVAL || sp.hasEffect(MobEffects.WATER_BREATHING)) return;
 
         Services.PLATFORM.getWetnessCapability(sp).ifPresent(data -> {
             WetnessInfo wetnessInfo = new WetnessInfo(

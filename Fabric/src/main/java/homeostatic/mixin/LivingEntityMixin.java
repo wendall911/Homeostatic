@@ -8,6 +8,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import homeostatic.common.effect.HomeostaticEffects;
+
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
 
@@ -15,7 +17,7 @@ public class LivingEntityMixin {
     private void homeostatic$canFreeze(CallbackInfoReturnable<Boolean> cir) {
         LivingEntity self = (LivingEntity) (Object) this;
 
-        if (self.isSpectator()) {
+        if (self.isSpectator() || self.hasEffect(HomeostaticEffects.FROST_RESISTANCE)) {
             cir.setReturnValue(false);
         }
         else {

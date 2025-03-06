@@ -12,10 +12,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.biome.Biome;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -41,6 +46,7 @@ import homeostatic.common.fluid.ForgeFluidType;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.HomeostaticModule;
 import homeostatic.common.item.HomeostaticItems;
+import homeostatic.common.potions.HomeostaticPotions;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.event.CapabilityEventHandler;
 import homeostatic.event.ServerEventListener;
@@ -67,6 +73,19 @@ public class HomeostaticForge {
         MinecraftForge.EVENT_BUS.register(CapabilityEventHandler.class);
 
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> HomeostaticClientForge::new);
+
+        event.enqueueWork(() -> {
+            BrewingRecipeRegistry.addRecipe(
+                Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
+                Ingredient.of(Items.SNOWBALL),
+                PotionUtils.setPotion(new ItemStack(Items.POTION), HomeostaticPotions.FROST_RESISTANCE)
+            );
+            BrewingRecipeRegistry.addRecipe(
+                Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), HomeostaticPotions.FROST_RESISTANCE)),
+                Ingredient.of(Items.REDSTONE),
+                PotionUtils.setPotion(new ItemStack(Items.POTION), HomeostaticPotions.LONG_FROST_RESISTANCE)
+            );
+        });
     }
 
     public static final class RegistryListener {
@@ -116,6 +135,7 @@ public class HomeostaticForge {
         bind(ForgeRegistries.FLUIDS.getRegistryKey(), HomeostaticFluids::init);
         bind(ForgeRegistries.RECIPE_SERIALIZERS.getRegistryKey(), HomeostaticRecipes::init);
         bind(ForgeRegistries.ITEMS.getRegistryKey(), HomeostaticItems::init);
+        bind(ForgeRegistries.POTIONS.getRegistryKey(), HomeostaticPotions::init);
     }
 
     private static <T> void bind(ResourceKey<Registry<T>> registry, Consumer<BiConsumer<T, ResourceLocation>> source) {

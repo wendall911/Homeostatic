@@ -4,12 +4,16 @@ import java.util.function.BiConsumer;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import homeostatic.common.biome.FabricBiomeCategoryManager;
 import homeostatic.common.block.FabricBlockRadiationManager;
@@ -21,6 +25,7 @@ import homeostatic.common.fluid.FabricDrinkingFluidManager;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.FabricDrinkableItemManager;
 import homeostatic.common.item.HomeostaticItems;
+import homeostatic.common.potions.HomeostaticPotions;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.event.ServerEventListener;
 import homeostatic.util.WaterHelper;
@@ -41,6 +46,17 @@ public class HomeostaticFabric implements ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(HomeostaticComponents.DRINK_WATER_KEY, ((server, player, handler, buf, responseSender) -> {
             server.execute(() -> WaterHelper.drinkWater(player));
         }));
+
+        FabricBrewingRecipeRegistry.registerPotionRecipe(
+            Potions.AWKWARD,
+            Ingredient.of(Items.SNOWBALL),
+            HomeostaticPotions.FROST_RESISTANCE
+        );
+        FabricBrewingRecipeRegistry.registerPotionRecipe(
+            HomeostaticPotions.FROST_RESISTANCE,
+            Ingredient.of(Items.REDSTONE),
+            HomeostaticPotions.LONG_FROST_RESISTANCE
+        );
     }
 
     private void registryInit() {
@@ -50,6 +66,7 @@ public class HomeostaticFabric implements ModInitializer {
         HomeostaticRecipes.init(bind(BuiltInRegistries.RECIPE_SERIALIZER));
         HomeostaticItems.init(bind(BuiltInRegistries.ITEM));
         FabricCreativeTabs.init(bind(BuiltInRegistries.CREATIVE_MODE_TAB));
+        HomeostaticPotions.init(bind(BuiltInRegistries.POTION));
     }
 
     private static <T> BiConsumer<T, ResourceLocation> bind(Registry<? super T> registry) {

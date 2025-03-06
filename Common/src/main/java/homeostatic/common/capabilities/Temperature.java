@@ -5,6 +5,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.damagesource.HomeostaticDamageTypes;
+import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.common.temperature.TemperatureThreshold;
 import homeostatic.util.DamageHelper;
@@ -66,7 +67,7 @@ public class Temperature implements ITemperature {
 
     @Override
     public void checkTemperatureLevel(Player player) {
-        if (this.coreTemperature < TemperatureThreshold.LOW.temperature) {
+        if (this.coreTemperature < TemperatureThreshold.LOW.temperature && !player.hasEffect(HomeostaticEffects.FROST_RESISTANCE)) {
             player.setTicksFrozen(player.getTicksFrozen() + 5);
         }
         else if (this.coreTemperature > TemperatureThreshold.HIGH.temperature) {

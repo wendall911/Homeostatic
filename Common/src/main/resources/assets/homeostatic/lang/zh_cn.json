@@ -76,5 +76,14 @@
   "tooltip.radiation_protection": "热辐射防护",
   "tooltip.thermometer": "温度测量",
   "tooltip.water_container.empty": "空",
-  "tooltip.waterproof": "防水"
+  "tooltip.waterproof": "防水",
+  "effect.homeostatic.frost_resistance": "Frost Resistance",
+  "item.minecraft.lingering_potion.effect.frost_resistance": "Lingering Potion of Frost Resistance",
+  "item.minecraft.lingering_potion.effect.long_frost_resistance": "Lingering Potion of Frost Resistance",
+  "item.minecraft.potion.effect.frost_resistance": "Potion of Frost Resistance",
+  "item.minecraft.potion.effect.long_frost_resistance": "Potion of Frost Resistance",
+  "item.minecraft.splash_potion.effect.frost_resistance": "Splash Potion of Frost Resistance",
+  "item.minecraft.splash_potion.effect.long_frost_resistance": "Splash Potion of Frost Resistance",
+  "item.minecraft.tipped_arrow.effect.frost_resistance": "Arrow of Frost Resistance",
+  "item.minecraft.tipped_arrow.effect.long_frost_resistance": "Arrow of Frost Resistance"
 }
