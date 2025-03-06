@@ -1,6 +1,5 @@
 package homeostatic;
 
-import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -8,9 +7,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
@@ -20,7 +16,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -35,6 +30,7 @@ import homeostatic.common.fluid.NeoForgeFluidType;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.HomeostaticModule;
 import homeostatic.common.item.HomeostaticItems;
+import homeostatic.common.potions.HomeostaticPotions;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.event.ServerEventListener;
 import homeostatic.network.DrinkWater;
@@ -69,8 +65,6 @@ public class HomeostaticNeoForge {
 
     public static final class RegistryListener {
 
-        private static boolean setupDone = false;
-
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         public static void registerEvent(RegisterEvent event) {
             event.register(NeoForgeRegistries.FLUID_TYPES.key(), NeoForgeFluidType::initTypes);
@@ -89,6 +83,7 @@ public class HomeostaticNeoForge {
         bind(bus, Registries.FLUID, HomeostaticFluids::init);
         bind(bus, Registries.RECIPE_SERIALIZER, HomeostaticRecipes::init);
         bind(bus, Registries.ITEM, HomeostaticItems::init);
+        bind(bus, Registries.POTION, HomeostaticPotions::init);
         HomeostaticNeoForgeRegistries.COMPONENT_TYPE_DEFERRED_REGISTER.register(bus);
         HomeostaticComponents.registerDataComponents();
     }

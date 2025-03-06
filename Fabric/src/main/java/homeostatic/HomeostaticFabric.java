@@ -2,30 +2,34 @@ package homeostatic;
 
 import java.util.function.BiConsumer;
 
-import homeostatic.network.DrinkWater;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import homeostatic.common.biome.FabricBiomeCategoryManager;
 import homeostatic.common.block.FabricBlockRadiationManager;
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.component.HomeostaticComponents;
-import homeostatic.common.components.HomeostaticCardinalComponents;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.FabricCreativeTabs;
 import homeostatic.common.fluid.FabricDrinkingFluidManager;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.FabricDrinkableItemManager;
 import homeostatic.common.item.HomeostaticItems;
+import homeostatic.common.potions.HomeostaticPotions;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.event.ServerEventListener;
+import homeostatic.network.DrinkWater;
 import homeostatic.util.WaterHelper;
 
 public class HomeostaticFabric implements ModInitializer {
@@ -45,6 +49,19 @@ public class HomeostaticFabric implements ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(DrinkWater.TYPE, ((payload, context) -> {
             WaterHelper.drinkWater(context.player());
         }));
+
+        FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
+            builder.registerPotionRecipe(
+                Potions.AWKWARD,
+                Ingredient.of(Items.SNOWBALL),
+                BuiltInRegistries.POTION.wrapAsHolder(HomeostaticPotions.FROST_RESISTANCE)
+            );
+            builder.registerPotionRecipe(
+                BuiltInRegistries.POTION.wrapAsHolder(HomeostaticPotions.FROST_RESISTANCE),
+                Ingredient.of(Items.REDSTONE),
+                BuiltInRegistries.POTION.wrapAsHolder(HomeostaticPotions.LONG_FROST_RESISTANCE)
+            );
+        });
     }
 
     private void registryInit() {
@@ -54,6 +71,7 @@ public class HomeostaticFabric implements ModInitializer {
         HomeostaticRecipes.init(bind(BuiltInRegistries.RECIPE_SERIALIZER));
         HomeostaticItems.init(bind(BuiltInRegistries.ITEM));
         FabricCreativeTabs.init(bind(BuiltInRegistries.CREATIVE_MODE_TAB));
+        HomeostaticPotions.init(bind(BuiltInRegistries.POTION));
         HomeostaticComponents.registerDataComponents();
     }
 
