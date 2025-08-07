@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-06T08:55:00.750429342	Homeostatic/Homeostatic - Block Radiation 
+// 1.20.1	2025-08-07T10:04:48.704050719	Homeostatic/Homeostatic - Block Radiation 
 9b95affd2ecec5e18efc4dcb584bce0b70876f69 data/tconstruct/environment/block_radiation/smeltery_controller.json
 56faabc5fcd94f3624a4d0f7994dfe74cd58a8b9 data/minecraft/environment/block_radiation/furnace.json
 b07f7932492b6e47d09bf20c1deff2de8f8a54a4 data/minecraft/environment/block_radiation/smoker.json

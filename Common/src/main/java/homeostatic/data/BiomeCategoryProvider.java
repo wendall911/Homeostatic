@@ -164,6 +164,15 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.bopLoc("lush_savanna"), BiomeCategory.Type.LUSH_DESERT);
         add(ModIntegration.bopLoc("mediterranean_forest"), BiomeCategory.Type.LUSH_DESERT);
         add(ModIntegration.bopLoc("wasteland_steppe"), BiomeCategory.Type.MESA);
+        add(ModIntegration.bopLoc("overgrown_greens"), BiomeCategory.Type.PLAINS);
+        add(ModIntegration.bopLoc("jacaranda_glade"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.bopLoc("wintry_origin_valley"), BiomeCategory.Type.COLD_FOREST);
+        add(ModIntegration.bopLoc("gravel_beach"), BiomeCategory.Type.BEACH);
+        add(ModIntegration.bopLoc("hot_springs"), BiomeCategory.Type.JUNGLE);
+        add(ModIntegration.bopLoc("aspen_glade"), BiomeCategory.Type.FOREST);
+        add(ModIntegration.bopLoc("end_wilds"), BiomeCategory.Type.THEEND);
+        add(ModIntegration.bopLoc("end_corruption"), BiomeCategory.Type.THEEND);
+        add(ModIntegration.bopLoc("end_reef"), BiomeCategory.Type.THEEND);
 
         // Oh The Biomes We've Gone
         add(ModIntegration.bygLoc("allium_shrubland"), BiomeCategory.Type.PLAINS);
