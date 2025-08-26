@@ -1,12 +1,8 @@
 package homeostatic.common.fluid;
 
-import java.util.function.Consumer;
-
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Rarity;
 
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.RegisterEvent;
@@ -24,25 +20,7 @@ public class NeoForgeFluidType {
                 .density(4000)
                 .rarity(Rarity.UNCOMMON)
                 .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
-                .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)) {
-
-            @Override
-            public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
-                consumer.accept(new IClientFluidTypeExtensions() {
-                    @Override
-                    public ResourceLocation getStillTexture() {
-                        return HomeostaticFluids.STILL_FLUID_TEXTURE;
-                    }
-
-                    @Override
-                    public ResourceLocation getFlowingTexture() {
-                        return HomeostaticFluids.FLOWING_FLUID_TEXTURE;
-                    }
-
-                });
-            }
-
-        };
+                .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY));
 
         registryHelper.register(loc("purified_water_type"), PURIFIED_WATER_TYPE);
     }

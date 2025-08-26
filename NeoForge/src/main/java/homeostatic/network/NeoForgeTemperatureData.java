@@ -50,6 +50,4 @@ public class NeoForgeTemperatureData extends Temperature implements CustomPacket
         return TYPE;
     }
 
-
-
 }

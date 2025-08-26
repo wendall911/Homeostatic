@@ -4,11 +4,11 @@ import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-import net.neoforged.neoforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.common.util.ValueIOSerializable;
 
 import homeostatic.network.Wetness;
 
@@ -18,18 +18,18 @@ public class WetnessData {
         return Optional.of(player.getData(AttachmentsRegistry.WETNESS_DATA.get()));
     }
 
-    public static class WetnessDataProvider extends Wetness implements INBTSerializable<ListTag> {
+    public static class WetnessDataProvider extends Wetness implements ValueIOSerializable {
 
         public WetnessDataProvider() {}
 
         @Override
-        public ListTag serializeNBT(HolderLookup.@NotNull Provider provider) {
-            return write();
+        public void serialize(@NotNull ValueOutput valueOutput) {
+            write(valueOutput);
         }
 
         @Override
-        public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull ListTag nbt) {
-            read(nbt);
+        public void deserialize(@NotNull ValueInput valueInput) {
+            read(valueInput);
         }
 
     }

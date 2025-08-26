@@ -5,21 +5,17 @@ import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.data.tags.DamageTypeTagsProvider;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.damagesource.DamageType;
-
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.Homeostatic;
 
-public class HomeostaticDamageTypeTagsProvider extends TagsProvider<DamageType> {
+public class HomeostaticDamageTypeTagsProvider extends DamageTypeTagsProvider {
 
-    public HomeostaticDamageTypeTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
-        super(packOutput, Registries.DAMAGE_TYPE, future, Homeostatic.MODID, helper);
+    public HomeostaticDamageTypeTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> future) {
+        super(packOutput, future, Homeostatic.MODID);
     }
 
     @Override

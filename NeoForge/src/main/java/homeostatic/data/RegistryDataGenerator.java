@@ -16,7 +16,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DataPackRegistriesHooks;
 
 import homeostatic.common.damagesource.HomeostaticDamageTypes;
@@ -31,9 +30,9 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
         super(output, provider, BUILDER, Set.of("minecraft", Homeostatic.MODID));
     }
 
-    public static void addProviders(boolean isServer, DataGenerator gen, PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
+    public static void addProviders(boolean isServer, DataGenerator gen, PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
         gen.addProvider(isServer, new RegistryDataGenerator(output, provider));
-        gen.addProvider(isServer, new HomeostaticDamageTypeTagsProvider(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        gen.addProvider(isServer, new HomeostaticDamageTypeTagsProvider(output, provider.thenApply(r -> append(r, BUILDER))));
     }
 
     @SuppressWarnings("UnstableApiUsage")

@@ -11,12 +11,12 @@ import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 
 import homeostatic.common.potions.HomeostaticPotions;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = Homeostatic.MODID)
+@EventBusSubscriber(modid = Homeostatic.MODID)
 public class HomeostaticCommonEvents {
 
     @SubscribeEvent
     public static void registerPotionRecipes(RegisterBrewingRecipesEvent event) {
-        Homeostatic.LOGGER.warn("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX: Registering potion recipes");
+        Homeostatic.LOGGER.warn("Registering potion recipes");
         PotionBrewing.Builder builder = event.getBuilder();
 
         builder.addMix(

@@ -15,7 +15,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.util.FakePlayer;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -33,6 +33,8 @@ import homeostatic.common.item.DrinkableItemManager;
 import homeostatic.Homeostatic;
 import homeostatic.util.RegistryHelper;
 import homeostatic.util.WaterHelper;
+
+import static homeostatic.Homeostatic.loc;
 
 public class ServerEventListener {
 
@@ -81,11 +83,11 @@ public class ServerEventListener {
     }
 
     @SubscribeEvent
-    public static void onResourceReload(AddReloadListenerEvent event) {
-        event.addListener(new BiomeCategoryManager());
-        event.addListener(new BlockRadiationManager());
-        event.addListener(new DrinkingFluidManager());
-        event.addListener(new DrinkableItemManager());
+    public static void onResourceReload(AddServerReloadListenersEvent event) {
+        event.addListener(loc("biome_category"), new BiomeCategoryManager());
+        event.addListener(loc("block_radiation"), new BlockRadiationManager());
+        event.addListener(loc("fluids"), new DrinkingFluidManager());
+        event.addListener(loc("drinkable"), new DrinkableItemManager());
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
@@ -95,7 +97,7 @@ public class ServerEventListener {
         for (Map.Entry<ResourceKey<Biome>, Biome> entry : biomeRegistry.entrySet()) {
             ResourceKey<Biome> biomeResourceKey = entry.getKey();
             ResourceLocation biomeName = biomeResourceKey.location();
-            Holder<Biome> biomeHolder = biomeRegistry.getHolderOrThrow(biomeResourceKey);
+            Holder<Biome> biomeHolder = biomeRegistry.wrapAsHolder(biomeRegistry.getValueOrThrow(biomeResourceKey));
             BiomeCategory.Type biomeCategory = BiomeCategoryManager.getBiomeCategory(biomeHolder);
             BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
             Biome biome = biomeHolder.value();

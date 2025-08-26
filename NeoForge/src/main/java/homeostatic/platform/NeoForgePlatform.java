@@ -48,10 +48,12 @@ import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.platform.services.IPlatform;
 import homeostatic.registries.HomeostaticNeoForgeRegistries;
 import homeostatic.util.CreateHelper;
-import homeostatic.util.EclipticSeasonsHelper;
+// TODO re-enable when Ecliptic Seasons is updated
+//import homeostatic.util.EclipticSeasonsHelper;
 import homeostatic.util.ItemStackFluidHelper;
 import homeostatic.util.SereneSeasonsForgeHelper;
-import homeostatic.util.VampirismHelperNeoForge;
+// TODO re-enable when Vampirism is updated
+//import homeostatic.util.VampirismHelperNeoForge;
 
 public class NeoForgePlatform implements IPlatform {
 
@@ -140,9 +142,11 @@ public class NeoForgePlatform implements IPlatform {
         if (isModLoaded(ModIntegration.SS_MODID) && SereneSeasonsForgeHelper.isSeasonDimension(level)) {
             return SereneSeasonsForgeHelper.getSubSeason(level);
         }
+        /* TODO re-enable when Ecliptic Seasons is updated
         else if(isModLoaded(ModIntegration.ECLIPTIC_MODID) && EclipticSeasonsHelper.isSeasonDimension(level)) {
             return EclipticSeasonsHelper.getSubSeason(level);
         }
+         */
 
         return null;
     }
@@ -204,7 +208,8 @@ public class NeoForgePlatform implements IPlatform {
 
     @Override
     public boolean isVampire(Player player) {
-        return VampirismHelperNeoForge.isVampire(player);
+        //return VampirismHelperNeoForge.isVampire(player);
+        return false; // TODO re-enable when Vampirism is updated
     }
 
 }
