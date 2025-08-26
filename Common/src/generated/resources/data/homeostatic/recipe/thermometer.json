@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "D": {
-      "item": "minecraft:redstone"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "N": {
-      "item": "minecraft:iron_nugget"
-    }
+    "D": "minecraft:redstone",
+    "I": "minecraft:iron_ingot",
+    "N": "minecraft:iron_nugget"
   },
   "pattern": [
     "N",

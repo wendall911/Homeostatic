@@ -1,9 +1,15 @@
-// 1.21.1	2025-03-06T12:02:27.123982917	Homeostatic/Homoestatic - Item Models
+// 1.21.8	-999999999-01-01T00:00:00	Homeostatic/Homoestatic - Item Models
 09de1c08b69c3c1309825990c42ef98d58a4d78c assets/homeostatic/blockstates/purified_water_fluid.json
-70905d30419583b4a5d5062274ba86750e4b139b assets/homeostatic/models/item/thermometer.json
-8ac3c5d38e390c03e470ffc6a8c4bbf4ed8402a7 assets/homeostatic/models/item/book.json
-91ae30b6c954a334c5238b1d434308009e9f02a2 assets/homeostatic/models/item/purified_water_bottle.json
-d47c64dd200def16af9520876b77dec15bf982a3 assets/homeostatic/models/item/leather_flask.json
+0615bbe23a8814d10a8c799742e928a4b7354b60 assets/homeostatic/items/book.json
+d84d141992909f9d9ea48dfbb6f230afe5826d13 assets/homeostatic/items/leather_flask.json
+ca9d37b3a10f3e95db1f05807485206395ca3a87 assets/homeostatic/items/purified_water_bottle.json
+523ff55e5f2085b68d42bd8191605577b02e3e2f assets/homeostatic/items/purified_water_bucket.json
+7d96de94b92e5ae69b63c69db1e3833cc25753b6 assets/homeostatic/items/thermometer.json
+7904831e4e6efef50c08baff8cdc546a6e50a56d assets/homeostatic/items/water_filter.json
 1212d49e505408eebee340b8bbdf538c509d9cfd assets/homeostatic/models/block/purified_water_fluid.json
+8ac3c5d38e390c03e470ffc6a8c4bbf4ed8402a7 assets/homeostatic/models/item/book.json
+d47c64dd200def16af9520876b77dec15bf982a3 assets/homeostatic/models/item/leather_flask.json
+91ae30b6c954a334c5238b1d434308009e9f02a2 assets/homeostatic/models/item/purified_water_bottle.json
 89c7619f7c711eafbb7cab37d1fc6ca00286a299 assets/homeostatic/models/item/purified_water_bucket.json
+70905d30419583b4a5d5062274ba86750e4b139b assets/homeostatic/models/item/thermometer.json
 c73bdff861fb51b5f0c403c32d42b499dc56dfdf assets/homeostatic/models/item/water_filter.json

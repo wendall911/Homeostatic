@@ -6,37 +6,28 @@
     }
   ],
   "type": "sewingkit:sewing",
+  "category": "sewingkit:sewing_misc",
   "materials": [
     {
       "count": 4,
-      "ingredient": {
-        "item": "sewingkit:leather_sheet"
-      }
+      "ingredient": "sewingkit:leather_sheet"
     },
     {
       "count": 2,
-      "ingredient": {
-        "item": "sewingkit:leather_strip"
-      }
+      "ingredient": "sewingkit:leather_strip"
     },
     {
       "count": 2,
-      "ingredient": {
-        "item": "minecraft:string"
-      }
+      "ingredient": "minecraft:string"
     },
     {
       "count": 1,
-      "ingredient": {
-        "tag": "minecraft:planks"
-      }
+      "ingredient": "#minecraft:planks"
     }
   ],
   "result": {
     "count": 1,
     "id": "homeostatic:leather_flask"
   },
-  "tool": {
-    "tag": "sewingkit:needles/wood_or_higher"
-  }
+  "tool": "#sewingkit:needles/wood_or_higher"
 }
