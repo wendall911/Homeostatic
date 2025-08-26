@@ -5,6 +5,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.GameType;
 
@@ -25,13 +28,15 @@ public class WetnessHelper {
             );
             AtomicInteger waterproofing = new AtomicInteger();
 
-            sp.getArmorSlots().forEach(armor -> {
+            for (EquipmentSlot slot : EquipmentSlotGroup.ARMOR) {
+                ItemStack armor = sp.getItemBySlot(slot);
+                if (armor.isEmpty()) continue;
                 CompoundTag tags = armor.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();
 
                 if (tags.contains("waterproof") || armor.is(TagManager.Items.WATERPROOF_ARMOR)) {
                     waterproofing.addAndGet(5);
                 }
-            });
+            }
 
             if (increase) {
                 wetnessInfo.increaseMoisture(moistureLevel, waterproofing.get());

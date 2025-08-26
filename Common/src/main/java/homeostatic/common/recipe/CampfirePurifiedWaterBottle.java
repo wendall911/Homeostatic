@@ -19,7 +19,7 @@ public class CampfirePurifiedWaterBottle extends CampfireCookingRecipe implement
 
     @Override
     public @NotNull ItemStack assemble(@NotNull SingleRecipeInput recipeInput, HolderLookup.@NotNull Provider pRegistries) {
-        return assemble(this.result);
+        return assemble(result());
     }
 
     @Override
@@ -33,7 +33,7 @@ public class CampfirePurifiedWaterBottle extends CampfireCookingRecipe implement
     }
 
     @Override
-    public @NotNull RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<CampfireCookingRecipe> getSerializer() {
         return HomeostaticRecipes.CAMPFIRE_PURIFIED_WATER_BOTTLE_SERIALIZER;
     }
 

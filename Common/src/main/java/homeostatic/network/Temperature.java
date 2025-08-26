@@ -2,13 +2,15 @@ package homeostatic.network;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.temperature.BodyTemperature;
+import homeostatic.common.temperature.TemperatureRange;
 import homeostatic.common.temperature.TemperatureThreshold;
 import homeostatic.util.DamageHelper;
 
@@ -86,17 +88,6 @@ public class Temperature implements ITemperature {
     }
 
     @Override
-    public ListTag write() {
-        ListTag listTag = new ListTag();
-        CompoundTag tag = new CompoundTag();
-
-        write(tag);
-        listTag.add(tag);
-
-        return listTag;
-    }
-
-    @Override
     public CompoundTag write(CompoundTag tag) {
         tag.putFloat("skinTemperature", this.getSkinTemperature());
         tag.putFloat("lastSkinTemperature", this.getLastSkinTemperature());
@@ -107,16 +98,29 @@ public class Temperature implements ITemperature {
     }
 
     @Override
-    public void read(ListTag nbt) {
-        read(nbt.getCompound(0));
+    public ValueOutput write(ValueOutput valueOutput) {
+        valueOutput.putFloat("skinTemperature", this.getSkinTemperature());
+        valueOutput.putFloat("lastSkinTemperature", this.getLastSkinTemperature());
+        valueOutput.putFloat("coreTemperature", this.getCoreTemperature());
+        valueOutput.putFloat("localTemperature", this.getLocalTemperature());
+
+        return valueOutput;
     }
 
     @Override
     public void read(CompoundTag tag) {
-        this.setSkinTemperature(tag.getFloat("skinTemperature"));
-        this.setLastSkinTemperature(tag.getFloat("lastSkinTemperature"));
-        this.setCoreTemperature(tag.getFloat("coreTemperature"));
-        this.setLocalTemperature(tag.getFloat("localTemperature"));
+        this.setSkinTemperature(tag.getFloat("skinTemperature").orElseThrow());
+        this.setLastSkinTemperature(tag.getFloat("lastSkinTemperature").orElseThrow());
+        this.setCoreTemperature(tag.getFloat("coreTemperature").orElseThrow());
+        this.setLocalTemperature(tag.getFloat("localTemperature").orElseThrow());
+    }
+
+    @Override
+    public void read(ValueInput valueInput) {
+        this.setSkinTemperature(valueInput.getFloatOr("skinTemperature", TemperatureThreshold.NORMAL.temperature));
+        this.setLastSkinTemperature(valueInput.getFloatOr("lastSkinTemperature", TemperatureThreshold.NORMAL.temperature));
+        this.setCoreTemperature(valueInput.getFloatOr("coreTemperature", TemperatureThreshold.NORMAL.temperature));
+        this.setLocalTemperature(valueInput.getFloatOr("localTemperature", TemperatureRange.PARITY.temperature));
     }
 
 }

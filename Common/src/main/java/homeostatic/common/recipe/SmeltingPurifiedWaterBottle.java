@@ -18,7 +18,7 @@ public class SmeltingPurifiedWaterBottle extends SmeltingRecipe implements IWate
 
     @Override
     public @NotNull ItemStack assemble(@NotNull SingleRecipeInput recipeInput, HolderLookup.@NotNull Provider pRegistries) {
-        return assemble(this.result);
+        return assemble(result());
     }
 
     @Override
@@ -32,7 +32,7 @@ public class SmeltingPurifiedWaterBottle extends SmeltingRecipe implements IWate
     }
 
     @Override
-    public @NotNull RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<SmeltingRecipe> getSerializer() {
         return HomeostaticRecipes.SMELTING_PURIFIED_WATER_BOTTLE_SERIALIZER;
     }
 

@@ -8,11 +8,10 @@ import com.google.common.collect.Lists;
 
 import com.mojang.datafixers.util.Pair;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
@@ -74,12 +73,7 @@ public class RemoveArmorEnhancement extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int pWidth, int pHeight) {
-        return pWidth * pHeight >= 2;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<RemoveArmorEnhancement> getSerializer() {
         return HomeostaticRecipes.REMOVE_ARMOR_ENHANCEMENT_SERIALIZER;
     }
 
@@ -91,10 +85,7 @@ public class RemoveArmorEnhancement extends CustomRecipe {
             ItemStack stack = craftingInput.getItem(i);
 
             if (stack.is(Items.SHEARS)) {
-                Item item = stack.getItem();
-
-                assert stack.getItem().getCraftingRemainingItem() != null;
-                nonnulllist.set(i, new ItemStack(stack.getItem().getCraftingRemainingItem()));
+                nonnulllist.set(i, stack.getItem().getCraftingRemainder());
             }
             else if (stack.is(Items.WATER_BUCKET) || stack.is(Items.LAVA_BUCKET)) {
                 ItemStack bucket = new ItemStack(Items.BUCKET);
@@ -131,7 +122,7 @@ public class RemoveArmorEnhancement extends CustomRecipe {
                 removalItem = ingredient;
                 ingredients.add(ingredient);
             }
-            else if (ingredient.getItem() instanceof ArmorItem) {
+            else if (ingredient.get(DataComponents.EQUIPPABLE) != null) {
                 armor = ingredient;
             }
         }

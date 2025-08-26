@@ -1,6 +1,5 @@
 package homeostatic.common.recipe;
 
-import net.minecraft.world.item.crafting.SmokingRecipe;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.core.HolderLookup;
@@ -9,6 +8,7 @@ import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.item.crafting.SmokingRecipe;
 
 public class SmokingPurifiedWaterBottle extends SmokingRecipe implements IWaterBottleCookingRecipe {
 
@@ -18,7 +18,7 @@ public class SmokingPurifiedWaterBottle extends SmokingRecipe implements IWaterB
 
     @Override
     public @NotNull ItemStack assemble(@NotNull SingleRecipeInput recipeInput, HolderLookup.@NotNull Provider pRegistries) {
-        return assemble(this.result);
+        return assemble(result());
     }
 
     @Override
@@ -32,7 +32,7 @@ public class SmokingPurifiedWaterBottle extends SmokingRecipe implements IWaterB
     }
 
     @Override
-    public @NotNull RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<SmokingRecipe> getSerializer() {
         return HomeostaticRecipes.SMOKING_PURIFIED_WATER_BOTTLE_SERIALIZER;
     }
 

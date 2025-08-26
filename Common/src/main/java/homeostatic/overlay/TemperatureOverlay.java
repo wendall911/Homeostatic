@@ -4,11 +4,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import org.joml.Matrix3x2fStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -36,12 +36,9 @@ public class TemperatureOverlay extends Overlay {
     @Override
     public void render(GuiGraphics guiGraphics, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
-        PoseStack matrix = guiGraphics.pose();
+        Matrix3x2fStack matrix = guiGraphics.pose();
 
         if (player == null) return;
-
-        RenderSystem.enableBlend();
-        RenderSystem.setShaderTexture(0, SPRITE);
 
         Services.PLATFORM.getTemperatureData(player).ifPresent(data -> {
             int offsetX = Alignment.getX(ConfigHandler.Client.thermometerPosition(), scaledWidth, ICON_WIDTH,
@@ -78,15 +75,15 @@ public class TemperatureOverlay extends Overlay {
             AtomicBoolean showTemperature = new AtomicBoolean(ConfigHandler.Common.showTemperatureValues());
 
             if (data.getCoreTemperature() > TemperatureThreshold.WARNING_HIGH.temperature) {
-                guiGraphics.blit(SPRITE, offsetX, pY, pUOffset, pV + ICON_HEIGHT, ICON_WIDTH, ICON_HEIGHT);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SPRITE, offsetX, pY, pUOffset, pV + ICON_HEIGHT, ICON_WIDTH, ICON_HEIGHT, 256, 256);
             }
             else if (data.getCoreTemperature() < TemperatureThreshold.WARNING_LOW.temperature) {
-                guiGraphics.blit(SPRITE, offsetX, pY, pUOffset, pV + ICON_HEIGHT * 2, ICON_WIDTH, ICON_HEIGHT);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SPRITE, offsetX, pY, pUOffset, pV + ICON_HEIGHT * 2, ICON_WIDTH, ICON_HEIGHT, 256, 256);
             }
             else {
-                guiGraphics.blit(SPRITE, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SPRITE, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT, 256, 256);
             }
-            guiGraphics.blit(SPRITE, offsetX, pY, pUOffset + ICON_WIDTH, pV + lineOffset, ICON_WIDTH, ICON_HEIGHT);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SPRITE, offsetX, pY, pUOffset + ICON_WIDTH, pV + lineOffset, ICON_WIDTH, ICON_HEIGHT, 256, 256);
 
             if (ConfigHandler.Common.requireThermometer()) {
                 Services.PLATFORM.getThermometerCapability(player).ifPresent(thermometer -> {
@@ -94,7 +91,7 @@ public class TemperatureOverlay extends Overlay {
                 });
             }
 
-            matrix.scale(textScale, textScale, textScale);
+            matrix.scale(textScale, textScale);
 
             if (ConfigHandler.Client.showThermometerRateChangeSymbols()) {
                 FontHelper.draw(mc, guiGraphics, coreDirection, directionOffsetX - 8,

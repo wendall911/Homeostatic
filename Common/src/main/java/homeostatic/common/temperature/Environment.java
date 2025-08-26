@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3d;
 
 import net.minecraft.core.BlockPos;
@@ -55,7 +58,7 @@ public class Environment {
         ResourceKey<Level> worldKey = world.dimension();
         MobEffectInstance effectInstance = sp.getEffect(MobEffects.FIRE_RESISTANCE);
         boolean inOverworld = worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString());
-        boolean isSubmerged = sp.isUnderWater() && sp.isInWater() && sp.isInWaterRainOrBubble();
+        boolean isSubmerged = sp.isUnderWater() && sp.isInWater() && sp.isInWaterOrRain();
         boolean isSheltered = true;
         boolean isUnderground = true;
         ChunkPos chunkPos;
@@ -70,13 +73,15 @@ public class Environment {
             isSheltered = false;
         }
 
-        sp.getArmorSlots().forEach(armor -> {
+        for (EquipmentSlot slot : EquipmentSlotGroup.ARMOR) {
+            ItemStack armor = sp.getItemBySlot(slot);
+            if (armor.isEmpty()) continue;
             CompoundTag tags = armor.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();
 
             if ((tags.contains("radiation_protection")) || armor.is(TagManager.Items.RADIATION_PROTECTED_ARMOR)) {
                 radiationReduction.updateAndGet(v -> (double) (v - ConfigHandler.Common.getRadiationReductionPercent()));
             }
-        });
+        };
 
         /*
          * Check blocks and calculate radiation.
@@ -97,7 +102,7 @@ public class Environment {
 
                     // If in the void, this gets weird, let's just catch and move on.
                     try {
-                        palette = chunk.getSection((blockpos.getY() >> 4) - chunk.getMinSection()).getStates();
+                        palette = chunk.getSection((blockpos.getY() >> 4) - chunk.getMinSectionY()).getStates();
                     }
                     catch (Exception e) {
                         continue;

@@ -4,11 +4,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import org.joml.Matrix3x2f;
+import org.joml.Matrix3x2fStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -34,12 +35,9 @@ public class TemperatureGlobeOverlay extends Overlay {
     @Override
     public void render(GuiGraphics guiGraphics, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
-        PoseStack matrix = guiGraphics.pose();
+        Matrix3x2fStack matrix = guiGraphics.pose();
 
         if (player == null) return;
-
-        RenderSystem.enableBlend();
-        RenderSystem.setShaderTexture(0, SPRITE);
 
         Services.PLATFORM.getTemperatureData(player).ifPresent(data -> {
             int offsetX = Alignment.getX(ConfigHandler.Client.globePosition(), scaledWidth, ICON_WIDTH,
@@ -68,8 +66,8 @@ public class TemperatureGlobeOverlay extends Overlay {
             pV = getTempOffset(coreRangeStep);
             localPV = getTempOffset(localRangeStep);
 
-            guiGraphics.blit(SPRITE, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT);
-            guiGraphics.blit(SPRITE, offsetX, pY, pUOffset + ICON_WIDTH, localPV, ICON_WIDTH, ICON_HEIGHT);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SPRITE, offsetX, pY, pUOffset, pV, ICON_WIDTH, ICON_HEIGHT, 256, 256);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SPRITE, offsetX, pY, pUOffset + ICON_WIDTH, localPV, ICON_WIDTH, ICON_HEIGHT, 256, 256);
 
             if (ConfigHandler.Common.requireThermometer()) {
                 Services.PLATFORM.getThermometerCapability(player).ifPresent(thermometer -> {
@@ -78,7 +76,7 @@ public class TemperatureGlobeOverlay extends Overlay {
             }
 
             if (showTemperature.get()) {
-                matrix.scale(textScale, textScale, textScale);
+                matrix.scale(textScale, textScale);
 
                 FontHelper.draw(mc, guiGraphics, localTemp, localOffsetX - 1, textOffsetY - 19, ColorHelper.getLocalTemperatureColor(localRangeStep), true);
                 FontHelper.draw(mc, guiGraphics, coreTempSmall, coreOffsetX - 1, textOffsetY, ColorHelper.getGlobeTemperatureColor(coreRangeStep), true);

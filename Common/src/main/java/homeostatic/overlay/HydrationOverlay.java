@@ -1,12 +1,8 @@
 package homeostatic.overlay;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import org.jetbrains.annotations.Nullable;
 
-import org.lwjgl.opengl.GL11;
-
-import com.mojang.blaze3d.systems.RenderSystem;
-
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -48,10 +44,6 @@ public class HydrationOverlay extends Overlay {
 
         final Gui gui = mc.gui;
 
-        RenderSystem.enableBlend();
-        RenderSystem.setShaderTexture(0, WaterHud.SPRITE);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
-        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         MobEffectInstance effectInstance = mc.player.getEffect(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(HomeostaticEffects.THIRST));
 
         Services.PLATFORM.getWaterCapabilty(player).ifPresent(data -> {
@@ -60,9 +52,6 @@ public class HydrationOverlay extends Overlay {
 
             WaterHelper.drawWaterBar(SPRITE, scaledWidth, scaledHeight, effectInstance, gui, guiGraphics, waterSaturationLevel, waterLevel, tickCount);
         });
-
-        RenderSystem.disableBlend();
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     public static void onClientTick(Minecraft minecraft) {

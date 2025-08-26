@@ -47,12 +47,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int pWidth, int pHeight) {
-        return pWidth * pHeight >= 2;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<PurifiedLeatherFlask> getSerializer() {
         return HomeostaticRecipes.PURIFIED_LEATHER_FLASK_SERIALIZER;
     }
 

@@ -3,8 +3,12 @@ package homeostatic.common.recipe;
 import java.util.function.BiConsumer;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.CampfireCookingRecipe;
+import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.SmokingRecipe;
 
 import static homeostatic.Homeostatic.loc;
 
@@ -14,24 +18,24 @@ public class HomeostaticRecipes {
     public static RecipeSerializer<PurifiedLeatherFlask> PURIFIED_LEATHER_FLASK_SERIALIZER;
     public static RecipeSerializer<HelmetThermometer> HELMET_THERMOMETER_SERIALIZER;
     public static RecipeSerializer<RemoveArmorEnhancement> REMOVE_ARMOR_ENHANCEMENT_SERIALIZER;
-    public static RecipeSerializer<CampfirePurifiedLeatherFlask> CAMPFIRE_PURIFIED_LEATHER_FLASK_SERIALIZER;
-    public static RecipeSerializer<SmeltingPurifiedLeatherFlask> SMELTING_PURIFIED_LEATHER_FLASK_SERIALIZER;
-    public static RecipeSerializer<SmokingPurifiedLeatherFlask> SMOKING_PURIFIED_LEATHER_FLASK_SERIALIZER;
-    public static RecipeSerializer<CampfirePurifiedWaterBottle> CAMPFIRE_PURIFIED_WATER_BOTTLE_SERIALIZER;
-    public static RecipeSerializer<SmeltingPurifiedWaterBottle> SMELTING_PURIFIED_WATER_BOTTLE_SERIALIZER;
-    public static RecipeSerializer<SmokingPurifiedWaterBottle> SMOKING_PURIFIED_WATER_BOTTLE_SERIALIZER;
+    public static RecipeSerializer<CampfireCookingRecipe> CAMPFIRE_PURIFIED_LEATHER_FLASK_SERIALIZER;
+    public static RecipeSerializer<SmeltingRecipe> SMELTING_PURIFIED_LEATHER_FLASK_SERIALIZER;
+    public static RecipeSerializer<SmokingRecipe> SMOKING_PURIFIED_LEATHER_FLASK_SERIALIZER;
+    public static RecipeSerializer<CampfireCookingRecipe> CAMPFIRE_PURIFIED_WATER_BOTTLE_SERIALIZER;
+    public static RecipeSerializer<SmeltingRecipe> SMELTING_PURIFIED_WATER_BOTTLE_SERIALIZER;
+    public static RecipeSerializer<SmokingRecipe> SMOKING_PURIFIED_WATER_BOTTLE_SERIALIZER;
 
     public static void init(BiConsumer<RecipeSerializer<?>, ResourceLocation> consumer) {
-        ARMOR_ENHANCEMENT_SERIALIZER = new SimpleCraftingRecipeSerializer<>(ArmorEnhancement::new);
-        PURIFIED_LEATHER_FLASK_SERIALIZER = new SimpleCraftingRecipeSerializer<>(PurifiedLeatherFlask::new);
-        HELMET_THERMOMETER_SERIALIZER = new SimpleCraftingRecipeSerializer<>(HelmetThermometer::new);
-        REMOVE_ARMOR_ENHANCEMENT_SERIALIZER = new SimpleCraftingRecipeSerializer<>(RemoveArmorEnhancement::new);
-        CAMPFIRE_PURIFIED_LEATHER_FLASK_SERIALIZER = new SimpleCookingSerializerWrapper<>(CampfirePurifiedLeatherFlask::new, 200);
-        SMELTING_PURIFIED_LEATHER_FLASK_SERIALIZER = new SimpleCookingSerializerWrapper<>(SmeltingPurifiedLeatherFlask::new, 150);
-        SMOKING_PURIFIED_LEATHER_FLASK_SERIALIZER = new SimpleCookingSerializerWrapper<>(SmokingPurifiedLeatherFlask::new, 100);
-        CAMPFIRE_PURIFIED_WATER_BOTTLE_SERIALIZER = new SimpleCookingSerializerWrapper<>(CampfirePurifiedWaterBottle::new, 100);
-        SMELTING_PURIFIED_WATER_BOTTLE_SERIALIZER = new SimpleCookingSerializerWrapper<>(SmeltingPurifiedWaterBottle::new, 75);
-        SMOKING_PURIFIED_WATER_BOTTLE_SERIALIZER = new SimpleCookingSerializerWrapper<>(SmokingPurifiedWaterBottle::new, 50);
+        ARMOR_ENHANCEMENT_SERIALIZER = new CustomRecipe.Serializer<>(ArmorEnhancement::new);
+        PURIFIED_LEATHER_FLASK_SERIALIZER = new CustomRecipe.Serializer<>(PurifiedLeatherFlask::new);
+        HELMET_THERMOMETER_SERIALIZER = new CustomRecipe.Serializer<>(HelmetThermometer::new);
+        REMOVE_ARMOR_ENHANCEMENT_SERIALIZER = new CustomRecipe.Serializer<>(RemoveArmorEnhancement::new);
+        CAMPFIRE_PURIFIED_LEATHER_FLASK_SERIALIZER = new AbstractCookingRecipe.Serializer<>(CampfirePurifiedLeatherFlask::new, 200);
+        SMELTING_PURIFIED_LEATHER_FLASK_SERIALIZER = new AbstractCookingRecipe.Serializer<>(SmeltingPurifiedLeatherFlask::new, 150);
+        SMOKING_PURIFIED_LEATHER_FLASK_SERIALIZER = new AbstractCookingRecipe.Serializer<>(SmokingPurifiedLeatherFlask::new, 100);
+        CAMPFIRE_PURIFIED_WATER_BOTTLE_SERIALIZER = new AbstractCookingRecipe.Serializer<>(CampfirePurifiedWaterBottle::new, 100);
+        SMELTING_PURIFIED_WATER_BOTTLE_SERIALIZER = new AbstractCookingRecipe.Serializer<>(SmeltingPurifiedWaterBottle::new, 75);
+        SMOKING_PURIFIED_WATER_BOTTLE_SERIALIZER = new AbstractCookingRecipe.Serializer<>(SmokingPurifiedWaterBottle::new, 50);
 
         consumer.accept(ARMOR_ENHANCEMENT_SERIALIZER, loc("armor_enhancement"));
         consumer.accept(PURIFIED_LEATHER_FLASK_SERIALIZER, loc("purified_leather_flask"));

@@ -1,7 +1,10 @@
 package homeostatic.network;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import homeostatic.common.wetness.WetnessInfo;
 
@@ -37,17 +40,6 @@ public class Wetness implements IWetness {
     }
 
     @Override
-    public ListTag write() {
-        ListTag listTag = new ListTag();
-        CompoundTag tag = new CompoundTag();
-
-        write(tag);
-        listTag.add(tag);
-
-        return listTag;
-    }
-
-    @Override
     public CompoundTag write(CompoundTag tag) {
         tag.putInt("wetnessLevel", this.getWetnessLevel());
         tag.putFloat("moistureLevel", this.getMoistureLevel());
@@ -56,14 +48,23 @@ public class Wetness implements IWetness {
     }
 
     @Override
-    public void read(ListTag nbt) {
-        read(nbt.getCompound(0));
+    public ValueOutput write(@NotNull ValueOutput valueOutput) {
+        valueOutput.putInt("wetnessLevel", this.getWetnessLevel());
+        valueOutput.putFloat("moistureLevel", this.getMoistureLevel());
+
+        return valueOutput;
     }
 
     @Override
     public void read(CompoundTag tag) {
-        this.setWetnessLevel(tag.getInt("wetnessLevel"));
-        this.setMoistureLevel(tag.getFloat("moistureLevel"));
+        this.setWetnessLevel(tag.getInt("wetnessLevel").orElseThrow());
+        this.setMoistureLevel(tag.getFloat("moistureLevel").orElseThrow());
+    }
+
+    @Override
+    public void read(@NotNull ValueInput valueInput) {
+        this.setWetnessLevel(valueInput.getIntOr("wetnessLevel", 0));
+        this.setMoistureLevel(valueInput.getFloatOr("moistureLevel", 0.0F));
     }
 
 }

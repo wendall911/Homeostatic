@@ -3,9 +3,9 @@ package homeostatic.event;
 import java.util.List;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.ItemStack;
 
@@ -19,7 +19,7 @@ public class TooltipEventHandler {
     public static void onItemToolTip(ItemStack itemStack, List<Component> toolTip) {
         boolean sewingKitItem = Services.PLATFORM.isModLoaded(ModIntegration.SK_MODID) && itemStack.is(TagManager.Items.SEWINGKIT_WEARABLE);
 
-        if (itemStack.getItem() instanceof ArmorItem || sewingKitItem) {
+        if (itemStack.get(DataComponents.EQUIPPABLE) != null || sewingKitItem) {
             CompoundTag tags = itemStack.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();;
 
             if ((tags.contains("insulation")) || itemStack.is(TagManager.Items.INSULATED_ARMOR)) {

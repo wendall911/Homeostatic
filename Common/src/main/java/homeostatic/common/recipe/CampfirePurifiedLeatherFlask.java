@@ -19,7 +19,7 @@ public class CampfirePurifiedLeatherFlask extends CampfireCookingRecipe implemen
 
     @Override
     public @NotNull ItemStack assemble(@NotNull SingleRecipeInput recipeInput, HolderLookup.@NotNull Provider pRegistries) {
-        return assemble(recipeInput, this.result);
+        return assemble(recipeInput, result());
     }
 
     @Override
@@ -33,7 +33,7 @@ public class CampfirePurifiedLeatherFlask extends CampfireCookingRecipe implemen
     }
 
     @Override
-    public @NotNull RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<CampfireCookingRecipe> getSerializer() {
         return HomeostaticRecipes.CAMPFIRE_PURIFIED_LEATHER_FLASK_SERIALIZER;
     }
 

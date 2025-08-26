@@ -5,6 +5,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,7 +30,7 @@ import homeostatic.util.WetnessHelper;
 public class PlayerEventHandler {
 
     public static void onEntityJoinLevel(ServerPlayer sp) {
-        ServerLevel world = sp.serverLevel();
+        ServerLevel world = sp.level();
 
         if (!GameModeHelper.shouldLoad(sp)) return;
 
@@ -51,8 +52,8 @@ public class PlayerEventHandler {
     public static void onPlayerTickEvent(ServerPlayer sp) {
         if (!GameModeHelper.shouldLoad(sp)) return;
 
-        ServerLevel world = sp.serverLevel();
-        ProfilerFiller profilerfiller = world.getProfiler();
+        ServerLevel world = sp.level();
+        ProfilerFiller profilerfiller = Profiler.get();
 
         Services.PLATFORM.getWaterCapabilty(sp).ifPresent(data -> data.checkWaterLevel(sp));
 
@@ -80,7 +81,7 @@ public class PlayerEventHandler {
     }
 
     public static void onPlayerRespawn(ServerPlayer sp) {
-        ServerLevel world = sp.serverLevel();
+        ServerLevel world = sp.level();
 
         if (!GameModeHelper.shouldLoad(sp)) return;
 

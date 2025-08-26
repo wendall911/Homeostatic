@@ -3,6 +3,8 @@ package homeostatic.integrations;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
 import net.minecraft.world.item.crafting.CookingBookCategory;
@@ -31,8 +33,8 @@ public final class CampfireRecipeMaker {
         Services.PLATFORM.fillFluid(filledPurifiedWaterLeatherFlask, HomeostaticFluids.PURIFIED_WATER, Services.PLATFORM.getFluidCapacity(filledPurifiedWaterLeatherFlask));
 
         recipes.add(new RecipeHolder<>(
-            loc(group + ".flask"),
-            new CampfireCookingRecipe(group, CookingBookCategory.MISC, Ingredient.of(filledWaterLeatherFlask), filledPurifiedWaterLeatherFlask, 0.15F, 200)
+            ResourceKey.create(Registries.RECIPE, loc(group + ".flask")),
+            new CampfireCookingRecipe(group, CookingBookCategory.MISC, Ingredient.of(filledWaterLeatherFlask.getItem()), filledPurifiedWaterLeatherFlask, 0.15F, 200)
         ));
 
         return recipes;
@@ -44,8 +46,8 @@ public final class CampfireRecipeMaker {
         ItemStack result = new ItemStack(HomeostaticItems.PURIFIED_WATER_BOTTLE);
 
         recipes.add(new RecipeHolder<>(
-                loc(group + ".water_bottle"),
-                new CampfireCookingRecipe(group, CookingBookCategory.MISC, Ingredient.of(RecipeProviderBase.waterBottle), result, 0.05F, 100)
+                ResourceKey.create(Registries.RECIPE, loc(group + ".water_bottle")),
+                new CampfireCookingRecipe(group, CookingBookCategory.MISC, Ingredient.of(RecipeProviderBase.waterBottle.getItem()), result, 0.05F, 100)
         ));
 
         return recipes;

@@ -29,7 +29,7 @@ public class WetnessOverlay extends Overlay {
             float wetnessPercentage = (float) data.getWetnessLevel() / (float) WetnessInfo.MAX_WETNESS_LEVEL;
 
             if (wetnessPercentage > 0.0F) {
-                OverlayHelper.renderTexture(WETNESS_OVERLAY, scaledWidth, scaledHeight, wetnessPercentage);
+                OverlayHelper.renderTexture(guiGraphics, WETNESS_OVERLAY, scaledWidth, scaledHeight, wetnessPercentage);
             }
         });
     }

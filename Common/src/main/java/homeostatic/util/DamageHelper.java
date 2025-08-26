@@ -9,7 +9,8 @@ import net.minecraft.world.damagesource.DamageType;
 public class DamageHelper {
 
     public static Holder<DamageType> getHolder(MinecraftServer server, ResourceKey<DamageType> damageType) {
-        return RegistryHelper.getRegistry(server, Registries.DAMAGE_TYPE).getHolderOrThrow(damageType);
+        return RegistryHelper.getRegistry(server, Registries.DAMAGE_TYPE).get(damageType)
+                .orElseThrow(() -> new IllegalArgumentException("Damage type not found: " + damageType));
     }
 
 }

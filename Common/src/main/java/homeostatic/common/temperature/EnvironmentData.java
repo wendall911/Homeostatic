@@ -1,15 +1,19 @@
 package homeostatic.common.temperature;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.google.common.collect.ImmutableList;
 
 import com.mojang.datafixers.util.Pair;
 
+import homeostatic.Homeostatic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -31,6 +35,7 @@ import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.biome.ClimateSettings;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.platform.Services;
+import homeostatic.util.RegistryHelper;
 import homeostatic.util.TempHelper;
 import homeostatic.util.WetnessHelper;
 
@@ -50,8 +55,7 @@ public class EnvironmentData {
      * Returns WBGT
      * See: https://en.wikipedia.org/wiki/Wet-bulb_globe_temperature
      */
-    public EnvironmentData(ServerPlayer sp, BlockPos pos, Holder<Biome> biome, ServerLevel world) {
-        LevelData info = world.getLevelData();
+    public EnvironmentData(ServerPlayer sp, BlockPos pos, Holder<Biome> biome, ServerLevel level) {
         ArrayList<Pair<Holder<Biome>, BlockPos>> biomes = new ArrayList<>();
         int chunkRange = 3;
         float accumulatedDryTemp = 0.0F;
@@ -61,15 +65,16 @@ public class EnvironmentData {
         float dayNightOffset;
         float wetTemp;
         float blackGlobeTemp;
-        EnvironmentInfo envData = Environment.get(world, sp);
+        EnvironmentInfo envData = Environment.get(level, sp);
         boolean isUnderground = envData.isUnderground();
         boolean isSheltered = envData.isSheltered();
         double waterVolume = envData.getWaterVolume();
-        Holder<Biome> lushBiome = world.registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(Biomes.LUSH_CAVES);
+        Registry<Biome> biomeRegistry = RegistryHelper.getRegistry(level.getServer(), Registries.BIOME);
+        Holder<Biome> lushBiome = biomeRegistry.wrapAsHolder(biomeRegistry.getValueOrThrow(Biomes.LUSH_CAVES));
 
         this.envRadiation = envData.getRadiation();
-        this.isPartialSubmersion = !sp.isUnderWater() && sp.isInWater() && sp.isInWaterRainOrBubble();
-        this.isSubmerged = sp.isUnderWater() && sp.isInWater() && sp.isInWaterRainOrBubble();
+        this.isPartialSubmersion = !sp.isUnderWater() && sp.isInWater() && sp.isInWaterOrRain();
+        this.isSubmerged = sp.isUnderWater() && sp.isInWater() && sp.isInWaterOrRain();
 
         if (isSubmerged) {
             moisture = 20.0F;
@@ -77,7 +82,7 @@ public class EnvironmentData {
         else if (isPartialSubmersion) {
             moisture = 10.0F;
         }
-        else if (sp.isInWaterRainOrBubble()) {
+        else if (sp.isInWaterOrRain()) {
             moisture = 0.5F;
         }
 
@@ -104,8 +109,8 @@ public class EnvironmentData {
                 for (int z = -chunkRange; z <= chunkRange; z++) {
                     BlockPos chunkPos = pos.offset(x * 16, 0, z * 16);
 
-                    if (world.isLoaded(chunkPos)) {
-                        biomes.add(Pair.of(world.getBiome(chunkPos), chunkPos));
+                    if (level.isLoaded(chunkPos)) {
+                        biomes.add(Pair.of(level.getBiome(chunkPos), chunkPos));
                     }
                 }
             }
@@ -115,23 +120,23 @@ public class EnvironmentData {
             Holder<Biome> chunkBiome = pair.getFirst();
             BlockPos chunkPos = pair.getSecond();
 
-            float chunkTemp = getHeightAdjustedTemperature(world, chunkBiome, chunkPos);
+            float chunkTemp = getHeightAdjustedTemperature(level, chunkBiome, chunkPos);
 
-            accumulatedDryTemp += isUnderground ? chunkTemp : getSeasonAdjustedTemperature(world, chunkBiome, chunkTemp, chunkPos);
+            accumulatedDryTemp += isUnderground ? chunkTemp : getSeasonAdjustedTemperature(level, chunkBiome, chunkTemp, chunkPos);
 
             // If weather is enabled
-            if (info.getGameRules().getBoolean(GameRules.RULE_WEATHER_CYCLE)) {
-                double chunkHumidity = getBiomeHumidity(world, chunkBiome, chunkPos);
+            if (level.getGameRules().getBoolean(GameRules.RULE_WEATHER_CYCLE)) {
+                double chunkHumidity = getBiomeHumidity(level, chunkBiome, chunkPos);
 
                 accumulatedHumidity += chunkHumidity;
             }
         }
 
         this.relativeHumidity = accumulatedHumidity / biomes.size();
-        dayNightOffset = isUnderground ? 0F : getDayNightOffset(world, biome, this.relativeHumidity);
+        dayNightOffset = isUnderground ? 0F : getDayNightOffset(level, biome, this.relativeHumidity);
         dryTemp = (accumulatedDryTemp / biomes.size()) + dayNightOffset;
         wetTemp = (float) TempHelper.getHeatIndex(dryTemp, this.relativeHumidity);
-        blackGlobeTemp = (float) getBlackGlobeTemp(world, pos, dryTemp, this.relativeHumidity);
+        blackGlobeTemp = (float) getBlackGlobeTemp(level, pos, dryTemp, this.relativeHumidity);
 
         if (isSheltered || isUnderground) {
             //If not exposed to solar radiation, we use the simplified formula for temperature calculation.
@@ -179,8 +184,8 @@ public class EnvironmentData {
     /*
      * Calculate current radiation where player is standing.
      */
-    private double getBlackGlobeTemp(ServerLevel world, BlockPos pos, float dryTemp, double relativeHumidity) {
-        this.envRadiation += getSunRadiation(world, pos);
+    private double getBlackGlobeTemp(ServerLevel level, BlockPos pos, float dryTemp, double relativeHumidity) {
+        this.envRadiation += getSunRadiation(level, pos);
 
         return TempHelper.getBlackGlobe(this.envRadiation, dryTemp, relativeHumidity);
     }
@@ -193,7 +198,7 @@ public class EnvironmentData {
         Biome biome = biomeHolder.value();
         ServerLevelData serverInfo = Services.PLATFORM.getServerLevelData(level);
         double biomeHumidity;
-        double maxRH = getMaxBiomeHumidity(biomeHolder, pos);
+        double maxRH = getMaxBiomeHumidity(level, biomeHolder, pos);
         double minRH = maxRH - 20;
 
         if (biome.hasPrecipitation()) {
@@ -217,10 +222,10 @@ public class EnvironmentData {
     /*
      * Based on sun angle ... do mathy things to get radiation
      */
-    private static double getSunRadiation(ServerLevel world, BlockPos pos) {
+    private static double getSunRadiation(ServerLevel level, BlockPos pos) {
         double radiation = 0.0;
-        double sunlight = world.getBrightness(LightLayer.SKY, pos.above()) - world.getSkyDarken();
-        float f = world.getSunAngle(1.0F);
+        double sunlight = level.getBrightness(LightLayer.SKY, pos.above()) - level.getSkyDarken();
+        float f = level.getSunAngle(1.0F);
 
         if (sunlight > 0) {
             float f1 = f < (float)Math.PI ? 0.0F : ((float)Math.PI * 2F);
@@ -233,10 +238,10 @@ public class EnvironmentData {
         return Math.max(radiation, 0);
     }
 
-    private static double getMaxBiomeHumidity(Holder<Biome> biomeHolder, BlockPos pos) {
+    private static double getMaxBiomeHumidity(ServerLevel level, Holder<Biome> biomeHolder, BlockPos pos) {
         BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
 
-        return biomeData.getHumidity(biomeHolder.value().getPrecipitationAt(pos));
+        return biomeData.getHumidity(biomeHolder.value().getPrecipitationAt(pos, level.getSeaLevel()));
     }
 
     private static float getWaterTemperature(float airTemperature, double waterVolume) {
@@ -255,8 +260,8 @@ public class EnvironmentData {
         return waterTemp;
     }
 
-    private static float getDayNightOffset(ServerLevel world, Holder<Biome> biome, double relativeHumidity) {
-        ResourceKey<Level> worldKey = world.dimension();
+    private static float getDayNightOffset(ServerLevel level, Holder<Biome> biome, double relativeHumidity) {
+        ResourceKey<Level> worldKey = level.dimension();
 
         /*
          * Only calculate in Overworld.
@@ -266,7 +271,7 @@ public class EnvironmentData {
         }
 
         BiomeData biomeData = BiomeRegistry.getDataForBiome(biome);
-        long time = (world.getDayTime() % 24000);
+        long time = (level.getDayTime() % 24000);
         ClimateSettings climateSettings = Services.PLATFORM.getClimateSettings(biome);
         float maxTemp = biomeData.getDayNightOffset(climateSettings.getPrecipitationType());
 
@@ -288,10 +293,10 @@ public class EnvironmentData {
         return offset * humidityOffset;
     }
 
-    private static float getHeightAdjustedTemperature(ServerLevel world, Holder<Biome> biomeHolder, BlockPos pos) {
-        ResourceKey<Level> worldKey = world.dimension();
+    private static float getHeightAdjustedTemperature(ServerLevel level, Holder<Biome> biomeHolder, BlockPos pos) {
+        ResourceKey<Level> worldKey = level.dimension();
         BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
-        Biome.Precipitation precipitation = biomeHolder.value().getPrecipitationAt(pos);
+        Biome.Precipitation precipitation = biomeHolder.value().getPrecipitationAt(pos, level.getSeaLevel());
         float temperature = biomeData.getTemperature(precipitation);
 
         /*
@@ -310,7 +315,7 @@ public class EnvironmentData {
 
         if (pos.getY() > 80) {
             float noise = (float)(TEMPERATURE_NOISE.getValue((double)((float)pos.getX() / 8.0F), (double)((float)pos.getZ() / 8.0F), false) * 8.0D);
-            return temperature - (noise + getAdjustedHeight(world, (float)pos.getY()) - 80.0F) * 0.05F / 40.0F;
+            return temperature - (noise + getAdjustedHeight(level, (float)pos.getY()) - 80.0F) * 0.05F / 40.0F;
         } else {
             return temperature;
         }
@@ -320,8 +325,8 @@ public class EnvironmentData {
      * Adjust height based on default max build height of 256.
      * Fixes math to give a corrected height even if max height has been modified.
      */
-    private static float getAdjustedHeight(ServerLevel world, float y) {
-        return y / (world.getMaxBuildHeight() / 256.0F);
+    private static float getAdjustedHeight(ServerLevel level, float y) {
+        return y / (level.getMaxY() / 256.0F);
     }
 
     private static float getSeasonAdjustedTemperature(ServerLevel level, Holder<Biome> biomeHolder, float biomeTemp, BlockPos pos) {
@@ -341,7 +346,7 @@ public class EnvironmentData {
             int season;
             float lateSummerOffset = biomeData.MC_DEGREE * 5;
             int subSeason = subSeasonHolder.ordinal();
-            float variation = biomeData.getSeasonVariation(biomeHolder.value().getPrecipitationAt(pos)) / 2.0F;
+            float variation = biomeData.getSeasonVariation(biomeHolder.value().getPrecipitationAt(pos, level.getSeaLevel())) / 2.0F;
 
             if ((subSeason + 9) <= 12) {
                 season = subSeason + 9;

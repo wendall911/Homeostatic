@@ -1,14 +1,15 @@
 package homeostatic.util;
 
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.alchemy.PotionContents;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Optional;
+
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,6 +17,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.material.Fluid;
@@ -181,27 +183,27 @@ public class WaterHelper {
 
         for (int i = 0; i < 10; ++i) {
             int pX = offsetX - i * 8 - 9;
-            guiGraphics.blit(sprite, pX, pY, pUOffset + 36, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, sprite, pX, pY, pUOffset + 36, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT, 256, 256);
 
             if (waterSaturationLevel <= 0.0F && tickCount % (waterLevel * 3 + 1) == 0) {
                 pY = offsetY + (Homeostatic.RANDOM.nextInt(3) - 1);
             }
 
             if (i * 2 + 1 < waterLevel) {
-                guiGraphics.blit(sprite, pX, pY, pU, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, sprite, pX, pY, pU, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT, 256, 256);
             }
 
             if (i * 2 + 1 == waterLevel) {
-                guiGraphics.blit(sprite, pX, pY, pU + 9, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, sprite, pX, pY, pU + 9, pV, WaterHud.BAR_WIDTH, WaterHud.BAR_HEIGHT, 256, 256);
             }
 
             if (i * 2 + 1 < waterSaturationLevel) {
-                guiGraphics.blit(sprite, pX, pY - 1, pU, pV + 9, 9, 9);
-                guiGraphics.blit(sprite, pX, pY + 1, pU + 9, pV + 9, 9, 9);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, sprite, pX, pY - 1, pU, pV + 9, 9, 9, 256, 256);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, sprite, pX, pY + 1, pU + 9, pV + 9, 9, 9, 256, 256);
             }
 
             if (i * 2 + 1 == waterSaturationLevel) {
-                guiGraphics.blit(sprite, pX, pY, pU, pV + 9, 9, 9);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, sprite, pX, pY, pU, pV + 9, 9, 9, 256, 256);
             }
         }
     }
@@ -211,9 +213,14 @@ public class WaterHelper {
     }
 
     public static ItemStack getFilledItem(ItemStack stack, ResourceLocation key, int amount) {
-        Fluid fluid = RegistryHelper.getRegistry(Registries.FLUID).get(key);
+        Optional<Holder.Reference<Fluid>> fluid = RegistryHelper.getRegistry(Registries.FLUID).get(key);
 
-        return getFilledItem(stack, fluid, amount);
+        if (fluid.isEmpty()) {
+            Homeostatic.LOGGER.warn("Fluid with key {} not found in registry", key);
+            return stack;
+        }
+
+        return getFilledItem(stack, fluid.get().value(), amount);
     }
 
 }

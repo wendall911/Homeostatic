@@ -6,16 +6,17 @@ import org.jetbrains.annotations.NotNull;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.Level;
 
 import homeostatic.common.component.HomeostaticComponents;
@@ -46,12 +47,7 @@ public class HelmetThermometer extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int pWidth, int pHeight) {
-        return pWidth * pHeight >= 2;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<HelmetThermometer> getSerializer() {
         return HomeostaticRecipes.HELMET_THERMOMETER_SERIALIZER;
     }
 
@@ -61,11 +57,12 @@ public class HelmetThermometer extends CustomRecipe {
 
         for (int i = 0; i < craftingInput.size(); i++) {
             ItemStack ingredient = craftingInput.getItem(i);
+            Equippable equippable = ingredient.get(DataComponents.EQUIPPABLE);
 
             if (ingredient.is(HomeostaticItems.THERMOMETER)) {
                 ingredients.add(ingredient);
             }
-            else if (ingredient.getItem() instanceof ArmorItem armorItem && armorItem.getEquipmentSlot() == EquipmentSlot.HEAD) {
+            else if (equippable != null && equippable.slot() == EquipmentSlot.HEAD) {
                 armor = ingredient;
             }
         }

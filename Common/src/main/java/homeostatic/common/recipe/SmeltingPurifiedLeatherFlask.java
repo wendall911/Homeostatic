@@ -19,12 +19,12 @@ public class SmeltingPurifiedLeatherFlask extends SmeltingRecipe implements IWat
 
     @Override
     public @NotNull ItemStack assemble(@NotNull SingleRecipeInput recipeInput, HolderLookup.@NotNull Provider pRegistries) {
-        return assemble(recipeInput, this.result);
+        return assemble(recipeInput, result());
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registryProvider) {
-        return getCleanWaterFilledLWaterContainer(this.result);
+    public ItemStack assemble(SingleRecipeInput recipeInput, ItemStack result) {
+        return IWaterContainerCookingRecipe.super.assemble(recipeInput, getCleanWaterFilledLWaterContainer(result));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class SmeltingPurifiedLeatherFlask extends SmeltingRecipe implements IWat
     }
 
     @Override
-    public @NotNull RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<SmeltingRecipe> getSerializer() {
         return HomeostaticRecipes.SMELTING_PURIFIED_LEATHER_FLASK_SERIALIZER;
     }
 

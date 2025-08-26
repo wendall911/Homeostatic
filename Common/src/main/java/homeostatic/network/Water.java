@@ -1,9 +1,10 @@
 package homeostatic.network;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.common.water.WaterInfo;
@@ -70,17 +71,6 @@ public class Water implements IWater {
     }
 
     @Override
-    public ListTag write() {
-        ListTag listTag = new ListTag();
-        CompoundTag tag = new CompoundTag();
-
-        write(tag);
-        listTag.add(tag);
-
-        return listTag;
-    }
-
-    @Override
     public CompoundTag write(CompoundTag tag) {
         tag.putInt("waterLevel", this.getWaterLevel());
         tag.putFloat("waterExhaustion", this.getWaterExhaustionLevel());
@@ -90,15 +80,26 @@ public class Water implements IWater {
     }
 
     @Override
-    public void read(ListTag nbt) {
-        read(nbt.getCompound(0));
+    public ValueOutput write(ValueOutput valueOutput) {
+        valueOutput.putInt("waterLevel", this.getWaterLevel());
+        valueOutput.putFloat("waterExhaustion", this.getWaterExhaustionLevel());
+        valueOutput.putFloat("waterSaturation", this.getWaterSaturationLevel());
+
+        return valueOutput;
     }
 
     @Override
     public void read(CompoundTag tag) {
-        this.setWaterLevel(tag.getInt("waterLevel"));
-        this.setWaterExhaustionLevel(tag.getFloat("waterExhaustion"));
-        this.setWaterSaturationLevel(tag.getFloat("waterSaturation"));
+        this.setWaterLevel(tag.getInt("waterLevel").orElseThrow());
+        this.setWaterExhaustionLevel(tag.getFloat("waterExhaustion").orElseThrow());
+        this.setWaterSaturationLevel(tag.getFloat("waterSaturation").orElseThrow());
+    }
+
+    @Override
+    public void read(ValueInput valueInput) {
+        this.setWaterLevel(valueInput.getIntOr("waterLevel", 0));
+        this.setWaterExhaustionLevel(valueInput.getFloatOr("waterExhaustion", 0.0F));
+        this.setWaterSaturationLevel(valueInput.getFloatOr("waterSaturation", 0.0F));
     }
 
 }

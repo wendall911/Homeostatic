@@ -6,15 +6,14 @@ import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 import homeostatic.platform.Services;
@@ -26,13 +25,8 @@ public class PurifiedWaterBottle extends Item {
     }
 
     @Override
-    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
-        return UseAnim.DRINK;
-    }
-
-    @Override
-    public @NotNull SoundEvent getEatingSound() {
-        return getDrinkingSound();
+    public @NotNull ItemUseAnimation getUseAnimation(@NotNull ItemStack stack) {
+        return ItemUseAnimation.DRINK;
     }
 
     @Override
@@ -41,12 +35,12 @@ public class PurifiedWaterBottle extends Item {
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+    public @NotNull InteractionResult use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
         if (canDrink(player)) {
             return ItemUtils.startUsingInstantly(level, player, hand);
         }
 
-        return InteractionResultHolder.fail(player.getItemInHand(hand));
+        return InteractionResult.FAIL;
     }
 
     @Override
@@ -60,13 +54,15 @@ public class PurifiedWaterBottle extends Item {
         stack.setCount(stack.getCount() - 1);
 
         if (player == null || !player.getAbilities().instabuild) {
-            if (stack.isEmpty() && getCraftingRemainingItem() != null) {
-                return new ItemStack(getCraftingRemainingItem());
+            ItemStack remainder = stack.getItem().getCraftingRemainder();
+
+            if (stack.isEmpty() && !remainder.isEmpty()) {
+                return remainder;
             }
 
-            if (player != null && getCraftingRemainingItem() != null) {
-                if (!player.getInventory().add(new ItemStack(getCraftingRemainingItem()))) {
-                    player.drop(new ItemStack(getCraftingRemainingItem()), true);
+            if (player != null && !remainder.isEmpty()) {
+                if (!player.getInventory().add(remainder)) {
+                    player.drop(remainder, true);
                 }
             }
         }

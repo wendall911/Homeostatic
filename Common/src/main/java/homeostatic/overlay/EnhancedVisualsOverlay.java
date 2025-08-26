@@ -2,8 +2,6 @@ package homeostatic.overlay;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
@@ -28,19 +26,17 @@ public class EnhancedVisualsOverlay extends Overlay {
 
         if (player == null) return;
 
-        RenderSystem.enableBlend();
-
         Services.PLATFORM.getTemperatureData(player).ifPresent(data -> {
             if (data.getSkinTemperature() > TemperatureThreshold.SCALDING_WARNING.temperature) {
                 float alpha = 0.1F + ((data.getSkinTemperature() - TemperatureThreshold.SCALDING_WARNING.temperature) * 10);
 
-                OverlayHelper.renderTexture(BURNING_OVERLAY, scaledWidth, scaledHeight, alpha);
+                OverlayHelper.renderTexture(guiGraphics, BURNING_OVERLAY, scaledWidth, scaledHeight, alpha);
             }
 
             if (data.getCoreTemperature() > TemperatureThreshold.WARNING_HIGH.temperature) {
                 float alpha = 0.1F + ((data.getCoreTemperature() - TemperatureThreshold.WARNING_HIGH.temperature) * 10);
 
-                OverlayHelper.renderTexture(HYPERTHERMIA_OVERLAY, scaledWidth, scaledHeight, alpha);
+                OverlayHelper.renderTexture(guiGraphics, HYPERTHERMIA_OVERLAY, scaledWidth, scaledHeight, alpha);
             }
         });
     }

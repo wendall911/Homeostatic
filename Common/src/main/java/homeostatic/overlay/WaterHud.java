@@ -1,14 +1,12 @@
 package homeostatic.overlay;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import org.jetbrains.annotations.Nullable;
-
-import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
@@ -35,8 +33,6 @@ public class WaterHud extends Overlay {
 
         final Gui gui = mc.gui;
 
-        RenderSystem.enableBlend();
-        RenderSystem.setShaderTexture(0, SPRITE);
         MobEffectInstance effectInstance = mc.player.getEffect(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(HomeostaticEffects.THIRST));
 
         Services.PLATFORM.getWaterCapabilty(player).ifPresent(data -> {

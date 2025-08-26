@@ -35,7 +35,7 @@ public class PatchouliHelper {
 
             switch (recipe) {
                 case "insulation" -> {
-                    ingredient = Ingredient.of(TagManager.Items.INSULATION);
+                    ingredient = IngredientHelper.fromTag(TagManager.Items.INSULATION);
                     armorStackBase = new ItemStack(Items.LEATHER_BOOTS);
                     armorStack = armorStackBase.copy();
                     armorStackTag = armorStack.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();
@@ -52,7 +52,7 @@ public class PatchouliHelper {
                     removalRecipe = true;
                 }
                 case "waterproof" -> {
-                    ingredient = Ingredient.of(TagManager.Items.WATERPROOF);
+                    ingredient = IngredientHelper.fromTag(TagManager.Items.WATERPROOF);
                     armorStackBase = new ItemStack(Items.LEATHER_HELMET);
                     armorStack = armorStackBase.copy();
                     armorStackTag = armorStack.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();
@@ -69,7 +69,7 @@ public class PatchouliHelper {
                     removalRecipe = true;
                 }
                 case "radiation_protection" -> {
-                    ingredient = Ingredient.of(TagManager.Items.RADIATION_PROTECTION);
+                    ingredient = IngredientHelper.fromTag(TagManager.Items.RADIATION_PROTECTION);
                     armorStackBase = new ItemStack(Items.LEATHER_CHESTPLATE);
                     armorStack = armorStackBase.copy();
                     armorStackTag = armorStack.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();
@@ -96,21 +96,21 @@ public class PatchouliHelper {
                 }
             }
             if (armorStackBase != null) {
-                Ingredient baseArmorIngredient = Ingredient.of(armorStackBase);
+                Ingredient baseArmorIngredient = Ingredient.of(armorStackBase.getItem());
                 NonNullList<Ingredient> armorInputs;
 
                 if (removalRecipe) {
-                    armorInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, ingredient);
+                    armorInputs = NonNullList.of(null, baseArmorIngredient, ingredient);
                 }
                 else {
-                    armorInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, ingredient, Ingredient.EMPTY, ingredient, ingredient);
+                    armorInputs = NonNullList.of(null, baseArmorIngredient, ingredient, ingredient, ingredient);
                 }
 
                 customRecipe = new ShapelessRecipe("armor.enhancement", CraftingBookCategory.EQUIPMENT, armorStack, armorInputs);
             }
             else if (leatherFlask != null) {
                 Ingredient baseFlaskIngredient = Ingredient.of(leatherFlaskBase.getItem());
-                NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseFlaskIngredient, ingredient);
+                NonNullList<Ingredient> recipeInputs = NonNullList.of(null, baseFlaskIngredient, ingredient);
 
                 customRecipe = new ShapelessRecipe("flask.filter", CraftingBookCategory.MISC, leatherFlask, recipeInputs);
             }

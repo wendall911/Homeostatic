@@ -1,7 +1,10 @@
 package homeostatic.network;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import homeostatic.common.wetness.WetnessInfo;
 
@@ -17,12 +20,12 @@ public interface IWetness {
 
     float getMoistureLevel();
 
-    ListTag write();
-
     CompoundTag write(CompoundTag tag);
 
-    void read(ListTag tag);
+    ValueOutput write(@NotNull ValueOutput tag);
 
     void read(CompoundTag tag);
+
+    void read(@NotNull ValueInput tag);
 
 }

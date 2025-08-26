@@ -1,5 +1,6 @@
 package homeostatic.util;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -11,6 +12,8 @@ import net.minecraft.world.level.material.Fluids;
 import homeostatic.common.component.HomeostaticComponents;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.platform.Services;
+
+import java.util.Optional;
 
 public class ItemStackFluidHelper {
 
@@ -25,9 +28,13 @@ public class ItemStackFluidHelper {
             setFluid(stack, Fluids.EMPTY);
         }
 
-        String fluidName = tag.getString(Services.PLATFORM.fluidStackTag());
+        Optional<String> fluidName = tag.getString(Services.PLATFORM.fluidStackTag());
 
-        return BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluidName));
+        if (fluidName.isEmpty() || fluidName.get().isEmpty()) {
+            return Fluids.EMPTY;
+        }
+
+        return BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluidName.get())).map(Holder.Reference::value).orElse(Fluids.EMPTY);
     }
 
     public static void setFluid(ItemStack stack, Fluid fluid) {
@@ -55,7 +62,7 @@ public class ItemStackFluidHelper {
             setAmount(stack, 0L);
         }
 
-        return tag.getLong("Amount");
+        return tag.getLong("Amount").orElse(0L);
     }
 
     public static void drainFluid(ItemStack stack, Long amount) {

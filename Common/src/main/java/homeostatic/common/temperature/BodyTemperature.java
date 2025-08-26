@@ -269,7 +269,7 @@ public class BodyTemperature {
         float moisture = 0.0F;
         double temp;
 
-        if (!sp.isInWaterRainOrBubble()) {
+        if (!sp.isInWaterOrRain()) {
             moisture = 0.2F * (3.0F + radiationModifier);
         }
 

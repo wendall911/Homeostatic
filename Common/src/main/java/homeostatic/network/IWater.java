@@ -1,8 +1,11 @@
 package homeostatic.network;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import homeostatic.common.water.WaterInfo;
 
@@ -28,12 +31,12 @@ public interface IWater {
 
     void checkWaterLevel(ServerPlayer player);
 
-    ListTag write();
-
     CompoundTag write(CompoundTag tag);
 
-    void read(ListTag tag);
+    ValueOutput write(@NotNull ValueOutput tag);
 
     void read(CompoundTag tag);
+
+    void read(ValueInput tag);
 
 }

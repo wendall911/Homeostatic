@@ -3,6 +3,7 @@ package homeostatic.common.effect;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,7 +17,7 @@ public class Thirst extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(@NotNull ServerLevel level, @NotNull LivingEntity entity, int amplifier) {
         if (entity instanceof ServerPlayer) {
             WaterHelper.updateWaterInfo((ServerPlayer) entity, 0.005F * (float)(amplifier + 1));
         }

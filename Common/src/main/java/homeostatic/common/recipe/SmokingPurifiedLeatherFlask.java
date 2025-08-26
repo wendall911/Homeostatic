@@ -19,12 +19,13 @@ public class SmokingPurifiedLeatherFlask extends SmokingRecipe implements IWater
 
     @Override
     public @NotNull ItemStack assemble(@NotNull SingleRecipeInput recipeInput, HolderLookup.@NotNull Provider pRegistries) {
-        return assemble(recipeInput, this.result);
+        return assemble(recipeInput, result());
     }
 
+
     @Override
-    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registryProvider) {
-        return getCleanWaterFilledLWaterContainer(this.result);
+    public ItemStack assemble(SingleRecipeInput recipeInput, ItemStack result) {
+        return IWaterContainerCookingRecipe.super.assemble(recipeInput, getCleanWaterFilledLWaterContainer(result));
     }
 
     @Override
@@ -38,7 +39,7 @@ public class SmokingPurifiedLeatherFlask extends SmokingRecipe implements IWater
     }
 
     @Override
-    public @NotNull RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<SmokingRecipe> getSerializer() {
         return HomeostaticRecipes.SMOKING_PURIFIED_LEATHER_FLASK_SERIALIZER;
     }
 

@@ -1,10 +1,10 @@
 package homeostatic.integrations.jei;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -13,14 +13,14 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.common.Internal;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.crafting.SmokingRecipe;
 
@@ -42,11 +42,6 @@ import homeostatic.integrations.SmeltingRecipeMaker;
 import homeostatic.integrations.SmokerRecipeMaker;
 import homeostatic.integrations.WaterFilterRecipeMaker;
 
-import static net.minecraft.world.item.crafting.RecipeType.CAMPFIRE_COOKING;
-import static net.minecraft.world.item.crafting.RecipeType.CRAFTING;
-import static net.minecraft.world.item.crafting.RecipeType.SMELTING;
-import static net.minecraft.world.item.crafting.RecipeType.SMOKING;
-
 @JeiPlugin
 public class JEIPlugin implements IModPlugin {
 
@@ -55,21 +50,34 @@ public class JEIPlugin implements IModPlugin {
         return Homeostatic.loc("jei_plugin");
     }
 
+    // TODO: Figure out if I can show the water recipes correctly in JEI. Currently shows Empty Flask as input.
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        Minecraft minecraft = Minecraft.getInstance();
-        RecipeManager recipeManager = Objects.requireNonNull(minecraft.level).getRecipeManager();
-        List<RecipeHolder<CraftingRecipe>> allCraftingRecipes = recipeManager.getAllRecipesFor(CRAFTING);
-        List<RecipeHolder<CraftingRecipe>> armorEnhancementRecipes = addArmorCraftingRecipes(allCraftingRecipes);
-        List<RecipeHolder<CampfireCookingRecipe>> allCampfireRecipes = recipeManager.getAllRecipesFor(CAMPFIRE_COOKING);
+        RecipeMap clientSyncedRecipes = Internal.getClientSyncedRecipes();
+
+        if (clientSyncedRecipes.values().isEmpty()) {
+            Homeostatic.LOGGER.error("JEI Recipe Registration failed: No synced recipes");
+
+            return;
+        }
+
+        Recipes recipes = new Recipes(clientSyncedRecipes);
+
+        List<RecipeHolder<CraftingRecipe>> craftingRecipes = recipes.getCraftingRecipes();
+        List<RecipeHolder<CraftingRecipe>> armorEnhancementRecipes = addArmorCraftingRecipes(craftingRecipes);
+        List<RecipeHolder<CampfireCookingRecipe>> allCampfireRecipes = recipes.getCampfireCookingRecipes();
         List<RecipeHolder<CampfireCookingRecipe>> purifiedWaterCampfireRecipes = addCampfireRecipes(allCampfireRecipes);
-        List<RecipeHolder<SmokingRecipe>> allSmokingRecipes = recipeManager.getAllRecipesFor(SMOKING);
+        List<RecipeHolder<SmokingRecipe>> allSmokingRecipes = recipes.getSmokingRecipes();
         List<RecipeHolder<SmokingRecipe>> purifiedWaterSmokingRecipes = addSmokingRecipes(allSmokingRecipes);
-        List<RecipeHolder<SmeltingRecipe>> allSmeltingRecipes = recipeManager.getAllRecipesFor(SMELTING);
+        List<RecipeHolder<SmeltingRecipe>> allSmeltingRecipes = recipes.getSmeltingRecipes();
         List<RecipeHolder<SmeltingRecipe>> purifiedWaterSmeltingRecipes = addSmeltingRecipes(allSmeltingRecipes);
 
         registration.addRecipes(RecipeTypes.CRAFTING, armorEnhancementRecipes);
-        registration.addRecipes(RecipeTypes.CRAFTING, WaterFilterRecipeMaker.getFilterCraftingRecipes("jei"));
+        List<RecipeHolder<CraftingRecipe>> waterFilterRecipes = new ArrayList<>();
+        WaterFilterRecipeMaker.getFilterCraftingRecipes("jei").forEach(pair -> {
+            waterFilterRecipes.add(pair.getSecond());
+        });
+        registration.addRecipes(RecipeTypes.CRAFTING, waterFilterRecipes);
         registration.addRecipes(RecipeTypes.CAMPFIRE_COOKING, purifiedWaterCampfireRecipes);
         registration.addRecipes(RecipeTypes.SMOKING, purifiedWaterSmokingRecipes);
         registration.addRecipes(RecipeTypes.SMELTING, purifiedWaterSmeltingRecipes);
@@ -80,16 +88,25 @@ public class JEIPlugin implements IModPlugin {
         }
     }
 
-    private static List<RecipeHolder<CraftingRecipe>> addArmorCraftingRecipes(List<RecipeHolder<CraftingRecipe>> allCraftingRecipes) {
+    private static List<RecipeHolder<CraftingRecipe>> addArmorCraftingRecipes(List<RecipeHolder<CraftingRecipe>> craftingRecipes) {
         Map<Class<? extends CraftingRecipe>, Supplier<List<RecipeHolder<CraftingRecipe>>>> replacers = new IdentityHashMap<>();
+        List<RecipeHolder<CraftingRecipe>> recipes = new ArrayList<>();
+        List<RecipeHolder<CraftingRecipe>> helmetThermometerRecipes = new ArrayList<>();
 
-        replacers.put(ArmorEnhancement.class, () -> ArmorEnhancementRecipeMaker.createRecipes("jei"));
+        ArmorEnhancementRecipeMaker.createRecipes("jei").forEach(pair -> {
+            recipes.add(pair.getSecond());
+        });
+
+        replacers.put(ArmorEnhancement.class, () -> recipes);
 
         if (ConfigHandler.Common.requireThermometer()) {
-            replacers.put(HelmetThermometer.class, () -> HelmetThermometerRecipeMaker.createRecipes("jei"));
+            HelmetThermometerRecipeMaker.createRecipes("jei").forEach(pair -> {
+                helmetThermometerRecipes.add(pair.getSecond());
+            });
+            replacers.put(HelmetThermometer.class, () -> helmetThermometerRecipes);
         }
 
-        return allCraftingRecipes.stream()
+        return craftingRecipes.stream()
             .map(RecipeHolder::value)
             .map(CraftingRecipe::getClass)
             .distinct()
@@ -99,9 +116,7 @@ public class JEIPlugin implements IModPlugin {
                 Supplier<List<RecipeHolder<CraftingRecipe>>> supplier = replacers.get(recipeClass);
 
                 try {
-                    List<RecipeHolder<CraftingRecipe>> results = supplier.get();
-
-                    return results.stream();
+                    return supplier.get().stream();
                 }
                 catch (RuntimeException e) {
                     Homeostatic.LOGGER.error("Failed to create JEI Recipes for {} {}", recipeClass, e);
@@ -112,13 +127,13 @@ public class JEIPlugin implements IModPlugin {
             .toList();
     }
 
-    private static List<RecipeHolder<CampfireCookingRecipe>> addCampfireRecipes(List<RecipeHolder<CampfireCookingRecipe>> allCraftingRecipes) {
+    private static List<RecipeHolder<CampfireCookingRecipe>> addCampfireRecipes(List<RecipeHolder<CampfireCookingRecipe>> campfireRecipes) {
         Map<Class<? extends CampfireCookingRecipe>, Supplier<List<RecipeHolder<CampfireCookingRecipe>>>> replacers = new IdentityHashMap<>();
 
         replacers.put(CampfirePurifiedLeatherFlask.class, () -> CampfireRecipeMaker.createFlaskRecipes("jei"));
         replacers.put(CampfirePurifiedWaterBottle.class, () -> CampfireRecipeMaker.createWaterBottleRecipes("jei"));
 
-        return allCraftingRecipes.stream()
+        return campfireRecipes.stream()
             .map(RecipeHolder::value)
             .map(CampfireCookingRecipe::getClass)
             .distinct()
@@ -128,9 +143,7 @@ public class JEIPlugin implements IModPlugin {
                 Supplier<List<RecipeHolder<CampfireCookingRecipe>>> supplier = replacers.get(recipeClass);
 
                 try {
-                    List<RecipeHolder<CampfireCookingRecipe>> results = supplier.get();
-
-                    return results.stream();
+                    return supplier.get().stream();
                 }
                 catch (RuntimeException e) {
                     Homeostatic.LOGGER.error("Failed to create JEI Recipes for {} {}", recipeClass, e);
@@ -141,13 +154,13 @@ public class JEIPlugin implements IModPlugin {
             .toList();
     }
 
-    private static List<RecipeHolder<SmokingRecipe>> addSmokingRecipes(List<RecipeHolder<SmokingRecipe>> allCraftingRecipes) {
+    private static List<RecipeHolder<SmokingRecipe>> addSmokingRecipes(List<RecipeHolder<SmokingRecipe>> smokingRecipes) {
         Map<Class<? extends SmokingRecipe>, Supplier<List<RecipeHolder<SmokingRecipe>>>> replacers = new IdentityHashMap<>();
 
         replacers.put(SmokingPurifiedLeatherFlask.class, () -> SmokerRecipeMaker.createFlaskRecipes("jei"));
         replacers.put(SmokingPurifiedWaterBottle.class, () -> SmokerRecipeMaker.createWaterBottleRecipes("jei"));
 
-        return allCraftingRecipes.stream()
+        return smokingRecipes.stream()
             .map(RecipeHolder::value)
             .map(SmokingRecipe::getClass)
             .distinct()
@@ -157,9 +170,7 @@ public class JEIPlugin implements IModPlugin {
                 Supplier<List<RecipeHolder<SmokingRecipe>>> supplier = replacers.get(recipeClass);
 
                 try {
-                    List<RecipeHolder<SmokingRecipe>> results = supplier.get();
-
-                    return results.stream();
+                    return supplier.get().stream();
                 }
                 catch (RuntimeException e) {
                     Homeostatic.LOGGER.error("Failed to create JEI Recipes for {} {}", recipeClass, e);
@@ -170,13 +181,13 @@ public class JEIPlugin implements IModPlugin {
             .toList();
     }
 
-    private static List<RecipeHolder<SmeltingRecipe>> addSmeltingRecipes(List<RecipeHolder<SmeltingRecipe>> allCraftingRecipes) {
+    private static List<RecipeHolder<SmeltingRecipe>> addSmeltingRecipes(List<RecipeHolder<SmeltingRecipe>> smeltingRecipes) {
         Map<Class<? extends SmeltingRecipe>, Supplier<List<RecipeHolder<SmeltingRecipe>>>> replacers = new IdentityHashMap<>();
 
         replacers.put(SmeltingPurifiedLeatherFlask.class, () -> SmeltingRecipeMaker.createFlaskRecipes("jei"));
         replacers.put(SmeltingPurifiedWaterBottle.class, () -> SmeltingRecipeMaker.createWaterBottleRecipes("jei"));
 
-        return allCraftingRecipes.stream()
+        return smeltingRecipes.stream()
             .map(RecipeHolder::value)
             .map(SmeltingRecipe::getClass)
             .distinct()
@@ -186,9 +197,7 @@ public class JEIPlugin implements IModPlugin {
                 Supplier<List<RecipeHolder<SmeltingRecipe>>> supplier = replacers.get(recipeClass);
 
                 try {
-                    List<RecipeHolder<SmeltingRecipe>> results = supplier.get();
-
-                    return results.stream();
+                    return supplier.get().stream();
                 }
                 catch (RuntimeException e) {
                     Homeostatic.LOGGER.error("Failed to create JEI Recipes for {} {}", recipeClass, e);

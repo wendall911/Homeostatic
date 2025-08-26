@@ -2,7 +2,7 @@ package homeostatic.overlay;
 
 import java.util.Objects;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import org.joml.Matrix3x2fStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -24,7 +24,7 @@ public class OverlayManager {
     private OverlayManager() {}
 
     public void render(GuiGraphics guiGraphics, Overlay overlay, boolean scaled, int rightHeight) {
-        PoseStack matrix = guiGraphics.pose();
+        Matrix3x2fStack matrix = guiGraphics.pose();
         Minecraft mc = Minecraft.getInstance();
         BlockPos pos = Objects.requireNonNull(mc.getCameraEntity()).blockPosition();
         int scaledWidth;
@@ -36,18 +36,18 @@ public class OverlayManager {
                 scaledWidth = (int) (mc.getWindow().getGuiScaledWidth() / scale);
                 scaledHeight = (int) (mc.getWindow().getGuiScaledHeight() / scale);
 
-                matrix.pushPose();
-                matrix.scale(scale, scale, scale);
+                matrix.pushMatrix();
+                matrix.scale(scale, scale);
             }
             else {
                 scaledWidth = mc.getWindow().getGuiScaledWidth();
                 scaledHeight = mc.getWindow().getGuiScaledHeight() - rightHeight;
-                matrix.pushPose();
+                matrix.pushMatrix();
             }
 
             overlay.render(guiGraphics, mc, pos, scaledWidth, scaledHeight);
 
-            matrix.popPose();
+            matrix.popMatrix();
         }
 
     }

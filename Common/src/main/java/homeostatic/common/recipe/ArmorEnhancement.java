@@ -2,17 +2,16 @@ package homeostatic.common.recipe;
 
 import java.util.List;
 
-import homeostatic.common.component.HomeostaticComponents;
 import org.jetbrains.annotations.NotNull;
 
 import com.google.common.collect.Lists;
 
 import com.mojang.datafixers.util.Pair;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
@@ -22,6 +21,7 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
+import homeostatic.common.component.HomeostaticComponents;
 import homeostatic.common.TagManager;
 
 public class ArmorEnhancement extends CustomRecipe {
@@ -74,12 +74,7 @@ public class ArmorEnhancement extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int pWidth, int pHeight) {
-        return pWidth * pHeight >= 2;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<ArmorEnhancement> getSerializer() {
         return HomeostaticRecipes.ARMOR_ENHANCEMENT_SERIALIZER;
     }
 
@@ -109,7 +104,7 @@ public class ArmorEnhancement extends CustomRecipe {
                 tagKey = TagManager.Items.RADIATION_PROTECTION;
                 ingredients.add(ingredient);
             }
-            else if (ingredient.getItem() instanceof ArmorItem) {
+            else if (ingredient.get(DataComponents.EQUIPPABLE) != null) {
                 armor = ingredient;
             }
         }

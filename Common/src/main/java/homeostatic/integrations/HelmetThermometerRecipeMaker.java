@@ -2,12 +2,16 @@ package homeostatic.integrations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -24,26 +28,26 @@ import static homeostatic.Homeostatic.loc;
 
 public final class HelmetThermometerRecipeMaker {
 
-    public static List<RecipeHolder<CraftingRecipe>> createRecipes(String plugin) {
+    public static List<Pair<ItemStack, RecipeHolder<CraftingRecipe>>> createRecipes(String plugin) {
         String group = plugin + ".helmet";
-        List<RecipeHolder<CraftingRecipe>> recipes = new ArrayList<>();
+        List<Pair<ItemStack, RecipeHolder<CraftingRecipe>>> recipes = new ArrayList<>();
         Ingredient thermometer = Ingredient.of(HomeostaticItems.THERMOMETER);
 
         RegistryHelper.getRegistry(Registries.ITEM).stream()
-                .filter(ArmorItem.class::isInstance)
-                .filter(armorItem -> ((ArmorItem) armorItem).getEquipmentSlot() == EquipmentSlot.HEAD)
+                .filter(armorItem -> armorItem.components().has(DataComponents.EQUIPPABLE))
+                .filter(armorItem -> Objects.requireNonNull(armorItem.components().get(DataComponents.EQUIPPABLE)).slot() == EquipmentSlot.HEAD)
                 .forEach(armorItem -> {
                     ItemStack armorStack = new ItemStack(armorItem);
                     Ingredient baseArmorIngredient = Ingredient.of(armorItem.asItem());
                     CompoundTag tag = armorStack.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();
-                    NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, thermometer);
+                    NonNullList<Ingredient> recipeInputs = NonNullList.of(null, baseArmorIngredient, thermometer);
 
                     tag.putBoolean("thermometer", true);
                     armorStack.set(HomeostaticComponents.ARMOR, CustomData.of(tag));
-                    recipes.add(new RecipeHolder<>(
-                        loc(group + ".thermometer"),
+                    recipes.add(Pair.of(armorStack, new RecipeHolder<>(
+                        ResourceKey.create(Registries.RECIPE, loc(group + ".thermometer")),
                         new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, armorStack, recipeInputs)
-                    ));
+                    )));
                 });
 
         return recipes;
