@@ -25,9 +25,9 @@ neoForge {
         server {
             server()
         }
-        data {
+        clientData {
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-            data()
+            clientData()
         }
     }
     mods {
@@ -48,29 +48,32 @@ dependencies {
     compileOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
     compileOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
     //compileOnly "curse.maven:create-328085:${create_forge_version}"
+    /*
+     * Unavailble for 1.21.8
     implementation "vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT"
     implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
-    compileOnly "dev.gigaherz.sewingkit:SewingKit-1.21:${sewingkit_version}"
     compileOnly "curse.maven:vampirism-233029:${vampirism_neoforge_version}"
     compileOnly "curse.maven:ecliptic-1118306:${ecliptic_neoforge_version}"
+    */
+    compileOnly "dev.gigaherz.sewingkit:SewingKit-1.21.6:${sewingkit_version}"
 
     if (System.getenv('DATA_GEN') != null) {
         //runtimeOnly "curse.maven:create-328085:${create_neoforge_version}"
-        runtimeOnly "dev.gigaherz.sewingkit:SewingKit-1.21:${sewingkit_version}"
+        runtimeOnly "dev.gigaherz.sewingkit:SewingKit-1.21.6:${sewingkit_version}"
     }
     else {
-        //runtimeOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
-        //runtimeOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
-        runtimeOnly "curse.maven:ecliptic-1118306:${ecliptic_neoforge_version}"
+        runtimeOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
+        runtimeOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
+        //runtimeOnly "curse.maven:ecliptic-1118306:${ecliptic_neoforge_version}"
         //runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
         //runtimeOnly "dev.architectury:architectury-neoforge:${architectury_version}"
         //runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
-        runtimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_neoforge_version}"
+        //runtimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_neoforge_version}"
         //runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"
         //runtimeOnly "curse.maven:configured-457570:4462839"
-        //runtimeOnly "curse.maven:biomesoplenty-220318:${bop_neoforge_version}"
+        runtimeOnly "curse.maven:biomesoplenty-220318:${bop_neoforge_version}"
         runtimeOnly "curse.maven:terrablender-940057:${terrablender_neoforge_version}"
-        runtimeOnly "curse.maven:regions-659110:${regions_neoforge_version}"
+        //runtimeOnly "curse.maven:regions-659110:${regions_neoforge_version}"
         //runtimeOnly "curse.maven:terralith-513688:5512077"
         //runtimeOnly "curse.maven:primalwinter-393321:4575861"
         //runtimeOnly "curse.maven:byg-1070751:${byg_neoforge_version}"
@@ -107,7 +110,6 @@ dependencies {
         //runtimeOnly "curse.maven:phc_crops-361385:${phc_crops_neoforge_version}"
         //runtimeOnly "curse.maven:phc_trees-365460:${phc_trees_neoforge_version}"
         //runtimeOnly "curse.maven:phc_food_extended-402231:${phc_food_extended_neoforge_version}"
-        //runtimeOnly "curse.maven:the_veggie_way-270684:${the_veggie_way_neoforge_version}"
         //runtimeOnly "curse.maven:eternal_starlight-1080592:5673629"
         //runtimeOnly "curse.maven:undergarden-379849:5651032"
         //runtimeOnly "curse.maven:colorful_hearts-854213:${colorful_hearts_neoforge_version}"
