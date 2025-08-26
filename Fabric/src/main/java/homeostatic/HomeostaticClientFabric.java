@@ -15,7 +15,8 @@ import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.event.ClientEventListener;
-import homeostatic.integrations.patchouli.PageCustomCrafting;
+// TODO uncomment when Patchouli is available
+//import homeostatic.integrations.patchouli.PageCustomCrafting;
 import homeostatic.platform.Services;
 
 public class HomeostaticClientFabric implements ClientModInitializer {
@@ -25,7 +26,7 @@ public class HomeostaticClientFabric implements ClientModInitializer {
         ClientEventListener.init();
 
         if (Services.PLATFORM.isModLoaded(ModIntegration.PATCHOULI_MODID)) {
-            PageCustomCrafting.init();
+            //PageCustomCrafting.init();
         }
 
         FluidRenderHandlerRegistry.INSTANCE.register(HomeostaticFluids.PURIFIED_WATER, HomeostaticFluids.PURIFIED_WATER_FLOWING, new SimpleFluidRenderHandler(

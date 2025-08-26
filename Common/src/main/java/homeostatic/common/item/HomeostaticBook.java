@@ -1,12 +1,12 @@
 package homeostatic.common.item;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import homeostatic.data.integration.ModIntegration;
@@ -25,14 +25,15 @@ public class HomeostaticBook extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player playerIn, InteractionHand handIn) {
+    public @NotNull InteractionResult use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
         if (Services.PLATFORM.isModLoaded(ModIntegration.PATCHOULI_MODID)) {
             if (level.isClientSide()) {
-                vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(book);
+                // TODO: Add book back once Patchouli is updated to 1.21.8+
+                //vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(book);
             }
         }
 
-        return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
+        return InteractionResult.SUCCESS.heldItemTransformedTo(player.getItemInHand(hand));
     }
 
 }

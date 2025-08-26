@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
+/* TODO Add back once PatchouliProvider is updated
 import xyz.brassgoggledcoders.patchouliprovider.BookBuilder;
 import xyz.brassgoggledcoders.patchouliprovider.CategoryBuilder;
 import xyz.brassgoggledcoders.patchouliprovider.EntryBuilder;
@@ -200,3 +201,4 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
     }
 
 }
+ */

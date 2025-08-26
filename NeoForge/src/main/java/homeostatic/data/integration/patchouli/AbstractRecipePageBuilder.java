@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.resources.ResourceLocation;
 
+/* TODO Add back once PatchouliProvider is updated
 import xyz.brassgoggledcoders.patchouliprovider.AbstractPageBuilder;
 import xyz.brassgoggledcoders.patchouliprovider.EntryBuilder;
 
@@ -48,3 +49,4 @@ public abstract class AbstractRecipePageBuilder<T extends AbstractRecipePageBuil
     }
 
 }
+*/

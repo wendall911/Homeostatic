@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 
+/* TODO Update once patchouli 1.21.8+ is released
 import vazkii.patchouli.client.book.BookContentsBuilder;
 import vazkii.patchouli.client.book.BookEntry;
 import vazkii.patchouli.client.book.ClientBookRegistry;
@@ -27,3 +28,4 @@ public class PageCustomCrafting extends PageCrafting {
     }
 
 }
+ */
