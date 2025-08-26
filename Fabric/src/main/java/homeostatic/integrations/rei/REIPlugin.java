@@ -3,7 +3,10 @@ package homeostatic.integrations.rei;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
+
+import com.mojang.datafixers.util.Pair;
 
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
@@ -17,8 +20,6 @@ import me.shedaniel.rei.plugin.common.displays.cooking.DefaultSmeltingDisplay;
 import me.shedaniel.rei.plugin.common.displays.cooking.DefaultSmokingDisplay;
 import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCustomDisplay;
 
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -37,9 +38,10 @@ import homeostatic.integrations.WaterFilterRecipeMaker;
 
 public class REIPlugin implements REIClientPlugin {
 
+    // TODO: Figure out if I can show the water recipes correctly in REI. Currently shows Empty Flask as input.
     @Override
     public void registerDisplays(DisplayRegistry helper) {
-        List<RecipeHolder<CraftingRecipe>> recipes = ArmorEnhancementRecipeMaker.createRecipes("rei");
+        List<Pair<ItemStack, RecipeHolder<CraftingRecipe>>> recipes = ArmorEnhancementRecipeMaker.createRecipes("rei");
         List<RecipeHolder<CampfireCookingRecipe>> campfireRecipes = Stream.concat(
             CampfireRecipeMaker.createFlaskRecipes("rei").stream(),
             CampfireRecipeMaker.createWaterBottleRecipes("rei").stream()
@@ -52,7 +54,6 @@ public class REIPlugin implements REIClientPlugin {
             SmeltingRecipeMaker.createFlaskRecipes("rei").stream(),
             SmeltingRecipeMaker.createWaterBottleRecipes("rei").stream()
         ).toList();
-        RegistryAccess registryAccess = RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
 
         if (!ConfigHandler.Common.requireThermometer()) {
             recipes.addAll(HelmetThermometerRecipeMaker.createRecipes("rei"));
@@ -60,14 +61,15 @@ public class REIPlugin implements REIClientPlugin {
 
         recipes.addAll(WaterFilterRecipeMaker.getFilterCraftingRecipes("rei"));
 
-        recipes.forEach(recipe -> {
+        recipes.forEach(recipePair -> {
             List<EntryIngredient> input = new ArrayList<>();
 
-            recipe.value().getIngredients().forEach(ingredient -> {
+            recipePair.getSecond().value().placementInfo().ingredients().forEach(ingredient -> {
                 input.add(EntryIngredients.ofIngredient(ingredient));
             });
 
-            helper.add(new DefaultCustomDisplay(null, input, Collections.singletonList(EntryIngredients.of(recipe.value().getResultItem(registryAccess)))));
+
+            helper.add(new DefaultCustomDisplay(input, Collections.singletonList(EntryIngredients.of(recipePair.getFirst())), Optional.of(recipePair.getSecond().id().location())));
         });
 
         campfireRecipes.forEach(recipe -> {
