@@ -45,7 +45,7 @@ minecraft {
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             args "-mixin.config=${mod_id}.mixins.json"
             mods {
-                modClientRun {
+                modServerRun {
                     source sourceSets.main
                     source project(":Common").sourceSets.main
                 }
