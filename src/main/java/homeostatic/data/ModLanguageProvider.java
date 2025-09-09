@@ -32,7 +32,7 @@ public class ModLanguageProvider extends LanguageProvider {
         addItem("purified_water_bucket", "Purified Water Bucket");
         addItem("water_filter", "Water Filter");
         addItem("thermometer", "Thermometer");
-        addFluid("purified_water_type", "Purified Water");
+        addFluid("purified_water", "Purified Water");
         addBookEntry("intro", "Temperature and hydration dynamics that don't defy logic...$(br)" +
                 "$(li)The $(l:homeostatic:education/environment)environment$() has temperature that is affected by " +
                     "$(l:https://simple.wikipedia.org/wiki/Thermal_radiation)thermal radiation$(), like sun, lava, " +
@@ -176,7 +176,7 @@ public class ModLanguageProvider extends LanguageProvider {
     }
 
     protected void addFluid(String name, String text) {
-        add("fluid_type." + Homeostatic.MODID + "." + name, text);
+        add("fluid." + Homeostatic.MODID + "." + name, text);
     }
 
     protected void addBookEntry(String name, String text) {

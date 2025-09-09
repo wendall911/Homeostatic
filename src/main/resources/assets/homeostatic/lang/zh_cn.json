@@ -6,7 +6,7 @@
   "death.attack.hyperthermia": "中暑夺走了可怜的 %1$s",
   "death.attack.hyperthermia.player": "在与 %2$s 战斗时，中暑夺走了可怜的 %1$s",
   "effect.homeostatic.thirst": "脱水",
-  "fluid_type.homeostatic.purified_water_type": "纯净水",
+  "fluid.homeostatic.purified_water": "纯净水",
   "info.homeostatic.book.education.body_temp.intro": "更多信息即将到来 ...",
   "info.homeostatic.book.education.body_temp.name": "教程：体温",
   "info.homeostatic.book.education.desc": "本节专门针对那些试图公开论证“在又湿又冷并且只穿着T恤和裤子时通过跑来跑去可以产生足够的身体热量”的人（即使你有几分超人的能力）。 这太愚蠢了。$(br)$(br)如果需要，请参阅以下页面以了解其实际工作原理。提示：无论你是跳来跳去还是跑了多少，如果身体又湿又冷，都会让你被冻死。此外，非常热的东西会烫伤、烧伤你或者把你煮熟……",
