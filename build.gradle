@@ -4,25 +4,26 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'org.spongepowered.mixin' version '0.7.+'
-    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.71.8'
-    id 'me.modmuss50.mod-publish-plugin' version '0.7.3'
+    // https://plugins.gradle.org/plugin/me.modmuss50.mod-publish-plugin
+    id 'me.modmuss50.mod-publish-plugin' version '1.0.0'
+    // https://plugins.gradle.org/plugin/se.bjurr.gitchangelog.git-changelog-gradle-plugin
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '3.0.7'
 }
 
 repositories {
     maven {
-        name = "Curse Maven"
-        url = "https://cursemaven.com"
+        name = 'Curse Maven'
+        url = 'https://cursemaven.com'
         content {
-            includeGroup "curse.maven"
+            includeGroup 'curse.maven'
         }
     }
     maven {
-        // Patchouli && Provider
-        name = "Blame Jared"
-        url = "https://maven.blamejared.com"
+        name = 'BlameJared Maven (CrT / Bookshelf / JEI (Newer) / vazkii / xyz)'
+        url = 'https://maven.blamejared.com'
     }
     maven {
-        name = "Geckolib"
+        name = 'Geckolib'
         url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
     }
     maven {
@@ -45,7 +46,7 @@ archivesBaseName = "${mod_name}"
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '17'
 
 minecraft {
-    mappings channel: "${mappings_channel}", version: mappings_version
+    mappings channel: 'parchment', version: "${mappings_version}-${minecraft_version}"
 
     runs {
         client {
@@ -100,7 +101,8 @@ dependencies {
 
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
     compileOnly fg.deobf("curse.maven:create-328085:4625533")
     compileOnly fg.deobf("curse.maven:sereneseasons-291874:${serene_seasons_version}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
@@ -112,7 +114,7 @@ dependencies {
         runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}")
     }
     else {
-        runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
+        runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
         runtimeOnly fg.deobf("curse.maven:simpletextoverlay-321283:${simpletextoverlay_version}")
         //runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}")
         //runtimeOnly fg.deobf("curse.maven:immersive_engineering-231951:4412849")
@@ -167,7 +169,7 @@ def replaceProperties = [
     'version': version, 'forge_mc_version_range': forge_mc_version_range, 'forge_version_range': forge_version_range,
     'license': license, 'mod_id': mod_id, 'mod_author': mod_author, 'mod_description': mod_description,
     'mod_name': mod_name, 'issue_tracker': issue_tracker, 'mod_credits': mod_credits,
-    'loader_version_range': loader_version_range, 'mod_update_branch': mod_update_branch
+    'mod_update_branch': mod_update_branch
 ]
 
 processResources {
@@ -216,11 +218,10 @@ def updates = tasks.register("generateUpdates", Copy) {
 }
 
 task changelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-    file = new File('build/libs/' + project.getName() + '-' + version + '-changelog.txt');
-    templateContent = file('files/templates/changelog.mustache').getText('UTF-8');
-    fromRepo = file("$projectDir");
-    toRef = "HEAD";
-    fromRef = "${minecraft_version}-${last_mod_version}";
+    file.set(new File(project(":").projectDir.toString() + '/build/libs/changelog.txt'));
+    templateContent.set(file(project(":").projectDir.toString() + '/files/templates/changelog.mustache').getText('UTF-8'));
+    toRevision.set('HEAD');
+    fromRevision.set("${minecraft_version}-${last_mod_version}");
 }
 
 tasks.build.dependsOn('changelog', 'generateUpdates')
