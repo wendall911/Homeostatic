@@ -245,7 +245,7 @@ task signJar(type: SignJar, dependsOn: jar) {
     outputFile = jar.archiveFile
 }
 
-def changelogFile = project(":").projectDir.toString() + '/build/libs/' + project.getName() + '-' + version + '-changelog.txt'
+def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
 def publishFile = project(":").projectDir.toString() + "/build/libs/${archivesBaseName}-${version}.jar"
 
 publishMods {
@@ -255,6 +255,7 @@ publishMods {
     }
     type = "${release_type}".startsWith("release") ? STABLE : ("${release_type}".startsWith("beta") ? BETA : ALPHA)
     modLoaders.addAll(['forge'])
+    dryRun = providers.environmentVariable('DO_RELEASE').getOrNull() == null
 
     if (project.hasProperty('hscurseApiKey')) {
         curseforge {
@@ -264,7 +265,6 @@ publishMods {
             clientRequired = true
             serverRequired = true
             minecraftVersions.addAll("${release_versions}".split(','))
-            embeds('spectrelib')
             optional('configured')
             optional('catalogue')
             optional('jei')
@@ -312,7 +312,5 @@ publishMods {
             optional('primal-winter')
             optional('tinkers-construct')
         }
-    }
-    if (project.hasProperty('hsGithubToken')) {
     }
 }
