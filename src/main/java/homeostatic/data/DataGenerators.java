@@ -15,7 +15,6 @@ import homeostatic.data.recipe.ModRecipesProvider;
 import homeostatic.data.recipe.SpecialRecipeProvider;
 import homeostatic.Homeostatic;
 
-
 @Mod.EventBusSubscriber(modid = Homeostatic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class DataGenerators {
 

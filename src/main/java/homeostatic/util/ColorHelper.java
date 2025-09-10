@@ -7,7 +7,6 @@ import net.minecraft.util.Tuple;
 import homeostatic.config.ConfigHandler;
 import homeostatic.common.temperature.TemperatureRange;
 
-
 public class ColorHelper {
 
     public static final Color neutral = ColorHelper.decode("#d9d8d4");

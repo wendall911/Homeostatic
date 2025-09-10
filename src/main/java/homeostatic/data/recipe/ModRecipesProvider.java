@@ -2,7 +2,8 @@ package homeostatic.data.recipe;
 
 import java.util.function.Consumer;
 
-import homeostatic.data.AdvancedCookingRecipeBuilder;
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -18,10 +19,9 @@ import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 
-import org.jetbrains.annotations.NotNull;
-
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.fluid.HomeostaticFluids;
+import homeostatic.data.AdvancedCookingRecipeBuilder;
 import homeostatic.data.integration.ConsumerWrapperBuilder;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.util.WaterHelper;
