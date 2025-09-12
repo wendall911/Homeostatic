@@ -14,6 +14,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.mcLoc;
+
 public class SimpleCookingSerializerWrapper<T extends AbstractCookingRecipe> extends SimpleCookingSerializer<T> {
 
     private final Factory<T> factory;
@@ -51,7 +53,7 @@ public class SimpleCookingSerializerWrapper<T extends AbstractCookingRecipe> ext
         }
 
         String rawResult = GsonHelper.getAsString(jsonObject, "result");
-        ResourceLocation resultId = new ResourceLocation(rawResult);
+        ResourceLocation resultId = mcLoc(rawResult);
 
         return new ItemStack(BuiltInRegistries.ITEM.getOptional(resultId).orElseThrow(
             () -> new IllegalStateException("Item: " + rawResult + " does not exist")));

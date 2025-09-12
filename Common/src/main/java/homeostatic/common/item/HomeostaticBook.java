@@ -20,7 +20,7 @@ public class HomeostaticBook extends Item {
     public HomeostaticBook(Properties pProperties, String bookId) {
         super(pProperties);
 
-        this.book = new ResourceLocation(Homeostatic.MODID, bookId);
+        this.book = Homeostatic.loc(bookId);
     }
 
     @Override

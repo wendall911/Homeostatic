@@ -7,6 +7,7 @@ import net.minecraft.world.level.Level;
 
 import homeostatic.common.temperature.SubSeason;
 
+@SuppressWarnings("removal")
 public class EclipticSeasonsHelper {
 
     public static boolean isSeasonDimension(Level level) {

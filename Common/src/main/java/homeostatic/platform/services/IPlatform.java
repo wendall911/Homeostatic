@@ -10,7 +10,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,10 +34,6 @@ public interface IPlatform {
     ResourceLocation getFluidResourceLocation(Fluid fluid);
 
     boolean isModLoaded(String name);
-
-    boolean isPhysicalClient();
-
-    Ingredient getStrictNBTIngredient(ItemStack stack);
 
     double getCreateBlockRadiation(BlockState state, Double radiation);
 

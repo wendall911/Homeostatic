@@ -22,6 +22,9 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 
 import homeostatic.common.recipe.HomeostaticRecipes;
 
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.loc;
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.mcLoc;
+
 public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
    private final Ingredient result;
    private final Ingredient ingredient;
@@ -84,8 +87,8 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
 
    public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pRecipeId) {
       this.ensureValid(pRecipeId);
-      this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
-      pFinishedRecipeConsumer.accept(new AdvancedCookingRecipeBuilder.Result(pRecipeId, this.group == null ? "" : this.group, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement, new ResourceLocation(pRecipeId.getNamespace(), "recipes/" + pRecipeId.getPath()), (RecipeSerializer<? extends AbstractCookingRecipe>) this.serializer));
+      this.advancement.parent(mcLoc("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
+      pFinishedRecipeConsumer.accept(new AdvancedCookingRecipeBuilder.Result(pRecipeId, this.group == null ? "" : this.group, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement, loc(pRecipeId.getNamespace(), "recipes/" + pRecipeId.getPath()), (RecipeSerializer<? extends AbstractCookingRecipe>) this.serializer));
    }
 
    private void ensureValid(ResourceLocation pId) {

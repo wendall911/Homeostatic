@@ -18,6 +18,7 @@ import homeostatic.common.item.HomeostaticItems;
 import homeostatic.Homeostatic;
 
 import static homeostatic.Homeostatic.loc;
+import static homeostatic.data.integration.ModIntegration.mcNamespaceLoc;
 
 public class HomeostaticBookProvider extends PatchouliBookProvider {
 
@@ -130,7 +131,7 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
             .setTitle(prefix("gameplay.hydration.title"))
             .setText(prefix("gameplay.hydration.intro")).build()
         .addTextPage(prefix("gameplay.hydration.details")).build()
-        .addCraftingPage(new ResourceLocation("minecraft", "glass_bottle"))
+        .addCraftingPage(mcNamespaceLoc("glass_bottle"))
             .setTitle(prefix("gameplay.hydration.water_bottle.title"))
             .setText(prefix("gameplay.hydration.water_bottle.text")).build()
         .addCampfirePage(loc("campfire_purified_water_bottle"))
@@ -188,7 +189,7 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
     }
 
     private ResourceLocation bookImage(String id) {
-        return new ResourceLocation(Homeostatic.MODID, "textures/gui/book/" + id + ".png");
+        return loc("textures/gui/book/" + id + ".png");
     }
 
 }

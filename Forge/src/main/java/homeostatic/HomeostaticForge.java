@@ -56,6 +56,7 @@ import homeostatic.util.RegistryHelper;
 @Mod(Homeostatic.MODID)
 public class HomeostaticForge {
 
+    @SuppressWarnings("removal")
     public HomeostaticForge() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -98,6 +99,7 @@ public class HomeostaticForge {
             CreativeTabs.init();
         }
 
+        @SuppressWarnings("removal")
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         public static void setupRegistries(FMLConstructModEvent event) {
             IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -138,6 +140,7 @@ public class HomeostaticForge {
         bind(ForgeRegistries.POTIONS.getRegistryKey(), HomeostaticPotions::init);
     }
 
+    @SuppressWarnings("removal")
     private static <T> void bind(ResourceKey<Registry<T>> registry, Consumer<BiConsumer<T, ResourceLocation>> source) {
         FMLJavaModLoadingContext.get().getModEventBus().addListener((RegisterEvent event) -> {
             if (registry.equals(event.getRegistryKey())) {

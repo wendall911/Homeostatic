@@ -8,6 +8,8 @@ import net.minecraft.world.level.material.Fluid;
 
 import homeostatic.Homeostatic;
 
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.loc;
+
 public final class TagManager {
 
     public static final class Items {
@@ -31,11 +33,11 @@ public final class TagManager {
         }
 
         private static TagKey<Item> createForge(String id) {
-            return TagKey.create(Registries.ITEM, new ResourceLocation("forge", id));
+            return TagKey.create(Registries.ITEM, loc("forge", id));
         }
 
         private static TagKey<Item> createCommon(String id) {
-            return TagKey.create(Registries.ITEM, new ResourceLocation("c", id));
+            return TagKey.create(Registries.ITEM, loc("c", id));
         }
 
     }

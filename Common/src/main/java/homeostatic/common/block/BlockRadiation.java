@@ -20,6 +20,8 @@ import homeostatic.data.integration.ModIntegration;
 import homeostatic.platform.Services;
 import homeostatic.util.TConHelper;
 
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.mcLoc;
+
 public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
 
     public double getBlockRadiation(BlockState state, double distance, boolean obscured, int y) {
@@ -108,7 +110,7 @@ public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
         public BlockRadiation deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
 
-            return new BlockRadiation(new ResourceLocation(json.get("block").getAsString()), json.get("max_radiation").getAsDouble());
+            return new BlockRadiation(mcLoc(json.get("block").getAsString()), json.get("max_radiation").getAsDouble());
         }
 
         @Override

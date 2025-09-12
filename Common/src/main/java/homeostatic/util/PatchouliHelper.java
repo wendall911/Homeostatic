@@ -99,13 +99,13 @@ public class PatchouliHelper {
                     armorInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, ingredient, Ingredient.EMPTY, ingredient, ingredient);
                 }
 
-                customRecipe = new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, recipe), "armor.enhancement", CraftingBookCategory.EQUIPMENT, armorStack, armorInputs);
+                customRecipe = new ShapelessRecipe(Homeostatic.loc(recipe), "armor.enhancement", CraftingBookCategory.EQUIPMENT, armorStack, armorInputs);
             }
             else if (leatherFlask != null) {
                 Ingredient baseFlaskIngredient = Ingredient.of(leatherFlaskBase.getItem());
                 NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseFlaskIngredient, ingredient);
 
-                customRecipe = new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, recipe), "flask.filter", CraftingBookCategory.MISC, leatherFlask, recipeInputs);
+                customRecipe = new ShapelessRecipe(Homeostatic.loc(recipe), "flask.filter", CraftingBookCategory.MISC, leatherFlask, recipeInputs);
             }
         }
 

@@ -6,7 +6,6 @@ import java.util.List;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -43,18 +42,18 @@ public final class ArmorEnhancementRecipeMaker {
 
                     if (woolArmorStackTag != null) {
                         woolArmorStackTag.putBoolean("insulation", true);
-                        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".insulated"), group, CraftingBookCategory.EQUIPMENT, woolArmorStack, insulatedInputs));
+                        recipes.add(new ShapelessRecipe(Homeostatic.loc(group + ".insulated"), group, CraftingBookCategory.EQUIPMENT, woolArmorStack, insulatedInputs));
                     }
 
                     if (waterproofArmorStackTag != null) {
                         waterproofArmorStackTag.putBoolean("waterproof", true);
-                        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".waterproof"), group, CraftingBookCategory.EQUIPMENT, waterproofArmorStack, waterproofInputs));
+                        recipes.add(new ShapelessRecipe(Homeostatic.loc(group + ".waterproof"), group, CraftingBookCategory.EQUIPMENT, waterproofArmorStack, waterproofInputs));
 
                     }
 
                     if (radiationArmorStackTag != null) {
                         radiationArmorStackTag.putBoolean("radiation_protection", true);
-                        recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".radiation_resistance"), group, CraftingBookCategory.EQUIPMENT, radiationArmorStack, radiationInputs));
+                        recipes.add(new ShapelessRecipe(Homeostatic.loc(group + ".radiation_resistance"), group, CraftingBookCategory.EQUIPMENT, radiationArmorStack, radiationInputs));
                     }
                 });
 

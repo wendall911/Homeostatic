@@ -7,21 +7,21 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.illusivesoulworks.spectrelib.config.SpectreConfigSpec;
+import technology.roughness.whitenoise.config.WhiteNoiseConfigSpec;
 
 import homeostatic.util.ColorHelper;
 
 public class ConfigHandler {
 
-    public static final SpectreConfigSpec CLIENT_SPEC;
-    public static final SpectreConfigSpec COMMON_SPEC;
+    public static final WhiteNoiseConfigSpec CLIENT_SPEC;
+    public static final WhiteNoiseConfigSpec COMMON_SPEC;
 
     private static final Client CLIENT;
     private static final Common COMMON;
 
     static {
-        final Pair<Client, SpectreConfigSpec> specPairClient = new SpectreConfigSpec.Builder().configure(Client::new);
-        final Pair<Common, SpectreConfigSpec> specPairCommon = new SpectreConfigSpec.Builder().configure(Common::new);
+        final Pair<Client, WhiteNoiseConfigSpec> specPairClient = new WhiteNoiseConfigSpec.Builder().configure(Client::new);
+        final Pair<Common, WhiteNoiseConfigSpec> specPairCommon = new WhiteNoiseConfigSpec.Builder().configure(Common::new);
 
         CLIENT_SPEC = specPairClient.getRight();
         CLIENT = specPairClient.getLeft();
@@ -38,29 +38,29 @@ public class ConfigHandler {
         private static final Predicate<Object> hexRangeValidator = s -> s instanceof String
                 && ((String) s).matches("#[a-zA-Z\\d]{6}->#[a-zA-Z\\d]{6}");
 
-        public final SpectreConfigSpec.BooleanValue useFahrenheit;
-        public final SpectreConfigSpec.BooleanValue showDegreeSymbol;
-        public final SpectreConfigSpec.ConfigValue<String> debugPosition;
-        public final SpectreConfigSpec.IntValue debugOffsetX;
-        public final SpectreConfigSpec.IntValue debugOffsetY;
-        public final SpectreConfigSpec.DoubleValue scale;
-        public final SpectreConfigSpec.ConfigValue<String> temperatureColorRange;
-        public final SpectreConfigSpec.ConfigValue<String> temperatureHudOption;
-        public final SpectreConfigSpec.ConfigValue<String> thermometerPosition;
-        public final SpectreConfigSpec.IntValue thermometerOffsetX;
-        public final SpectreConfigSpec.IntValue thermometerOffsetY;
-        public final SpectreConfigSpec.IntValue thermometerTextOffsetY;
-        public final SpectreConfigSpec.BooleanValue showThermometerRateChangeSymbols;
-        public final SpectreConfigSpec.ConfigValue<String> globePosition;
-        public final SpectreConfigSpec.IntValue globeOffsetX;
-        public final SpectreConfigSpec.IntValue globeOffsetY;
-        public final SpectreConfigSpec.IntValue globeTextOffsetY;
-        public final SpectreConfigSpec.BooleanValue forceWaterBarPosition;
-        public final SpectreConfigSpec.ConfigValue<String> waterBarPosition;
-        public final SpectreConfigSpec.IntValue waterBarOffsetX;
-        public final SpectreConfigSpec.IntValue waterBarOffsetY;
+        public final WhiteNoiseConfigSpec.BooleanValue useFahrenheit;
+        public final WhiteNoiseConfigSpec.BooleanValue showDegreeSymbol;
+        public final WhiteNoiseConfigSpec.ConfigValue<String> debugPosition;
+        public final WhiteNoiseConfigSpec.IntValue debugOffsetX;
+        public final WhiteNoiseConfigSpec.IntValue debugOffsetY;
+        public final WhiteNoiseConfigSpec.DoubleValue scale;
+        public final WhiteNoiseConfigSpec.ConfigValue<String> temperatureColorRange;
+        public final WhiteNoiseConfigSpec.ConfigValue<String> temperatureHudOption;
+        public final WhiteNoiseConfigSpec.ConfigValue<String> thermometerPosition;
+        public final WhiteNoiseConfigSpec.IntValue thermometerOffsetX;
+        public final WhiteNoiseConfigSpec.IntValue thermometerOffsetY;
+        public final WhiteNoiseConfigSpec.IntValue thermometerTextOffsetY;
+        public final WhiteNoiseConfigSpec.BooleanValue showThermometerRateChangeSymbols;
+        public final WhiteNoiseConfigSpec.ConfigValue<String> globePosition;
+        public final WhiteNoiseConfigSpec.IntValue globeOffsetX;
+        public final WhiteNoiseConfigSpec.IntValue globeOffsetY;
+        public final WhiteNoiseConfigSpec.IntValue globeTextOffsetY;
+        public final WhiteNoiseConfigSpec.BooleanValue forceWaterBarPosition;
+        public final WhiteNoiseConfigSpec.ConfigValue<String> waterBarPosition;
+        public final WhiteNoiseConfigSpec.IntValue waterBarOffsetX;
+        public final WhiteNoiseConfigSpec.IntValue waterBarOffsetY;
 
-        Client(SpectreConfigSpec.Builder builder) {
+        Client(WhiteNoiseConfigSpec.Builder builder) {
             useFahrenheit = builder
                 .comment("Use Fahrenheit, otherwise use Celcius.")
                 .define("useFahrenheit", true);
@@ -224,13 +224,13 @@ public class ConfigHandler {
     }
 
     public static final class Common {
-        public final SpectreConfigSpec.BooleanValue debugEnabled;
-        public final SpectreConfigSpec.BooleanValue showTemperatureValues;
-        public final SpectreConfigSpec.BooleanValue requireThermometer;
-        public final SpectreConfigSpec.DoubleValue randomWaterLoss;
-        public final SpectreConfigSpec.DoubleValue radiationReductionPercent;
+        public final WhiteNoiseConfigSpec.BooleanValue debugEnabled;
+        public final WhiteNoiseConfigSpec.BooleanValue showTemperatureValues;
+        public final WhiteNoiseConfigSpec.BooleanValue requireThermometer;
+        public final WhiteNoiseConfigSpec.DoubleValue randomWaterLoss;
+        public final WhiteNoiseConfigSpec.DoubleValue radiationReductionPercent;
 
-        Common(SpectreConfigSpec.Builder builder) {
+        Common(WhiteNoiseConfigSpec.Builder builder) {
             debugEnabled = builder
                 .comment("Show temperature debug info.")
                 .define("debugEnabled", false);

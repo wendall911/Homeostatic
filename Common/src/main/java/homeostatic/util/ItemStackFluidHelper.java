@@ -1,7 +1,6 @@
 package homeostatic.util;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
@@ -9,6 +8,8 @@ import net.minecraft.world.level.material.Fluids;
 import homeostatic.Homeostatic;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.platform.Services;
+
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.mcLoc;
 
 public class ItemStackFluidHelper {
 
@@ -25,7 +26,7 @@ public class ItemStackFluidHelper {
 
         String fluidName = tag.getString(Services.PLATFORM.fluidStackTag());
 
-        return Services.PLATFORM.getFluid(new ResourceLocation(fluidName));
+        return Services.PLATFORM.getFluid(mcLoc(fluidName));
     }
 
     public static void setFluid(ItemStack stack, Fluid fluid) {

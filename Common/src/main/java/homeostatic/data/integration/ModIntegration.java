@@ -2,6 +2,8 @@ package homeostatic.data.integration;
 
 import net.minecraft.resources.ResourceLocation;
 
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.loc;
+
 public class ModIntegration {
 
     public static final String ALEX_MODID = "alexsmobs";
@@ -41,123 +43,123 @@ public class ModIntegration {
     public static final String XERCA_MODID = "xercamod";
 
     public static ResourceLocation alexLoc(String path) {
-        return new ResourceLocation(ALEX_MODID, path);
+        return loc(ALEX_MODID, path);
     }
 
     public static ResourceLocation arseLoc(String path) {
-        return new ResourceLocation(ARSE_MODID, path);
+        return loc(ARSE_MODID, path);
     }
 
     public static ResourceLocation arsLoc(String path) {
-        return new ResourceLocation(ARS_MODID, path);
+        return loc(ARS_MODID, path);
     }
 
     public static ResourceLocation bopLoc(String path) {
-        return new ResourceLocation(BOP_MODID, path);
+        return loc(BOP_MODID, path);
     }
 
     public static ResourceLocation bygLoc(String path) {
-        return new ResourceLocation(BYG_MODID, path);
+        return loc(BYG_MODID, path);
     }
 
     public static ResourceLocation ccLoc(String path) {
-        return new ResourceLocation(CC_MODID, path);
+        return loc(CC_MODID, path);
     }
 
     public static ResourceLocation croptopiaLoc(String path) {
-        return new ResourceLocation(CROPTOPIA_MODID, path);
+        return loc(CROPTOPIA_MODID, path);
     }
 
     public static ResourceLocation ecoLoc(String path) {
-        return new ResourceLocation(ECO_MODID, path);
+        return loc(ECO_MODID, path);
     }
 
     public static ResourceLocation fdLoc(String path) {
-        return new ResourceLocation(FD_MODID, path);
+        return loc(FD_MODID, path);
     }
 
     public static ResourceLocation ftLoc(String path) {
-        return new ResourceLocation(FT_MODID, path);
+        return loc(FT_MODID, path);
     }
 
     public static ResourceLocation ieLoc(String path) {
-        return new ResourceLocation(IE_MODID, path);
+        return loc(IE_MODID, path);
     }
 
-    public static ResourceLocation mcLoc(String path) {
-        return new ResourceLocation(MC_MODID, path);
+    public static ResourceLocation mcNamespaceLoc(String path) {
+        return loc(MC_MODID, path);
     }
 
     public static ResourceLocation sproutLoc(String path) {
-        return new ResourceLocation(SPROUT_MODID, path);
+        return loc(SPROUT_MODID, path);
     }
 
     public static ResourceLocation morecraftLoc(String path) {
-        return new ResourceLocation(MORECRAFT_MODID, path);
+        return loc(MORECRAFT_MODID, path);
     }
 
     public static ResourceLocation xercaLoc(String path) {
-        return new ResourceLocation(XERCA_MODID, path);
+        return loc(XERCA_MODID, path);
     }
 
     public static ResourceLocation scubaLoc(String path) {
-        return new ResourceLocation(SCUBA_GEAR_MODID, path);
+        return loc(SCUBA_GEAR_MODID, path);
     }
 
     public static ResourceLocation koboldsLoc(String path) {
-        return new ResourceLocation(KOBOLDS_MODID, path);
+        return loc(KOBOLDS_MODID, path);
     }
 
     public static ResourceLocation tfLoc(String path) {
-        return new ResourceLocation(TF_MODID, path);
+        return loc(TF_MODID, path);
     }
 
     public static ResourceLocation createLoc(String path) {
-        return new ResourceLocation(CREATE_MODID, path);
+        return loc(CREATE_MODID, path);
     }
 
     public static ResourceLocation tconLoc(String path) {
-        return new ResourceLocation(TCON_MODID, path);
+        return loc(TCON_MODID, path);
     }
 
     public static ResourceLocation skLoc(String name) {
-        return new ResourceLocation(SK_MODID, name);
+        return loc(SK_MODID, name);
     }
 
     public static ResourceLocation mfLoc(String name) {
-        return new ResourceLocation(MORE_FOOD_MODID, name);
+        return loc(MORE_FOOD_MODID, name);
     }
 
     public static ResourceLocation mffLoc(String name) {
-        return new ResourceLocation(MORE_FOOD_FABRIC_MODID, name);
+        return loc(MORE_FOOD_FABRIC_MODID, name);
     }
 
     public static ResourceLocation phcLoc(String name) {
-        return new ResourceLocation(PHC_CORE_MODID, name);
+        return loc(PHC_CORE_MODID, name);
     }
 
     public static ResourceLocation pcropsLoc(String name) {
-        return new ResourceLocation(PHC_CROPS_MODID, name);
+        return loc(PHC_CROPS_MODID, name);
     }
 
     public static ResourceLocation pheLoc(String name) {
-        return new ResourceLocation(PHC_FOOD_EXTENDED_MODID, name);
+        return loc(PHC_FOOD_EXTENDED_MODID, name);
     }
 
     public static ResourceLocation veggieLoc(String name) {
-        return new ResourceLocation(VEGGIE_MODID, name);
+        return loc(VEGGIE_MODID, name);
     }
 
     public static ResourceLocation terralithLoc(String name) {
-        return new ResourceLocation(TL_MODID, name);
+        return loc(TL_MODID, name);
     }
 
     public static ResourceLocation ugLoc(String name) {
-        return new ResourceLocation(UG_MODID, name);
+        return loc(UG_MODID, name);
     }
 
     public static ResourceLocation regionsLoc(String name) {
-        return new ResourceLocation(REGIONS_MODID, name);
+        return loc(REGIONS_MODID, name);
     }
 
 }

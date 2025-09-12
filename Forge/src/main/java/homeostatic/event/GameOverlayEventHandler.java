@@ -14,6 +14,7 @@ import homeostatic.config.ConfigHandler;
 import homeostatic.overlay.OverlayManager;
 import homeostatic.Homeostatic;
 
+@SuppressWarnings("removal")
 @Mod.EventBusSubscriber(modid=Homeostatic.MODID, value= Dist.CLIENT)
 public class GameOverlayEventHandler {
 

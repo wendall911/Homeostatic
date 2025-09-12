@@ -2,10 +2,6 @@ package homeostatic.platform;
 
 import java.util.Optional;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.fabric.impl.recipe.ingredient.builtin.NbtIngredient;
-import net.fabricmc.loader.api.FabricLoader;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -15,7 +11,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -55,17 +50,7 @@ public class FabricPlatform implements IPlatform {
 
     @Override
     public boolean isModLoaded(String name) {
-        return FabricLoader.getInstance().isModLoaded(name);
-    }
-
-    @Override
-    public boolean isPhysicalClient() {
-        return FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
-    }
-
-    @Override
-    public Ingredient getStrictNBTIngredient(ItemStack stack) {
-        return new NbtIngredient(Ingredient.of(stack),stack.getTag(),true).toVanilla();
+        return technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(name);
     }
 
     @Override

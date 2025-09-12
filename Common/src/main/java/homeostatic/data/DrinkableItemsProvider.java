@@ -33,23 +33,23 @@ public class DrinkableItemsProvider implements DataProvider {
         add(loc("purified_water_bottle"), 3, 0.7F,  0, 0, 0.0F);
 
         // Minecraft
-        add(ModIntegration.mcLoc("honey_bottle"), 4, 1.0F,  0, 0, 0.0F);
-        add(ModIntegration.mcLoc("milk_bucket"), 9, 2.1F,  0, 0, 0.0F);
-        add(ModIntegration.mcLoc("enchanted_golden_apple"), 9, 2.1F,  0, 0, 0.0F);
-        add(ModIntegration.mcLoc("golden_apple"), 6, 1.2F,  0, 0, 0.0F);
-        addSoup(ModIntegration.mcLoc("beetroot_soup"));
-        addSoup(ModIntegration.mcLoc("mushroom_stew"));
-        addSoup(ModIntegration.mcLoc("rabbit_stew"));
-        addBerries(ModIntegration.mcLoc("glow_berries"));
-        addBerries(ModIntegration.mcLoc("sweet_berries"));
-        addFruit(ModIntegration.mcLoc("melon_slice"));
-        addFruit(ModIntegration.mcLoc("apple"));
-        add(ModIntegration.mcLoc("suspicious_stew"), 1, 0.0F, 45, 200, 0.3F);
-        add(ModIntegration.mcLoc("poisonous_potato"), 1, 0.0F, 45, 200, 0.2F);
-        addCake(ModIntegration.mcLoc("cake"));
-        addVeggie(ModIntegration.mcLoc("baked_potato"));
-        addVeggie(ModIntegration.mcLoc("golden_carrot"));
-        addFruit(ModIntegration.mcLoc("glistering_melon_slice"));
+        add(ModIntegration.mcNamespaceLoc("honey_bottle"), 4, 1.0F,  0, 0, 0.0F);
+        add(ModIntegration.mcNamespaceLoc("milk_bucket"), 9, 2.1F,  0, 0, 0.0F);
+        add(ModIntegration.mcNamespaceLoc("enchanted_golden_apple"), 9, 2.1F,  0, 0, 0.0F);
+        add(ModIntegration.mcNamespaceLoc("golden_apple"), 6, 1.2F,  0, 0, 0.0F);
+        addSoup(ModIntegration.mcNamespaceLoc("beetroot_soup"));
+        addSoup(ModIntegration.mcNamespaceLoc("mushroom_stew"));
+        addSoup(ModIntegration.mcNamespaceLoc("rabbit_stew"));
+        addBerries(ModIntegration.mcNamespaceLoc("glow_berries"));
+        addBerries(ModIntegration.mcNamespaceLoc("sweet_berries"));
+        addFruit(ModIntegration.mcNamespaceLoc("melon_slice"));
+        addFruit(ModIntegration.mcNamespaceLoc("apple"));
+        add(ModIntegration.mcNamespaceLoc("suspicious_stew"), 1, 0.0F, 45, 200, 0.3F);
+        add(ModIntegration.mcNamespaceLoc("poisonous_potato"), 1, 0.0F, 45, 200, 0.2F);
+        addCake(ModIntegration.mcNamespaceLoc("cake"));
+        addVeggie(ModIntegration.mcNamespaceLoc("baked_potato"));
+        addVeggie(ModIntegration.mcNamespaceLoc("golden_carrot"));
+        addFruit(ModIntegration.mcNamespaceLoc("glistering_melon_slice"));
 
         // Oh The Biomes You've Gone
         addBerries(ModIntegration.bygLoc("blueberries"));

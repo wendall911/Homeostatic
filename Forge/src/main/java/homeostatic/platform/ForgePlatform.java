@@ -2,7 +2,6 @@ package homeostatic.platform;
 
 import java.util.Optional;
 
-import homeostatic.util.EclipticSeasonsHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -12,21 +11,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ServerLevelData;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -56,6 +50,7 @@ import homeostatic.network.ForgeTemperatureData;
 import homeostatic.network.NetworkHandler;
 import homeostatic.platform.services.IPlatform;
 import homeostatic.util.CreateHelper;
+import homeostatic.util.EclipticSeasonsHelper;
 import homeostatic.util.SereneSeasonsHelper;
 
 public class ForgePlatform implements IPlatform {
@@ -67,17 +62,7 @@ public class ForgePlatform implements IPlatform {
 
     @Override
     public boolean isModLoaded(String name) {
-        return ModList.get().isLoaded(name);
-    }
-
-    @Override
-    public boolean isPhysicalClient() {
-        return FMLLoader.getDist() == Dist.CLIENT;
-    }
-
-    @Override
-    public Ingredient getStrictNBTIngredient(ItemStack stack) {
-        return StrictNBTIngredient.of(stack);
+        return technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(name);
     }
 
     @Override

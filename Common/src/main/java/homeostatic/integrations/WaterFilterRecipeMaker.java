@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -34,7 +33,7 @@ public class WaterFilterRecipeMaker {
         NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseFlaskIngredient, ingredient);
 
         recipes.add(new ShapelessRecipe(
-            new ResourceLocation(Homeostatic.MODID, group + ".purified_leather_flask"),
+            Homeostatic.loc(group + ".purified_leather_flask"),
             group,
             CraftingBookCategory.MISC,
             leatherFlask,

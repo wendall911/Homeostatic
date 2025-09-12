@@ -27,22 +27,22 @@ public class RadiationBlocksProvider implements DataProvider {
     }
 
     protected void registerRadiationBlocks() {
-        add(ModIntegration.mcLoc("soul_campfire"), 8325);
-        add(ModIntegration.mcLoc("campfire"), 5550);
-        add(ModIntegration.mcLoc("soul_fire"), 1950);
-        add(ModIntegration.mcLoc("blast_furnace"), 1800);
-        add(ModIntegration.mcLoc("lava"), 1550);
-        add(ModIntegration.mcLoc("fire"), 1300);
-        add(ModIntegration.mcLoc("furnace"), 1300);
-        add(ModIntegration.mcLoc("magma_block"), 1200);
-        add(ModIntegration.mcLoc("smoker"), 1100);
-        add(ModIntegration.mcLoc("soul_torch"), 525);
-        add(ModIntegration.mcLoc("soul_wall_torch"), 525);
-        add(ModIntegration.mcLoc("soul_lantern"), 525);
-        add(ModIntegration.mcLoc("nether_portal"), 350);
-        add(ModIntegration.mcLoc("torch"), 350);
-        add(ModIntegration.mcLoc("wall_torch"), 350);
-        add(ModIntegration.mcLoc("lantern"), 350);
+        add(ModIntegration.mcNamespaceLoc("soul_campfire"), 8325);
+        add(ModIntegration.mcNamespaceLoc("campfire"), 5550);
+        add(ModIntegration.mcNamespaceLoc("soul_fire"), 1950);
+        add(ModIntegration.mcNamespaceLoc("blast_furnace"), 1800);
+        add(ModIntegration.mcNamespaceLoc("lava"), 1550);
+        add(ModIntegration.mcNamespaceLoc("fire"), 1300);
+        add(ModIntegration.mcNamespaceLoc("furnace"), 1300);
+        add(ModIntegration.mcNamespaceLoc("magma_block"), 1200);
+        add(ModIntegration.mcNamespaceLoc("smoker"), 1100);
+        add(ModIntegration.mcNamespaceLoc("soul_torch"), 525);
+        add(ModIntegration.mcNamespaceLoc("soul_wall_torch"), 525);
+        add(ModIntegration.mcNamespaceLoc("soul_lantern"), 525);
+        add(ModIntegration.mcNamespaceLoc("nether_portal"), 350);
+        add(ModIntegration.mcNamespaceLoc("torch"), 350);
+        add(ModIntegration.mcNamespaceLoc("wall_torch"), 350);
+        add(ModIntegration.mcNamespaceLoc("lantern"), 350);
 
         // Create
         add(ModIntegration.createLoc("blaze_burner"), 8325);

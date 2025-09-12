@@ -6,7 +6,6 @@ import java.util.List;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +35,7 @@ public final class HelmetThermometerRecipeMaker {
                     NonNullList<Ingredient> recipeInputs = NonNullList.of(Ingredient.EMPTY, baseArmorIngredient, thermometer);
 
                     tag.putBoolean("thermometer", true);
-                    recipes.add(new ShapelessRecipe(new ResourceLocation(Homeostatic.MODID, group + ".thermometer"), group, CraftingBookCategory.EQUIPMENT, armorStack, recipeInputs));
+                    recipes.add(new ShapelessRecipe(Homeostatic.loc(group + ".thermometer"), group, CraftingBookCategory.EQUIPMENT, armorStack, recipeInputs));
                 });
 
         return recipes;
