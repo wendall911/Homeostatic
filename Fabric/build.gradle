@@ -1,7 +1,6 @@
 plugins {
-    id 'fabric-loom'
-    id 'maven-publish'
     id 'idea'
+    id 'fabric-loom'
     id 'me.modmuss50.mod-publish-plugin'
 }
 
@@ -21,10 +20,14 @@ dependencies {
         parchment("org.parchmentmc.data:parchment-${minecraft_version}:${mappings_version}@zip")
     })
 
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+    implementation project(":Common")
+
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
-    modImplementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_range}"
+    modImplementation group: 'technology.roughness.whitenoise', name: 'whitenoise-fabric', version: "${whitenoise_range}"
+    include group: 'technology.roughness.whitenoise', name: 'whitenoise-fabric', version: "${whitenoise_version}"
 
     modRuntimeOnly "curse.maven:architectury-419699:${architectury_version}"
     modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
@@ -39,13 +42,7 @@ dependencies {
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
     modRuntimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
 
-    modRuntimeOnly("com.terraformersmc:modmenu:${mod_menu_version}") {
-        transitive = false
-    }
-    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
-    implementation project(":Common")
-
-    include group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_version}+${minecraft_version}"
+    modLocalRuntime group: 'com.terraformersmc', name: 'modmenu', version: "${mod_menu_version}"
 
     if (System.getenv('DATA_GEN') != null) {
         // Datagen mods
@@ -68,7 +65,7 @@ dependencies {
 }
 
 loom {
-	if (project(":Common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
+    if (project(":Common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
         accessWidenerPath.set(project(":Common").file("src/main/resources/${mod_id}.accesswidener"))
     }
     mixin {
@@ -119,7 +116,8 @@ processResources {
     filesMatching("fabric.mod.json") {
         expand 'version': project.version, 'fabric_mc_version_range': project.fabric_mc_version_range, 'license': project.license,
                 'mod_id': project.mod_id, 'mod_author': project.mod_author, 'mod_description': project.mod_description,
-                'mod_name': project.mod_name, 'issue_tracker': project.issue_tracker, 'fabric_loader_min_version': fabric_loader_min_version
+                'mod_name': project.mod_name, 'issue_tracker': project.issue_tracker, 'fabric_loader_min_version': fabric_loader_min_version,
+                'java_version': project.java_version
     }
 
     filesMatching("pack.mcmeta") {
@@ -135,22 +133,17 @@ tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
 }
 
-publishing {
-    repositories {
-        maven {
-            url "file://" + System.getenv("local_maven")
-        }
-    }
-}
-
 def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
 def publishFile = project(":").projectDir.toString() + "/Fabric/build/libs/${archivesBaseName}-${version}.jar"
 
 publishMods {
     file = file(publishFile)
-    changelog = file(changelogFile).text
+    if (file(changelogFile).exists()) {
+        changelog = file(changelogFile).text
+    }
     type = "${release_type}".startsWith("release") ? STABLE : ("${release_type}".startsWith("beta") ? BETA : ALPHA)
     modLoaders.add('fabric')
+    dryRun = providers.environmentVariable('DO_RELEASE').getOrNull() == null
 
     if (project.hasProperty('hscurseApiKey')) {
         curseforge {
@@ -160,32 +153,31 @@ publishMods {
             clientRequired = true
             serverRequired = true
             minecraftVersions.addAll("${release_versions}".split(','))
-            embeds('spectrelib')
-			requires('fabric-api')
-			optional('jei')
-			optional('simpletextoverlay')
-			optional('serene-seasons')
-			optional('biomes-o-plenty')
+            requires('fabric-api')
+            optional('jei')
+            optional('simpletextoverlay')
+            optional('serene-seasons')
+            optional('biomes-o-plenty')
             optional('oh-the-biomes-weve-gone')
-			optional('croptopia')
-			optional('farmers-delight-refabricated')
-			optional('xercamod')
-			optional('kitteh6660s-morecraft')
-			optional('sophisticated-backpacks')
-			optional('ecologics')
-			optional('ars-nouveau')
-			optional('sprout')
-			optional('create-cafe')
-			optional('fruit-trees')
-			optional('leave-my-bars-alone')
-			optional('create')
-			optional('patchouli')
-			optional('scuba-gear')
-			optional('kobolds')
-			optional('the-twilight-forest')
-			optional('primal-winter')
-			optional('more-food-xd')
-			optional('terralith')
+            optional('croptopia')
+            optional('farmers-delight-refabricated')
+            optional('xercamod')
+            optional('kitteh6660s-morecraft')
+            optional('sophisticated-backpacks')
+            optional('ecologics')
+            optional('ars-nouveau')
+            optional('sprout')
+            optional('create-cafe')
+            optional('fruit-trees')
+            optional('leave-my-bars-alone')
+            optional('create')
+            optional('patchouli')
+            optional('scuba-gear')
+            optional('kobolds')
+            optional('the-twilight-forest')
+            optional('primal-winter')
+            optional('more-food-xd')
+            optional('terralith')
             optional('regions-unexplored')
         }
     }
@@ -214,7 +206,5 @@ publishMods {
             optional('terralith')
             optional('regions-unexplored')
         }
-    }
-    if (project.hasProperty('hsGithubToken')) {
     }
 }

@@ -1,9 +1,13 @@
 plugins {
-    id 'fabric-loom' version '1.10-SNAPSHOT' apply(false)
+    id 'fabric-loom' version '1.11-SNAPSHOT' apply(false)
     id 'net.minecraftforge.gradle' version '[6.0,6.2)' apply(false)
     id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT' apply(false)
     id 'org.spongepowered.mixin' version "0.7-SNAPSHOT" apply(false)
-    id 'me.modmuss50.mod-publish-plugin' version '0.7.3' apply(false)
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+' apply(false)
+    // https://plugins.gradle.org/plugin/me.modmuss50.mod-publish-plugin
+    id 'me.modmuss50.mod-publish-plugin' version '1.0.0' apply(false)
+    // https://plugins.gradle.org/plugin/se.bjurr.gitchangelog.git-changelog-gradle-plugin
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '3.0.7' apply(false)
 }
 allprojects {
     apply plugin: 'java'
@@ -47,7 +51,6 @@ subprojects {
 
     repositories {
         mavenCentral()
-        mavenLocal()
 
         maven {
             name = 'Sponge / Mixin'
@@ -66,38 +69,43 @@ subprojects {
         }
 
         maven {
-            name = "TerraformersMC (Trinkets)"
-            url = "https://maven.terraformersmc.com/"
+            name = 'TerraformersMC (Trinkets)'
+            url = 'https://maven.terraformersmc.com/'
         }
 
         maven {
-            name = "Ladysnake Libs"
-            url = "https://maven.ladysnake.org/releases"
+            name = 'Ladysnake Libs'
+            url = 'https://maven.ladysnake.org/releases'
         }
 
         maven {
             // location of the maven that hosts Mantle and JEI files
-            name = "JEI"
-            url "https://dvs1.progwml6.com/files/maven/"
+            name = 'JEI'
+            url 'https://dvs1.progwml6.com/files/maven/'
         }
 
         maven {
-            name = "Curse Maven"
-            url = "https://cursemaven.com"
+            name = 'Curse Maven'
+            url = 'https://cursemaven.com'
             content {
-                includeGroup "curse.maven"
+                includeGroup 'curse.maven'
             }
         }
 
         maven {
-            name = "C4's Maven"
+            name = 'WhiteNoise' // Library for wendall911 mods
+            url = 'https://raw.githubusercontent.com/wendall911/maven/main/'
+        }
+
+        maven {
+            name = "Illusive Soulworks"
             url = "https://maven.theillusivec4.top/"
         }
 
         maven {
             url 'https://www.dogforce-games.com/maven/'
             content {
-                includeGroup "dev.gigaherz.sewingkit"
+                includeGroup 'dev.gigaherz.sewingkit'
             }
         }
 
@@ -107,12 +115,6 @@ subprojects {
             content {
                 includeGroup('software.bernie.geckolib')
                 includeGroup('com.eliotlash.mclib')
-            }
-        }
-
-        if (project.hasProperty('localmaven')) {
-            maven {
-                url "file://" + localmaven
             }
         }
     }
