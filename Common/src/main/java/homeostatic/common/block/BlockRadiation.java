@@ -20,6 +20,8 @@ import homeostatic.data.integration.ModIntegration;
 import homeostatic.platform.Services;
 import homeostatic.util.TConHelper;
 
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.parse;
+
 public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
 
     public double getBlockRadiation(BlockState state, double distance, boolean obscured, int y) {
@@ -69,11 +71,13 @@ public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
     public double maxRadiation(BlockState state) {
         Block block = state.getBlock();
 
-        if (Services.PLATFORM.isModLoaded(ModIntegration.CREATE_MODID) && block.toString().contains(ModIntegration.CREATE_MODID)) {
+        if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.CREATE_MODID)
+                && block.toString().contains(ModIntegration.CREATE_MODID)) {
             return Services.PLATFORM.getCreateBlockRadiation(state, maxRadiation);
         }
 
-        if (Services.PLATFORM.isModLoaded(ModIntegration.TCON_MODID) && block.toString().contains(ModIntegration.TCON_MODID)) {
+        if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.TCON_MODID)
+                && block.toString().contains(ModIntegration.TCON_MODID)) {
             return TConHelper.getBlockRadiation(state, maxRadiation);
         }
 
@@ -97,7 +101,7 @@ public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
     @Override
     public String toString() {
         return "BlockRadiation[" +
-                "loc=" + loc + ", " +
+                "prefix=" + loc + ", " +
                 "maxRadiation=" + maxRadiation + ']';
     }
 
@@ -108,7 +112,7 @@ public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
         public BlockRadiation deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
 
-            return new BlockRadiation(ResourceLocation.parse(json.get("block").getAsString()), json.get("max_radiation").getAsDouble());
+            return new BlockRadiation(parse(json.get("block").getAsString()), json.get("max_radiation").getAsDouble());
         }
 
         @Override

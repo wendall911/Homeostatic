@@ -6,7 +6,7 @@ import net.minecraft.world.item.component.CustomData;
 
 import homeostatic.platform.Services;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class HomeostaticComponents {
 
@@ -14,8 +14,8 @@ public class HomeostaticComponents {
     public static final DataComponentType<CustomData> WATER_CONTAINER = DataComponentType.<CustomData>builder().persistent(CustomData.CODEC).networkSynchronized(CustomData.STREAM_CODEC).build();
 
     public static void registerDataComponents() {
-        register(loc("armor"), ARMOR);
-        register(loc("water_container"), WATER_CONTAINER);
+        register(prefix("armor"), ARMOR);
+        register(prefix("water_container"), WATER_CONTAINER);
     }
 
     private static <T> void register(ResourceLocation name, DataComponentType<T> component) {

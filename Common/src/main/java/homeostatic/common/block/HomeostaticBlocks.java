@@ -10,11 +10,11 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import homeostatic.common.fluid.HomeostaticFluids;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class HomeostaticBlocks {
 
-    public static final ResourceLocation PURIFIED_WATER_FLUID_ID = loc("purified_water_fluid");
+    public static final ResourceLocation PURIFIED_WATER_FLUID_ID = prefix("purified_water_fluid");
     public static final LiquidBlock PURIFIED_WATER_FLUID = new PurifiedWaterBlock(
         HomeostaticFluids.PURIFIED_WATER_FLOWING,
         BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).noCollission().strength(100.0F).noLootTable()

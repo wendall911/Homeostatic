@@ -9,10 +9,11 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.ItemStack;
 
+import technology.roughness.whitenoise.platform.Services;
+
 import homeostatic.common.component.HomeostaticComponents;
 import homeostatic.common.TagManager;
 import homeostatic.data.integration.ModIntegration;
-import homeostatic.platform.Services;
 
 public class TooltipEventHandler {
 

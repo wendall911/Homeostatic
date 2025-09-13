@@ -5,15 +5,18 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.illusivesoulworks.spectrelib.config.SpectreConfig;
-import com.illusivesoulworks.spectrelib.config.SpectreConfigLoader;
-
 import net.minecraft.resources.ResourceLocation;
+
+import technology.roughness.whitenoise.config.WhiteNoiseConfig;
+import technology.roughness.whitenoise.config.WhiteNoiseConfigLoader;
+
+import technology.roughness.whitenoise.platform.Services;
 
 import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.config.ConfigHandler;
-import homeostatic.platform.Services;
+
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.loc;
 
 public class Homeostatic {
 
@@ -29,16 +32,16 @@ public class Homeostatic {
     }
    
     public static void initConfig() {
-        SpectreConfigLoader.add(SpectreConfig.Type.COMMON, ConfigHandler.COMMON_SPEC, MODID);
+        WhiteNoiseConfigLoader.add(WhiteNoiseConfig.Type.COMMON, ConfigHandler.COMMON_SPEC, MODID);
 
         if (Services.PLATFORM.isPhysicalClient()) {
-            SpectreConfig clientConfig = SpectreConfigLoader.add(SpectreConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC, MODID);
+            WhiteNoiseConfig clientConfig = WhiteNoiseConfigLoader.add(WhiteNoiseConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC, MODID);
             clientConfig.addLoadListener((config, flag) -> ConfigHandler.Client.init());
         }
     }
 
-    public static ResourceLocation loc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MODID, path);
+    public static ResourceLocation prefix(String path) {
+        return loc(MODID, path);
     }
 
 }

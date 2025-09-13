@@ -19,8 +19,6 @@ import xyz.brassgoggledcoders.patchouliprovider.PatchouliBookProvider;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.Homeostatic;
 
-import static homeostatic.Homeostatic.loc;
-
 public class HomeostaticBookProvider extends PatchouliBookProvider {
 
     private final String translationLoc = "info.homeostatic.book";
@@ -103,27 +101,27 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
             .setAnchor("hypothermia")
             .setTitle(prefix("gameplay.body_temp.hypothermia.title"))
             .setText(prefix("gameplay.body_temp.hypothermia.intro")).build()
-        .addPage(new CustomRecipePageBuilder(loc("insulation"), gameplayBodyTempEntry))
+        .addPage(new CustomRecipePageBuilder(Homeostatic.prefix("insulation"), gameplayBodyTempEntry))
             .setAnchor("insulation")
             .setTitle(prefix("gameplay.body_temp.insulation.title"))
             .setText(prefix("gameplay.body_temp.insulation.text")).build()
-        .addPage(new CustomRecipePageBuilder(loc("remove_insulation"), gameplayBodyTempEntry))
+        .addPage(new CustomRecipePageBuilder(Homeostatic.prefix("remove_insulation"), gameplayBodyTempEntry))
             .setAnchor("remove_insulation")
             .setTitle(prefix("gameplay.body_temp.remove_insulation.title"))
             .setText(prefix("gameplay.body_temp.remove_insulation.text")).build()
-        .addPage(new CustomRecipePageBuilder(loc("radiation_protection"), gameplayBodyTempEntry))
+        .addPage(new CustomRecipePageBuilder(Homeostatic.prefix("radiation_protection"), gameplayBodyTempEntry))
             .setAnchor("radiation_protection")
             .setTitle(prefix("gameplay.body_temp.radiation_protection.title"))
             .setText(prefix("gameplay.body_temp.radiation_protection.text")).build()
-        .addPage(new CustomRecipePageBuilder(loc("remove_radiation_protection"), gameplayBodyTempEntry))
+        .addPage(new CustomRecipePageBuilder(Homeostatic.prefix("remove_radiation_protection"), gameplayBodyTempEntry))
             .setAnchor("remove_radiation_protection")
             .setTitle(prefix("gameplay.body_temp.remove_radiation_protection.title"))
             .setText(prefix("gameplay.body_temp.remove_radiation_protection.text")).build()
-        .addPage(new CustomRecipePageBuilder(loc("waterproof"), gameplayBodyTempEntry))
+        .addPage(new CustomRecipePageBuilder(Homeostatic.prefix("waterproof"), gameplayBodyTempEntry))
             .setAnchor("waterproofing")
             .setTitle(prefix("gameplay.body_temp.waterproof.title"))
             .setText(prefix("gameplay.body_temp.waterproof.text")).build()
-        .addPage(new CustomRecipePageBuilder(loc("remove_waterproof"), gameplayBodyTempEntry))
+        .addPage(new CustomRecipePageBuilder(Homeostatic.prefix("remove_waterproof"), gameplayBodyTempEntry))
             .setAnchor("remove_waterproofing")
             .setTitle(prefix("gameplay.body_temp.remove_waterproof.title"))
             .setText(prefix("gameplay.body_temp.remove_waterproof.text")).build();
@@ -141,19 +139,19 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
         .addCraftingPage(ResourceLocation.fromNamespaceAndPath("minecraft", "glass_bottle"))
             .setTitle(prefix("gameplay.hydration.water_bottle.title"))
             .setText(prefix("gameplay.hydration.water_bottle.text")).build()
-        .addCampfirePage(loc("campfire_purified_water_bottle"))
+        .addCampfirePage(Homeostatic.prefix("campfire_purified_water_bottle"))
             .setTitle(prefix("gameplay.hydration.water_bottle.campfire.title"))
             .setText(prefix("gameplay.hydration.water_bottle.campfire.text")).build()
-        .addCraftingPage(loc("leather_flask"))
+        .addCraftingPage(Homeostatic.prefix("leather_flask"))
             .setTitle(prefix("gameplay.hydration.leather_flask.title"))
             .setText(prefix("gameplay.hydration.leather_flask.text")).build()
-        .addSmeltingPage(loc("furnace_purified_leather_flask"))
+        .addSmeltingPage(Homeostatic.prefix("furnace_purified_leather_flask"))
             .setTitle(prefix("gameplay.hydration.leather_flask.smelting.title"))
             .setText(prefix("gameplay.hydration.leather_flask.smelting.text")).build()
-        .addCraftingPage(loc("water_filter"))
+        .addCraftingPage(Homeostatic.prefix("water_filter"))
             .setTitle(prefix("gameplay.hydration.water_filter.title"))
             .setText(prefix("gameplay.hydration.water_filter.text")).build()
-        .addPage(new CustomRecipePageBuilder(loc("filtered_water_flask"), gameplayHydrationEntry))
+        .addPage(new CustomRecipePageBuilder(Homeostatic.prefix("filtered_water_flask"), gameplayHydrationEntry))
             .setTitle(prefix("gameplay.hydration.leather_flask_water_filter.title"))
             .setText(prefix("gameplay.hydration.leather_flask_water_filter.text")).build();
 

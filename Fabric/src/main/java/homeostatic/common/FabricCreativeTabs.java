@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import homeostatic.Homeostatic;
 import homeostatic.common.item.HomeostaticItems;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class FabricCreativeTabs {
 
@@ -29,7 +29,7 @@ public class FabricCreativeTabs {
         }).build();
 
     public static void init(BiConsumer<CreativeModeTab, ResourceLocation> consumer) {
-        consumer.accept(HOMEOSTATIC_ITEM_GROUP, loc("items"));
+        consumer.accept(HOMEOSTATIC_ITEM_GROUP, prefix("items"));
     }
 
 }

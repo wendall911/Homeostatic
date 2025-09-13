@@ -11,12 +11,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 
+import technology.roughness.whitenoise.platform.Services;
+
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.event.ClientEventListener;
 import homeostatic.integrations.patchouli.PageCustomCrafting;
-import homeostatic.platform.Services;
 
 public class HomeostaticClientFabric implements ClientModInitializer {
 

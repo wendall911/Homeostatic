@@ -9,7 +9,7 @@ import net.minecraft.world.item.alchemy.Potion;
 
 import homeostatic.common.effect.HomeostaticEffects;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class HomeostaticPotions {
 
@@ -23,8 +23,8 @@ public class HomeostaticPotions {
     );
 
     public static void init(BiConsumer<Potion, ResourceLocation> consumer) {
-        consumer.accept(FROST_RESISTANCE, loc("frost_resistance"));
-        consumer.accept(LONG_FROST_RESISTANCE, loc("long_frost_resistance"));
+        consumer.accept(FROST_RESISTANCE, prefix("frost_resistance"));
+        consumer.accept(LONG_FROST_RESISTANCE, prefix("long_frost_resistance"));
     }
 
 }

@@ -15,6 +15,8 @@ import net.minecraft.util.GsonHelper;
 
 import homeostatic.common.Hydration;
 
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.parse;
+
 public record DrinkingFluid(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
 
     public static Hydration getHydration(DrinkingFluid fluid) {
@@ -28,7 +30,7 @@ public record DrinkingFluid(ResourceLocation loc, int amount, float saturation, 
             JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
 
             return new DrinkingFluid(
-                ResourceLocation.parse(json.get("fluid").getAsString()),
+                parse(json.get("fluid").getAsString()),
                 json.get("amount").getAsInt(),
                 json.get("saturation").getAsFloat(),
                 json.get("effect_potency").getAsInt(),

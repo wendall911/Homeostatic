@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import homeostatic.common.water.WaterInfo;
 import homeostatic.platform.Services;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class WaterData {
 
@@ -16,7 +16,7 @@ public class WaterData {
     private final float waterSaturationLevel;
     private final float waterExhaustionLevel;
     private final WaterInfo waterInfo;
-    public static final ResourceLocation ID = loc("water_data");
+    public static final ResourceLocation ID = prefix("water_data");
 
     public WaterData(WaterInfo waterInfo) {
         this.waterLevel = waterInfo.getWaterLevel();

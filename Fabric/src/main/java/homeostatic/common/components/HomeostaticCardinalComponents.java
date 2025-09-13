@@ -6,18 +6,18 @@ import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
 import org.ladysnake.cca.api.v3.entity.RespawnCopyStrategy;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class HomeostaticCardinalComponents implements EntityComponentInitializer {
 
     public static final ComponentKey<ComponentTemperatureData> TEMPERATURE_DATA =
-        ComponentRegistry.getOrCreate(loc("temperature_data_provider"), ComponentTemperatureData.class);
+        ComponentRegistry.getOrCreate(prefix("temperature_data_provider"), ComponentTemperatureData.class);
     public static final ComponentKey<ComponentThermometerData> THERMOMETER_DATA =
-        ComponentRegistry.getOrCreate(loc("thermometer_data_provider"), ComponentThermometerData.class);
+        ComponentRegistry.getOrCreate(prefix("thermometer_data_provider"), ComponentThermometerData.class);
     public static final ComponentKey<ComponentWaterData> WATER_DATA =
-        ComponentRegistry.getOrCreate(loc("water_data_provider"), ComponentWaterData.class);
+        ComponentRegistry.getOrCreate(prefix("water_data_provider"), ComponentWaterData.class);
     public static final ComponentKey<ComponentWetnessData> WETNESS_DATA =
-        ComponentRegistry.getOrCreate(loc("wetness_data_provider"), ComponentWetnessData.class);
+        ComponentRegistry.getOrCreate(prefix("wetness_data_provider"), ComponentWetnessData.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {

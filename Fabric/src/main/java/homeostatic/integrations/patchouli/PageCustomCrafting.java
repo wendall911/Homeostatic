@@ -11,14 +11,14 @@ import vazkii.patchouli.client.book.page.PageCrafting;
 
 import homeostatic.util.PatchouliHelper;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class PageCustomCrafting extends PageCrafting {
 
     public static void init() {
         ClientBookRegistry registry = ClientBookRegistry.INSTANCE;
 
-        registry.pageTypes.put(loc("custom_crafting"), PageCustomCrafting.class);
+        registry.pageTypes.put(prefix("custom_crafting"), PageCustomCrafting.class);
     }
 
     @Override

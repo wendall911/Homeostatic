@@ -48,7 +48,7 @@ public final class HomeostaticItems {
     }
 
     public static <T extends Item> T make(String name, T item) {
-        ResourceLocation loc = Homeostatic.loc(name);
+        ResourceLocation loc = Homeostatic.prefix(name);
 
         ALL.put(loc, item);
 

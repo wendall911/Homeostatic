@@ -13,7 +13,7 @@ import homeostatic.Homeostatic;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.data.recipe.RecipeProviderBase;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class HomeostaticRecipeProvider extends FabricRecipeProvider {
 
@@ -30,7 +30,7 @@ public class HomeostaticRecipeProvider extends FabricRecipeProvider {
     public void buildRecipes(RecipeOutput recipeOutput) {
         RecipeOutput patchouliWrapped = withConditions(recipeOutput, ResourceConditions.allModsLoaded(ModIntegration.PATCHOULI_MODID));
 
-        RecipeProviderBase.book().save(patchouliWrapped, loc("book_from_dirt"));
+        RecipeProviderBase.book().save(patchouliWrapped, prefix("book_from_dirt"));
     }
 
 }

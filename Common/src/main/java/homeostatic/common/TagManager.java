@@ -44,7 +44,7 @@ public final class TagManager {
     }
 
     public static ResourceLocation identifier(String path) {
-        return Homeostatic.loc(path);
+        return Homeostatic.prefix(path);
     }
 
 }

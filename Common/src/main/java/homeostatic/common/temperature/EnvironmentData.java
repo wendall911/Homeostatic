@@ -304,7 +304,8 @@ public class EnvironmentData {
         /*
          * If not already a snowy biome, add SNOW offset if Primal Winter mod is loaded.
          */
-        if (Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID) && precipitation != Biome.Precipitation.SNOW) {
+        if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID)
+                && precipitation != Biome.Precipitation.SNOW) {
             temperature += BiomeData.SNOW_OFFSET;
         }
 
@@ -365,7 +366,7 @@ public class EnvironmentData {
          *
          * Always will use the full season temperature variation used in RAIN calculations.
          */
-        else if (Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID)) {
+        else if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID)) {
             int season = 7;
             float variation = biomeData.getSeasonVariation(Biome.Precipitation.RAIN);
             double temp = getSeasonTemperature(season, variation, biomeTemp);

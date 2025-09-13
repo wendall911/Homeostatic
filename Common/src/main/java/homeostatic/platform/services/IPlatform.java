@@ -32,10 +32,6 @@ public interface IPlatform {
 
     ResourceLocation getFluidResourceLocation(Fluid fluid);
 
-    boolean isModLoaded(String name);
-
-    boolean isPhysicalClient();
-
     double getCreateBlockRadiation(BlockState state, Double radiation);
 
     String fluidStackTag();

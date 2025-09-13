@@ -8,14 +8,14 @@ import net.minecraft.world.entity.player.Player;
 import homeostatic.common.wetness.WetnessInfo;
 import homeostatic.platform.Services;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class WetnessData {
 
     private final int wetnessLevel;
     private final float moistureLevel;
     private final WetnessInfo wetnessInfo;
-    public static final ResourceLocation ID = loc("wetness_data");
+    public static final ResourceLocation ID = prefix("wetness_data");
 
     public WetnessData(WetnessInfo wetnessInfo) {
         this.wetnessLevel = wetnessInfo.getWetnessLevel();

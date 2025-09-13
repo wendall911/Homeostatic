@@ -16,7 +16,7 @@ import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.common.recipe.PurifiedLeatherFlask;
 import homeostatic.common.recipe.RemoveArmorEnhancement;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class CommonRecipeProvider extends RecipeProvider {
 
@@ -46,15 +46,15 @@ public class CommonRecipeProvider extends RecipeProvider {
             (SimpleCraftingRecipeSerializer<?>) HomeostaticRecipes.REMOVE_ARMOR_ENHANCEMENT_SERIALIZER,
             RemoveArmorEnhancement::new
         );
-        RecipeProviderBase.cleanWaterFlaskSmelting().save(recipeOutput, loc("furnace_purified_leather_flask"));
-        RecipeProviderBase.cleanWaterFlaskCampfire().save(recipeOutput, loc("campfire_purified_leather_flask"));
-        RecipeProviderBase.cleanWaterFlaskSmoking().save(recipeOutput, loc("smoking_purified_leather_flask"));
+        RecipeProviderBase.cleanWaterFlaskSmelting().save(recipeOutput, prefix("furnace_purified_leather_flask"));
+        RecipeProviderBase.cleanWaterFlaskCampfire().save(recipeOutput, prefix("campfire_purified_leather_flask"));
+        RecipeProviderBase.cleanWaterFlaskSmoking().save(recipeOutput, prefix("smoking_purified_leather_flask"));
         RecipeProviderBase.leatherFlask().save(recipeOutput);
         RecipeProviderBase.waterFilter().save(recipeOutput);
         RecipeProviderBase.thermometer().save(recipeOutput);
-        RecipeProviderBase.cleanWaterBottleSmelting().save(recipeOutput, loc("furnace_purified_water_bottle"));
-        RecipeProviderBase.cleanWaterBottleCampfire().save(recipeOutput, loc("campfire_purified_water_bottle"));
-        RecipeProviderBase.cleanWaterBottleSmoking().save(recipeOutput, loc("smoking_purified_water_bottle"));
+        RecipeProviderBase.cleanWaterBottleSmelting().save(recipeOutput, prefix("furnace_purified_water_bottle"));
+        RecipeProviderBase.cleanWaterBottleCampfire().save(recipeOutput, prefix("campfire_purified_water_bottle"));
+        RecipeProviderBase.cleanWaterBottleSmoking().save(recipeOutput, prefix("smoking_purified_water_bottle"));
     }
 
 }

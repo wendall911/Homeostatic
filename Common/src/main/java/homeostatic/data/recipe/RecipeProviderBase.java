@@ -20,7 +20,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -37,7 +36,7 @@ import net.minecraft.world.level.ItemLike;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.data.AdvancedCookingRecipeBuilder;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public abstract class RecipeProviderBase {
 
@@ -51,7 +50,7 @@ public abstract class RecipeProviderBase {
     protected static void specialRecipe(RecipeOutput exporter, SimpleCraftingRecipeSerializer<?> serializer, Function<CraftingBookCategory, Recipe<?>> recipeFunction) {
         ResourceLocation name = BuiltInRegistries.RECIPE_SERIALIZER.getKey(serializer);
 
-        SpecialRecipeBuilder.special(recipeFunction).save(exporter, loc("dynamic/" + Objects.requireNonNull(name).getPath()).toString());
+        SpecialRecipeBuilder.special(recipeFunction).save(exporter, prefix("dynamic/" + Objects.requireNonNull(name).getPath()).toString());
     }
 
     private static Criterion<InventoryChangeTrigger.TriggerInstance> has(TagKey<Item> pTag) {

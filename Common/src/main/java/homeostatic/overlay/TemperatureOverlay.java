@@ -27,7 +27,7 @@ import homeostatic.util.TempHelper;
 
 public class TemperatureOverlay extends Overlay {
 
-    public final static ResourceLocation SPRITE = Homeostatic.loc("textures/gui/icons.png");
+    public final static ResourceLocation SPRITE = Homeostatic.prefix("textures/gui/icons.png");
     protected final static int ICON_WIDTH = 13;
     protected final static int ICON_HEIGHT = 26;
 

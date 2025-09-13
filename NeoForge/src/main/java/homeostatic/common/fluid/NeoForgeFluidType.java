@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class NeoForgeFluidType {
 
@@ -44,7 +44,7 @@ public class NeoForgeFluidType {
 
         };
 
-        registryHelper.register(loc("purified_water_type"), PURIFIED_WATER_TYPE);
+        registryHelper.register(prefix("purified_water_type"), PURIFIED_WATER_TYPE);
     }
 
 }

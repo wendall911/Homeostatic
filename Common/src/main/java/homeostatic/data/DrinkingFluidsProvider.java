@@ -29,7 +29,7 @@ public class DrinkingFluidsProvider implements DataProvider {
 
     protected void addDrinkingFluids() {
         add(ModIntegration.mcLoc("water"), 1, 0.0F, 45, 200, 0.2F);
-        add(Homeostatic.loc("purified_water"), 3, 0.7F,  0, 0, 0.0F);
+        add(Homeostatic.prefix("purified_water"), 3, 0.7F,  0, 0, 0.0F);
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {

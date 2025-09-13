@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.event.GameOverlayEventHandler;
-import homeostatic.platform.Services;
+import technology.roughness.whitenoise.platform.Services;
 
 @Mixin(Gui.class)
 public abstract class NeoForgeGuiMixin {

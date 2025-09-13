@@ -8,10 +8,11 @@ import homeostatic.platform.Services;
 public class VampirismHelper {
 
     public static boolean isVampire(Player player) {
-        if (Services.PLATFORM.isModLoaded(ModIntegration.VAMPIRISM_MODID)) {
+        if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.VAMPIRISM_MODID)) {
             return Services.PLATFORM.isVampire(player);
         }
 
         return false;
     }
+
 }

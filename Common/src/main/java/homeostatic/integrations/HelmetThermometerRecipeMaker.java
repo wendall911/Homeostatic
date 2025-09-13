@@ -20,7 +20,7 @@ import homeostatic.common.component.HomeostaticComponents;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.util.RegistryHelper;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public final class HelmetThermometerRecipeMaker {
 
@@ -41,7 +41,7 @@ public final class HelmetThermometerRecipeMaker {
                     tag.putBoolean("thermometer", true);
                     armorStack.set(HomeostaticComponents.ARMOR, CustomData.of(tag));
                     recipes.add(new RecipeHolder<>(
-                        loc(group + ".thermometer"),
+                        prefix(group + ".thermometer"),
                         new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, armorStack, recipeInputs)
                     ));
                 });

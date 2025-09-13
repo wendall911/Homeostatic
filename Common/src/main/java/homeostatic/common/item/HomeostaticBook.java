@@ -9,10 +9,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import homeostatic.data.integration.ModIntegration;
-import homeostatic.platform.Services;
+import technology.roughness.whitenoise.platform.Services;
 
-import static homeostatic.Homeostatic.loc;
+import homeostatic.data.integration.ModIntegration;
+
+import static homeostatic.Homeostatic.prefix;
 
 public class HomeostaticBook extends Item {
 
@@ -21,7 +22,7 @@ public class HomeostaticBook extends Item {
     public HomeostaticBook(Properties pProperties, String bookId) {
         super(pProperties);
 
-        this.book = loc(bookId);
+        this.book = prefix(bookId);
     }
 
     @Override

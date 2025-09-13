@@ -13,11 +13,11 @@ import net.minecraft.world.level.material.Fluids;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.data.integration.ModIntegration;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class MixingRecipeProvider extends ProcessingRecipeGen {
 
-    GeneratedRecipe PURIFIED_WATER = create(loc("purified_water"), b -> b.require(Fluids.WATER, 1000)
+    GeneratedRecipe PURIFIED_WATER = create(prefix("purified_water"), b -> b.require(Fluids.WATER, 1000)
         .output(HomeostaticFluids.PURIFIED_WATER, 1000)
         .requiresHeat(HeatCondition.HEATED)
         .whenModLoaded(ModIntegration.CREATE_MODID)

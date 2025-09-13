@@ -19,7 +19,7 @@ import homeostatic.common.component.HomeostaticComponents;
 import homeostatic.common.TagManager;
 import homeostatic.util.RegistryHelper;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public final class ArmorEnhancementRecipeMaker {
 
@@ -47,21 +47,21 @@ public final class ArmorEnhancementRecipeMaker {
                     woolArmorStackTag.putBoolean("insulation", true);
                     woolArmorStack.set(HomeostaticComponents.ARMOR, CustomData.of(woolArmorStackTag));
                     recipes.add(new RecipeHolder<>(
-                        loc(group + ".insulated"),
+                        prefix(group + ".insulated"),
                         new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, woolArmorStack, insulatedInputs)
                     ));
 
                     waterproofArmorStackTag.putBoolean("waterproof", true);
                     waterproofArmorStack.set(HomeostaticComponents.ARMOR, CustomData.of(waterproofArmorStackTag));
                     recipes.add(new RecipeHolder<>(
-                        loc(group + ".waterproof"),
+                        prefix(group + ".waterproof"),
                         new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, waterproofArmorStack, waterproofInputs)
                     ));
 
                     radiationArmorStackTag.putBoolean("radiation_protection", true);
                     radiationArmorStack.set(HomeostaticComponents.ARMOR, CustomData.of(radiationArmorStackTag));
                     recipes.add(new RecipeHolder<>(
-                        loc(group + ".radiation_resistance"),
+                        prefix(group + ".radiation_resistance"),
                         new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, radiationArmorStack, radiationInputs)
                     ));
                 });

@@ -15,11 +15,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ServerLevelData;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.network.PacketDistributor;
+
+import technology.roughness.whitenoise.platform.Services;
 
 import homeostatic.common.attachments.TemperatureData;
 import homeostatic.common.attachments.ThermometerData;
@@ -58,16 +57,6 @@ public class NeoForgePlatform implements IPlatform {
     @Override
     public ResourceLocation getFluidResourceLocation(Fluid fluid) {
         return BuiltInRegistries.FLUID.getKey(fluid);
-    }
-
-    @Override
-    public boolean isModLoaded(String name) {
-        return ModList.get().isLoaded(name);
-    }
-
-    @Override
-    public boolean isPhysicalClient() {
-        return FMLLoader.getDist() == Dist.CLIENT;
     }
 
     @Override
@@ -137,10 +126,12 @@ public class NeoForgePlatform implements IPlatform {
 
     @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
-        if (isModLoaded(ModIntegration.SS_MODID) && SereneSeasonsForgeHelper.isSeasonDimension(level)) {
+        if (Services.PLATFORM.isModLoaded(ModIntegration.SS_MODID)
+                && SereneSeasonsForgeHelper.isSeasonDimension(level)) {
             return SereneSeasonsForgeHelper.getSubSeason(level);
         }
-        else if(isModLoaded(ModIntegration.ECLIPTIC_MODID) && EclipticSeasonsHelper.isSeasonDimension(level)) {
+        else if(Services.PLATFORM.isModLoaded(ModIntegration.ECLIPTIC_MODID)
+                && EclipticSeasonsHelper.isSeasonDimension(level)) {
             return EclipticSeasonsHelper.getSubSeason(level);
         }
 

@@ -16,7 +16,6 @@ public class HomeostaticCommonEvents {
 
     @SubscribeEvent
     public static void registerPotionRecipes(RegisterBrewingRecipesEvent event) {
-        Homeostatic.LOGGER.warn("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX: Registering potion recipes");
         PotionBrewing.Builder builder = event.getBuilder();
 
         builder.addMix(
