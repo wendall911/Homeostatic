@@ -10,15 +10,14 @@ dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings(loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${parchment_mc_version}:${parchment_version}@zip")
+        parchment("org.parchmentmc.data:parchment-${minecraft_version}:${mappings_version}@zip")
     })
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
-    modImplementation "com.illusivesoulworks.spectrelib:spectrelib-fabric:${spectrelib_version}"
-    include "com.illusivesoulworks.spectrelib:spectrelib-fabric:${spectrelib_version}"
-    include group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_version}"
+    modImplementation group: 'technology.roughness.whitenoise', name: 'whitenoise-fabric', version: "${whitenoise_range}"
+    include group: 'technology.roughness.whitenoise', name: 'whitenoise-fabric', version: "${whitenoise_version}"
 
     modApi "dev.architectury:architectury-fabric:${architectury_version}"
     modApi("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
@@ -45,9 +44,7 @@ dependencies {
     modRuntimeOnly "net.jodah:typetools:0.6.3"
     modImplementation "com.electronwill.night-config:core:3.6.7"
 
-    modRuntimeOnly("com.terraformersmc:modmenu:${mod_menu_version}") {
-        transitive = false
-    }
+    modLocalRuntime group: 'com.terraformersmc', name: 'modmenu', version: "${mod_menu_version}"
 
     if (System.getenv('DATA_GEN') != null) {
         // Datagen mods
@@ -129,9 +126,12 @@ def publishFile = project(":").projectDir.toString() + "/Fabric/build/libs/${arc
 
 publishMods {
     file = file(publishFile)
-    changelog = file(changelogFile).text
+    if (file(changelogFile).exists()) {
+        changelog = file(changelogFile).text
+    }
     type = "${release_type}".startsWith("release") ? STABLE : ("${release_type}".startsWith("beta") ? BETA : ALPHA)
     modLoaders.add('fabric')
+    dryRun = providers.environmentVariable('DO_RELEASE').getOrNull() == null
 
     if (project.hasProperty('hscurseApiKey')) {
         curseforge {
@@ -141,29 +141,28 @@ publishMods {
             clientRequired = true
             serverRequired = true
             minecraftVersions.addAll("${release_versions}".split(','))
-            embeds('spectrelib')
-			requires('fabric-api')
-			optional('jei')
-			optional('simpletextoverlay')
-			optional('serene-seasons')
-			optional('biomes-o-plenty')
+            requires('fabric-api')
+            optional('jei')
+            optional('simpletextoverlay')
+            optional('serene-seasons')
+            optional('biomes-o-plenty')
             optional('oh-the-biomes-weve-gone')
-			optional('croptopia')
-			optional('farmers-delight-refabricated')
-			optional('xercamod')
-			optional('kitteh6660s-morecraft')
-			optional('sophisticated-backpacks')
-			optional('ecologics')
-			optional('sprout')
-			optional('create-cafe')
-			optional('fruit-trees')
-			optional('leave-my-bars-alone')
-			optional('create')
-			optional('patchouli')
-			optional('primal-winter')
-			optional('more-food-xd')
-			optional('eternal-starlight')
-			optional('terralith')
+            optional('croptopia')
+            optional('farmers-delight-refabricated')
+            optional('xercamod')
+            optional('kitteh6660s-morecraft')
+            optional('sophisticated-backpacks')
+            optional('ecologics')
+            optional('sprout')
+            optional('create-cafe')
+            optional('fruit-trees')
+            optional('leave-my-bars-alone')
+            optional('create')
+            optional('patchouli')
+            optional('primal-winter')
+            optional('more-food-xd')
+            optional('eternal-starlight')
+            optional('terralith')
             optional('regions-unexplored')
         }
     }
@@ -190,7 +189,5 @@ publishMods {
             optional('terralith')
             optional('regions-unexplored')
         }
-    }
-    if (project.hasProperty('hsGithubToken')) {
     }
 }

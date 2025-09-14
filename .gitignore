@@ -1,12 +1,9 @@
 # gradle
 build
 .gradle
-libs
 run
 runs
 
 # IntelliJ
 .idea
-
-#mappings
-mappings/mcp
+*.iml

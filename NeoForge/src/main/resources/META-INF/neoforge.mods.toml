@@ -1,18 +1,19 @@
 modLoader="javafml"
-loaderVersion="[1,)"
+loaderVersion = "${neoforge_loader_version_range}"
 license="${license}"
 issueTrackerURL="${issue_tracker}"
-
 [[mods]]
-  modId="${mod_id}"
-  displayName="${mod_name}"
-  description='''${mod_description}'''
-  version="${version}"
-  updateJSONURL="https://raw.githubusercontent.com/wendall911/Homeostatic/${mod_update_branch}/files/updates.json"
-  authors="${mod_author}"
-  credits="${mod_credits}"
-  logoFile="${mod_id}_icon.png"
-  itemIcon="minecraft:bubble_column"
+    modId="${mod_id}"
+    version="${version}"
+    displayName="${mod_name}"
+    updateJSONURL="https://raw.githubusercontent.com/wendall911/Homeostatic/${mod_update_branch}/files/updates.json"
+    displayURL="${mod_url}"
+    logoFile="${mod_id}_icon.png"
+    credits="${mod_credits}"
+    authors="${mod_author}"
+    description='''
+    ${mod_description}
+    '''
 [[mixins]]
     config = "${mod_id}.mixins.json"
 [[mixins]]
