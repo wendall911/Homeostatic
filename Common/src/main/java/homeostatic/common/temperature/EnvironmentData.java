@@ -7,7 +7,6 @@ import com.google.common.collect.ImmutableList;
 
 import com.mojang.datafixers.util.Pair;
 
-import homeostatic.Homeostatic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -34,6 +33,7 @@ import homeostatic.common.biome.BiomeData;
 import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.biome.ClimateSettings;
 import homeostatic.data.integration.ModIntegration;
+import homeostatic.Homeostatic;
 import homeostatic.platform.Services;
 import homeostatic.util.RegistryHelper;
 import homeostatic.util.TempHelper;
@@ -309,7 +309,8 @@ public class EnvironmentData {
         /*
          * If not already a snowy biome, add SNOW offset if Primal Winter mod is loaded.
          */
-        if (Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID) && precipitation != Biome.Precipitation.SNOW) {
+        if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID)
+                && precipitation != Biome.Precipitation.SNOW) {
             temperature += BiomeData.SNOW_OFFSET;
         }
 
@@ -370,7 +371,7 @@ public class EnvironmentData {
          *
          * Always will use the full season temperature variation used in RAIN calculations.
          */
-        else if (Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID)) {
+        else if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID)) {
             int season = 7;
             float variation = biomeData.getSeasonVariation(Biome.Precipitation.RAIN);
             double temp = getSeasonTemperature(season, variation, biomeTemp);

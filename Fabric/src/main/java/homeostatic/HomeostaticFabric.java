@@ -28,7 +28,6 @@ import homeostatic.common.item.FabricDrinkableItemManager;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.potions.HomeostaticPotions;
 import homeostatic.common.recipe.HomeostaticRecipes;
-import homeostatic.data.integration.ModIntegration;
 import homeostatic.event.ServerEventListener;
 import homeostatic.network.DrinkWater;
 import homeostatic.util.WaterHelper;

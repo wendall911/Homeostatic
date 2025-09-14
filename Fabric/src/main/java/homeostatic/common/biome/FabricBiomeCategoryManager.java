@@ -4,13 +4,13 @@ import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 
 import net.minecraft.resources.ResourceLocation;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class FabricBiomeCategoryManager extends BiomeCategoryManager implements IdentifiableResourceReloadListener {
 
     @Override
     public ResourceLocation getFabricId() {
-        return loc("reload_biome_category");
+        return prefix("reload_biome_category");
     }
 
 }

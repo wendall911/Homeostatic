@@ -47,7 +47,7 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
-        return Homeostatic.loc("jei_plugin");
+        return Homeostatic.prefix("jei_plugin");
     }
 
     // TODO: Figure out if I can show the water recipes correctly in JEI. Currently shows Empty Flask as input.

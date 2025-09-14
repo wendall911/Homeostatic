@@ -8,12 +8,12 @@ import net.minecraft.world.entity.player.Player;
 import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.platform.Services;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class ThermometerData {
 
     public boolean hasThermometer;
-    public static final ResourceLocation ID = loc("thermometer_data");
+    public static final ResourceLocation ID = prefix("thermometer_data");
 
     public ThermometerData(ThermometerInfo info) {
         this.hasThermometer = info.hasThermometer();

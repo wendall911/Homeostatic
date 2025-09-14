@@ -2,6 +2,8 @@ package homeostatic.data.integration;
 
 import net.minecraft.resources.ResourceLocation;
 
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.loc;
+
 public class ModIntegration {
 
     public static final String ALEX_MODID = "alexsmobs";
@@ -43,123 +45,123 @@ public class ModIntegration {
     public static final String LMBA_MODID = "leavemybarsalone";
 
     public static ResourceLocation alexLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(ALEX_MODID, path);
+        return loc(ALEX_MODID, path);
     }
 
     public static ResourceLocation arseLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(ARSE_MODID, path);
+        return loc(ARSE_MODID, path);
     }
 
     public static ResourceLocation arsLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(ARS_MODID, path);
+        return loc(ARS_MODID, path);
     }
 
     public static ResourceLocation bopLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(BOP_MODID, path);
+        return loc(BOP_MODID, path);
     }
 
     public static ResourceLocation bygLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(BYG_MODID, path);
+        return loc(BYG_MODID, path);
     }
 
     public static ResourceLocation ccLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(CC_MODID, path);
+        return loc(CC_MODID, path);
     }
 
     public static ResourceLocation croptopiaLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(CROPTOPIA_MODID, path);
+        return loc(CROPTOPIA_MODID, path);
     }
 
     public static ResourceLocation ecoLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(ECO_MODID, path);
+        return loc(ECO_MODID, path);
     }
 
     public static ResourceLocation fdLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(FD_MODID, path);
+        return loc(FD_MODID, path);
     }
 
     public static ResourceLocation ftLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(FT_MODID, path);
+        return loc(FT_MODID, path);
     }
 
     public static ResourceLocation ieLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(IE_MODID, path);
+        return loc(IE_MODID, path);
     }
 
     public static ResourceLocation mcLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MC_MODID, path);
+        return loc(MC_MODID, path);
     }
 
     public static ResourceLocation sproutLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(SPROUT_MODID, path);
+        return loc(SPROUT_MODID, path);
     }
 
     public static ResourceLocation morecraftLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MORECRAFT_MODID, path);
+        return loc(MORECRAFT_MODID, path);
     }
 
     public static ResourceLocation xercaLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(XERCA_MODID, path);
+        return loc(XERCA_MODID, path);
     }
 
     public static ResourceLocation scubaLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(SCUBA_GEAR_MODID, path);
+        return loc(SCUBA_GEAR_MODID, path);
     }
 
     public static ResourceLocation koboldsLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(KOBOLDS_MODID, path);
+        return loc(KOBOLDS_MODID, path);
     }
 
     public static ResourceLocation tfLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(TF_MODID, path);
+        return loc(TF_MODID, path);
     }
 
     public static ResourceLocation createLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(CREATE_MODID, path);
+        return loc(CREATE_MODID, path);
     }
 
     public static ResourceLocation tconLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(TCON_MODID, path);
+        return loc(TCON_MODID, path);
     }
 
     public static ResourceLocation skLoc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(SK_MODID, name);
+        return loc(SK_MODID, name);
     }
 
     public static ResourceLocation mfLoc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(MORE_FOOD_MODID, name);
+        return loc(MORE_FOOD_MODID, name);
     }
 
     public static ResourceLocation phcLoc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(PHC_CORE_MODID, name);
+        return loc(PHC_CORE_MODID, name);
     }
 
     public static ResourceLocation pcropsLoc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(PHC_CROPS_MODID, name);
+        return loc(PHC_CROPS_MODID, name);
     }
 
     public static ResourceLocation pheLoc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(PHC_FOOD_EXTENDED_MODID, name);
+        return loc(PHC_FOOD_EXTENDED_MODID, name);
     }
 
     public static ResourceLocation veggieLoc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(VEGGIE_MODID, name);
+        return loc(VEGGIE_MODID, name);
     }
 
     public static ResourceLocation esLoc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(ES_MODID, name);
+        return loc(ES_MODID, name);
     }
 
     public static ResourceLocation terralithLoc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(TL_MODID, name);
+        return loc(TL_MODID, name);
     }
 
     public static ResourceLocation ugLoc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(UG_MODID, name);
+        return loc(UG_MODID, name);
     }
 
     public static ResourceLocation regionsLoc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(REGIONS_MODID, name);
+        return loc(REGIONS_MODID, name);
     }
 
 }

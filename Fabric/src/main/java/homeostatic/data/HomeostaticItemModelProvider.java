@@ -10,7 +10,7 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.item.HomeostaticItems;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class HomeostaticItemModelProvider extends FabricModelProvider {
 
@@ -35,7 +35,7 @@ public class HomeostaticItemModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        blockStateModelGenerator.createAirLikeBlock(HomeostaticBlocks.PURIFIED_WATER_FLUID, loc("block/fluid/still_water"));
+        blockStateModelGenerator.createAirLikeBlock(HomeostaticBlocks.PURIFIED_WATER_FLUID, prefix("block/fluid/still_water"));
     }
 
 }

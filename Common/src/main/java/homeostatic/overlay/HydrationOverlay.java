@@ -20,7 +20,7 @@ import homeostatic.util.WaterHelper;
 
 public class HydrationOverlay extends Overlay {
 
-    public final static ResourceLocation SPRITE = Homeostatic.loc("textures/gui/icons.png");
+    public final static ResourceLocation SPRITE = Homeostatic.prefix("textures/gui/icons.png");
     private static float unclampedAlpha = 0F;
     private static float alpha = 0F;
     private static byte alphaDirection = 1;

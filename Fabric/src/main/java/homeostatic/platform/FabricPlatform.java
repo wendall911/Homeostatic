@@ -2,9 +2,6 @@ package homeostatic.platform;
 
 import java.util.Optional;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
@@ -19,6 +16,8 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ServerLevelData;
+
+import technology.roughness.whitenoise.platform.Services;
 
 import homeostatic.common.biome.ClimateSettings;
 import homeostatic.network.ITemperature;
@@ -49,16 +48,6 @@ public class FabricPlatform implements IPlatform {
     @Override
     public ResourceLocation getFluidResourceLocation(Fluid fluid) {
         return BuiltInRegistries.FLUID.getKey(fluid);
-    }
-
-    @Override
-    public boolean isModLoaded(String name) {
-        return FabricLoader.getInstance().isModLoaded(name);
-    }
-
-    @Override
-    public boolean isPhysicalClient() {
-        return FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
     }
 
     @Override
@@ -127,10 +116,12 @@ public class FabricPlatform implements IPlatform {
 
     @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
-        if (isModLoaded(ModIntegration.SS_MODID) && SereneSeasonsFabricHelper.isSeasonDimension(level)) {
+        if (Services.PLATFORM.isModLoaded(ModIntegration.SS_MODID)
+                && SereneSeasonsFabricHelper.isSeasonDimension(level)) {
             return SereneSeasonsFabricHelper.getSubSeason(level);
         }
-        else if (isModLoaded(ModIntegration.SEASONS_MODID) && FabricSeasonsHelper.isSeasonDimension(level)) {
+        else if (Services.PLATFORM.isModLoaded(ModIntegration.SEASONS_MODID)
+                && FabricSeasonsHelper.isSeasonDimension(level)) {
             return SubSeason.getSubSeason(level, FabricSeasonsHelper.getSeasonDuration());
         }
 

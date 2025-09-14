@@ -23,7 +23,7 @@ import homeostatic.common.TagManager;
 import homeostatic.util.IngredientHelper;
 import homeostatic.util.RegistryHelper;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public final class ArmorEnhancementRecipeMaker {
 
@@ -52,25 +52,24 @@ public final class ArmorEnhancementRecipeMaker {
                     woolArmorStackTag.putBoolean("insulation", true);
                     woolArmorStack.set(HomeostaticComponents.ARMOR, CustomData.of(woolArmorStackTag));
                     recipes.add(Pair.of(woolArmorStack, new RecipeHolder<>(
-                        ResourceKey.create(Registries.RECIPE, loc(group + ".insulated")),
+                        ResourceKey.create(Registries.RECIPE, prefix(group + ".insulated")),
                         new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, woolArmorStack, insulatedInputs)
                     )));
 
                     waterproofArmorStackTag.putBoolean("waterproof", true);
                     waterproofArmorStack.set(HomeostaticComponents.ARMOR, CustomData.of(waterproofArmorStackTag));
                     recipes.add(Pair.of(waterproofArmorStack, new RecipeHolder<>(
-                        ResourceKey.create(Registries.RECIPE, loc(group + ".waterproof")),
+                        ResourceKey.create(Registries.RECIPE, prefix(group + ".waterproof")),
                         new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, waterproofArmorStack, waterproofInputs)
                     )));
 
                     radiationArmorStackTag.putBoolean("radiation_protection", true);
                     radiationArmorStack.set(HomeostaticComponents.ARMOR, CustomData.of(radiationArmorStackTag));
                     recipes.add(Pair.of(radiationArmorStack, new RecipeHolder<>(
-                        ResourceKey.create(Registries.RECIPE, loc(group + ".radiation_resistance")),
+                        ResourceKey.create(Registries.RECIPE, prefix(group + ".radiation_resistance")),
                         new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, radiationArmorStack, radiationInputs)
                     )));
                 });
-
 
         return recipes;
     }

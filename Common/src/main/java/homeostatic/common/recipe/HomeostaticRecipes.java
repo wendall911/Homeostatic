@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.crafting.SmokingRecipe;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class HomeostaticRecipes {
 
@@ -37,16 +37,16 @@ public class HomeostaticRecipes {
         SMELTING_PURIFIED_WATER_BOTTLE_SERIALIZER = new AbstractCookingRecipe.Serializer<>(SmeltingPurifiedWaterBottle::new, 75);
         SMOKING_PURIFIED_WATER_BOTTLE_SERIALIZER = new AbstractCookingRecipe.Serializer<>(SmokingPurifiedWaterBottle::new, 50);
 
-        consumer.accept(ARMOR_ENHANCEMENT_SERIALIZER, loc("armor_enhancement"));
-        consumer.accept(PURIFIED_LEATHER_FLASK_SERIALIZER, loc("purified_leather_flask"));
-        consumer.accept(HELMET_THERMOMETER_SERIALIZER, loc("helmet_thermometer"));
-        consumer.accept(REMOVE_ARMOR_ENHANCEMENT_SERIALIZER, loc("remove_armor_enhancement"));
-        consumer.accept(CAMPFIRE_PURIFIED_LEATHER_FLASK_SERIALIZER, loc("campfire_purified_leather_flask"));
-        consumer.accept(SMELTING_PURIFIED_LEATHER_FLASK_SERIALIZER, loc("smelting_purified_leather_flask"));
-        consumer.accept(SMOKING_PURIFIED_LEATHER_FLASK_SERIALIZER, loc("smoking_purified_leather_flask"));
-        consumer.accept(CAMPFIRE_PURIFIED_WATER_BOTTLE_SERIALIZER, loc("campfire_purified_water_bottle"));
-        consumer.accept(SMELTING_PURIFIED_WATER_BOTTLE_SERIALIZER, loc("smelting_purified_water_bottle"));
-        consumer.accept(SMOKING_PURIFIED_WATER_BOTTLE_SERIALIZER, loc("smoking_purified_water_bottle"));
+        consumer.accept(ARMOR_ENHANCEMENT_SERIALIZER, prefix("armor_enhancement"));
+        consumer.accept(PURIFIED_LEATHER_FLASK_SERIALIZER, prefix("purified_leather_flask"));
+        consumer.accept(HELMET_THERMOMETER_SERIALIZER, prefix("helmet_thermometer"));
+        consumer.accept(REMOVE_ARMOR_ENHANCEMENT_SERIALIZER, prefix("remove_armor_enhancement"));
+        consumer.accept(CAMPFIRE_PURIFIED_LEATHER_FLASK_SERIALIZER, prefix("campfire_purified_leather_flask"));
+        consumer.accept(SMELTING_PURIFIED_LEATHER_FLASK_SERIALIZER, prefix("smelting_purified_leather_flask"));
+        consumer.accept(SMOKING_PURIFIED_LEATHER_FLASK_SERIALIZER, prefix("smoking_purified_leather_flask"));
+        consumer.accept(CAMPFIRE_PURIFIED_WATER_BOTTLE_SERIALIZER, prefix("campfire_purified_water_bottle"));
+        consumer.accept(SMELTING_PURIFIED_WATER_BOTTLE_SERIALIZER, prefix("smelting_purified_water_bottle"));
+        consumer.accept(SMOKING_PURIFIED_WATER_BOTTLE_SERIALIZER, prefix("smoking_purified_water_bottle"));
     }
 
 }

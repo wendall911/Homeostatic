@@ -1,5 +1,7 @@
 package homeostatic.util;
 
+import java.util.Optional;
+
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -12,8 +14,6 @@ import net.minecraft.world.level.material.Fluids;
 import homeostatic.common.component.HomeostaticComponents;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.platform.Services;
-
-import java.util.Optional;
 
 public class ItemStackFluidHelper {
 

@@ -34,7 +34,7 @@ import homeostatic.Homeostatic;
 import homeostatic.util.RegistryHelper;
 import homeostatic.util.WaterHelper;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class ServerEventListener {
 
@@ -84,10 +84,10 @@ public class ServerEventListener {
 
     @SubscribeEvent
     public static void onResourceReload(AddServerReloadListenersEvent event) {
-        event.addListener(loc("biome_category"), new BiomeCategoryManager());
-        event.addListener(loc("block_radiation"), new BlockRadiationManager());
-        event.addListener(loc("fluids"), new DrinkingFluidManager());
-        event.addListener(loc("drinkable"), new DrinkableItemManager());
+        event.addListener(prefix("biome_category"), new BiomeCategoryManager());
+        event.addListener(prefix("block_radiation"), new BlockRadiationManager());
+        event.addListener(prefix("fluids"), new DrinkingFluidManager());
+        event.addListener(prefix("drinkable"), new DrinkableItemManager());
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)

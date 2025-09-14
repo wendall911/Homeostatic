@@ -7,7 +7,7 @@ import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class NeoForgeFluidType {
 
@@ -22,7 +22,7 @@ public class NeoForgeFluidType {
                 .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
                 .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY));
 
-        registryHelper.register(loc("purified_water_type"), PURIFIED_WATER_TYPE);
+        registryHelper.register(prefix("purified_water_type"), PURIFIED_WATER_TYPE);
     }
 
 }

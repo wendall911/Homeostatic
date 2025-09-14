@@ -17,7 +17,7 @@ import homeostatic.common.item.HomeostaticItems;
 import homeostatic.data.recipe.RecipeProviderBase;
 import homeostatic.platform.Services;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class SmeltingRecipeMaker {
 
@@ -33,7 +33,7 @@ public class SmeltingRecipeMaker {
         Services.PLATFORM.fillFluid(filledPurifiedWaterLeatherFlask, HomeostaticFluids.PURIFIED_WATER, Services.PLATFORM.getFluidCapacity(filledPurifiedWaterLeatherFlask));
 
         recipes.add(new RecipeHolder<>(
-            ResourceKey.create(Registries.RECIPE, loc(group + ".flask")),
+            ResourceKey.create(Registries.RECIPE, prefix(group + ".flask")),
             new SmeltingRecipe(group, CookingBookCategory.MISC, Ingredient.of(filledWaterLeatherFlask.getItem()), filledPurifiedWaterLeatherFlask, 0.15F, 150)
         ));
 
@@ -46,7 +46,7 @@ public class SmeltingRecipeMaker {
         ItemStack result = new ItemStack(HomeostaticItems.PURIFIED_WATER_BOTTLE);
 
         recipes.add(new RecipeHolder<>(
-            ResourceKey.create(Registries.RECIPE, loc(group + ".water_bottle")),
+            ResourceKey.create(Registries.RECIPE, prefix(group + ".water_bottle")),
             new SmeltingRecipe(group, CookingBookCategory.MISC, Ingredient.of(RecipeProviderBase.waterBottle.getItem()), result, 0.05F, 75)
         ));
 

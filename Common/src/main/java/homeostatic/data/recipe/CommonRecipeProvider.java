@@ -20,7 +20,7 @@ import homeostatic.common.recipe.PurifiedLeatherFlask;
 import homeostatic.common.recipe.RemoveArmorEnhancement;
 import net.minecraft.world.item.crafting.Recipe;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class CommonRecipeProvider extends RecipeProvider {
 
@@ -70,7 +70,7 @@ public class CommonRecipeProvider extends RecipeProvider {
     }
 
     private ResourceKey<Recipe<?>> getKey(String id) {
-        return ResourceKey.create(Registries.RECIPE, loc(id));
+        return ResourceKey.create(Registries.RECIPE, prefix(id));
     }
 
 }

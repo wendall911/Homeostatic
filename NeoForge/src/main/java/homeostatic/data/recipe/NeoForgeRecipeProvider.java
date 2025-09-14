@@ -24,7 +24,7 @@ import net.neoforged.neoforge.common.Tags;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.data.integration.ModIntegration;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class NeoForgeRecipeProvider extends RecipeProvider.Runner {
 
@@ -48,7 +48,7 @@ public class NeoForgeRecipeProvider extends RecipeProvider.Runner {
                     .addMaterial(Items.STRING, 2)
                     .addMaterial(ItemTags.PLANKS)
                     .addCriterion("has_leather", has(Tags.Items.LEATHERS))
-                    .save(wrapped, loc("leather_flask_via_sewing"));
+                    .save(wrapped, prefix("leather_flask_via_sewing"));
             }
         };
     }

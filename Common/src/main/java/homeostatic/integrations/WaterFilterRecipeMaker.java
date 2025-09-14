@@ -20,7 +20,7 @@ import homeostatic.common.item.HomeostaticItems;
 import homeostatic.platform.Services;
 import homeostatic.util.WaterHelper;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class WaterFilterRecipeMaker {
 
@@ -39,7 +39,7 @@ public class WaterFilterRecipeMaker {
         NonNullList<Ingredient> recipeInputs = NonNullList.of(null, baseFlaskIngredient, ingredient);
 
         recipes.add(Pair.of(leatherFlask, new RecipeHolder<>(
-            ResourceKey.create(Registries.RECIPE, loc(group + ".purified_leather_flask")),
+            ResourceKey.create(Registries.RECIPE, prefix(group + ".purified_leather_flask")),
             new ShapelessRecipe(group, CraftingBookCategory.MISC, leatherFlask, recipeInputs)
         )));
 

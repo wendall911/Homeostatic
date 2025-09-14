@@ -19,11 +19,11 @@ import homeostatic.common.item.LeatherFlask;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.util.WaterHelper;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class FillingRecipeProvider extends ProcessingRecipeGen {
 
-    GeneratedRecipe FLASK = createFlaskRecipe("purified_water", TagManager.Fluids.PURIFIED_WATER, loc("purified_water")),
+    GeneratedRecipe FLASK = createFlaskRecipe("purified_water", TagManager.Fluids.PURIFIED_WATER, prefix("purified_water")),
             WATER = createFlaskRecipe("water", FluidTags.WATER, new ResourceLocation("minecraft", "water"));
 
     public FillingRecipeProvider(@NotNull final PackOutput packOutput) {
@@ -31,7 +31,7 @@ public class FillingRecipeProvider extends ProcessingRecipeGen {
     }
 
     private GeneratedRecipe createFlaskRecipe(String id, TagKey<Fluid> key, ResourceLocation fluid) {
-        return create(loc(id), b -> b.require(key, (int) LeatherFlask.LEATHER_FLASK_CAPACITY)
+        return create(prefix(id), b -> b.require(key, (int) LeatherFlask.LEATHER_FLASK_CAPACITY)
             .require(HomeostaticItems.LEATHER_FLASK)
             .output(WaterHelper.getFilledItem(new ItemStack(HomeostaticItems.LEATHER_FLASK), fluid, (int) LeatherFlask.LEATHER_FLASK_CAPACITY))
             .whenModLoaded(ModIntegration.CREATE_MODID));

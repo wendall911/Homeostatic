@@ -15,8 +15,8 @@ import homeostatic.util.OverlayHelper;
 
 public class EnhancedVisualsOverlay extends Overlay {
 
-    public final static ResourceLocation BURNING_OVERLAY = Homeostatic.loc("textures/gui/burning.png");
-    public final static ResourceLocation HYPERTHERMIA_OVERLAY = Homeostatic.loc("textures/gui/hyperthermia.png");
+    public final static ResourceLocation BURNING_OVERLAY = Homeostatic.prefix("textures/gui/burning.png");
+    public final static ResourceLocation HYPERTHERMIA_OVERLAY = Homeostatic.prefix("textures/gui/hyperthermia.png");
 
     public EnhancedVisualsOverlay() {}
 

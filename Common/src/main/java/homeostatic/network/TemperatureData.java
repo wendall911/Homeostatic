@@ -7,14 +7,14 @@ import net.minecraft.world.entity.player.Player;
 
 import homeostatic.platform.Services;
 
-import static homeostatic.Homeostatic.loc;
+import static homeostatic.Homeostatic.prefix;
 
 public class TemperatureData {
 
     public float localTemperature;
     public float skinTemperature;
     public float coreTemperature;
-    public static final ResourceLocation ID = loc("temperature_data");
+    public static final ResourceLocation ID = prefix("temperature_data");
 
     public TemperatureData(float localTemperature, float skinTemperature, float coreTemperature) {
         this.localTemperature = localTemperature;
