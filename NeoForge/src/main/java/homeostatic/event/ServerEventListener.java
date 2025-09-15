@@ -2,6 +2,7 @@ package homeostatic.event;
 
 import java.util.Map;
 
+import homeostatic.common.biome.BiomeTypeDataManager;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -85,6 +86,7 @@ public class ServerEventListener {
     @SubscribeEvent
     public static void onResourceReload(AddServerReloadListenersEvent event) {
         event.addListener(prefix("biome_category"), new BiomeCategoryManager());
+        event.addListener(prefix("biome_type_data"), new BiomeTypeDataManager());
         event.addListener(prefix("block_radiation"), new BlockRadiationManager());
         event.addListener(prefix("fluids"), new DrinkingFluidManager());
         event.addListener(prefix("drinkable"), new DrinkableItemManager());

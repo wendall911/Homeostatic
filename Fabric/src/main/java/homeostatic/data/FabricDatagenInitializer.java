@@ -25,6 +25,7 @@ public class FabricDatagenInitializer implements DataGeneratorEntrypoint {
         pack.addProvider((dataOutput, registryFuture) -> new DrinkingFluidsProvider(dataOutput));
         pack.addProvider((dataOutput, registryFuture) -> new DrinkableItemsProvider(dataOutput));
         pack.addProvider((dataOutput, registryFuture) -> new BiomeCategoryProvider(dataOutput));
+        pack.addProvider((dataOutput, registryFuture) -> new BiomeTypeDataProvider(dataOutput));
         pack.addProvider(HomeostaticLanguageProvider::new);
         pack.addProvider(HomeostaticRecipeProvider::new);
     }

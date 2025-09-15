@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
+
+import static homeostatic.Homeostatic.prefix;
 
 public class BiomeRegistry {
 
@@ -82,9 +85,10 @@ public class BiomeRegistry {
     }
 
     public static BiomeData getDataForBiome(Holder<Biome> biome) {
-        BiomeCategory.Type biomeCategory = BiomeCategoryManager.getBiomeCategory(biome);
+        ResourceLocation biomeCategory = prefix(BiomeCategoryManager.getBiomeCategory(biome).toString());
 
-        return BiomeRegistry.BIOMES.getOrDefault(biomeCategory, MISSING);
+        //return BiomeRegistry.BIOMES.getOrDefault(biomeCategory, MISSING);
+        return BiomeTypeDataManager.getBiomeData(biomeCategory);
     }
 
     public static void init() {}

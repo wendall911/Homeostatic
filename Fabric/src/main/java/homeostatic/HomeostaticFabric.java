@@ -17,6 +17,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import homeostatic.common.biome.FabricBiomeCategoryManager;
+import homeostatic.common.biome.FabricBiomeTypeDataManager;
 import homeostatic.common.block.FabricBlockRadiationManager;
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.component.HomeostaticComponents;
@@ -41,6 +42,7 @@ public class HomeostaticFabric implements ModInitializer {
         ServerEventListener.init();
 
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricBiomeCategoryManager());
+        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricBiomeTypeDataManager());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricBlockRadiationManager());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricDrinkingFluidManager());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricDrinkableItemManager());

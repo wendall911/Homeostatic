@@ -1,5 +1,16 @@
 package homeostatic.common.biome;
 
+import java.lang.reflect.Type;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.biome.Biome;
 
 public class BiomeData {
@@ -10,16 +21,46 @@ public class BiomeData {
 
     private final float temperature;
     private double humidity;
-    private final float seasonVariation;
-    private final float dayNightOffset;
+    private final double seasonVariation;
+    private final double dayNightOffset;
     private final boolean isFrozen;
 
-    BiomeData (float temperature, double humidity, double seasonVariation, double dayNightOffset, boolean isFrozen) {
-        this.humidity = humidity;
-        this.seasonVariation = (float) seasonVariation * MC_DEGREE;
-        this.dayNightOffset = (float) dayNightOffset * MC_DEGREE;
+    public BiomeData(float temperature, double humidity, double seasonVariation, double dayNightOffset, boolean isFrozen) {
         this.temperature = temperature;
+        this.humidity = humidity;
+        this.seasonVariation = seasonVariation;
+        this.dayNightOffset = dayNightOffset;
         this.isFrozen = isFrozen;
+    }
+
+    public static class Serializer implements JsonDeserializer<BiomeData>, JsonSerializer<BiomeData> {
+
+        @Override
+        public BiomeData deserialize(JsonElement jsonElement, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
+
+            return new BiomeData(
+                GsonHelper.getAsFloat(json, "temperature"),
+                GsonHelper.getAsDouble(json, "humidity"),
+                GsonHelper.getAsDouble(json, "season_variation"),
+                GsonHelper.getAsDouble(json, "day_night_offset"),
+                GsonHelper.getAsBoolean(json, "is_frozen")
+            );
+        }
+
+        @Override
+        public JsonElement serialize(BiomeData biomeData, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject json = new JsonObject();
+
+            json.addProperty("temperature", biomeData.temperature);
+            json.addProperty("humidity", biomeData.humidity);
+            json.addProperty("season_variation", biomeData.seasonVariation);
+            json.addProperty("day_night_offset", biomeData.dayNightOffset);
+            json.addProperty("is_frozen", biomeData.isFrozen);
+
+            return json;
+        }
+
     }
 
     public float getTemperature(Biome.Precipitation precipitation) {
@@ -44,19 +85,23 @@ public class BiomeData {
     }
 
     public float getSeasonVariation(Biome.Precipitation precipitation) {
+        float seasonVariation = (float) this.seasonVariation * MC_DEGREE;
+
         if (precipitation == Biome.Precipitation.SNOW) {
-            return this.seasonVariation / 2.0F;
+            return seasonVariation / 2.0F;
         }
 
-        return this.seasonVariation;
+        return seasonVariation;
     }
 
     public float getDayNightOffset(Biome.Precipitation precipitation) {
+        float dayNightOffset = (float) this.dayNightOffset * MC_DEGREE;
+
         if (precipitation == Biome.Precipitation.SNOW) {
-            return this.dayNightOffset / 2.0F;
+            return dayNightOffset / 2.0F;
         }
 
-        return this.dayNightOffset;
+        return dayNightOffset;
     }
 
     public boolean isFrozen() {
