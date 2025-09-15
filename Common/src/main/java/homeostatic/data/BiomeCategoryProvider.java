@@ -499,7 +499,7 @@ public class BiomeCategoryProvider implements DataProvider {
         add(ModIntegration.regionsLoc("willow_forest"), BiomeCategory.Type.FOREST);
     }
 
-    protected void add (ResourceKey<Biome> biomeResourceKey, BiomeCategory.Type type) {
+    protected void add(ResourceKey<Biome> biomeResourceKey, BiomeCategory.Type type) {
         BIOME_CATEGORY_MAP.put(biomeResourceKey.location(), new BiomeCategory(biomeResourceKey.location(), type.name()));
     }
     
