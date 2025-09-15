@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
 
 import homeostatic.common.biome.BiomeCategoryManager;
-import homeostatic.common.biome.BiomeData;
+import homeostatic.common.biome.BiomeTypeData;
 import homeostatic.common.biome.BiomeTypeDataManager;
 import homeostatic.common.temperature.TemperatureDirection;
 import homeostatic.common.temperature.TemperatureRange;
@@ -77,8 +77,8 @@ public class TemperatureInfo extends Overlay {
 
             biome.unwrapKey().ifPresent(key -> {
                 ResourceLocation biomeCategory = loc(BiomeCategoryManager.getBiomeCategory(biome).toString());
-                BiomeData biomeData = BiomeTypeDataManager.getBiomeData(biomeCategory);
-                String biomeString = String.format("%s (%s) frozen: %s", key.location(), biomeCategory, biomeData.isFrozen());
+                BiomeTypeData biomeTypeData = BiomeTypeDataManager.getBiomeData(biomeCategory);
+                String biomeString = String.format("%s (%s) frozen: %s", key.location(), biomeCategory, biomeTypeData.isFrozen());
                 int biomeStringWidth = mc.font.width(biomeString);
 
                 FontHelper.draw(mc, guiGraphics, biomeString,

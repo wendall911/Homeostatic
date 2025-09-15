@@ -36,8 +36,8 @@ import net.minecraftforge.registries.RegisterEvent;
 
 import homeostatic.common.biome.BiomeCategory;
 import homeostatic.common.biome.BiomeCategoryManager;
-import homeostatic.common.biome.BiomeData;
-import homeostatic.common.biome.BiomeRegistry;
+import homeostatic.common.biome.BiomeTypeData;
+import homeostatic.common.biome.BiomeTypeDataManager;
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.capabilities.CapabilityRegistry;
 import homeostatic.common.CreativeTabs;
@@ -157,7 +157,7 @@ public class HomeostaticForge {
             ResourceLocation biomeName = biomeResourceKey.location();
             Holder<Biome> biomeHolder = biomeRegistry.getHolderOrThrow(biomeResourceKey);
             BiomeCategory.Type biomeCategory = BiomeCategoryManager.getBiomeCategory(biomeHolder);
-            BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+            BiomeTypeData biomeData = BiomeTypeDataManager.getDataForBiome(biomeHolder);
             Biome biome = biomeHolder.value();
             Biome.Precipitation precipitation = getPrecipitation(biome);
             String temperatureModifier = biomeData.isFrozen() ? "FROZEN" : "NONE";

@@ -14,14 +14,14 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 
 import homeostatic.common.biome.BiomeCategory;
-import homeostatic.common.biome.BiomeData;
+import homeostatic.common.biome.BiomeTypeData;
 import homeostatic.common.biome.BiomeTypeDataManager;
 
 import static homeostatic.Homeostatic.loc;
 
 public class BiomeTypeDataProvider implements DataProvider {
 
-    private final Map<ResourceLocation, BiomeData> BIOME_TYPES_MAP = new HashMap<>();
+    private final Map<ResourceLocation, BiomeTypeData> BIOME_TYPES_MAP = new HashMap<>();
     private final PackOutput packOutput;
 
     public BiomeTypeDataProvider(@NotNull final PackOutput packOutput) {
@@ -29,44 +29,44 @@ public class BiomeTypeDataProvider implements DataProvider {
     }
 
     protected void registerBiomeTypeData() {
-        add(loc(BiomeCategory.Type.BOG.toString()), new BiomeData(0.351F, 60.0F, 40F, 10F, false));
-        add(loc(BiomeCategory.Type.FROZEN_OCEAN.toString()), new BiomeData(0.373F, 20.0F, 20F, 5F, true));
-        add(loc(BiomeCategory.Type.COLD_OCEAN.toString()), new BiomeData(0.373F, 20.0F, 20F, 5F, false));
-        add(loc(BiomeCategory.Type.COLD_FOREST.toString()), new BiomeData(0.373F, 60.0F, 40F, 12F, false));
-        add(loc(BiomeCategory.Type.COLD_DESERT.toString()), new BiomeData(0.395F, 20.0F, 40F, 20F, false));
-        add(loc(BiomeCategory.Type.DEEP_COLD_OCEAN.toString()), new BiomeData(0.440F, 20.0F, 20F, 5F, false));
-        add(loc(BiomeCategory.Type.ICY.toString()), new BiomeData(0.507F, 20.0F, 20F, 5F, false));
-        add(loc(BiomeCategory.Type.TAIGA.toString()), new BiomeData(0.507F, 50.0F, 40F, 10F, false));
-        add(loc(BiomeCategory.Type.OCEAN.toString()), new BiomeData(0.551F, 70.0F, 40F, 10F, false));
-        add(loc(BiomeCategory.Type.RIVER.toString()), new BiomeData(0.551F, 70.0F, 40F, 10F, false));
-        add(loc(BiomeCategory.Type.DEEP_LUKEWARM_OCEAN.toString()), new BiomeData(0.596F, 70.0F, 40F, 10F, false));
-        add(loc(BiomeCategory.Type.EXTREME_HILLS.toString()), new BiomeData(0.618F, 50.0F, 40F, 10F, false));
-        add(loc(BiomeCategory.Type.MOUNTAIN.toString()), new BiomeData(0.618F, 50.0F, 40F, 10F, false));
-        add(loc(BiomeCategory.Type.LUKEWARM_OCEAN.toString()), new BiomeData(0.640F, 70.0F, 40F, 10F, false));
-        add(loc(BiomeCategory.Type.BEACH.toString()), new BiomeData(0.663F, 70.0F, 40F, 10F, false));
-        add(loc(BiomeCategory.Type.FOREST.toString()), new BiomeData(0.663F, 50.0F, 40F, 12F, false));
-        add(loc(BiomeCategory.Type.UNDERGROUND.toString()), new BiomeData(0.663F, 40.0F, 40F, 12F, false));
-        add(loc(BiomeCategory.Type.SWAMP.toString()), new BiomeData(0.685F, 90.0F, 40F, 12F, false));
-        add(loc(BiomeCategory.Type.MUSHROOM.toString()), new BiomeData(0.685F, 70.0F, 40F, 12F, false));
-        add(loc(BiomeCategory.Type.WARM_OCEAN.toString()), new BiomeData(0.730F, 70.0F, 40F, 10F, false));
-        add(loc(BiomeCategory.Type.PLAINS.toString()), new BiomeData(0.774F, 60.0F, 40F, 15F, false));
-        add(loc(BiomeCategory.Type.MISSING.toString()), new BiomeData(0.774F, 40.0F, 40F, 15F, false));
-        add(loc(BiomeCategory.Type.LUSH_DESERT.toString()), new BiomeData(0.886F, 60.0F, 40F, 15F, false));
-        add(loc(BiomeCategory.Type.DRYLAND.toString()), new BiomeData(0.886F, 35.0F, 40F, 15F, false));
-        add(loc(BiomeCategory.Type.RAINFOREST.toString()), new BiomeData(0.886F, 95.0F, 40F, 15F, false));
-        add(loc(BiomeCategory.Type.JUNGLE.toString()), new BiomeData(0.997F, 90.0F, 40F, 15F, false));
-        add(loc(BiomeCategory.Type.VOLCANIC.toString()), new BiomeData(1.04F, 35.0F, 40F, 15F, false));
-        add(loc(BiomeCategory.Type.DEAD_SEA.toString()), new BiomeData(1.04F, 35.0F, 40F, 15F, false));
-        add(loc(BiomeCategory.Type.SAVANNA.toString()), new BiomeData(1.108F, 30.0F, 40F, 15F, false));
-        add(loc(BiomeCategory.Type.MESA.toString()), new BiomeData(1.309F, 20.0F, 40F, 15F, false));
-        add(loc(BiomeCategory.Type.DESERT.toString()), new BiomeData(1.354F, 20.0F, 40F, 20F, false));
-        add(loc(BiomeCategory.Type.NONE.toString()), new BiomeData(0.15F, 40.0F, 40F, 0F, false));
-        add(loc(BiomeCategory.Type.THEEND.toString()), new BiomeData(0.551F, 40.0F, 40F, 0F, false));
-        add(loc(BiomeCategory.Type.NETHER.toString()), new BiomeData(1.666F, 20.0F, 40F, 0F, false));
+        add(loc(BiomeCategory.Type.BOG.toString()), new BiomeTypeData(0.351F, 60.0F, 40F, 10F, false));
+        add(loc(BiomeCategory.Type.FROZEN_OCEAN.toString()), new BiomeTypeData(0.373F, 20.0F, 20F, 5F, true));
+        add(loc(BiomeCategory.Type.COLD_OCEAN.toString()), new BiomeTypeData(0.373F, 20.0F, 20F, 5F, false));
+        add(loc(BiomeCategory.Type.COLD_FOREST.toString()), new BiomeTypeData(0.373F, 60.0F, 40F, 12F, false));
+        add(loc(BiomeCategory.Type.COLD_DESERT.toString()), new BiomeTypeData(0.395F, 20.0F, 40F, 20F, false));
+        add(loc(BiomeCategory.Type.DEEP_COLD_OCEAN.toString()), new BiomeTypeData(0.440F, 20.0F, 20F, 5F, false));
+        add(loc(BiomeCategory.Type.ICY.toString()), new BiomeTypeData(0.507F, 20.0F, 20F, 5F, false));
+        add(loc(BiomeCategory.Type.TAIGA.toString()), new BiomeTypeData(0.507F, 50.0F, 40F, 10F, false));
+        add(loc(BiomeCategory.Type.OCEAN.toString()), new BiomeTypeData(0.551F, 70.0F, 40F, 10F, false));
+        add(loc(BiomeCategory.Type.RIVER.toString()), new BiomeTypeData(0.551F, 70.0F, 40F, 10F, false));
+        add(loc(BiomeCategory.Type.DEEP_LUKEWARM_OCEAN.toString()), new BiomeTypeData(0.596F, 70.0F, 40F, 10F, false));
+        add(loc(BiomeCategory.Type.EXTREME_HILLS.toString()), new BiomeTypeData(0.618F, 50.0F, 40F, 10F, false));
+        add(loc(BiomeCategory.Type.MOUNTAIN.toString()), new BiomeTypeData(0.618F, 50.0F, 40F, 10F, false));
+        add(loc(BiomeCategory.Type.LUKEWARM_OCEAN.toString()), new BiomeTypeData(0.640F, 70.0F, 40F, 10F, false));
+        add(loc(BiomeCategory.Type.BEACH.toString()), new BiomeTypeData(0.663F, 70.0F, 40F, 10F, false));
+        add(loc(BiomeCategory.Type.FOREST.toString()), new BiomeTypeData(0.663F, 50.0F, 40F, 12F, false));
+        add(loc(BiomeCategory.Type.UNDERGROUND.toString()), new BiomeTypeData(0.663F, 40.0F, 40F, 12F, false));
+        add(loc(BiomeCategory.Type.SWAMP.toString()), new BiomeTypeData(0.685F, 90.0F, 40F, 12F, false));
+        add(loc(BiomeCategory.Type.MUSHROOM.toString()), new BiomeTypeData(0.685F, 70.0F, 40F, 12F, false));
+        add(loc(BiomeCategory.Type.WARM_OCEAN.toString()), new BiomeTypeData(0.730F, 70.0F, 40F, 10F, false));
+        add(loc(BiomeCategory.Type.PLAINS.toString()), new BiomeTypeData(0.774F, 60.0F, 40F, 15F, false));
+        add(loc(BiomeCategory.Type.MISSING.toString()), new BiomeTypeData(0.774F, 40.0F, 40F, 15F, false));
+        add(loc(BiomeCategory.Type.LUSH_DESERT.toString()), new BiomeTypeData(0.886F, 60.0F, 40F, 15F, false));
+        add(loc(BiomeCategory.Type.DRYLAND.toString()), new BiomeTypeData(0.886F, 35.0F, 40F, 15F, false));
+        add(loc(BiomeCategory.Type.RAINFOREST.toString()), new BiomeTypeData(0.886F, 95.0F, 40F, 15F, false));
+        add(loc(BiomeCategory.Type.JUNGLE.toString()), new BiomeTypeData(0.997F, 90.0F, 40F, 15F, false));
+        add(loc(BiomeCategory.Type.VOLCANIC.toString()), new BiomeTypeData(1.04F, 35.0F, 40F, 15F, false));
+        add(loc(BiomeCategory.Type.DEAD_SEA.toString()), new BiomeTypeData(1.04F, 35.0F, 40F, 15F, false));
+        add(loc(BiomeCategory.Type.SAVANNA.toString()), new BiomeTypeData(1.108F, 30.0F, 40F, 15F, false));
+        add(loc(BiomeCategory.Type.MESA.toString()), new BiomeTypeData(1.309F, 20.0F, 40F, 15F, false));
+        add(loc(BiomeCategory.Type.DESERT.toString()), new BiomeTypeData(1.354F, 20.0F, 40F, 20F, false));
+        add(loc(BiomeCategory.Type.NONE.toString()), new BiomeTypeData(0.15F, 40.0F, 40F, 0F, false));
+        add(loc(BiomeCategory.Type.THEEND.toString()), new BiomeTypeData(0.551F, 40.0F, 40F, 0F, false));
+        add(loc(BiomeCategory.Type.NETHER.toString()), new BiomeTypeData(1.666F, 20.0F, 40F, 0F, false));
     }
 
-    protected void add(ResourceLocation loc, BiomeData biomeData) {
-        BIOME_TYPES_MAP.put(loc, biomeData);
+    protected void add(ResourceLocation loc, BiomeTypeData biomeTypeData) {
+        BIOME_TYPES_MAP.put(loc, biomeTypeData);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class BiomeTypeDataProvider implements DataProvider {
 
         registerBiomeTypeData();
 
-        for (Map.Entry<ResourceLocation, BiomeData> entry : BIOME_TYPES_MAP.entrySet()) {
+        for (Map.Entry<ResourceLocation, BiomeTypeData> entry : BIOME_TYPES_MAP.entrySet()) {
             PackOutput.PathProvider pathProvider = getPath(entry.getKey());
 
             recipeList.add(DataProvider.saveStable(cache,
