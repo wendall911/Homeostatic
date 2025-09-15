@@ -2,7 +2,6 @@ package homeostatic.event;
 
 import java.util.Map;
 
-import homeostatic.common.biome.BiomeTypeDataManager;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -26,8 +25,8 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import homeostatic.common.biome.BiomeCategory;
 import homeostatic.common.biome.BiomeCategoryManager;
-import homeostatic.common.biome.BiomeData;
-import homeostatic.common.biome.BiomeRegistry;
+import homeostatic.common.biome.BiomeTypeData;
+import homeostatic.common.biome.BiomeTypeDataManager;
 import homeostatic.common.block.BlockRadiationManager;
 import homeostatic.common.fluid.DrinkingFluidManager;
 import homeostatic.common.item.DrinkableItemManager;
@@ -99,12 +98,12 @@ public class ServerEventListener {
             ResourceLocation biomeName = biomeResourceKey.location();
             Holder<Biome> biomeHolder = biomeRegistry.getHolderOrThrow(biomeResourceKey);
             BiomeCategory.Type biomeCategory = BiomeCategoryManager.getBiomeCategory(biomeHolder);
-            BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+            BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biomeHolder);
             Biome biome = biomeHolder.value();
             Biome.Precipitation precipitation = getPrecipitation(biome);
-            String temperatureModifier = biomeData.isFrozen() ? "FROZEN" : "NONE";
-            float dayNightOffset = biomeData.getDayNightOffset(precipitation);
-            double humidity = biomeData.getHumidity(precipitation);
+            String temperatureModifier = biomeTypeData.isFrozen() ? "FROZEN" : "NONE";
+            float dayNightOffset = biomeTypeData.getDayNightOffset(precipitation);
+            double humidity = biomeTypeData.getHumidity(precipitation);
 
             if (!biomeName.toString().equals("terrablender:deferred_placeholder")) {
                 if (biomeCategory == BiomeCategory.Type.MISSING) {
@@ -113,7 +112,7 @@ public class ServerEventListener {
 
                 Homeostatic.LOGGER.debug("Biome: " + biomeName
                     + "\nprecipitation_type=" + precipitation
-                    + "\ntemperature=" + biomeData.getTemperature(precipitation)
+                    + "\ntemperature=" + biomeTypeData.getTemperature(precipitation)
                     + "\ntemperatureModifier=" + temperatureModifier
                     + "\ndownfall=" + biome.getModifiedClimateSettings().downfall()
                     + "\ndayNightOffset=" + dayNightOffset
