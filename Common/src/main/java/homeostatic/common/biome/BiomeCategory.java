@@ -72,7 +72,12 @@ public record BiomeCategory(ResourceLocation loc, String type) {
         NONE,
         THEEND,
         NETHER,
-        MISSING
+        MISSING;
+
+        @Override
+        public String toString() {
+            return this.name().toLowerCase();
+        }
     }
 
 }

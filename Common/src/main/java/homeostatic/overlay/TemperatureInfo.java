@@ -1,11 +1,20 @@
 package homeostatic.overlay;
 
+import java.util.Objects;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.biome.Biome;
 
+import homeostatic.common.biome.BiomeCategoryManager;
+import homeostatic.common.biome.BiomeData;
+import homeostatic.common.biome.BiomeTypeDataManager;
+import homeostatic.common.temperature.TemperatureDirection;
 import homeostatic.common.temperature.TemperatureRange;
 import homeostatic.config.ConfigHandler;
 import homeostatic.platform.Services;
@@ -13,7 +22,8 @@ import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
 import homeostatic.util.FontHelper;
 import homeostatic.util.TempHelper;
-import homeostatic.common.temperature.TemperatureDirection;
+
+import static homeostatic.Homeostatic.loc;
 
 public class TemperatureInfo extends Overlay {
 
@@ -22,6 +32,7 @@ public class TemperatureInfo extends Overlay {
     @Override
     public void render(GuiGraphics guiGraphics, Minecraft mc, BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
+        Holder<Biome> biome = Objects.requireNonNull(mc.level).getBiome(pos);
 
         if (player == null) return;
 
@@ -63,6 +74,18 @@ public class TemperatureInfo extends Overlay {
                 Alignment.getTextX(ConfigHandler.Client.debugPosition(), scaledWidth, coreTempWidth,
                 ConfigHandler.Client.debugOffsetX(), 1.0F), y + (mc.font.lineHeight * 2),
                 ColorHelper.getTemperatureColor(coreRangeStep), false);
+
+            biome.unwrapKey().ifPresent(key -> {
+                ResourceLocation biomeCategory = loc(BiomeCategoryManager.getBiomeCategory(biome).toString());
+                BiomeData biomeData = BiomeTypeDataManager.getBiomeData(biomeCategory);
+                String biomeString = String.format("%s (%s) frozen: %s", key.location(), biomeCategory, biomeData.isFrozen());
+                int biomeStringWidth = mc.font.width(biomeString);
+
+                FontHelper.draw(mc, guiGraphics, biomeString,
+                    Alignment.getTextX(ConfigHandler.Client.debugPosition(), scaledWidth, biomeStringWidth,
+                    ConfigHandler.Client.debugOffsetX(), 1.0F), y + (mc.font.lineHeight * 3),
+                    -1, false);
+            });
         });
     }
 

@@ -3,6 +3,7 @@ package homeostatic.event;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+import homeostatic.common.biome.BiomeTypeDataManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -80,6 +81,7 @@ public class ServerEventListener {
     @SubscribeEvent
     public static void onResourceReload(AddReloadListenerEvent event) {
         event.addListener(new BiomeCategoryManager());
+        event.addListener(new BiomeTypeDataManager());
         event.addListener(new BlockRadiationManager());
         event.addListener(new DrinkingFluidManager());
         event.addListener(new DrinkableItemManager());

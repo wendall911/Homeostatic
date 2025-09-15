@@ -33,6 +33,7 @@ public class FabricDatagenInitializer implements DataGeneratorEntrypoint {
         pack.addProvider((dataOutput, registryFuture) -> new BiomeCategoryProvider(dataOutput));
         pack.addProvider((dataOutput, registryFuture) -> new HomeostaticLanguageProvider(dataOutput));
         pack.addProvider((dataOutput, registryFuture) -> new CommonRecipeProvider(dataOutput));
+        pack.addProvider((dataOutput, registryFuture) -> new BiomeTypeDataProvider(dataOutput));
     }
 
     public static void configureFabricDatagen(FabricDataGenerator.Pack pack) {
