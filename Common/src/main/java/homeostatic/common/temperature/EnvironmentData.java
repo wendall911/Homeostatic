@@ -1,7 +1,6 @@
 package homeostatic.common.temperature;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import com.google.common.collect.ImmutableList;
 
@@ -12,7 +11,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -29,11 +27,10 @@ import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
 
-import homeostatic.common.biome.BiomeData;
-import homeostatic.common.biome.BiomeRegistry;
+import homeostatic.common.biome.BiomeTypeData;
+import homeostatic.common.biome.BiomeTypeDataManager;
 import homeostatic.common.biome.ClimateSettings;
 import homeostatic.data.integration.ModIntegration;
-import homeostatic.Homeostatic;
 import homeostatic.platform.Services;
 import homeostatic.util.RegistryHelper;
 import homeostatic.util.TempHelper;
@@ -239,9 +236,9 @@ public class EnvironmentData {
     }
 
     private static double getMaxBiomeHumidity(ServerLevel level, Holder<Biome> biomeHolder, BlockPos pos) {
-        BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+        BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biomeHolder);
 
-        return biomeData.getHumidity(biomeHolder.value().getPrecipitationAt(pos, level.getSeaLevel()));
+        return biomeTypeData.getHumidity(biomeHolder.value().getPrecipitationAt(pos, level.getSeaLevel()));
     }
 
     private static float getWaterTemperature(float airTemperature, double waterVolume) {
@@ -270,10 +267,10 @@ public class EnvironmentData {
             return 0F;
         }
 
-        BiomeData biomeData = BiomeRegistry.getDataForBiome(biome);
+        BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biome);
         long time = (level.getDayTime() % 24000);
         ClimateSettings climateSettings = Services.PLATFORM.getClimateSettings(biome);
-        float maxTemp = biomeData.getDayNightOffset(climateSettings.getPrecipitationType());
+        float maxTemp = biomeTypeData.getDayNightOffset(climateSettings.getPrecipitationType());
 
         if (maxTemp == 0F) return maxTemp;
 
@@ -295,9 +292,9 @@ public class EnvironmentData {
 
     private static float getHeightAdjustedTemperature(ServerLevel level, Holder<Biome> biomeHolder, BlockPos pos) {
         ResourceKey<Level> worldKey = level.dimension();
-        BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+        BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biomeHolder);
         Biome.Precipitation precipitation = biomeHolder.value().getPrecipitationAt(pos, level.getSeaLevel());
-        float temperature = biomeData.getTemperature(precipitation);
+        float temperature = biomeTypeData.getTemperature(precipitation);
 
         /*
          * Only calculate in Overworld.
@@ -311,7 +308,7 @@ public class EnvironmentData {
          */
         if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID)
                 && precipitation != Biome.Precipitation.SNOW) {
-            temperature += BiomeData.SNOW_OFFSET;
+            temperature += BiomeTypeData.SNOW_OFFSET;
         }
 
         if (pos.getY() > 80) {
@@ -340,14 +337,14 @@ public class EnvironmentData {
             return biomeTemp;
         }
 
-        BiomeData biomeData = BiomeRegistry.getDataForBiome(biomeHolder);
+        BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biomeHolder);
         SubSeason subSeasonHolder = Services.PLATFORM.getSubSeason(level, biomeHolder);
 
         if (subSeasonHolder != null) {
             int season;
-            float lateSummerOffset = biomeData.MC_DEGREE * 5;
+            float lateSummerOffset = biomeTypeData.MC_DEGREE * 5;
             int subSeason = subSeasonHolder.ordinal();
-            float variation = biomeData.getSeasonVariation(biomeHolder.value().getPrecipitationAt(pos, level.getSeaLevel())) / 2.0F;
+            float variation = biomeTypeData.getSeasonVariation(biomeHolder.value().getPrecipitationAt(pos, level.getSeaLevel())) / 2.0F;
 
             if ((subSeason + 9) <= 12) {
                 season = subSeason + 9;
@@ -373,7 +370,7 @@ public class EnvironmentData {
          */
         else if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID)) {
             int season = 7;
-            float variation = biomeData.getSeasonVariation(Biome.Precipitation.RAIN);
+            float variation = biomeTypeData.getSeasonVariation(Biome.Precipitation.RAIN);
             double temp = getSeasonTemperature(season, variation, biomeTemp);
 
             return (float) temp;

@@ -12,7 +12,6 @@ import technology.roughness.whitenoise.config.WhiteNoiseConfigLoader;
 
 import technology.roughness.whitenoise.platform.Services;
 
-import homeostatic.common.biome.BiomeRegistry;
 import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.config.ConfigHandler;
 
@@ -27,7 +26,6 @@ public class Homeostatic {
     public static boolean DATA_GEN = System.getenv("DATA_GEN") != null && System.getenv("DATA_GEN").contains("all");
 
     public static void init() {
-        BiomeRegistry.init();
         HomeostaticDamageTypes.init();
     }
    

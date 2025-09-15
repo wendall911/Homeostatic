@@ -3,7 +3,7 @@ package homeostatic.common.temperature;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
 
-import homeostatic.common.biome.BiomeData;
+import homeostatic.common.biome.BiomeTypeData;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
@@ -121,14 +121,14 @@ public class BodyTemperature {
         if (tempChange > 0.0F) {
             switch (skinTemperatureDirection) {
                 case COOLING -> {
-                    tempChange = Math.max(-(tempChange) * 70.0F, -(BiomeData.MC_DEGREE * 3.0F));
+                    tempChange = Math.max(-(tempChange) * 70.0F, -(BiomeTypeData.MC_DEGREE * 3.0F));
 
                     if (this.wetness > 0) {
                         tempChange = tempChange * (float) (1.0 + (this.wetness / 20.0));
                     }
                 }
                 case COOLING_RAPIDLY -> {
-                    tempChange = Math.max(-(tempChange) * 100.0F, -(BiomeData.MC_DEGREE * 4.0F));
+                    tempChange = Math.max(-(tempChange) * 100.0F, -(BiomeTypeData.MC_DEGREE * 4.0F));
 
                     if (this.wetness > 0) {
                         tempChange = tempChange * (float) (2.0 + (this.wetness / 20.0));
@@ -155,10 +155,10 @@ public class BodyTemperature {
                         WaterHelper.updateWaterInfo(sp, Math.min(tempChange * 150.0F, 0.3F));
                     }
                     else {
-                        tempChange = Math.min(tempChange * 70.0F, BiomeData.MC_DEGREE * 3.0F);
+                        tempChange = Math.min(tempChange * 70.0F, BiomeTypeData.MC_DEGREE * 3.0F);
                     }
                 }
-                case WARMING_RAPIDLY -> tempChange = Math.min(tempChange * 100.0F, BiomeData.MC_DEGREE * 4.0F);
+                case WARMING_RAPIDLY -> tempChange = Math.min(tempChange * 100.0F, BiomeTypeData.MC_DEGREE * 4.0F);
                 case WARMING_NORMALLY -> {
                     if (canSweat) {
                         // Sweating
@@ -198,7 +198,7 @@ public class BodyTemperature {
         if (this.skinTemperature > NORMAL
                 && this.skinTemperature > this.lastSkinTemperature
                 && localTemperature < this.skinTemperature) {
-            float coolingRate = Math.max((this.skinTemperature - NORMAL) / 20.0F, BiomeData.MC_DEGREE);
+            float coolingRate = Math.max((this.skinTemperature - NORMAL) / 20.0F, BiomeTypeData.MC_DEGREE);
             if (canSweat) {
                 //Homeostatic.LOGGER.debug("sweating to normalize: {}", Math.min(tempChange * 150.0F, 0.2F));
                 WaterHelper.updateWaterInfo(sp, Math.min(tempChange * 150.0F, 0.2F));

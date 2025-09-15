@@ -3,6 +3,8 @@ package homeostatic.common.biome;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.core.Holder;
+import net.minecraft.world.level.biome.Biome;
 import org.jetbrains.annotations.NotNull;
 
 import com.google.gson.Gson;
@@ -18,24 +20,32 @@ import net.minecraft.util.profiling.ProfilerFiller;
 
 import homeostatic.Homeostatic;
 
+import static homeostatic.Homeostatic.prefix;
+
 public class BiomeTypeDataManager extends SimpleJsonResourceReloadListener<JsonElement> {
 
-    private static final Map<ResourceLocation, BiomeData> BIOME_TYPES = new HashMap<>();
+    private static final Map<ResourceLocation, BiomeTypeData> BIOME_TYPES = new HashMap<>();
 
     private static final ResourceLocation MISSING_LOC = Homeostatic.prefix(BiomeCategory.Type.MISSING.toString());
 
-    private static final Gson GSON = new GsonBuilder().registerTypeAdapter(BiomeData.class, new BiomeData.Serializer()).create();
+    private static final Gson GSON = new GsonBuilder().registerTypeAdapter(BiomeTypeData.class, new BiomeTypeData.Serializer()).create();
 
     public BiomeTypeDataManager() {
         super(ExtraCodecs.JSON, FileToIdConverter.json("environment/biome_type_data"));
     }
 
-    public static JsonElement parseBiomeData(BiomeData biomeData) {
-        return GSON.toJsonTree(biomeData);
+    public static JsonElement parseBiomeData(BiomeTypeData biomeTypeData) {
+        return GSON.toJsonTree(biomeTypeData);
     }
 
-    public static BiomeData getBiomeData(ResourceLocation type) {
+    public static BiomeTypeData getBiomeData(ResourceLocation type) {
         return BIOME_TYPES.getOrDefault(type, BIOME_TYPES.get(MISSING_LOC));
+    }
+
+    public static BiomeTypeData getDataForBiome(Holder<Biome> biome) {
+        ResourceLocation biomeCategory = prefix(BiomeCategoryManager.getBiomeCategory(biome).toString());
+
+        return getBiomeData(biomeCategory);
     }
 
     @Override
@@ -44,9 +54,9 @@ public class BiomeTypeDataManager extends SimpleJsonResourceReloadListener<JsonE
 
         for (Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet()) {
             try {
-                BiomeData biomeData = GSON.fromJson(entry.getValue(), BiomeData.class);
+                BiomeTypeData biomeTypeData = GSON.fromJson(entry.getValue(), BiomeTypeData.class);
 
-                BIOME_TYPES.put(entry.getKey(), biomeData);
+                BIOME_TYPES.put(entry.getKey(), biomeTypeData);
             }
             catch (Exception e) {
                 Homeostatic.LOGGER.error("Couldn't parse biome data {} {}", entry.getKey(), e);

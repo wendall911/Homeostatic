@@ -13,7 +13,7 @@ import com.google.gson.JsonSerializer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.biome.Biome;
 
-public class BiomeData {
+public class BiomeTypeData {
 
     public static final float FROZEN_OFFSET = -0.31F;
     public static final float SNOW_OFFSET = -0.446F;
@@ -25,7 +25,7 @@ public class BiomeData {
     private final double dayNightOffset;
     private final boolean isFrozen;
 
-    public BiomeData(float temperature, double humidity, double seasonVariation, double dayNightOffset, boolean isFrozen) {
+    public BiomeTypeData(float temperature, double humidity, double seasonVariation, double dayNightOffset, boolean isFrozen) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.seasonVariation = seasonVariation;
@@ -33,13 +33,13 @@ public class BiomeData {
         this.isFrozen = isFrozen;
     }
 
-    public static class Serializer implements JsonDeserializer<BiomeData>, JsonSerializer<BiomeData> {
+    public static class Serializer implements JsonDeserializer<BiomeTypeData>, JsonSerializer<BiomeTypeData> {
 
         @Override
-        public BiomeData deserialize(JsonElement jsonElement, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public BiomeTypeData deserialize(JsonElement jsonElement, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
 
-            return new BiomeData(
+            return new BiomeTypeData(
                 GsonHelper.getAsFloat(json, "temperature"),
                 GsonHelper.getAsDouble(json, "humidity"),
                 GsonHelper.getAsDouble(json, "season_variation"),
@@ -49,14 +49,14 @@ public class BiomeData {
         }
 
         @Override
-        public JsonElement serialize(BiomeData biomeData, Type typeOfSrc, JsonSerializationContext context) {
+        public JsonElement serialize(BiomeTypeData biomeTypeData, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject json = new JsonObject();
 
-            json.addProperty("temperature", biomeData.temperature);
-            json.addProperty("humidity", biomeData.humidity);
-            json.addProperty("season_variation", biomeData.seasonVariation);
-            json.addProperty("day_night_offset", biomeData.dayNightOffset);
-            json.addProperty("is_frozen", biomeData.isFrozen);
+            json.addProperty("temperature", biomeTypeData.temperature);
+            json.addProperty("humidity", biomeTypeData.humidity);
+            json.addProperty("season_variation", biomeTypeData.seasonVariation);
+            json.addProperty("day_night_offset", biomeTypeData.dayNightOffset);
+            json.addProperty("is_frozen", biomeTypeData.isFrozen);
 
             return json;
         }
