@@ -4,13 +4,14 @@ import java.awt.Color;
 
 import net.minecraft.util.Tuple;
 
+import technology.roughness.whitenoise.util.ColorHelper.Colors;
+
 import homeostatic.config.ConfigHandler;
 import homeostatic.common.temperature.TemperatureRange;
 
-
 public class ColorHelper {
 
-    public static final Color neutral = ColorHelper.decode("#d9d8d4");
+    public static final Color neutral = Colors.NEUTRAL.toColor();
 
     public static int getTemperatureColor(Tuple<TemperatureRange, Integer> rangeStep) {
         Color hot = ConfigHandler.Client.temperatureColorHot();
@@ -20,7 +21,7 @@ public class ColorHelper {
     }
 
     public static int getGlobeTemperatureColor(Tuple<TemperatureRange, Integer> rangeStep) {
-        Color color = decode("#FFFFFF");
+        Color color = Colors.WHITE.toColor();
 
         return getTemperatureColorFromRange(rangeStep, color, color, true);
     }
