@@ -21,8 +21,6 @@ public class GameOverlayEventHandler {
     private final OverlayManager overlayManager = OverlayManager.INSTANCE;
     public static final GameOverlayEventHandler INSTANCE = new GameOverlayEventHandler();
 
-    private static boolean enabled = false;
-
     private final IGuiOverlay OVERLAY;
     private final IGuiOverlay WATER_LEVEL_OVERLAY;
     private final IGuiOverlay TEMPERATURE_OVERLAY;
@@ -37,7 +35,7 @@ public class GameOverlayEventHandler {
         Minecraft mc = Minecraft.getInstance();
 
         OVERLAY = (gui, guiGraphics, partialTick, width, height) -> {
-            if (enabled && ConfigHandler.Common.debugEnabled() && !mc.options.renderDebug) {
+            if (ConfigHandler.Common.debugEnabled() && !mc.options.renderDebug) {
                 overlayManager.renderOverlay(guiGraphics);
             }
         };
