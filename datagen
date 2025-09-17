@@ -1,3 +1,0 @@
-#!/bin/sh
-
-DATA_GEN=all ./gradlew :Fabric:runCommonDatagen :Fabric:runFabricDatagen :NeoForge:runData || exit 1
