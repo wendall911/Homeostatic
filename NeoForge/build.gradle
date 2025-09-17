@@ -39,8 +39,8 @@ neoForge {
 }
 
 dependencies {
-    implementation group: 'technology.roughness.whitenoise', name: 'whitenoise-neoforge', version: "${whitenoise_version}"
-    jarJar group: 'technology.roughness.whitenoise', name: 'whitenoise-neoforge', version: "${whitenoise_version}"
+    implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
+    jarJar group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
 
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
