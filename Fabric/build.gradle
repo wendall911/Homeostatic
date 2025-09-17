@@ -26,8 +26,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
-    modImplementation group: 'technology.roughness.whitenoise', name: 'whitenoise-fabric', version: "${whitenoise_range}"
-    include group: 'technology.roughness.whitenoise', name: 'whitenoise-fabric', version: "${whitenoise_version}"
+    modImplementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_range}"
+    include group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_version}"
 
     modRuntimeOnly "curse.maven:architectury-419699:${architectury_version}"
     modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"

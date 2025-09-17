@@ -93,11 +93,6 @@ subprojects {
         }
 
         maven {
-            name = 'WhiteNoise' // Library for wendall911 mods
-            url = 'https://raw.githubusercontent.com/wendall911/maven/main/'
-        }
-
-        maven {
             name = "Illusive Soulworks"
             url = "https://maven.theillusivec4.top/"
         }
@@ -117,6 +112,18 @@ subprojects {
                 includeGroup('com.eliotlash.mclib')
             }
         }
+
+        maven {
+            name = 'WhiteNoise' // Library for wendall911 mods
+            url = 'https://raw.githubusercontent.com/wendall911/maven/main/'
+        }
+
+        if (System.getenv('local_maven') != null && project.hasProperty('localmaven')) {
+            maven {
+                url 'file://' + localmaven
+            }
+        }
+
     }
 
     tasks.withType(JavaCompile).configureEach {

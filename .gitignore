@@ -3,10 +3,12 @@ build
 .gradle
 libs
 run
-NeoForge
 
 # IntelliJ
 .idea
+*.iml
 
 #mappings
 mappings/mcp
+
+NeoForge
