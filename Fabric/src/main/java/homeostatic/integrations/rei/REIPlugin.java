@@ -54,7 +54,7 @@ public class REIPlugin implements REIClientPlugin {
         ).toList();
         RegistryAccess registryAccess = RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
 
-        if (!ConfigHandler.Common.requireThermometer()) {
+        if (ConfigHandler.Common.requireThermometer()) {
             recipes.addAll(HelmetThermometerRecipeMaker.createRecipes("rei"));
         }
 
