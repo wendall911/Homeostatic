@@ -55,7 +55,7 @@ public class REIPlugin implements REIClientPlugin {
             SmeltingRecipeMaker.createWaterBottleRecipes("rei").stream()
         ).toList();
 
-        if (!ConfigHandler.Common.requireThermometer()) {
+        if (ConfigHandler.Common.requireThermometer()) {
             recipes.addAll(HelmetThermometerRecipeMaker.createRecipes("rei"));
         }
 
