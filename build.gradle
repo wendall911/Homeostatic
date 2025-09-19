@@ -40,7 +40,8 @@ repositories {
 }
 
 group = 'com.github.wendall911.homeostatic'
-version = "${minecraft_version}-${mod_version}"
+def actualVersion = version
+version = "${minecraft_version}-${version}"
 archivesBaseName = "${mod_name}"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '17'
@@ -166,7 +167,7 @@ jar {
 
 def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta', '*.mixins.json']
 def replaceProperties = [
-    'version': version, 'forge_mc_version_range': forge_mc_version_range, 'forge_version_range': forge_version_range,
+    'version': actualVersion, 'forge_mc_version_range': forge_mc_version_range, 'forge_version_range': forge_version_range,
     'license': license, 'mod_id': mod_id, 'mod_author': mod_author, 'mod_description': mod_description,
     'mod_name': mod_name, 'issue_tracker': issue_tracker, 'mod_credits': mod_credits,
     'mod_update_branch': mod_update_branch
@@ -211,7 +212,7 @@ def updates = tasks.register("generateUpdates", Copy) {
 
     it.from("./files/templates/") {
         include 'updates.json'
-        expand 'version': version
+        expand 'version': actualVersion
     }
 
     it.into 'files/'

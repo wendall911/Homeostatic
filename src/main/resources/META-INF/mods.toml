@@ -1,26 +1,27 @@
 modLoader="javafml"
 loaderVersion="${forge_version_range}"
-issueTrackerURL="${issue_tracker}"
 license="${license}"
+logoBlur=false
+issueTrackerURL="${issue_tracker}"
+logoFile="${mod_id}_icon.png"
 
 [[mods]]
-  modId="${mod_id}"
-  displayName="${mod_name}"
-  description="${mod_description}"
-  version="${version}"
-  updateJSONURL="https://raw.githubusercontent.com/wendall911/Homeostatic/${mod_update_branch}/files/updates.json"
-  authors="${mod_author}"
-  credits="${mod_credits}"
-  logoFile="logo.png"
-  itemIcon="minecraft:bubble_column"
-
-[[dependencies.homeostatic]]
+    modId="${mod_id}"
+    version="${version}"
+    displayName="${mod_name}"
+    updateJSONURL="https://raw.githubusercontent.com/wendall911/Homeostatic/${mod_update_branch}/files/updates.json"
+    authors="${mod_author}"
+    credits="${mod_credits}"
+    description='''
+    ${mod_description}
+    '''
+[[dependencies.${mod_id}]]
     modId="forge"
     mandatory=true
     versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
-[[dependencies.homeostatic]]
+[[dependencies.${mod_id}]]
     modId="minecraft"
     mandatory=true
     versionRange="${forge_mc_version_range}"
