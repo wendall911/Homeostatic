@@ -39,7 +39,7 @@ dependencies {
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-	modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
+    modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
     modRuntimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
 
@@ -109,6 +109,18 @@ def replaceProperties = [
     'issue_tracker': issue_tracker, 'fabric_loader_min_version': fabric_loader_min_version,
     'mod_credits': mod_credits, 'java_version': java_version
 ]
+
+processResources {
+    from project(":Common").sourceSets.main.resources
+    duplicatesStrategy(DuplicatesStrategy.FAIL)
+    inputs.properties replaceProperties
+    replaceProperties.put 'project', project
+    exclude '.cache'
+
+    filesMatching(resourceTargets) {
+        expand replaceProperties
+    }
+}
 
 tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
