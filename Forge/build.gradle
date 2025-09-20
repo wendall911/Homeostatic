@@ -8,8 +8,9 @@ plugins {
     id 'me.modmuss50.mod-publish-plugin'
 }
 
+def actualVersion = version
+version = "${minecraft_version}-${version}-FORGE"
 archivesBaseName = "${mod_id}"
-version = "${minecraft_version}-${mod_version}-FORGE"
 
 mixin {
     add sourceSets.main, "${mod_id}-refmap.json"
@@ -161,7 +162,7 @@ tasks.withType(JavaCompile) {
 
 def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta', '*.mixins.json']
 def replaceProperties = [
-    'version': version, 'forge_mc_version_range': forge_mc_version_range, 'forge_version_range': forge_version_range,
+    'version': actualVersion, 'forge_mc_version_range': forge_mc_version_range, 'forge_version_range': forge_version_range,
     'license': license, 'mod_id': mod_id, 'mod_author': mod_author, 'mod_description': mod_description,
     'mod_name': mod_name, 'issue_tracker': issue_tracker, 'mod_credits': mod_credits,
     'mod_update_branch': mod_update_branch
@@ -208,7 +209,7 @@ def updates = tasks.register("generateUpdates", Copy) {
 
     it.from("../files/templates/") {
         include 'updates.json'
-        expand 'version': version, 'minecraft_version': minecraft_version
+        expand 'version': actualVersion, 'minecraft_version': minecraft_version
     }
 
     it.into '../files/'
