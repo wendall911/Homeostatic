@@ -5,13 +5,13 @@ import homeostatic.platform.services.IClientPlatform;
 
 import net.minecraft.world.entity.player.Player;
 
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class NeoForgeClientPlatform implements IClientPlatform {
 
     @Override
     public void sendDrinkWaterPacket(Player player) {
-        ClientPacketDistributor.sendToServer(new DrinkWater(player.getId()));
+        PacketDistributor.sendToServer(new DrinkWater(player.getId()));
     }
 
 }
