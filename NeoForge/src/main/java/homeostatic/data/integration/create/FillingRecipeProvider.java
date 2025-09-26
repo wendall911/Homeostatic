@@ -1,11 +1,12 @@
 package homeostatic.data.integration.create;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.jetbrains.annotations.NotNull;
 
-/*
-import com.simibubi.create.AllRecipeTypes;
-import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
+import com.simibubi.create.api.data.recipe.FillingRecipeGen;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
@@ -17,17 +18,19 @@ import homeostatic.common.TagManager;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.item.LeatherFlask;
 import homeostatic.data.integration.ModIntegration;
+import homeostatic.Homeostatic;
 import homeostatic.util.WaterHelper;
 
 import static homeostatic.Homeostatic.prefix;
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.loc;
 
-public class FillingRecipeProvider extends ProcessingRecipeGen {
+public class FillingRecipeProvider extends FillingRecipeGen {
 
     GeneratedRecipe FLASK = createFlaskRecipe("purified_water", TagManager.Fluids.PURIFIED_WATER, prefix("purified_water")),
-            WATER = createFlaskRecipe("water", FluidTags.WATER, new ResourceLocation("minecraft", "water"));
+            WATER = createFlaskRecipe("water", FluidTags.WATER, loc("minecraft", "water"));
 
-    public FillingRecipeProvider(@NotNull final PackOutput packOutput) {
-        super(packOutput);
+    public FillingRecipeProvider(@NotNull final PackOutput packOutput, CompletableFuture<HolderLookup.Provider> provider) {
+        super(packOutput, provider, Homeostatic.MODID);
     }
 
     private GeneratedRecipe createFlaskRecipe(String id, TagKey<Fluid> key, ResourceLocation fluid) {
@@ -37,10 +40,4 @@ public class FillingRecipeProvider extends ProcessingRecipeGen {
             .whenModLoaded(ModIntegration.CREATE_MODID));
     }
 
-    @Override
-    protected AllRecipeTypes getRecipeType() {
-        return AllRecipeTypes.FILLING;
-    }
-
 }
-*/

@@ -52,7 +52,7 @@ dependencies {
     compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
     compileOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
     compileOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
-    //compileOnly "curse.maven:create-328085:${create_forge_version}"
+    compileOnly "curse.maven:create-328085:${create_neoforge_version}"
     implementation "vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT"
     implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
     compileOnly "dev.gigaherz.sewingkit:SewingKit-1.21:${sewingkit_version}"
@@ -60,7 +60,7 @@ dependencies {
     compileOnly "curse.maven:ecliptic-1118306:${ecliptic_neoforge_version}"
 
     if (System.getenv('DATA_GEN') != null) {
-        //runtimeOnly "curse.maven:create-328085:${create_neoforge_version}"
+        runtimeOnly "curse.maven:create-328085:${create_neoforge_version}"
         runtimeOnly "dev.gigaherz.sewingkit:SewingKit-1.21:${sewingkit_version}"
     }
     else {
