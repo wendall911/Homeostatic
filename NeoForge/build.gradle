@@ -84,7 +84,7 @@ dependencies {
         //runtimeOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_neoforge_version}"
         //runtimeOnly "curse.maven:twilightforest-227639:${twilight_forest_neoforge_version}"
         //runtimeOnly "curse.maven:botania-225643:???"
-        //runtimeOnly "curse.maven:curios-1037991:5657610"
+        //runtimeOnly "curse.maven:curios-309927:${curios_neoforge_version}"
         //runtimeOnly "curse.maven:croptopia-415438:4512807"
         //runtimeOnly "curse.maven:farmers_delight-398521:???"
         //runtimeOnly "curse.maven:xerca-341575:???"
