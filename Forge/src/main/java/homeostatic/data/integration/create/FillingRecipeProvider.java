@@ -3,7 +3,8 @@ package homeostatic.data.integration.create;
 import org.jetbrains.annotations.NotNull;
 
 import com.simibubi.create.AllRecipeTypes;
-import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
+import com.simibubi.create.api.data.recipe.BaseRecipeProvider;
+import com.simibubi.create.api.data.recipe.PressingRecipeGen;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -21,13 +22,13 @@ import homeostatic.util.WaterHelper;
 
 import static technology.roughness.whitenoise.util.ResourceLocationHelper.loc;
 
-public class FillingRecipeProvider extends ProcessingRecipeGen {
+public class FillingRecipeProvider extends PressingRecipeGen {
 
-    GeneratedRecipe FLASK = createFlaskRecipe("purified_water", TagManager.Fluids.PURIFIED_WATER, Homeostatic.loc("purified_water")),
+    BaseRecipeProvider.GeneratedRecipe FLASK = createFlaskRecipe("purified_water", TagManager.Fluids.PURIFIED_WATER, Homeostatic.loc("purified_water")),
             WATER = createFlaskRecipe("water", FluidTags.WATER, loc("minecraft", "water"));
 
     public FillingRecipeProvider(@NotNull final PackOutput packOutput) {
-        super(packOutput);
+        super(packOutput, Homeostatic.MODID);
     }
 
     private GeneratedRecipe createFlaskRecipe(String id, TagKey<Fluid> key, ResourceLocation fluid) {
