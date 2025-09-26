@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "homeostatic:leather_flask"
+    },
+    {
+      "type": "fluid_tag",
+      "amount": 1000,
+      "fluid_tag": "homeostatic:purified_water"
+    }
+  ],
+  "results": [
+    {
+      "components": {
+        "homeostatic:water_container": {
+          "Amount": 1000,
+          "Fluid": "homeostatic:purified_water"
+        }
+      },
+      "id": "homeostatic:leather_flask"
+    }
+  ]
+}

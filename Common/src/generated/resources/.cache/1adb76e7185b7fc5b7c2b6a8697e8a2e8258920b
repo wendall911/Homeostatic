@@ -1,4 +1,4 @@
-// 1.21.1	2025-09-15T12:22:33.67878908	Homeostatic/Homeostatic - Biome Categories
+// 1.21.1	2025-09-26T08:34:24.081852974	Homeostatic/Homeostatic - Biome Categories
 d5e0ffcd65a6c6d8913baf74dd41c90458e5bad3 data/biomeswevegone/environment/biome_category/dacite_shore.json
 89cb8254870a5e56904f5c89f31ea6f65699fb16 data/minecraft/environment/biome_category/soul_sand_valley.json
 d18f4c43fe65ac53bff64b550c39202a748bde93 data/twilightforest/environment/biome_category/fire_swamp.json
@@ -330,8 +330,8 @@ d5c4b6a3d9ca184bac39d52d677cb02c3611f54e data/minecraft/environment/biome_catego
 a044ce20b28737650be9b1f13ef19a029b79d73e data/terralith/environment/biome_category/rocky_shrubland.json
 783ec664b38b4dd306653c0cefcecf01faea4656 data/biomeswevegone/environment/biome_category/rainbow_beach.json
 a20c7fd8039f5172980949379876a61c4677334c data/regions_unexplored/environment/biome_category/hyacinth_deeps.json
-c5597eb7745b4748020fd19f53915433afff0e1a data/terralith/environment/biome_category/blooming_plateau.json
 46f04ae17bd3ce95331a2abb34f9bfbac598ad47 data/terralith/environment/biome_category/ashen_savanna.json
+c5597eb7745b4748020fd19f53915433afff0e1a data/terralith/environment/biome_category/blooming_plateau.json
 0592a68e959dd6ecf0d4c0592a1b90a9ca86dc8c data/minecraft/environment/biome_category/small_end_islands.json
 c16bb22151faad38829971430d90f275763ebe7f data/minecraft/environment/biome_category/mushroom_fields.json
 de07f16549f08e0ab5b0c80ea626d235dc2de60e data/undergarden/environment/biome_category/veil_mushroom_bog.json
