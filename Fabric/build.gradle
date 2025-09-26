@@ -142,6 +142,7 @@ publishMods {
         curseforge {
             accessToken = project.hscurseApiKey
             projectId = project.hscurseId
+            projectSlug = project.hsSlug
             javaVersions.add(JavaVersion.toVersion("${java_version}"))
             clientRequired = true
             serverRequired = true
@@ -198,6 +199,16 @@ publishMods {
             optional('more-food-xd')
             optional('terralith')
             optional('regions-unexplored')
+        }
+    }
+    if (project.hasProperty('hsDiscordWebhook')) {
+        discord {
+            webhookUrl = project.hsDiscordWebhook
+            dryRunWebhookUrl = project.discordDryrunWebhook
+            username = "wendall911"
+            content = changelog.map {
+                "# A new version of Homeostatic for Fabric ${minecraft_version} has been released! \n" + it
+            }
         }
     }
 }
