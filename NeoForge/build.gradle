@@ -170,11 +170,11 @@ publishMods {
     modLoaders.add('neoforge')
     dryRun = providers.environmentVariable('DO_RELEASE').getOrNull() == null
 
-    if (project.hasProperty('hscurseApiKey')) {
+    if (project.hasProperty("${curseforge_api_key_prop}")) {
         curseforge {
-            accessToken = project.hscurseApiKey
-            projectId = project.hscurseId
-            projectSlug = project.hsSlug
+            accessToken = project.property("${curseforge_api_key_prop}")
+            projectId = "${curseforge_id}"
+            projectSlug = "${curseforge_slug}"
             javaVersions.add(JavaVersion.toVersion("${java_version}"))
             clientRequired = true
             serverRequired = true
@@ -217,10 +217,10 @@ publishMods {
             optional('regions-unexplored')
         }
     }
-    if (project.hasProperty('hsModrinthId')) {
+    if (project.hasProperty("${modrinth_api_key_prop}")) {
         modrinth {
-            accessToken = project.modrinthKey
-            projectId = project.hsModrinthId
+            accessToken = project.property("${modrinth_api_key_prop}")
+            projectId = "${modrinth_id}"
             minecraftVersions.addAll("${release_versions}".split(','))
             optional('create')
             optional('ecologics')
@@ -244,13 +244,13 @@ publishMods {
             optional('regions-unexplored')
         }
     }
-    if (project.hasProperty('hsDiscordWebhook')) {
+    if (project.hasProperty("${discord_webhook_prop}")) {
         discord {
-            webhookUrl = project.hsDiscordWebhook
-            dryRunWebhookUrl = project.discordDryrunWebhook
-            username = "wendall911"
+            webhookUrl = project.property("${discord_webhook_prop}")
+            dryRunWebhookUrl = project.property("${discord_dryrun_webhook_prop}")
+            username = "${mod_author}"
             content = changelog.map {
-                "# A new version of Homeostatic for Forge ${minecraft_version} has been released! \n" + it
+                "# A new version of ${mod_display_name} for NeoForge ${minecraft_version} has been released! \n" + it
             }
         }
     }
