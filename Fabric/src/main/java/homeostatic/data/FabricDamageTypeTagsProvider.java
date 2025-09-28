@@ -10,7 +10,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageType;
 
-import homeostatic.common.damagesource.HomeostaticDamageTypeTags;
+import homeostatic.common.damagesource.HomeostaticDamageTypes;
 
 public class FabricDamageTypeTagsProvider extends FabricTagProvider<DamageType> {
 
@@ -18,18 +18,10 @@ public class FabricDamageTypeTagsProvider extends FabricTagProvider<DamageType> 
         super(output, Registries.DAMAGE_TYPE, provider);
     }
 
-    // TODO: investigate why addTag doesn't work here. I have a registry error thrown when I try to use it.
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(DamageTypeTags.BYPASSES_ARMOR)
-            .addOptionalTag(HomeostaticDamageTypeTags.HYPERTHERMIA.location())
-            .addOptionalTag(HomeostaticDamageTypeTags.SCALDING.location())
-            .addOptionalTag(HomeostaticDamageTypeTags.DEHYDRATION.location());
-        tag(DamageTypeTags.BYPASSES_INVULNERABILITY)
-            .addOptionalTag(HomeostaticDamageTypeTags.HYPERTHERMIA.location())
-            .addOptionalTag(HomeostaticDamageTypeTags.SCALDING.location())
-            .addOptionalTag(HomeostaticDamageTypeTags.DEHYDRATION.location());
-
+        this.tag(DamageTypeTags.BYPASSES_ARMOR).add(HomeostaticDamageTypes.HYPERTHERMIA, HomeostaticDamageTypes.SCALDING, HomeostaticDamageTypes.DEHYDRATION);
+        this.tag(DamageTypeTags.BYPASSES_INVULNERABILITY).add(HomeostaticDamageTypes.HYPERTHERMIA, HomeostaticDamageTypes.SCALDING, HomeostaticDamageTypes.DEHYDRATION);
     }
 
 }
