@@ -1,4 +1,4 @@
-// 1.20.1	2025-09-28T11:06:48.143819805	Homeostatic/Homeostatic - Biome Type Data
+// 1.20.1	2025-09-28T12:08:11.942355367	Homeostatic/Homeostatic - Biome Type Data
 356aef59683b376cc842f7fdd216be4b91ac48bc data/homeostatic/environment/biome_type_data/extreme_hills.json
 797b2698c2cbaa233849963da1b05f465679cf88 data/homeostatic/environment/biome_type_data/cold_forest.json
 f9711626088a91abbc3e93becb20270a4db532e2 data/homeostatic/environment/biome_type_data/rainforest.json
@@ -19,8 +19,8 @@ bb4449f8966bd3ee37e76fafc287dd6c0752ed83 data/homeostatic/environment/biome_type
 1b2b5c7df54151bb099f03327c72f2f2898c4495 data/homeostatic/environment/biome_type_data/ocean.json
 f21245d7b8114738c6685f43e2b09abff9966fe7 data/homeostatic/environment/biome_type_data/missing.json
 6b606536261bcffea60345fd7b67d93083bb2fc6 data/homeostatic/environment/biome_type_data/jungle.json
-1a73f4c8e25f87203d357290c4b0099dd3f01ad4 data/homeostatic/environment/biome_type_data/bog.json
 483a43fa952597adfaed20c724eda454ad48f364 data/homeostatic/environment/biome_type_data/deep_cold_ocean.json
+1a73f4c8e25f87203d357290c4b0099dd3f01ad4 data/homeostatic/environment/biome_type_data/bog.json
 47535995b7675016a7203b01f88ea38f89c5394a data/homeostatic/environment/biome_type_data/dryland.json
 9e67f695df5bc2db05f38eab6165631bc389e3e1 data/homeostatic/environment/biome_type_data/savanna.json
 59dc100ebc57a482065ee2f5792153a505c5b00a data/homeostatic/environment/biome_type_data/mesa.json
