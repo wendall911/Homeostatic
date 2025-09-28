@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#homeostatic:hyperthermia",
+      "required": false
+    },
+    {
+      "id": "#homeostatic:scalding",
+      "required": false
+    },
+    {
+      "id": "#homeostatic:dehydration",
+      "required": false
+    }
+  ]
+}
