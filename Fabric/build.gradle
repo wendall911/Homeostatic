@@ -101,6 +101,7 @@ loom {
     }
 }
 
+
 def resourceTargets = ['fabric.mod.json', 'pack.mcmeta', '*.mixins.json']
 def replaceProperties = [
     'version': actualVersion, 'fabric_mc_version_range': fabric_mc_version_range,
@@ -119,6 +120,10 @@ processResources {
 
     filesMatching(resourceTargets) {
         expand replaceProperties
+    }
+
+    from ('../Forge/src/generated/resources/') {
+        exclude '**/recipes/*'
     }
 }
 
