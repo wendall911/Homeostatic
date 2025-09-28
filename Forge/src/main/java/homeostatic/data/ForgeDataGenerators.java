@@ -26,7 +26,6 @@ public final class ForgeDataGenerators {
         gen.addProvider(event.includeServer(), new MixingRecipeProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new FillingRecipeProvider(gen.getPackOutput()));
         gen.addProvider(event.includeServer(), new HomeostaticBookProvider(gen.getPackOutput()));
-        RegistryDataGenerator.addProviders(event.includeServer(), gen, gen.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
         gen.addProvider(event.includeServer(), new SewingKitRecipeProvider(gen.getPackOutput()));
     }
 

@@ -4,6 +4,10 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
+
+import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.data.recipe.CommonRecipeProvider;
 
 public class FabricDatagenInitializer implements DataGeneratorEntrypoint {
@@ -23,6 +27,11 @@ public class FabricDatagenInitializer implements DataGeneratorEntrypoint {
         }
     }
 
+    @Override
+    public void buildRegistry(RegistrySetBuilder builder) {
+        builder.add(Registries.DAMAGE_TYPE, HomeostaticDamageTypes::bootstrap);
+    }
+
     public static void configureCommonDatagen(FabricDataGenerator.Pack pack) {
         pack.addProvider((dataOutput, registryFuture) -> new HomeostaticItemTagsProvider(dataOutput, registryFuture, fabricBlockTagProvider.contentsGetter()));
         pack.addProvider(HomeostaticFluidTagsProvider::new);
@@ -34,6 +43,8 @@ public class FabricDatagenInitializer implements DataGeneratorEntrypoint {
         pack.addProvider((dataOutput, registryFuture) -> new HomeostaticLanguageProvider(dataOutput));
         pack.addProvider((dataOutput, registryFuture) -> new CommonRecipeProvider(dataOutput));
         pack.addProvider((dataOutput, registryFuture) -> new BiomeTypeDataProvider(dataOutput));
+        pack.addProvider(FabricDamageTypeProvider::new);
+        pack.addProvider(FabricDamageTypeTagsProvider::new);
     }
 
     public static void configureFabricDatagen(FabricDataGenerator.Pack pack) {

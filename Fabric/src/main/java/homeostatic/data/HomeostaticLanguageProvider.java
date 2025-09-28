@@ -18,12 +18,12 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
         translationBuilder.
             add(Homeostatic.MODID + ".items", "Homeostatic");
 
-        addAttack(translationBuilder, "hasHyperthermia", "Hyperthermia has claimed poor %1$s");
-        addAttack(translationBuilder, "hasHyperthermia.player", "Hyperthermia has claimed poor %1$s whilst fighting %2$s");
-        addAttack(translationBuilder, "isScalding", "%1$s died of scalding");
-        addAttack(translationBuilder, "isScalding.player", "%1$s died of scalding whilst fighting %2$s");
-        addAttack(translationBuilder, "hasDehydration", "%1$s turned into dead dried %1$s");
-        addAttack(translationBuilder, "hasDehydration.player", "%1$s turned into dead dried %1$s whilst fighting %2$s");
+        addAttack(translationBuilder, "hyperthermia", "Hyperthermia has claimed poor %1$s");
+        addAttack(translationBuilder, "hyperthermia.player", "Hyperthermia has claimed poor %1$s whilst fighting %2$s");
+        addAttack(translationBuilder, "scalding", "%1$s died of scalding");
+        addAttack(translationBuilder, "scalding.player", "%1$s died of scalding whilst fighting %2$s");
+        addAttack(translationBuilder, "dehydration", "%1$s turned into dead dried %1$s");
+        addAttack(translationBuilder, "dehydration.player", "%1$s turned into dead dried %1$s whilst fighting %2$s");
         addEffect(translationBuilder, "thirst", "Thirst");
         addEffect(translationBuilder, "frost_resistance", "Frost Resistance");
         addPotion(translationBuilder, "frost_resistance", "Frost Resistance");
