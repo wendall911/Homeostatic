@@ -7,6 +7,7 @@ import net.minecraft.server.MinecraftServer;
 
 public class RegistryHelper {
 
+    @SuppressWarnings("unchecked")
     public static <T> Registry<T> getRegistry(ResourceKey<Registry<T>> resourceKey) {
         return (Registry<T>) BuiltInRegistries.REGISTRY.get(resourceKey.location());
     }

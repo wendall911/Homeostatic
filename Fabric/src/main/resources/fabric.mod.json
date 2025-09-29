@@ -7,46 +7,51 @@
   "authors": [
     "${mod_author}"
   ],
+  "contributors": [
+    "${mod_credits}"
+  ],
   "contact": {
-    "issues": "${issue_tracker}"
+    "homepage": "https://github.com/${mod_author}/${mod_name}",
+    "issues": "https://github.com/${mod_author}/${mod_name}/issues",
+    "sources": "https://github.com/${mod_author}/${mod_name}"
   },
   "license": "${license}",
   "icon": "${mod_id}_icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "homeostatic.HomeostaticFabric"
+      "${mod_id}.${mod_name}Fabric"
     ],
     "client": [
-      "homeostatic.HomeostaticClientFabric"
+      "${mod_id}.${mod_name}ClientFabric"
     ],
     "fabric-datagen": [
-      "homeostatic.data.FabricDatagenInitializer"
+      "${mod_id}.data.FabricDatagenInitializer"
     ],
     "rei_client": [
-      "homeostatic.integrations.rei.REIPlugin"
+      "${mod_id}.integrations.rei.REIPlugin"
     ],
     "jei_mod_plugin": [
-      "homeostatic.integrations.jei.JEIPlugin"
+      "${mod_id}.integrations.jei.JEIPlugin"
     ],
     "whitenoise": [
-      "homeostatic.FabricConfigInitializer"
+      "${mod_id}.FabricConfigInitializer"
     ],
     "cardinal-components-entity": [
-      "homeostatic.common.components.HomeostaticComponents"
+      "${mod_id}.common.components.${mod_name}Components"
     ]
   },
   "custom": {
     "cardinal-components": [
-      "homeostatic:temperature_data_provider",
-      "homeostatic:thermometer_data_provider",
-      "homeostatic:water_data_provider",
-      "homeostatic:wetness_data_provider",
-      "homeostatic:item_fluid_provider"
+      "${mod_id}:temperature_data_provider",
+      "${mod_id}:thermometer_data_provider",
+      "${mod_id}:water_data_provider",
+      "${mod_id}:wetness_data_provider",
+      "${mod_id}:item_fluid_provider"
     ]
   },
   "mixins": [
-    "homeostatic.fabric.mixins.json"
+    "${mod_id}.fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": "${fabric_loader_min_version}",

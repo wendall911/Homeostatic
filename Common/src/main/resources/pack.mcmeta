@@ -1,6 +1,6 @@
 {
-    "pack": {
-        "description": "Homeostatic resources",
-        "pack_format": 15
-    }
+  "pack": {
+    "description": "${mod_display_name} resources",
+    "pack_format": ${pack_format}
+  }
 }

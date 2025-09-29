@@ -340,7 +340,7 @@ public class EnvironmentData {
 
         if (subSeasonHolder != null) {
             int season;
-            float lateSummerOffset = biomeTypeData.MC_DEGREE * 5;
+            float lateSummerOffset = BiomeTypeData.MC_DEGREE * 5;
             int subSeason = subSeasonHolder.ordinal();
             float variation = biomeTypeData.getSeasonVariation(biomeHolder.value().getPrecipitationAt(pos)) / 2.0F;
 

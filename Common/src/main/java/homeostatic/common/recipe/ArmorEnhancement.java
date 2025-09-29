@@ -29,18 +29,18 @@ public class ArmorEnhancement extends CustomRecipe {
 
     @Override
     public boolean matches(CraftingContainer pContainer, Level pLevel) {
-        Pair<ItemStack, TagKey> check = checkContainer(pContainer);
+        Pair<ItemStack, TagKey<Item>> check = checkContainer(pContainer);
         ItemStack armor = check.getFirst();
-        TagKey tagKey = check.getSecond();
+        TagKey<Item> tagKey = check.getSecond();
 
         return tagKey != null && armor != null;
     }
 
     @Override
     public ItemStack assemble(CraftingContainer pContainer, RegistryAccess registryAccess) {
-        Pair<ItemStack, TagKey> check = checkContainer(pContainer);
+        Pair<ItemStack, TagKey<Item>> check = checkContainer(pContainer);
         ItemStack armorCopy = check.getFirst().copy();
-        TagKey tagKey = check.getSecond();
+        TagKey<Item> tagKey = check.getSecond();
         CompoundTag tags = armorCopy.getOrCreateTag();
 
         if (tagKey == TagManager.Items.INSULATION) {
@@ -72,7 +72,7 @@ public class ArmorEnhancement extends CustomRecipe {
         return HomeostaticRecipes.ARMOR_ENHANCEMENT_SERIALIZER;
     }
 
-    public Pair<ItemStack, TagKey> checkContainer(CraftingContainer pContainer) {
+    public Pair<ItemStack, TagKey<Item>> checkContainer(CraftingContainer pContainer) {
         List<ItemStack> ingredients = Lists.newArrayList();
         TagKey<Item> tagKey = null;
         ItemStack armor = null;

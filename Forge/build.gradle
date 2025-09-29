@@ -1,6 +1,5 @@
 plugins {
     id 'idea'
-    id 'maven-publish'
     id 'net.minecraftforge.gradle'
     id 'org.parchmentmc.librarian.forgegradle'
     id 'org.spongepowered.mixin'
@@ -38,7 +37,6 @@ minecraft {
                 }
             }
         }
-
         server {
             workingDirectory project.file('run')
             property 'forge.logging.console.level', 'debug'
@@ -54,7 +52,6 @@ minecraft {
                 }
             }
         }
-
         data {
             workingDirectory project.file('run')
             property 'forge.logging.console.level', 'debug'
@@ -98,6 +95,8 @@ dependencies {
     compileOnly fg.deobf("curse.maven:ecliptic_seasons-1118306:${ecliptic_seasons_forge_version}")
     //compileOnly fg.deobf("curse.maven:-:")
 
+    // This stupidity is needed in Forge, since
+    // they don't ingore other mods datagen when running datagen locally.
     if (System.getenv('DATA_GEN') != null) {
         runtimeOnly fg.deobf("curse.maven:create-328085:${create_forge_version}")
         runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}")
@@ -156,24 +155,40 @@ dependencies {
     }
 }
 
+// Throw errors on warnings. Can also disable warnings here.
+compileJava {
+    source(project(":Common").sourceSets.main.allSource)
+    options.compilerArgs << "-Xlint:all,-classfile,-processing,-deprecation,-serial" << "-Werror"
+}
+
 tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
 }
 
 def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta', '*.mixins.json']
 def replaceProperties = [
-    'version': actualVersion, 'forge_mc_version_range': forge_mc_version_range, 'forge_version_range': forge_version_range,
-    'license': license, 'mod_id': mod_id, 'mod_author': mod_author, 'mod_description': mod_description,
-    'mod_name': mod_name, 'issue_tracker': issue_tracker, 'mod_credits': mod_credits,
-    'mod_update_branch': mod_update_branch
+    'version': actualVersion,
+    'minecraft_version': minecraft_version,
+    'forge_mc_version_range': forge_mc_version_range,
+    'forge_version_range': forge_version_range,
+    'license': license,
+    'mod_id': mod_id,
+    'mod_author': mod_author,
+    'mod_description': mod_description,
+    'mod_display_name': mod_display_name,
+    'mod_name': mod_name,
+    'mod_credits': mod_credits,
+    'mod_update_branch': mod_update_branch,
+    'pack_format': pack_format,
+    'curseforge_slug': curseforge_slug
 ]
 
 processResources {
     from project(":Common").sourceSets.main.resources
     duplicatesStrategy(DuplicatesStrategy.FAIL)
     inputs.properties replaceProperties
-    exclude '.cache'
     replaceProperties.put 'project', project
+    exclude '.cache'
 
     filesMatching(resourceTargets) {
         expand replaceProperties
@@ -209,13 +224,13 @@ def updates = tasks.register("generateUpdates", Copy) {
 
     it.from("../files/templates/") {
         include 'updates.json'
-        expand 'version': actualVersion, 'minecraft_version': minecraft_version
+        expand replaceProperties
     }
 
     it.into '../files/'
 }
 
-tasks.generateUpdates.mustRunAfter('jar', 'sourcesJar')
+tasks.generateUpdates.mustRunAfter('jar')
 
 tasks.build.dependsOn('changelog', 'generateUpdates')
 
@@ -231,11 +246,11 @@ publishMods {
     modLoaders.addAll(['neoforge', 'forge'])
     dryRun = providers.environmentVariable('DO_RELEASE').getOrNull() == null
 
-    if (project.hasProperty('hscurseApiKey')) {
+    if (project.hasProperty("${curseforge_api_key_prop}")) {
         curseforge {
-            accessToken = project.hscurseApiKey
-            projectId = project.hscurseId
-            projectSlug = project.hsSlug
+            accessToken = project.property("${curseforge_api_key_prop}")
+            projectId = "${curseforge_id}"
+            projectSlug = "${curseforge_slug}"
             javaVersions.add(JavaVersion.toVersion("${java_version}"))
             clientRequired = true
             serverRequired = true
@@ -243,7 +258,16 @@ publishMods {
             optional('configured')
             optional('catalogue')
             optional('jei')
+            optional('actually-harvest')
+            optional('betterdays')
+            optional('charged-charms')
+            optional('creeper-fireworks')
+            optional('homeostatic')
+            optional('magical-psi-revival')
             optional('simpletextoverlay')
+            optional('ready-player-fun')
+            optional('survivalist-essentials')
+            optional('tinkersurvival')
             optional('serene-seasons')
             optional('biomes-o-plenty')
             optional('oh-the-biomes-weve-gone')
@@ -276,11 +300,21 @@ publishMods {
             optional('regions-unexplored')
         }
     }
-    if (project.hasProperty('hsModrinthId')) {
+    if (project.hasProperty("${modrinth_api_key_prop}")) {
         modrinth {
-            accessToken = project.modrinthKey
-            projectId = project.hsModrinthId
+            accessToken = project.property("${modrinth_api_key_prop}")
+            projectId = "${modrinth_id}"
             minecraftVersions.addAll("${release_versions}".split(','))
+            optional('actually-harvest')
+            optional('betterdays')
+            optional('charged-charms')
+            optional('creeper-fireworks-mod')
+            optional('homeostatic')
+            optional('magical-psi-revival')
+            optional('simpletextoverlay')
+            optional('ready-player-fun')
+            optional('survivalist-essentials')
+            optional('tinkersurvival')
             optional('create')
             optional('ecologics')
             optional('create-cafe')
@@ -302,13 +336,13 @@ publishMods {
             optional('regions-unexplored')
         }
     }
-    if (project.hasProperty('hsDiscordWebhook')) {
+    if (project.hasProperty("${discord_webhook_prop}")) {
         discord {
-            webhookUrl = project.hsDiscordWebhook
-            dryRunWebhookUrl = project.discordDryrunWebhook
-            username = "wendall911"
+            webhookUrl = project.property("${discord_webhook_prop}")
+            dryRunWebhookUrl = project.property("${discord_dryrun_webhook_prop}")
+            username = "${mod_author}"
             content = changelog.map {
-                "# A new version of Homeostatic for Forge ${minecraft_version} has been released! \n" + it
+                "# A new version of ${mod_display_name} for Forge ${minecraft_version} has been released! \n" + it
             }
         }
     }

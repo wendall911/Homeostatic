@@ -35,12 +35,14 @@ public abstract class AbstractRecipePageBuilder<T extends AbstractRecipePageBuil
         }
     }
 
+    @SuppressWarnings("unchecked")
     public T setTitle(String title) {
         this.title = title;
 
         return (T) this;
     }
 
+    @SuppressWarnings("unchecked")
     public T setText(String text) {
         this.text = text;
 

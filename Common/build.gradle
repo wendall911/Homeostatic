@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'idea'
     id 'org.spongepowered.gradle.vanilla'
 }
 
@@ -14,17 +15,23 @@ dependencies {
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
     implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-common", version: "${whitenoise_version}"
 
-    compileOnly "vazkii.patchouli:Patchouli-xplat:${patchouli_version}-SNAPSHOT"
-
+    compileOnly "mezz.jei:jei-${minecraft_version}-common:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+
+    compileOnly "vazkii.patchouli:Patchouli-xplat:${patchouli_version}-SNAPSHOT"
 }
 
 sourceSets.main.resources {
     srcDir 'src/generated/resources'
 }
 
+def replaceProperties = [
+    'mod_display_name': mod_display_name,
+    'pack_format': pack_format
+]
+
 processResources {
     filesMatching("pack.mcmeta") {
-        expand 'mod_name': project.mod_name
+        expand replaceProperties
     }
 }

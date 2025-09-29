@@ -85,6 +85,7 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
       return Arrays.stream(this.result.getItems()).findFirst().get().getItem();
    }
 
+   @SuppressWarnings("unchecked")
    public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pRecipeId) {
       this.ensureValid(pRecipeId);
       this.advancement.parent(mcLoc("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);

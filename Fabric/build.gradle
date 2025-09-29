@@ -8,12 +8,6 @@ def actualVersion = version
 version = "${minecraft_version}-${version}-FABRIC"
 archivesBaseName = "${mod_id}"
 
-repositories {
-    maven {
-        url "https://maven.shedaniel.me/" // for rei
-    }
-}
-
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings(loom.layered {
@@ -30,8 +24,14 @@ dependencies {
     modImplementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_range}"
     include group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_version}"
 
-    modRuntimeOnly "curse.maven:architectury-419699:${architectury_version}"
-    modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
+    modApi "dev.architectury:architectury-fabric:${architectury_version}"
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rei_version}"
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
+
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
     modCompileOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
@@ -101,14 +101,20 @@ loom {
     }
 }
 
-
 def resourceTargets = ['fabric.mod.json', 'pack.mcmeta', '*.mixins.json']
 def replaceProperties = [
-    'version': actualVersion, 'fabric_mc_version_range': fabric_mc_version_range,
-    'license': license, 'mod_id': mod_id, 'mod_author': mod_author,
-    'mod_description': mod_description, 'mod_name': mod_name,
-    'issue_tracker': issue_tracker, 'fabric_loader_min_version': fabric_loader_min_version,
-    'mod_credits': mod_credits, 'java_version': java_version
+    'version': actualVersion,
+    'fabric_mc_version_range': fabric_mc_version_range,
+    'license': license,
+    'mod_id': mod_id,
+    'mod_author': mod_author,
+    'mod_description': mod_description,
+    'mod_display_name': mod_display_name,
+    'mod_name': mod_name,
+    'fabric_loader_min_version': fabric_loader_min_version,
+    'mod_credits': mod_credits,
+    'java_version': java_version,
+    'pack_format': pack_format
 ]
 
 processResources {
@@ -143,18 +149,26 @@ publishMods {
     modLoaders.add('fabric')
     dryRun = providers.environmentVariable('DO_RELEASE').getOrNull() == null
 
-    if (project.hasProperty('hscurseApiKey')) {
+    if (project.hasProperty("${curseforge_api_key_prop}")) {
         curseforge {
-            accessToken = project.hscurseApiKey
-            projectId = project.hscurseId
-            projectSlug = project.hsSlug
+            accessToken = project.property("${curseforge_api_key_prop}")
+            projectId = "${curseforge_id}"
+            projectSlug = "${curseforge_slug}"
             javaVersions.add(JavaVersion.toVersion("${java_version}"))
             clientRequired = true
             serverRequired = true
             minecraftVersions.addAll("${release_versions}".split(','))
             requires('fabric-api')
             optional('jei')
+            optional('actually-harvest')
+            optional('betterdays')
+            optional('charged-charms')
+            optional('creeper-fireworks')
+            optional('magical-psi-revival')
             optional('simpletextoverlay')
+            optional('ready-player-fun')
+            optional('survivalist-essentials')
+            optional('tinkersurvival')
             optional('serene-seasons')
             optional('biomes-o-plenty')
             optional('oh-the-biomes-weve-gone')
@@ -180,12 +194,21 @@ publishMods {
             optional('regions-unexplored')
         }
     }
-    if (project.hasProperty('hsModrinthId')) {
+    if (project.hasProperty("${modrinth_api_key_prop}")) {
         modrinth {
-            accessToken = project.modrinthKey
-            projectId = project.hsModrinthId
+            accessToken = project.property("${modrinth_api_key_prop}")
+            projectId = "${modrinth_id}"
             minecraftVersions.addAll("${release_versions}".split(','))
             requires('fabric-api')
+            optional('actually-harvest')
+            optional('betterdays')
+            optional('charged-charms')
+            optional('creeper-fireworks-mod')
+            optional('magical-psi-revival')
+            optional('simpletextoverlay')
+            optional('ready-player-fun')
+            optional('survivalist-essentials')
+            optional('tinkersurvival')
             optional('create')
             optional('ecologics')
             optional('create-cafe')
@@ -206,13 +229,13 @@ publishMods {
             optional('regions-unexplored')
         }
     }
-    if (project.hasProperty('hsDiscordWebhook')) {
+    if (project.hasProperty("${discord_webhook_prop}")) {
         discord {
-            webhookUrl = project.hsDiscordWebhook
-            dryRunWebhookUrl = project.discordDryrunWebhook
-            username = "wendall911"
+            webhookUrl = project.property("${discord_webhook_prop}")
+            dryRunWebhookUrl = project.property("${discord_dryrun_webhook_prop}")
+            username = "${mod_author}"
             content = changelog.map {
-                "# A new version of Homeostatic for Fabric ${minecraft_version} has been released! \n" + it
+                "# A new version of ${mod_display_name} for Fabric ${minecraft_version} has been released! \n" + it
             }
         }
     }

@@ -72,7 +72,7 @@ public class Environment {
             CompoundTag tags = armor.getTag();
 
             if ((tags != null && tags.contains("radiation_protection")) || armor.is(TagManager.Items.RADIATION_PROTECTED_ARMOR)) {
-                radiationReduction.updateAndGet(v -> (double) (v - ConfigHandler.Common.getRadiationReductionPercent()));
+                radiationReduction.updateAndGet(v -> v - ConfigHandler.Common.getRadiationReductionPercent());
             }
         });
 
