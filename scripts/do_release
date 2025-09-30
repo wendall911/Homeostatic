@@ -1,5 +1,5 @@
 #!/bin/bash
-# Ugly bug effective
+# Ugly but effective
 git_tag=$(git name-rev --name-only --tags HEAD 2>/dev/null | sed 's/^undefined$//')
 if [[ -n "$git_tag" && -z "$(git status --porcelain)" ]]; then
     echo "Releasing: $git_tag"

@@ -113,10 +113,13 @@ sourceSets.main.resources {
 }
 
 processResources {
-    // Added so we have book data and damage types built in Forge datagen
+    /*
+     * This is for things that have dedicated NeoForge datagen like
+     * Patchouli that need data copied over.
+    */
     from ('../NeoForge/src/generated/resources/') {
-        exclude '**/recipes/*'
         exclude '**/recipe/*'
+        exclude '**/recipes/*'
     }
 }
 
@@ -146,8 +149,13 @@ publishMods {
             serverRequired = true
             minecraftVersions.addAll("${release_versions}".split(','))
             requires('fabric-api')
-            optional('jei')
+            optional('actually-harvest')
+            optional('betterdays')
+            optional('charged-charms')
+            optional('creeper-fireworks')
             optional('simpletextoverlay')
+            optional('ready-player-fun')
+            optional('jei')
             optional('serene-seasons')
             optional('biomes-o-plenty')
             optional('oh-the-biomes-weve-gone')
@@ -170,12 +178,18 @@ publishMods {
             optional('regions-unexplored')
         }
     }
-    if (project.hasProperty('hsModrinthId')) {
+    if (project.hasProperty("${modrinth_api_key_prop}")) {
         modrinth {
             accessToken = project.property("${modrinth_api_key_prop}")
             projectId = "${modrinth_id}"
             minecraftVersions.addAll("${release_versions}".split(','))
             requires('fabric-api')
+            optional('actually-harvest')
+            optional('betterdays')
+            optional('charged-charms')
+            optional('creeper-fireworks-mod')
+            optional('simpletextoverlay')
+            optional('ready-player-fun')
             optional('create')
             optional('ecologics')
             optional('create-cafe')

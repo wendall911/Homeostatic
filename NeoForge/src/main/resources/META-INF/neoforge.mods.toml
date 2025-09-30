@@ -1,23 +1,23 @@
 modLoader="javafml"
 loaderVersion = "${neoforge_loader_version_range}"
 license="${license}"
-issueTrackerURL="${issue_tracker}"
+issueTrackerURL="https://github.com/${mod_author}/${mod_name}/issues"
 [[mods]]
     modId="${mod_id}"
     version="${version}"
     displayName="${mod_name}"
-    updateJSONURL="https://raw.githubusercontent.com/wendall911/Homeostatic/${mod_update_branch}/files/updates.json"
-    displayURL="${mod_url}"
+    updateJSONURL="https://raw.githubusercontent.com/${mod_author}/${mod_name}/${mod_update_branch}/files/updates.json"
+    displayURL="https://github.com/${mod_author}/${mod_name}"
     logoFile="${mod_id}_icon.png"
-    credits="${mod_credits}"
     authors="${mod_author}"
+    credits="${mod_credits}"
     description='''
     ${mod_description}
     '''
 [[mixins]]
     config = "${mod_id}.mixins.json"
 [[mixins]]
-    config = "${mod_id}_neoforge.mixins.json"
+    config = "${mod_id}.neoforge.mixins.json"
 [[dependencies.${mod_id}]]
     modId="neoforge"
     type="required"
