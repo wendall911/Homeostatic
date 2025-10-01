@@ -11,6 +11,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.ArmorEnhancement;
@@ -18,7 +19,6 @@ import homeostatic.common.recipe.HelmetThermometer;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.common.recipe.PurifiedLeatherFlask;
 import homeostatic.common.recipe.RemoveArmorEnhancement;
-import net.minecraft.world.item.crafting.Recipe;
 
 import static homeostatic.Homeostatic.prefix;
 

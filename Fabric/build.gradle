@@ -117,8 +117,8 @@ sourceSets.main.resources {
 processResources {
     // Added so we have book data and damage types built in Forge datagen
     from ('../NeoForge/src/generated/resources/') {
-        exclude '**/recipes/*'
         exclude '**/recipe/*'
+        exclude '**/recipes/*'
     }
 }
 
@@ -138,17 +138,23 @@ publishMods {
     modLoaders.add('fabric')
     dryRun = providers.environmentVariable('DO_RELEASE').getOrNull() == null
 
-    if (project.hasProperty('hscurseApiKey')) {
+    if (project.hasProperty("${curseforge_api_key_prop}")) {
         curseforge {
-            accessToken = project.hscurseApiKey
-            projectId = project.hscurseId
+            accessToken = project.property("${curseforge_api_key_prop}")
+            projectId = "${curseforge_id}"
+            projectSlug = "${curseforge_slug}"
             javaVersions.add(JavaVersion.toVersion("${java_version}"))
             clientRequired = true
             serverRequired = true
             minecraftVersions.addAll("${release_versions}".split(','))
             requires('fabric-api')
-            optional('jei')
+            optional('actually-harvest')
+            optional('betterdays')
+            optional('charged-charms')
+            optional('creeper-fireworks')
             optional('simpletextoverlay')
+            optional('ready-player-fun')
+            optional('jei')
             optional('serene-seasons')
             optional('biomes-o-plenty')
             optional('oh-the-biomes-weve-gone')
@@ -171,12 +177,18 @@ publishMods {
             optional('regions-unexplored')
         }
     }
-    if (project.hasProperty('hsModrinthId')) {
+    if (project.hasProperty("${modrinth_api_key_prop}")) {
         modrinth {
-            accessToken = project.modrinthKey
-            projectId = project.hsModrinthId
+            accessToken = project.property("${modrinth_api_key_prop}")
+            projectId = "${modrinth_id}"
             minecraftVersions.addAll("${release_versions}".split(','))
             requires('fabric-api')
+            optional('actually-harvest')
+            optional('betterdays')
+            optional('charged-charms')
+            optional('creeper-fireworks-mod')
+            optional('simpletextoverlay')
+            optional('ready-player-fun')
             optional('create')
             optional('ecologics')
             optional('create-cafe')
@@ -193,6 +205,16 @@ publishMods {
             optional('eternal-starlight')
             optional('terralith')
             optional('regions-unexplored')
+        }
+    }
+    if (project.hasProperty("${discord_webhook_prop}")) {
+        discord {
+            webhookUrl = project.property("${discord_webhook_prop}")
+            dryRunWebhookUrl = project.property("${discord_dryrun_webhook_prop}")
+            username = "${mod_author}"
+            content = changelog.map {
+                "# A new version of ${mod_display_name} for Fabric ${minecraft_version} has been released! \n" + it
+            }
         }
     }
 }

@@ -24,7 +24,6 @@ public final class NeoForgeDataGenerators {
         //gen.addProvider(event.includeServer(), new FillingRecipeProvider(gen.getPackOutput()));
         // TODO re-enable when Patchouli is updated
         //gen.addProvider(true, new HomeostaticBookProvider(gen.getPackOutput(), event.getLookupProvider()));
-        RegistryDataGenerator.addProviders(true, gen, gen.getPackOutput(), event.getLookupProvider());
     }
 
 }
