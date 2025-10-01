@@ -23,6 +23,7 @@ import net.neoforged.neoforge.common.Tags;
 
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.data.integration.ModIntegration;
+import homeostatic.Homeostatic;
 
 import static homeostatic.Homeostatic.prefix;
 
@@ -33,7 +34,12 @@ public class NeoForgeRecipeProvider extends RecipeProvider.Runner {
     }
 
     @Override
-    protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
+    public @NotNull String getName() {
+        return Homeostatic.MOD_NAME + " - NeoForge Recipes";
+    }
+
+    @Override
+    protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.@NotNull Provider provider, @NotNull RecipeOutput recipeOutput) {
         return new VanillaRecipeProvider(provider, recipeOutput) {
 
             @Override
@@ -51,11 +57,6 @@ public class NeoForgeRecipeProvider extends RecipeProvider.Runner {
                     .save(wrapped, prefix("leather_flask_via_sewing"));
             }
         };
-    }
-
-    @Override
-    public String getName() {
-        return "Homeostatic - NeoForge Recipes";
     }
 
 }
