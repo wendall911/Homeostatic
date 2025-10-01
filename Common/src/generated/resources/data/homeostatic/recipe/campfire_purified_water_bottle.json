@@ -1,0 +1,10 @@
+{
+  "type": "homeostatic:campfire_purified_water_bottle",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.05,
+  "ingredient": "minecraft:potion",
+  "result": {
+    "id": "homeostatic:purified_water_bottle"
+  }
+}

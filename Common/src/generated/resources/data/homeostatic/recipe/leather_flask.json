@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": "minecraft:leather",
+    "P": "#minecraft:planks",
+    "S": "minecraft:string"
+  },
+  "pattern": [
+    "SPS",
+    "L L",
+    "LLL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "homeostatic:leather_flask"
+  }
+}
