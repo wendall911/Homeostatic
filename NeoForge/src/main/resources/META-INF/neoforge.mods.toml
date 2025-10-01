@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion = "${neoforge_loader_version_range}"
+loaderVersion="${neoforge_loader_version_range}"
 license="${license}"
 issueTrackerURL="https://github.com/${mod_author}/${mod_name}/issues"
 [[mods]]

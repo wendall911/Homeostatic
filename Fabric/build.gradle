@@ -27,10 +27,8 @@ dependencies {
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rei_version}"
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
 
-    modCompileOnly "mezz.jei:jei-1.21.1-common-api:${jei_version}"
-    modCompileOnly "mezz.jei:jei-1.21.1-fabric:${jei_version}"
-    //modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
-    //modCompileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
+    modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    modCompileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
     //modCompileOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"

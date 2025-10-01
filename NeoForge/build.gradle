@@ -108,7 +108,6 @@ dependencies {
         //runtimeOnly "curse.maven:phc_crops-361385:${phc_crops_neoforge_version}"
         //runtimeOnly "curse.maven:phc_trees-365460:${phc_trees_neoforge_version}"
         //runtimeOnly "curse.maven:phc_food_extended-402231:${phc_food_extended_neoforge_version}"
-        //runtimeOnly "curse.maven:the_veggie_way-270684:${the_veggie_way_neoforge_version}"
         //runtimeOnly "curse.maven:eternal_starlight-1080592:5673629"
         //runtimeOnly "curse.maven:undergarden-379849:5651032"
         //runtimeOnly "curse.maven:colorful_hearts-854213:${colorful_hearts_neoforge_version}"
