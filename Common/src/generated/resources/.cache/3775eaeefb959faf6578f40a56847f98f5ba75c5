@@ -1,4 +1,4 @@
-// 1.21.8	-999999999-01-01T00:00:00	Homeostatic/Homeostatic - Block Radiation 
+// 1.21.6	-999999999-01-01T00:00:00	Homeostatic/Homeostatic - Block Radiation 
 4f8365ec26addb5cb9cf103115e2c650b43dc7f6 data/create/environment/block_radiation/blaze_burner.json
 d53fb31e4753337eece25e3851ee6a81a61a0ee6 data/create/environment/block_radiation/lit_blaze_burner.json
 e85ffc851c9b18540f8f805f6980676bbe60a776 data/eternal_starlight/environment/block_radiation/torreya_campfire.json
