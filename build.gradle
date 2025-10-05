@@ -23,8 +23,8 @@ subprojects {
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
     jar {
-        from(rootProject.file("LICENSE"))
-        from(rootProject.file("README.md"))
+        from(rootProject.file('LICENSE'))
+        from(rootProject.file('README.md'))
         from(rootProject.file('files/changelog.txt'))
         manifest {
             attributes([
@@ -134,9 +134,5 @@ subprojects {
     // other mod developers.
     tasks.withType(GenerateModuleMetadata) {
         it.enabled = false
-    }
-
-    tasks.withType(Jar).all {
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
 }
