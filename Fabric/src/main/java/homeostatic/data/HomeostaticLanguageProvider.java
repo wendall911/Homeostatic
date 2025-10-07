@@ -178,6 +178,7 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
         addBookEntry(translationBuilder, "education.body_temp.intro", "More info coming soon ...");
         addBookEntry(translationBuilder, "education.hydration.name", "Education: Hydration");
         addBookEntry(translationBuilder, "education.hydration.intro", "More info coming soon ...");
+        addTranslationTitle(translationBuilder, "Homeostatic");
         addTranslation(translationBuilder, "usefahrenheit");
         addTranslation(translationBuilder, "showdegreesymbol");
         addTranslation(translationBuilder, "position");
@@ -185,12 +186,6 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
         addTranslation(translationBuilder, "debugoffsety");
         addTranslation(translationBuilder, "scale");
         addTranslation(translationBuilder, "temperaturecolorrange");
-        addTranslation(translationBuilder, "temperaturehudoption");
-        addTranslation(translationBuilder, "thermometerposition");
-        addTranslation(translationBuilder, "thermometeroffsetx");
-        addTranslation(translationBuilder, "thermometeroffsety");
-        addTranslation(translationBuilder, "thermometertextoffsety");
-        addTranslation(translationBuilder, "showthermometerratechangesymbols");
         addTranslation(translationBuilder, "globeposition");
         addTranslation(translationBuilder, "globeoffsetx");
         addTranslation(translationBuilder, "globeoffsety");

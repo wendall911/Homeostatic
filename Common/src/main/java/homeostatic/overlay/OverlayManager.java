@@ -15,7 +15,6 @@ public class OverlayManager {
     public static final OverlayManager INSTANCE = new OverlayManager();
     public final WaterHud waterHud = new WaterHud();
     public final WetnessOverlay wetnessOverlay = new WetnessOverlay();
-    public final TemperatureOverlay temperatureOverlay = new TemperatureOverlay();
     public final TemperatureGlobeOverlay temperatureGlobeOverlay = new TemperatureGlobeOverlay();
     public final TemperatureInfo temperatureInfo = new TemperatureInfo();
     public final EnhancedVisualsOverlay enhancedVisualsOverlay = new EnhancedVisualsOverlay();
@@ -66,15 +65,7 @@ public class OverlayManager {
     }
 
     public void renderTemperatureOverlay(GuiGraphics guiGraphics) {
-        switch (ConfigHandler.Client.temperatureHudOption()) {
-            case HudType.RIGHT_THERMOMETER:
-                render(guiGraphics, temperatureOverlay, false, 0);
-                break;
-            case HudType.CENTER_GLOBE:
-            default:
-                render(guiGraphics, temperatureGlobeOverlay, false, 0);
-                break;
-        }
+        render(guiGraphics, temperatureGlobeOverlay, false, 0);
     }
 
     public void renderEnhancedVisualsOverlay(GuiGraphics guiGraphics) {
@@ -83,11 +74,6 @@ public class OverlayManager {
 
     public void renderHydrationOverlay(GuiGraphics guiGraphics, int rightHeight) {
         render(guiGraphics, hydrationOverlay, false, rightHeight);
-    }
-
-    public enum HudType {
-        CENTER_GLOBE,
-        RIGHT_THERMOMETER
     }
 
 }

@@ -28,17 +28,6 @@ public class Translations {
         translations.put("temperaturecolorrange.title", "Temperature Color Range");
         translations.put("temperaturecolorrange", "Temperature color range (Format (cold->hot): #3ab3da->#f9801d)");
         translations.put("temperaturehudoption.title", "Temperature HUD Option");
-        translations.put("temperaturehudoption", "Select which hud element to display for body and area temperature.");
-        translations.put("thermometerposition.title", "Thermometer Position");
-        translations.put("thermometerposition", "Position of the RIGHT_THERMOMETER HUD if enabled.");
-        translations.put("thermometeroffsetx.title", "Thermometer X Offset");
-        translations.put("thermometeroffsetx", "RIGHT_THERMOMETER HUD X offset");
-        translations.put("thermometeroffsety.title", "Thermometer Y Offset");
-        translations.put("thermometeroffsety", "RIGHT_THERMOMETER HUD Y offset");
-        translations.put("thermometertextoffsety.title", "Thermometer Text Y Offset");
-        translations.put("thermometertextoffsety", "RIGHT_THERMOMETER HUD Y offset");
-        translations.put("showthermometerratechangesymbols.title", "Show Thermometer Rate Change Symbols");
-        translations.put("showthermometerratechangesymbols", "Show rate change symbols to left/right of thermometer. Left is core temp, right is skin temperature.");
         translations.put("globeposition.title", "Globe Position");
         translations.put("globeposition", "Position of the CENTER_GLOBE HUD if enabled.");
         translations.put("globeoffsetx.title", "Globe X Offset");
