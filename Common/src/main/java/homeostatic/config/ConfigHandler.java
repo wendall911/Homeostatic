@@ -1,14 +1,15 @@
 package homeostatic.config;
 
 import java.awt.Color;
-import java.util.Arrays;
 import java.util.function.Predicate;
-import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import technology.roughness.whitenoise.config.WhiteNoiseConfigSpec;
 
+import homeostatic.common.Translations;
+import homeostatic.overlay.OverlayManager;
+import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
 
 public class ConfigHandler {
@@ -33,98 +34,95 @@ public class ConfigHandler {
 
     public static final class Client {
 
-        private static final List<String> positions = Arrays.asList("TOPLEFT", "TOPCENTER", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMCENTER", "BOTTOMRIGHT");
-        private static final List<String> temperatureHudOptions = Arrays.asList("CENTER_GLOBE", "RIGHT_THERMOMETER");
         private static Color temperatureColorCold = ColorHelper.decode("#3ab3da");
         private static Color temperatureColorHot = ColorHelper.decode("#f9801d");
         private static final Predicate<Object> hexRangeValidator = s -> s instanceof String
-                && ((String) s).matches("#[a-zA-Z\\d]{6}->#[a-zA-Z\\d]{6}");
-
+                && ((String) s).matches("#[a-fA-F\\d]{6}->#[a-fA-F\\d]{6}");
         public final WhiteNoiseConfigSpec.BooleanValue useFahrenheit;
         public final WhiteNoiseConfigSpec.BooleanValue showDegreeSymbol;
-        public final WhiteNoiseConfigSpec.ConfigValue<String> debugPosition;
+        public final WhiteNoiseConfigSpec.EnumValue<Alignment.AlignmentType> debugPosition;
         public final WhiteNoiseConfigSpec.IntValue debugOffsetX;
         public final WhiteNoiseConfigSpec.IntValue debugOffsetY;
         public final WhiteNoiseConfigSpec.DoubleValue scale;
         public final WhiteNoiseConfigSpec.ConfigValue<String> temperatureColorRange;
-        public final WhiteNoiseConfigSpec.ConfigValue<String> temperatureHudOption;
-        public final WhiteNoiseConfigSpec.ConfigValue<String> thermometerPosition;
+        public final WhiteNoiseConfigSpec.EnumValue<OverlayManager.HudType> temperatureHudOption;
+        public final WhiteNoiseConfigSpec.EnumValue<Alignment.AlignmentType> thermometerPosition;
         public final WhiteNoiseConfigSpec.IntValue thermometerOffsetX;
         public final WhiteNoiseConfigSpec.IntValue thermometerOffsetY;
         public final WhiteNoiseConfigSpec.IntValue thermometerTextOffsetY;
         public final WhiteNoiseConfigSpec.BooleanValue showThermometerRateChangeSymbols;
-        public final WhiteNoiseConfigSpec.ConfigValue<String> globePosition;
+        public final WhiteNoiseConfigSpec.EnumValue<Alignment.AlignmentType> globePosition;
         public final WhiteNoiseConfigSpec.IntValue globeOffsetX;
         public final WhiteNoiseConfigSpec.IntValue globeOffsetY;
         public final WhiteNoiseConfigSpec.IntValue globeTextOffsetY;
         public final WhiteNoiseConfigSpec.BooleanValue forceWaterBarPosition;
-        public final WhiteNoiseConfigSpec.ConfigValue<String> waterBarPosition;
+        public final WhiteNoiseConfigSpec.EnumValue<Alignment.AlignmentType> waterBarPosition;
         public final WhiteNoiseConfigSpec.IntValue waterBarOffsetX;
         public final WhiteNoiseConfigSpec.IntValue waterBarOffsetY;
 
         Client(WhiteNoiseConfigSpec.Builder builder) {
             useFahrenheit = builder
-                .comment("Use Fahrenheit, otherwise use Celcius.")
+                .comment(getTranslation("usefahrenheit"))
                 .define("useFahrenheit", true);
             showDegreeSymbol = builder
-                .comment("Show degree symbol next to temperature value.")
+                .comment(getTranslation("showdegreesymbol"))
                 .define("showDegreeSymbol", true);
             debugPosition = builder
-                .comment("Position of debug info, one of: " + positions)
-                .defineInList("position", "TOPRIGHT", positions);
+                .comment(getTranslation("position"))
+                .defineEnum("position", Alignment.AlignmentType.TOPRIGHT);
             debugOffsetX = builder
-                .comment("Debug text X offset")
+                .comment(getTranslation("debugoffsetx"))
                 .defineInRange("debugOffsetX", 3, -100, 100);
             debugOffsetY = builder
-                .comment("Debug text Y offset")
+                .comment(getTranslation("debugoffsety"))
                 .defineInRange("debugOffsetY", 3, -100, 100);
             scale = builder
-                .comment("The size of the text info (multiplier)")
+                .comment(getTranslation("scale"))
                 .defineInRange("scale", 0.5, 0.5, 2.0);
             temperatureColorRange = builder
-                .comment("Temperature color range (Format (cold->hot): #3ab3da->#f9801d)")
+                .comment(getTranslation("temperaturecolorrange"))
                 .define("temperatureColorRange", "#3ab3da->#f9801d", hexRangeValidator);
             temperatureHudOption = builder
-                .comment("Select which hud element to display for body and area temperature. One of: " + temperatureHudOptions)
-                .defineInList("temperatureHudOption", "CENTER_GLOBE", temperatureHudOptions);
+                .comment(getTranslation("temperaturehudoption"))
+                .defineEnum("temperatureHudOption", OverlayManager.HudType.CENTER_GLOBE);
             thermometerPosition = builder
-                .comment("Position of the RIGHT_THERMOMETER HUD if enabled, one of: " + positions)
-                .defineInList("thermometerPosition", "BOTTOMRIGHT", positions);
+                .comment(getTranslation("thermometerposition"))
+                .defineEnum("thermometerPosition", Alignment.AlignmentType.BOTTOMRIGHT);
             thermometerOffsetX = builder
-                .comment("RIGHT_THERMOMETER HUD X offset")
+                .comment(getTranslation("thermometeroffsetx"))
                 .defineInRange("thermometerOffsetX", 133, -500, 500);
             thermometerOffsetY = builder
-                .comment("RIGHT_THERMOMETER HUD Y offset")
+                .comment(getTranslation("thermometeroffsety"))
                 .defineInRange("thermometerOffsetY", 27, -500, 500);
             thermometerTextOffsetY = builder
-                .comment("RIGHT_THERMOMETER HUD Y offset")
+                .comment(getTranslation("thermometertextoffsety"))
                 .defineInRange("thermometerTextOffsetY", 15, -500, 500);
             showThermometerRateChangeSymbols = builder
-                .comment("Show rate change symbols to left/right of thermometer. Left is core temp, right is skin temperature.")
+                .comment(getTranslation("showthermometerratechangesymbols"))
                 .define("showThermometerRateChangeSymbols", true);
             globePosition = builder
-                .comment("Position of the CENTER_GLOBE HUD if enabled, one of: " + positions)
-                .defineInList("globePosition", "BOTTOMCENTER", positions);
+                .comment(getTranslation("globeposition"))
+                .defineEnum("globePosition", Alignment.AlignmentType.BOTTOMCENTER);
             globeOffsetX = builder
-                .comment("CENTER_GLOBE HUD X offset")
+                .comment(getTranslation("globeoffsetx"))
                 .defineInRange("globeOffsetX", 0, -500, 500);
             globeOffsetY = builder
-                .comment("CENTER_GLOBE HUD Y offset")
+                .comment(getTranslation("globeoffsety"))
                 .defineInRange("globeOffsetY", 50, -500, 500);
             globeTextOffsetY = builder
-                .comment("CENTER_GLOBE HUD Y offset")
+                .comment(getTranslation("globetextoffsety"))
                 .defineInRange("globeTextOffsetY", 90, -500, 500);
             forceWaterBarPosition = builder
-                .comment("Set to true to force position of the water bar.")
+                .comment(getTranslation("forcewaterbarposition"))
                 .define("forceWaterBarPosition", false);
             waterBarPosition = builder
-                .comment("Position of the Water Bar HUD if forceWaterBarPosition is true, one of: " + positions)
-                .defineInList("waterBarPosition", "BOTTOMCENTER", positions);
+                .comment(getTranslation("waterbarposition"))
+                .defineEnum("waterBarPosition", Alignment.AlignmentType.BOTTOMCENTER);
             waterBarOffsetX = builder
-                .comment("Water Bar HUD X offset")
+                .comment(getTranslation("waterbaroffsetx"))
                 .defineInRange("waterBarOffsetX", 96, -500, 500);
             waterBarOffsetY = builder
-                .comment("Water Bar HUD Y offset")
+                .comment(getTranslation("waterbaroffsety"))
                 .defineInRange("waterBarOffsetY", 50, -500, 500);
         }
 
@@ -136,7 +134,7 @@ public class ConfigHandler {
             return CLIENT.showDegreeSymbol.get();
         }
 
-        public static String debugPosition() {
+        public static Alignment.AlignmentType debugPosition() {
             return CLIENT.debugPosition.get();
         }
 
@@ -160,11 +158,11 @@ public class ConfigHandler {
             return temperatureColorHot;
         }
 
-        public static String temperatureHudOption() {
+        public static OverlayManager.HudType temperatureHudOption() {
             return CLIENT.temperatureHudOption.get();
         }
 
-        public static String thermometerPosition() {
+        public static Alignment.AlignmentType thermometerPosition() {
             return CLIENT.thermometerPosition.get();
         }
 
@@ -184,7 +182,7 @@ public class ConfigHandler {
             return CLIENT.showThermometerRateChangeSymbols.get();
         }
 
-        public static String globePosition() {
+        public static Alignment.AlignmentType globePosition() {
             return CLIENT.globePosition.get();
         }
 
@@ -204,7 +202,7 @@ public class ConfigHandler {
             return CLIENT.forceWaterBarPosition.get();
         }
 
-        public static String waterBarPosition() {
+        public static Alignment.AlignmentType waterBarPosition() {
             return CLIENT.waterBarPosition.get();
         }
 
@@ -236,23 +234,23 @@ public class ConfigHandler {
 
         Common(WhiteNoiseConfigSpec.Builder builder) {
             debugEnabled = builder
-                .comment("Show temperature debug info.")
+                .comment(getTranslation("debugenabled"))
                 .define("debugEnabled", false);
 
             showTemperatureValues = builder
-                .comment("Show temperature values in HUD.")
+                .comment(getTranslation("showtemperaturevalues"))
                 .define("showTemperatureValues", true);
 
             requireThermometer = builder
-                .comment("Require thermometer helmet enhancement to display temperature values.")
+                .comment(getTranslation("requirethermometer"))
                 .define("requireThermometer", false);
 
             randomWaterLoss = builder
-                .comment("Water loss speed when not sweating. Increase to make water loss more prevalent.")
+                .comment(getTranslation("randomwaterloss"))
                 .defineInRange("randomWaterLoss", 0.15, 0.01, 1.0);
 
             radiationReductionPercent = builder
-                .comment("Percentage of radiation reduced when 'Radiation Protection' is added to an armor piece. For example, 0.25 with four pieces will be 100%. 1.0 will be 100% for one piece. Default gives 80% for four pieces.")
+                .comment(getTranslation("radiationreductionpercent"))
                 .defineInRange("radiationReductionPercent", 0.2, 0.1, 1.0);
 
         }
@@ -281,6 +279,14 @@ public class ConfigHandler {
             return (float) reduction;
         }
 
+    }
+
+    private static String getTranslation(String key) {
+        return Translations.get(key);
+    }
+
+    private static String getTranslation(String key, String... values) {
+        return Translations.get(key, values);
     }
 
 }
