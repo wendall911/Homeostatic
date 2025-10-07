@@ -32,7 +32,6 @@ public class ConfigHandler {
     public static final class Client {
 
         private static final List<String> positions = Arrays.asList("TOPLEFT", "TOPCENTER", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMCENTER", "BOTTOMRIGHT");
-        private static final List<String> temperatureHudOptions = Arrays.asList("CENTER_GLOBE", "RIGHT_THERMOMETER");
         private static Color temperatureColorCold = ColorHelper.decode("#3ab3da");
         private static Color temperatureColorHot = ColorHelper.decode("#f9801d");
         private static final Predicate<Object> hexRangeValidator = s -> s instanceof String
@@ -45,12 +44,6 @@ public class ConfigHandler {
         public final WhiteNoiseConfigSpec.IntValue debugOffsetY;
         public final WhiteNoiseConfigSpec.DoubleValue scale;
         public final WhiteNoiseConfigSpec.ConfigValue<String> temperatureColorRange;
-        public final WhiteNoiseConfigSpec.ConfigValue<String> temperatureHudOption;
-        public final WhiteNoiseConfigSpec.ConfigValue<String> thermometerPosition;
-        public final WhiteNoiseConfigSpec.IntValue thermometerOffsetX;
-        public final WhiteNoiseConfigSpec.IntValue thermometerOffsetY;
-        public final WhiteNoiseConfigSpec.IntValue thermometerTextOffsetY;
-        public final WhiteNoiseConfigSpec.BooleanValue showThermometerRateChangeSymbols;
         public final WhiteNoiseConfigSpec.ConfigValue<String> globePosition;
         public final WhiteNoiseConfigSpec.IntValue globeOffsetX;
         public final WhiteNoiseConfigSpec.IntValue globeOffsetY;
@@ -82,24 +75,6 @@ public class ConfigHandler {
             temperatureColorRange = builder
                 .comment("Temperature color range (Format (cold->hot): #3ab3da->#f9801d)")
                 .define("temperatureColorRange", "#3ab3da->#f9801d", hexRangeValidator);
-            temperatureHudOption = builder
-                .comment("Select which hud element to display for body and area temperature. One of: " + temperatureHudOptions)
-                .defineInList("temperatureHudOption", "CENTER_GLOBE", temperatureHudOptions);
-            thermometerPosition = builder
-                .comment("Position of the RIGHT_THERMOMETER HUD if enabled, one of: " + positions)
-                .defineInList("thermometerPosition", "BOTTOMRIGHT", positions);
-            thermometerOffsetX = builder
-                .comment("RIGHT_THERMOMETER HUD X offset")
-                .defineInRange("thermometerOffsetX", 133, -500, 500);
-            thermometerOffsetY = builder
-                .comment("RIGHT_THERMOMETER HUD Y offset")
-                .defineInRange("thermometerOffsetY", 27, -500, 500);
-            thermometerTextOffsetY = builder
-                .comment("RIGHT_THERMOMETER HUD Y offset")
-                .defineInRange("thermometerTextOffsetY", 15, -500, 500);
-            showThermometerRateChangeSymbols = builder
-                .comment("Show rate change symbols to left/right of thermometer. Left is core temp, right is skin temperature.")
-                .define("showThermometerRateChangeSymbols", true);
             globePosition = builder
                 .comment("Position of the CENTER_GLOBE HUD if enabled, one of: " + positions)
                 .defineInList("globePosition", "BOTTOMCENTER", positions);
@@ -156,30 +131,6 @@ public class ConfigHandler {
 
         public static Color temperatureColorHot() {
             return temperatureColorHot;
-        }
-
-        public static String temperatureHudOption() {
-            return CLIENT.temperatureHudOption.get();
-        }
-
-        public static String thermometerPosition() {
-            return CLIENT.thermometerPosition.get();
-        }
-
-        public static int thermometerOffsetX() {
-            return CLIENT.thermometerOffsetX.get();
-        }
-
-        public static int thermometerOffsetY() {
-            return CLIENT.thermometerOffsetY.get();
-        }
-
-        public static int thermometerTextOffsetY() {
-            return CLIENT.thermometerTextOffsetY.get();
-        }
-
-        public static boolean showThermometerRateChangeSymbols() {
-            return CLIENT.showThermometerRateChangeSymbols.get();
         }
 
         public static String globePosition() {
