@@ -1,13 +1,14 @@
 package homeostatic.data;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import java.util.concurrent.CompletableFuture;
 
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
-import homeostatic.Homeostatic;
 import net.minecraft.core.HolderLookup;
 
-import java.util.concurrent.CompletableFuture;
+import homeostatic.common.Translations;
+import homeostatic.Homeostatic;
 
 public class HomeostaticLanguageProvider extends FabricLanguageProvider {
 
@@ -177,6 +178,32 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
         addBookEntry(translationBuilder, "education.body_temp.intro", "More info coming soon ...");
         addBookEntry(translationBuilder, "education.hydration.name", "Education: Hydration");
         addBookEntry(translationBuilder, "education.hydration.intro", "More info coming soon ...");
+        addTranslation(translationBuilder, "usefahrenheit");
+        addTranslation(translationBuilder, "showdegreesymbol");
+        addTranslation(translationBuilder, "position");
+        addTranslation(translationBuilder, "debugoffsetx");
+        addTranslation(translationBuilder, "debugoffsety");
+        addTranslation(translationBuilder, "scale");
+        addTranslation(translationBuilder, "temperaturecolorrange");
+        addTranslation(translationBuilder, "temperaturehudoption");
+        addTranslation(translationBuilder, "thermometerposition");
+        addTranslation(translationBuilder, "thermometeroffsetx");
+        addTranslation(translationBuilder, "thermometeroffsety");
+        addTranslation(translationBuilder, "thermometertextoffsety");
+        addTranslation(translationBuilder, "showthermometerratechangesymbols");
+        addTranslation(translationBuilder, "globeposition");
+        addTranslation(translationBuilder, "globeoffsetx");
+        addTranslation(translationBuilder, "globeoffsety");
+        addTranslation(translationBuilder, "globetextoffsety");
+        addTranslation(translationBuilder, "forcewaterbarposition");
+        addTranslation(translationBuilder, "waterbarposition");
+        addTranslation(translationBuilder, "waterbaroffsetx");
+        addTranslation(translationBuilder, "waterbaroffsety");
+        addTranslation(translationBuilder, "debugenabled");
+        addTranslation(translationBuilder, "showtemperaturevalues");
+        addTranslation(translationBuilder, "requirethermometer");
+        addTranslation(translationBuilder, "randomwaterloss");
+        addTranslation(translationBuilder, "radiationreductionpercent");
     }
 
     protected void addAttack(TranslationBuilder translationBuilder, String name, String text) {
@@ -211,6 +238,27 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
 
     protected void addBookEntry(TranslationBuilder translationBuilder, String name, String text) {
         translationBuilder.add("info." + Homeostatic.MODID + ".book." + name, text);
+    }
+
+    private void addTranslationTitle(TranslationBuilder builder, String title) {
+        builder.add(Homeostatic.MODID + ".configuration.title", title);
+    }
+
+    private void addTranslationName(TranslationBuilder builder, String id, String name) {
+        builder.add(Homeostatic.MODID + ".configuration." + id + ".name", name);
+    }
+
+    private void addTranslationDescription(TranslationBuilder builder, String id) {
+        builder.add(Homeostatic.MODID + ".configuration." + id + ".description", Translations.get(id));
+    }
+
+    private void addTranslation(TranslationBuilder buildder, String id) {
+        addTranslationName(buildder, id, Translations.get(id + ".title"));
+        addTranslationDescription(buildder, id);
+    }
+
+    private void addTranslationDescription(TranslationBuilder builder, String id, String key) {
+        builder.add(Homeostatic.MODID + ".configuration." + id + ".description", Translations.get(key));
     }
 
 }

@@ -67,10 +67,10 @@ public class OverlayManager {
 
     public void renderTemperatureOverlay(GuiGraphics guiGraphics) {
         switch (ConfigHandler.Client.temperatureHudOption()) {
-            case "RIGHT_THERMOMETER":
+            case HudType.RIGHT_THERMOMETER:
                 render(guiGraphics, temperatureOverlay, false, 0);
                 break;
-            case "CENTER_GLOBE":
+            case HudType.CENTER_GLOBE:
             default:
                 render(guiGraphics, temperatureGlobeOverlay, false, 0);
                 break;
@@ -83,6 +83,11 @@ public class OverlayManager {
 
     public void renderHydrationOverlay(GuiGraphics guiGraphics, int rightHeight) {
         render(guiGraphics, hydrationOverlay, false, rightHeight);
+    }
+
+    public enum HudType {
+        CENTER_GLOBE,
+        RIGHT_THERMOMETER
     }
 
 }
