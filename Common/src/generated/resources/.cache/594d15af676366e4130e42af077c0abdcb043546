@@ -1,4 +1,0 @@
-// 1.21.1	2025-09-28T11:56:58.574200738	Homeostatic/Tags for minecraft:damage_type
-cd61388f8b4a3c12eda047abc5e2df4400b44a03 data/minecraft/tags/damage_type/bypasses_armor.json
-cd61388f8b4a3c12eda047abc5e2df4400b44a03 data/minecraft/tags/damage_type/no_knockback.json
-cd61388f8b4a3c12eda047abc5e2df4400b44a03 data/minecraft/tags/damage_type/bypasses_invulnerability.json
