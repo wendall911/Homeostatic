@@ -1,9 +1,0 @@
-// 1.21.8	-999999999-01-01T00:00:00	Homeostatic/Tags for minecraft:item
-f8accb4fa1c1d78e57a174840f6c4bef2f1b4b20 data/homeostatic/tags/item/insulated_armor.json
-e5e42e8198174cc83b78356bd9dcc05e29593e70 data/homeostatic/tags/item/insulation.json
-1b94bea5746759a465c690884ea66a9506a55990 data/homeostatic/tags/item/radiation_protected_armor.json
-d30da4626cba21a1b5852a33c08949332adb537c data/homeostatic/tags/item/radiation_protection.json
-652c4f442d4a0099b0f1ff1599d48f46c931197d data/homeostatic/tags/item/sewingkit_wearable.json
-fe636b6454502909f3eac04a941dd15080c8b0d8 data/homeostatic/tags/item/waterproof.json
-3b2e931c061fb87e5d201a89ddfe87f0863849d5 data/homeostatic/tags/item/waterproof_armor.json
-dba9dd18dda7d4243587264d7c87009c354089b8 data/minecraft/tags/item/bookshelf_books.json
