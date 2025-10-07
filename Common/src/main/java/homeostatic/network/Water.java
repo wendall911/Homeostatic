@@ -66,7 +66,13 @@ public class Water implements IWater {
     @Override
     public void checkWaterLevel(ServerPlayer player) {
         if (this.waterLevel <= 0) {
-            player.hurt(new DamageSource(DamageHelper.getHolder(player.getServer(), HomeostaticDamageTypes.DEHYDRATION)), 1.0F);
+            player.hurtServer(
+                player.level(),
+                new DamageSource(
+                    DamageHelper.getHolder(player.level().getServer(), HomeostaticDamageTypes.DEHYDRATION)
+                ),
+                1.0F
+            );
         }
     }
 

@@ -42,7 +42,7 @@ public class ServerEventListener {
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
         final Player player = event.getEntity() instanceof Player ? (Player) event.getEntity() : null;
 
-        if (player != null && !player.level().isClientSide) {
+        if (player != null && !player.level().isClientSide()) {
             PlayerEventHandler.onEntityJoinLevel((ServerPlayer) player);
         }
     }
@@ -60,16 +60,16 @@ public class ServerEventListener {
     public static void onPlayerRespawn(PlayerEvent.Clone event) {
         if (!event.isWasDeath()) return;
 
-        final Player player = event.getEntity() != null ? event.getEntity() : null;
+        final Player player = event.getEntity();
 
-        if (player != null && !player.level().isClientSide) {
+        if (!player.level().isClientSide()) {
             PlayerEventHandler.onPlayerRespawn((ServerPlayer) player);
         }
     }
 
     @SubscribeEvent
     public static void onFinishUsingItem(LivingEntityUseItemEvent.Finish event) {
-        if (event.getEntity() instanceof Player player && !player.level().isClientSide) {
+        if (event.getEntity() instanceof Player player && !player.level().isClientSide()) {
             ItemStack stack = event.getItem();
             ServerPlayer sp = (ServerPlayer) player;
 

@@ -21,7 +21,7 @@ public class HomeostaticBlocks {
         HomeostaticFluids.PURIFIED_WATER_FLOWING,
         BlockBehaviour.Properties
             .ofFullCopy(Blocks.WATER)
-            .noCollission()
+            .noCollision()
             .strength(100.0F)
             .noLootTable()
             .setId(ResourceKey.create(Registries.BLOCK, PURIFIED_WATER_FLUID_ID))

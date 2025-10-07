@@ -1,7 +1,7 @@
 package homeostatic.network;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
@@ -27,7 +27,7 @@ public interface ITemperature {
 
     float getLocalTemperature();
 
-    void checkTemperatureLevel(Player player);
+    void checkTemperatureLevel(ServerPlayer player);
 
     CompoundTag write(CompoundTag tag);
 

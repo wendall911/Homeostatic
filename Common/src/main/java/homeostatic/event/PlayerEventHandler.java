@@ -113,7 +113,7 @@ public class PlayerEventHandler {
 
     public static void onEquipmentChange(LivingEntity entity, EquipmentSlot slot, ItemStack previousItem, ItemStack equippedItem) {
         if (ConfigHandler.Common.showTemperatureValues() && ConfigHandler.Common.requireThermometer() && slot == EquipmentSlot.HEAD) {
-            if (entity instanceof Player player && !player.level().isClientSide) {
+            if (entity instanceof Player player && !player.level().isClientSide()) {
                 ServerPlayer sp = (ServerPlayer) player;
 
                 if (!GameModeHelper.shouldLoad(sp)) return;

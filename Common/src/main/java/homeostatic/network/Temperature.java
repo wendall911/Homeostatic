@@ -2,8 +2,8 @@ package homeostatic.network;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
@@ -70,7 +70,7 @@ public class Temperature implements ITemperature {
     }
 
     @Override
-    public void checkTemperatureLevel(Player player) {
+    public void checkTemperatureLevel(ServerPlayer player) {
         if (this.coreTemperature < TemperatureThreshold.LOW.temperature
                 && !player.hasEffect(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(HomeostaticEffects.FROST_RESISTANCE))) {
             player.setTicksFrozen(player.getTicksFrozen() + 5);
@@ -78,12 +78,24 @@ public class Temperature implements ITemperature {
         else if (this.coreTemperature > TemperatureThreshold.HIGH.temperature) {
             float amount = (1.0F + (this.coreTemperature - TemperatureThreshold.HIGH.temperature)) * 0.5F;
 
-            player.hurt(new DamageSource(DamageHelper.getHolder(player.getServer(), HomeostaticDamageTypes.HYPERTHERMIA)), amount);
+            player.hurtServer(
+                player.level(),
+                new DamageSource(
+                    DamageHelper.getHolder(player.level().getServer(), HomeostaticDamageTypes.HYPERTHERMIA)
+                ),
+                amount
+            );
         }
         if (this.skinTemperature > TemperatureThreshold.SCALDING.temperature) {
             float amount = (1.0F + (this.skinTemperature - TemperatureThreshold.SCALDING.temperature)) * 0.25F;
 
-            player.hurt(new DamageSource(DamageHelper.getHolder(player.getServer(), HomeostaticDamageTypes.SCALDING)), amount);
+            player.hurtServer(
+                player.level(),
+                new DamageSource(
+                    DamageHelper.getHolder(player.level().getServer(), HomeostaticDamageTypes.SCALDING)
+                ),
+                amount
+            );
         }
     }
 
