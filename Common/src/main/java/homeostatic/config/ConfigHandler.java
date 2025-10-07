@@ -8,7 +8,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import technology.roughness.whitenoise.config.WhiteNoiseConfigSpec;
 
 import homeostatic.common.Translations;
-import homeostatic.overlay.OverlayManager;
 import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
 
@@ -45,12 +44,6 @@ public class ConfigHandler {
         public final WhiteNoiseConfigSpec.IntValue debugOffsetY;
         public final WhiteNoiseConfigSpec.DoubleValue scale;
         public final WhiteNoiseConfigSpec.ConfigValue<String> temperatureColorRange;
-        public final WhiteNoiseConfigSpec.EnumValue<OverlayManager.HudType> temperatureHudOption;
-        public final WhiteNoiseConfigSpec.EnumValue<Alignment.AlignmentType> thermometerPosition;
-        public final WhiteNoiseConfigSpec.IntValue thermometerOffsetX;
-        public final WhiteNoiseConfigSpec.IntValue thermometerOffsetY;
-        public final WhiteNoiseConfigSpec.IntValue thermometerTextOffsetY;
-        public final WhiteNoiseConfigSpec.BooleanValue showThermometerRateChangeSymbols;
         public final WhiteNoiseConfigSpec.EnumValue<Alignment.AlignmentType> globePosition;
         public final WhiteNoiseConfigSpec.IntValue globeOffsetX;
         public final WhiteNoiseConfigSpec.IntValue globeOffsetY;
@@ -82,24 +75,6 @@ public class ConfigHandler {
             temperatureColorRange = builder
                 .comment(getTranslation("temperaturecolorrange"))
                 .define("temperatureColorRange", "#3ab3da->#f9801d", hexRangeValidator);
-            temperatureHudOption = builder
-                .comment(getTranslation("temperaturehudoption"))
-                .defineEnum("temperatureHudOption", OverlayManager.HudType.CENTER_GLOBE);
-            thermometerPosition = builder
-                .comment(getTranslation("thermometerposition"))
-                .defineEnum("thermometerPosition", Alignment.AlignmentType.BOTTOMRIGHT);
-            thermometerOffsetX = builder
-                .comment(getTranslation("thermometeroffsetx"))
-                .defineInRange("thermometerOffsetX", 133, -500, 500);
-            thermometerOffsetY = builder
-                .comment(getTranslation("thermometeroffsety"))
-                .defineInRange("thermometerOffsetY", 27, -500, 500);
-            thermometerTextOffsetY = builder
-                .comment(getTranslation("thermometertextoffsety"))
-                .defineInRange("thermometerTextOffsetY", 15, -500, 500);
-            showThermometerRateChangeSymbols = builder
-                .comment(getTranslation("showthermometerratechangesymbols"))
-                .define("showThermometerRateChangeSymbols", true);
             globePosition = builder
                 .comment(getTranslation("globeposition"))
                 .defineEnum("globePosition", Alignment.AlignmentType.BOTTOMCENTER);
@@ -156,30 +131,6 @@ public class ConfigHandler {
 
         public static Color temperatureColorHot() {
             return temperatureColorHot;
-        }
-
-        public static OverlayManager.HudType temperatureHudOption() {
-            return CLIENT.temperatureHudOption.get();
-        }
-
-        public static Alignment.AlignmentType thermometerPosition() {
-            return CLIENT.thermometerPosition.get();
-        }
-
-        public static int thermometerOffsetX() {
-            return CLIENT.thermometerOffsetX.get();
-        }
-
-        public static int thermometerOffsetY() {
-            return CLIENT.thermometerOffsetY.get();
-        }
-
-        public static int thermometerTextOffsetY() {
-            return CLIENT.thermometerTextOffsetY.get();
-        }
-
-        public static boolean showThermometerRateChangeSymbols() {
-            return CLIENT.showThermometerRateChangeSymbols.get();
         }
 
         public static Alignment.AlignmentType globePosition() {
