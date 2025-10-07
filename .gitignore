@@ -12,3 +12,6 @@ run
 mappings/mcp
 
 NeoForge
+
+# Minecraft datagen
+.cache
