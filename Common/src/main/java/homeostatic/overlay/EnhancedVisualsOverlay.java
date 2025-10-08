@@ -77,11 +77,18 @@ public class EnhancedVisualsOverlay extends Overlay {
 
             if (player.tickCount >= lastTick + (20 * intensity)) {
                 lastTick = player.tickCount;
+
                 return true;
+            }
+            else if (player.tickCount < lastTick) { // handle player tick reset (e.g. respawn)
+                lastTick = player.tickCount;
+
+                return false;
             }
 
             return false;
         }
+
     }
 
 }
