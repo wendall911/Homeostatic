@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.Shadow;
 
 import homeostatic.common.item.FluidHandlerItem;
 import homeostatic.common.item.WaterContainerItem;
@@ -18,8 +18,8 @@ import homeostatic.common.item.WaterContainerItem;
 @Mixin(WaterContainerItem.class)
 public class FluidHandlerCapablityMixin extends Item {
 
-    @Unique
-    int homeostatic$capacity;
+    @Shadow(remap = false)
+    int capacity;
 
     public FluidHandlerCapablityMixin(Properties pProperties) {
         super(pProperties);
@@ -27,7 +27,7 @@ public class FluidHandlerCapablityMixin extends Item {
 
     @Override
     public ICapabilityProvider initCapabilities(@NotNull ItemStack stack, @Nullable CompoundTag tag) {
-        return new FluidHandlerItem(stack, homeostatic$capacity);
+        return new FluidHandlerItem(stack, capacity);
     }
 
 }
