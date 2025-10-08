@@ -78,7 +78,15 @@ public class TemperatureInfo extends Overlay {
             biome.unwrapKey().ifPresent(key -> {
                 ResourceLocation biomeCategory = prefix(BiomeCategoryManager.getBiomeCategory(biome).toString());
                 BiomeTypeData biomeTypeData = BiomeTypeDataManager.getBiomeData(biomeCategory);
-                String biomeString = String.format("%s (%s) frozen: %s", key.location(), biomeCategory, biomeTypeData.isFrozen());
+                String biomeString;
+
+                if (biomeTypeData != null) {
+                    biomeString = String.format("%s (%s) frozen: %s", key.location(), biomeCategory, biomeTypeData.isFrozen());
+                }
+                else {
+                    biomeString = String.format("%s (%s) frozen: %s", key.location(), biomeCategory, "unknown");
+                }
+
                 int biomeStringWidth = mc.font.width(biomeString);
 
                 FontHelper.draw(mc, guiGraphics, biomeString,
