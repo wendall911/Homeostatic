@@ -30,8 +30,8 @@ dependencies {
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
     */
 
-    modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
-    modCompileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
+    modCompileOnly "mezz.jei:jei-${jei_minecraft_version}-common-api:${jei_version}"
+    modCompileOnly "mezz.jei:jei-${jei_minecraft_version}-fabric:${jei_version}"
     //modCompileOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
@@ -41,7 +41,7 @@ dependencies {
     modCompileOnly "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
     modCompileOnly "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
     /*
-     * Unavailable for 1.21.8
+     * Unavailable for 1.21.10
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
     */
     modRuntimeOnly "net.jodah:typetools:0.6.3"
@@ -56,17 +56,17 @@ dependencies {
         // Runtime testing mods
         // This doesn't work for whatever reason. Such a strange port
         //modRuntimeOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
-        modRuntimeOnly "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
-        modRuntimeOnly "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
-        modRuntimeOnly "curse.maven:terrablender-565956:${terrablender_fabric_version}"
-        modRuntimeOnly "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
+        //modRuntimeOnly "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
+        //modRuntimeOnly "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
+        //modRuntimeOnly "curse.maven:terrablender-565956:${terrablender_fabric_version}"
+        //modRuntimeOnly "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
         //modRuntimeOnly "curse.maven:regions-659110:${regions_fabric_version}"
         //modRuntimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
         //modRuntimeOnly "curse.maven:more_food-874343:${more_food_fabric_version}"
         //modRuntimeOnly "curse.maven:colorful_hearts-854213:${colorful_hearts_fabric_version}"
-        modRuntimeOnly "curse.maven:puzzles_lib-495476:${puzzles_lib_fabric_version}"
-        modRuntimeOnly "curse.maven:forge_config_api_port-547434:${forge_config_api_fabric_version}"
-        modRuntimeOnly "curse.maven:lmba-281715:${lmba_fabric_version}"
+        //modRuntimeOnly "curse.maven:puzzles_lib-495476:${puzzles_lib_fabric_version}"
+        //modRuntimeOnly "curse.maven:forge_config_api_port-547434:${forge_config_api_fabric_version}"
+        //modRuntimeOnly "curse.maven:lmba-281715:${lmba_fabric_version}"
         //modRuntimeOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
         //modRuntimeOnly "curse.maven:fabric_seasons_extras-839878:${fabric_seasons_extras_version}"
         //modRuntimeOnly "curse.maven:byg-1070751:${byg_fabric_version}"

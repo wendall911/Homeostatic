@@ -162,6 +162,8 @@ processResources {
     inputs.properties(expandProps)
 }
 
+processResources.outputs.upToDateWhen { false }
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
