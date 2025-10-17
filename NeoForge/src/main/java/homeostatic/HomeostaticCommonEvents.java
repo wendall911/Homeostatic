@@ -11,7 +11,7 @@ import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 
 import homeostatic.common.potions.HomeostaticPotions;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = Homeostatic.MODID)
+@EventBusSubscriber(modid = Homeostatic.MODID)
 public class HomeostaticCommonEvents {
 
     @SubscribeEvent

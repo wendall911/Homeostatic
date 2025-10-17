@@ -55,6 +55,7 @@ public class CommonRecipeProvider extends RecipeProvider {
         RecipeProviderBase.cleanWaterBottleSmelting().save(recipeOutput, prefix("furnace_purified_water_bottle"));
         RecipeProviderBase.cleanWaterBottleCampfire().save(recipeOutput, prefix("campfire_purified_water_bottle"));
         RecipeProviderBase.cleanWaterBottleSmoking().save(recipeOutput, prefix("smoking_purified_water_bottle"));
+        RecipeProviderBase.book().save(recipeOutput, prefix("book_from_dirt"));
     }
 
 }

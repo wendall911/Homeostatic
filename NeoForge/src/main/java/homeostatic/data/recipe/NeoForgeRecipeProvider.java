@@ -31,11 +31,7 @@ public class NeoForgeRecipeProvider extends RecipeProvider {
 
     @Override
     public void buildRecipes(RecipeOutput recipeOutput) {
-        RecipeOutput wrapped = recipeOutput.withConditions(new ModLoadedCondition(ModIntegration.PATCHOULI_MODID));
-
-        RecipeProviderBase.book().save(wrapped, prefix("book_from_dirt"));
-
-        wrapped = recipeOutput.withConditions(new ModLoadedCondition(ModIntegration.SK_MODID));
+        RecipeOutput wrapped = recipeOutput.withConditions(new ModLoadedCondition(ModIntegration.SK_MODID));
 
         SewingRecipeBuilder.begin(RecipeCategory.MISC, HomeostaticItems.LEATHER_FLASK)
             .withTool(SewingKitMod.WOOD_OR_HIGHER)

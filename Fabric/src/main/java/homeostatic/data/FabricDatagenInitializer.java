@@ -50,7 +50,6 @@ public class FabricDatagenInitializer implements DataGeneratorEntrypoint {
     }
 
     public static void configureFabricDatagen(FabricDataGenerator.Pack pack) {
-        pack.addProvider(HomeostaticRecipeProvider::new);
     }
 
 }
