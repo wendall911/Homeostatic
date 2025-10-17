@@ -19,6 +19,9 @@ dependencies {
     modImplementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_version}"
     include group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_version}"
 
+    modImplementation group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-fabric", version: "${guidebook_version}"
+    include group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-fabric", version: "${guidebook_version}"
+
     modApi "dev.architectury:architectury-fabric:${architectury_version}"
     modApi("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
@@ -40,10 +43,7 @@ dependencies {
     //modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
     modCompileOnly "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
     modCompileOnly "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
-    /*
-     * Unavailable for 1.21.10
-    modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}-FABRIC-SNAPSHOT"
-    */
+
     modRuntimeOnly "net.jodah:typetools:0.6.3"
     modImplementation "com.electronwill.night-config:core:3.6.7"
 
@@ -117,14 +117,6 @@ sourceSets.main.resources {
     srcDir 'src/generated/resources'
 }
 
-processResources {
-    // Added so we have book data and damage types built in Forge datagen
-    from ('../NeoForge/src/generated/resources/') {
-        exclude '**/recipe/*'
-        exclude '**/recipes/*'
-    }
-}
-
 def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
 def publishFile = project(":").projectDir.toString() + "/Fabric/build/libs/${archivesBaseName}-${version}.jar"
 def display_name = "${project.name} ${minecraft_version}-${version}"
@@ -172,7 +164,6 @@ publishMods {
             optional('fruit-trees')
             optional('leave-my-bars-alone')
             optional('create')
-            optional('patchouli')
             optional('primal-winter')
             optional('more-food-xd')
             optional('eternal-starlight')
@@ -200,7 +191,6 @@ publishMods {
             optional('xercamod')
             optional('leave-my-bars-alone')
             optional('sprout')
-            optional('patchouli')
             optional('jei')
             optional('oh-the-biomes-weve-gone')
             optional('fruitful-fun')

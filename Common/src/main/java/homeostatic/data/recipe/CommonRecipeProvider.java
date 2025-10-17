@@ -2,18 +2,13 @@ package homeostatic.data.recipe;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 
-import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.ArmorEnhancement;
 import homeostatic.common.recipe.HelmetThermometer;
 import homeostatic.common.recipe.HomeostaticRecipes;
@@ -67,6 +62,7 @@ public class CommonRecipeProvider extends RecipeProvider {
         RecipeProviderBase.cleanWaterBottleSmelting(itemRegistry).save(recipeOutput, getKey("furnace_purified_water_bottle"));
         RecipeProviderBase.cleanWaterBottleCampfire(itemRegistry).save(recipeOutput, getKey("campfire_purified_water_bottle"));
         RecipeProviderBase.cleanWaterBottleSmoking(itemRegistry).save(recipeOutput, getKey("smoking_purified_water_bottle"));
+        RecipeProviderBase.book(itemRegistry).save(recipeOutput, "book_from_dirt");
     }
 
     private ResourceKey<Recipe<?>> getKey(String id) {

@@ -1,10 +1,9 @@
-package homeostatic.data.integration.patchouli;
+package homeostatic.data.book;
 
 import net.minecraft.resources.ResourceLocation;
 
-/* TODO Add back once PatchouliProvider is updated
-import xyz.brassgoggledcoders.patchouliprovider.EntryBuilder;
-import xyz.brassgoggledcoders.patchouliprovider.page.RecipePageBuilder;
+import guidebook.api.data.EntryBuilder;
+import guidebook.api.data.page.RecipePageBuilder;
 
 import homeostatic.Homeostatic;
 
@@ -15,4 +14,3 @@ public class CustomRecipePageBuilder extends RecipePageBuilder<CustomRecipePageB
     }
 
 }
- */

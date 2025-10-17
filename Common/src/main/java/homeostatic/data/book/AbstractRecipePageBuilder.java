@@ -1,12 +1,11 @@
-package homeostatic.data.integration.patchouli;
+package homeostatic.data.book;
 
 import com.google.gson.JsonObject;
 
 import net.minecraft.resources.ResourceLocation;
 
-/* TODO Add back once PatchouliProvider is updated
-import xyz.brassgoggledcoders.patchouliprovider.AbstractPageBuilder;
-import xyz.brassgoggledcoders.patchouliprovider.EntryBuilder;
+import guidebook.api.data.AbstractPageBuilder;
+import guidebook.api.data.EntryBuilder;
 
 public abstract class AbstractRecipePageBuilder<T extends AbstractRecipePageBuilder<T>> extends AbstractPageBuilder<T> {
 
@@ -49,4 +48,3 @@ public abstract class AbstractRecipePageBuilder<T extends AbstractRecipePageBuil
     }
 
 }
-*/

@@ -42,12 +42,11 @@ dependencies {
     implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
     jarJar group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
 
+    implementation group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-neoforge", version: "${guidebook_version}"
+    jarJar group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-neoforge", version: "${guidebook_version}"
+
     compileOnly "mezz.jei:jei-${jei_minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}"
-    /*
-     * TODO Re-enable REI when it is released
-    implementation "mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}"
-    */
 
     compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
     compileOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
@@ -55,8 +54,6 @@ dependencies {
     //compileOnly "curse.maven:create-328085:${create_forge_version}"
     /*
      * Unavailble for 1.21.10
-    implementation "vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT"
-    implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
     compileOnly "curse.maven:vampirism-233029:${vampirism_neoforge_version}"
     compileOnly "curse.maven:ecliptic-1118306:${ecliptic_neoforge_version}"
     */
@@ -64,7 +61,7 @@ dependencies {
 
     if (System.getenv('DATA_GEN') != null) {
         //runtimeOnly "curse.maven:create-328085:${create_neoforge_version}"
-        runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"
+        runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${sewingkit_minecraft_version}:${sewingkit_version}"
     }
     else {
         //runtimeOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
@@ -185,7 +182,6 @@ publishMods {
             optional('fruit-trees')
             optional('leave-my-bars-alone')
             optional('create')
-            optional('patchouli')
             optional('scuba-gear')
             optional('kobolds')
             optional('primal-winter')
@@ -225,7 +221,6 @@ publishMods {
             optional('xercamod')
             optional('leave-my-bars-alone')
             optional('sprout')
-            optional('patchouli')
             optional('jei')
             optional('oh-the-biomes-weve-gone')
             optional('kobolds')

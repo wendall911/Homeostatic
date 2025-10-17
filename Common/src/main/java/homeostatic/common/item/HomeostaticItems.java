@@ -47,8 +47,7 @@ public final class HomeostaticItems {
         new HomeostaticBook(
             new Item.Properties()
                 .setId(ResourceKey.create(Registries.ITEM, Homeostatic.prefix("book")))
-                .stacksTo(1),
-            "book"
+                .stacksTo(1)
         )
     );
     public static final Item THERMOMETER = make(

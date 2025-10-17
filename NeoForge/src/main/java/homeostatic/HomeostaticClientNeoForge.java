@@ -3,22 +3,16 @@ package homeostatic;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
 
-import technology.roughness.whitenoise.platform.Services;
-
-import homeostatic.data.integration.ModIntegration;
+import homeostatic.common.book.PageCustomCrafting;
 import homeostatic.event.ToolTipEventListener;
 import homeostatic.event.ClientEventListener;
-// TODO re-enable when Patchouli is updated
-//import homeostatic.integrations.patchouli.PageCustomCrafting;
 
 public class HomeostaticClientNeoForge {
     public static void init(IEventBus bus) {
         NeoForge.EVENT_BUS.register(ClientEventListener.class);
         NeoForge.EVENT_BUS.register(ToolTipEventListener.class);
 
-        if (Services.PLATFORM.isModLoaded(ModIntegration.PATCHOULI_MODID)) {
-            //PageCustomCrafting.init();
-        }
+        PageCustomCrafting.init();
     }
 
 }

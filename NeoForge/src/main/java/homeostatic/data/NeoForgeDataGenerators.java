@@ -6,7 +6,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
-//import homeostatic.data.integration.patchouli.HomeostaticBookProvider;
 import homeostatic.data.recipe.NeoForgeRecipeProvider;
 import homeostatic.Homeostatic;
 
@@ -22,8 +21,6 @@ public final class NeoForgeDataGenerators {
         gen.addProvider(true, new NeoForgeRecipeProvider(gen.getPackOutput(), event.getLookupProvider()));
         //gen.addProvider(event.includeServer(), new MixingRecipeProvider(gen.getPackOutput()));
         //gen.addProvider(event.includeServer(), new FillingRecipeProvider(gen.getPackOutput()));
-        // TODO re-enable when Patchouli is updated
-        //gen.addProvider(true, new HomeostaticBookProvider(gen.getPackOutput(), event.getLookupProvider()));
     }
 
 }
