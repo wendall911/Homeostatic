@@ -4,7 +4,7 @@
   "name": "info.homeostatic.book.education.environment.name",
   "pages": [
     {
-      "type": "patchouli:text",
+      "type": "guidebook:text",
       "text": "info.homeostatic.book.education.environment.intro"
     }
   ],

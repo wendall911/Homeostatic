@@ -45,12 +45,13 @@ dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
+    implementation group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-neoforge", version: "${guidebook_version}"
+    jarJar group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-neoforge", version: "${guidebook_version}"
+
     compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
     compileOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
     compileOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
     compileOnly "curse.maven:create-328085:${create_neoforge_version}"
-    implementation "vazkii.patchouli:Patchouli:${patchouli_version}-NEOFORGE-SNAPSHOT"
-    implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
     compileOnly "dev.gigaherz.sewingkit:SewingKit-1.21:${sewingkit_version}"
     compileOnly "curse.maven:vampirism-233029:${vampirism_neoforge_version}"
     compileOnly "curse.maven:ecliptic-1118306:${ecliptic_neoforge_version}"
@@ -178,7 +179,6 @@ publishMods {
             optional('fruit-trees')
             optional('leave-my-bars-alone')
             optional('create')
-            optional('patchouli')
             optional('scuba-gear')
             optional('kobolds')
             optional('primal-winter')
@@ -218,7 +218,6 @@ publishMods {
             optional('xercamod')
             optional('leave-my-bars-alone')
             optional('sprout')
-            optional('patchouli')
             optional('jei')
             optional('oh-the-biomes-weve-gone')
             optional('kobolds')

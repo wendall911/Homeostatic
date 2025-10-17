@@ -7,10 +7,10 @@ import java.util.function.BiConsumer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
-
-import homeostatic.common.fluid.HomeostaticFluids;
-import homeostatic.Homeostatic;
 import net.minecraft.world.item.Items;
+
+import homeostatic.Homeostatic;
+import homeostatic.common.fluid.HomeostaticFluids;
 
 public final class HomeostaticItems {
 
@@ -30,7 +30,7 @@ public final class HomeostaticItems {
     );
     public static final Item BOOK = make(
         "book",
-        new HomeostaticBook(new Item.Properties().stacksTo(1), "book")
+        new HomeostaticBook()
     );
     public static final Item THERMOMETER = make(
         "thermometer",

@@ -4,7 +4,7 @@
   "name": "info.homeostatic.book.gameplay.environment.name",
   "pages": [
     {
-      "type": "patchouli:image",
+      "type": "guidebook:image",
       "images": [
         "homeostatic:textures/gui/book/normal_outside.png"
       ],
@@ -12,7 +12,7 @@
       "title": "info.homeostatic.book.gameplay.environment.title"
     },
     {
-      "type": "patchouli:text",
+      "type": "guidebook:text",
       "text": "info.homeostatic.book.gameplay.environment.details"
     }
   ],

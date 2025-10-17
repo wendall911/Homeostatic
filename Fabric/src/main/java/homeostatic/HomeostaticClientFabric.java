@@ -11,23 +11,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 
-import technology.roughness.whitenoise.platform.Services;
-
+import homeostatic.common.book.PageCustomCrafting;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
-import homeostatic.data.integration.ModIntegration;
 import homeostatic.event.ClientEventListener;
-import homeostatic.integrations.patchouli.PageCustomCrafting;
 
 public class HomeostaticClientFabric implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
         ClientEventListener.init();
-
-        if (Services.PLATFORM.isModLoaded(ModIntegration.PATCHOULI_MODID)) {
-            PageCustomCrafting.init();
-        }
+        PageCustomCrafting.init();
 
         FluidRenderHandlerRegistry.INSTANCE.register(HomeostaticFluids.PURIFIED_WATER, HomeostaticFluids.PURIFIED_WATER_FLOWING, new SimpleFluidRenderHandler(
             HomeostaticFluids.STILL_FLUID_TEXTURE,

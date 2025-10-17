@@ -8,6 +8,7 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 
 import homeostatic.common.damagesource.HomeostaticDamageTypes;
+import homeostatic.data.book.HomeostaticBookProvider;
 import homeostatic.data.recipe.CommonRecipeProvider;
 
 public class FabricDatagenInitializer implements DataGeneratorEntrypoint {
@@ -45,6 +46,7 @@ public class FabricDatagenInitializer implements DataGeneratorEntrypoint {
         pack.addProvider(CommonRecipeProvider::new);
         pack.addProvider(FabricDamageTypeProvider::new);
         pack.addProvider(FabricDamageTypeTagsProvider::new);
+        pack.addProvider(HomeostaticBookProvider::new);
     }
 
     public static void configureFabricDatagen(FabricDataGenerator.Pack pack) {

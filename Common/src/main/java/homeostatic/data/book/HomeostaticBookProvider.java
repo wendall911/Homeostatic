@@ -1,4 +1,4 @@
-package homeostatic.data.integration.patchouli;
+package homeostatic.data.book;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -11,15 +11,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-import xyz.brassgoggledcoders.patchouliprovider.BookBuilder;
-import xyz.brassgoggledcoders.patchouliprovider.CategoryBuilder;
-import xyz.brassgoggledcoders.patchouliprovider.EntryBuilder;
-import xyz.brassgoggledcoders.patchouliprovider.PatchouliBookProvider;
+import guidebook.api.data.BookBuilder;
+import guidebook.api.data.CategoryBuilder;
+import guidebook.api.data.EntryBuilder;
+import guidebook.api.data.GuidebookBookProvider;
 
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.Homeostatic;
 
-public class HomeostaticBookProvider extends PatchouliBookProvider {
+public class HomeostaticBookProvider extends GuidebookBookProvider {
 
     private final String translationLoc = "info.homeostatic.book";
     private int categorySortNum = -1;
@@ -31,7 +31,7 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
 
     @Override
     protected void addBooks(Consumer<BookBuilder> consumer, HolderLookup.Provider provider) {
-        BookBuilder bookBuilder = createBookBuilder("book", translationLoc, prefix("intro"), provider)
+        BookBuilder bookBuilder = createBookBuilder("book", "item.homeostatic.book", prefix("intro"), provider)
             .setSubtitle(prefix("subtitle"))
             .setCustomBookItem(new ItemStack(HomeostaticItems.BOOK))
             .setCreativeTab(Homeostatic.MODID + ".items")
@@ -39,8 +39,7 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
             .setDontGenerateBook(true)
             .setShowProgress(false)
             .setUseBlockyFont(false)
-            .setI18n(true)
-            .setUseResourcePack(true);
+            .setI18n(true);
 
         bookBuilder = addGameplay(bookBuilder);
         bookBuilder = addEducation(bookBuilder);
@@ -72,7 +71,7 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
         gameplayEnvironmentEntry.addImagePage(bookImage("normal_outside"))
             .setTitle(prefix("gameplay.environment.title"))
             .setText(prefix("gameplay.environment.intro")).build()
-        .addTextPage(prefix("gameplay.environment.details")).build();
+        .addTextPage(prefix("gameplay.environment.details"));
 
         EntryBuilder gameplayBodyTempEntry = category.addEntry(
             "gameplay/body_temp",
@@ -124,7 +123,7 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
         .addPage(new CustomRecipePageBuilder(Homeostatic.prefix("remove_waterproof"), gameplayBodyTempEntry))
             .setAnchor("remove_waterproofing")
             .setTitle(prefix("gameplay.body_temp.remove_waterproof.title"))
-            .setText(prefix("gameplay.body_temp.remove_waterproof.text")).build();
+            .setText(prefix("gameplay.body_temp.remove_waterproof.text"));
 
         EntryBuilder gameplayHydrationEntry = category.addEntry(
             "gameplay/hydration",
@@ -153,7 +152,7 @@ public class HomeostaticBookProvider extends PatchouliBookProvider {
             .setText(prefix("gameplay.hydration.water_filter.text")).build()
         .addPage(new CustomRecipePageBuilder(Homeostatic.prefix("filtered_water_flask"), gameplayHydrationEntry))
             .setTitle(prefix("gameplay.hydration.leather_flask_water_filter.title"))
-            .setText(prefix("gameplay.hydration.leather_flask_water_filter.text")).build();
+            .setText(prefix("gameplay.hydration.leather_flask_water_filter.text"));
 
         return category.build();
     }

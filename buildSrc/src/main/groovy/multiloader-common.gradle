@@ -161,6 +161,9 @@ processResources {
         expand expandProps
     }
     inputs.properties(expandProps)
+    outputs.upToDateWhen {
+        false
+    }
 }
 
 publishing {

@@ -18,7 +18,7 @@ import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.platform.Services;
 
-public class PatchouliHelper {
+public class GuidebookHelper {
 
     public static Recipe<?> getRecipe(Level level, ResourceLocation loc) {
         Ingredient ingredient = null;

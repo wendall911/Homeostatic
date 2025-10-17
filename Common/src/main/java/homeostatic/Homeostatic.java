@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 
 import technology.roughness.whitenoise.config.WhiteNoiseConfig;
 import technology.roughness.whitenoise.config.WhiteNoiseConfigLoader;
-
 import technology.roughness.whitenoise.platform.Services;
 
 import homeostatic.common.damagesource.HomeostaticDamageTypes;

@@ -23,7 +23,7 @@ dependencies {
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: "${mixin_extras_version}"
     implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-common", version: "${whitenoise_version}"
 
-    compileOnly "vazkii.patchouli:Patchouli-xplat:${patchouli_version}-SNAPSHOT"
+    compileOnly group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-common", version: "${guidebook_version}"
 
     compileOnly "mezz.jei:jei-${minecraft_version}-common:${jei_version}"
 
