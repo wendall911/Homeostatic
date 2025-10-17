@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "books",
+  "ingredients": [
+    {
+      "item": "minecraft:dirt"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "homeostatic:book"
+  }
+}
