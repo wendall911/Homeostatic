@@ -4,7 +4,7 @@
   "name": "info.homeostatic.book.gameplay.body_temp.name",
   "pages": [
     {
-      "type": "guidebook:image",
+      "type": "handbook:image",
       "images": [
         "homeostatic:textures/gui/book/normal_body.png"
       ],
@@ -12,11 +12,11 @@
       "title": "info.homeostatic.book.gameplay.body_temp.title"
     },
     {
-      "type": "guidebook:text",
+      "type": "handbook:text",
       "text": "info.homeostatic.book.gameplay.body_temp.details"
     },
     {
-      "type": "guidebook:image",
+      "type": "handbook:image",
       "anchor": "wetness",
       "images": [
         "homeostatic:textures/gui/book/wetness_hud.png"
@@ -25,11 +25,11 @@
       "title": "info.homeostatic.book.gameplay.body_temp.wetness.title"
     },
     {
-      "type": "guidebook:text",
+      "type": "handbook:text",
       "text": "info.homeostatic.book.gameplay.body_temp.wetness.details"
     },
     {
-      "type": "guidebook:image",
+      "type": "handbook:image",
       "anchor": "scalding",
       "images": [
         "homeostatic:textures/gui/book/scalding_hud.png"
@@ -38,7 +38,7 @@
       "title": "info.homeostatic.book.gameplay.body_temp.scalding.title"
     },
     {
-      "type": "guidebook:image",
+      "type": "handbook:image",
       "anchor": "hyperthermia",
       "images": [
         "homeostatic:textures/gui/book/hyperthermia_hud.png"
@@ -47,7 +47,7 @@
       "title": "info.homeostatic.book.gameplay.body_temp.hyperthermia.title"
     },
     {
-      "type": "guidebook:image",
+      "type": "handbook:image",
       "anchor": "hypothermia",
       "images": [
         "homeostatic:textures/gui/book/hypothermia_hud.png"
