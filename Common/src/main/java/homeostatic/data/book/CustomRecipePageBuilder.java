@@ -2,8 +2,8 @@ package homeostatic.data.book;
 
 import net.minecraft.resources.ResourceLocation;
 
-import guidebook.api.data.EntryBuilder;
-import guidebook.api.data.page.RecipePageBuilder;
+import handbook.api.data.EntryBuilder;
+import handbook.api.data.page.RecipePageBuilder;
 
 import homeostatic.Homeostatic;
 

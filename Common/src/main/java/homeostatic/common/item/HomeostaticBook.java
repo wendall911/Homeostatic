@@ -1,8 +1,8 @@
 package homeostatic.common.item;
 
-import guidebook.common.item.ItemModBook;
+import handbook.common.item.HandbookBook;
 
-public class HomeostaticBook extends ItemModBook {
+public class HomeostaticBook extends HandbookBook {
 
     public HomeostaticBook() {
         super();

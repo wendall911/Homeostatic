@@ -4,10 +4,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 
-import guidebook.client.book.BookContentsBuilder;
-import guidebook.client.book.BookEntry;
-import guidebook.client.book.ClientBookRegistry;
-import guidebook.client.book.page.PageCrafting;
+import handbook.client.book.BookContentsBuilder;
+import handbook.client.book.BookEntry;
+import handbook.client.book.ClientBookRegistry;
+import handbook.client.book.page.PageCrafting;
 
 import homeostatic.util.GuidebookHelper;
 

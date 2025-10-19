@@ -45,8 +45,8 @@ dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     implementation "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
-    implementation group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-neoforge", version: "${guidebook_version}"
-    jarJar group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-neoforge", version: "${guidebook_version}"
+    implementation group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-neoforge", version: "${handbook_version}"
+    jarJar group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-neoforge", version: "${handbook_version}"
 
     compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
     compileOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"

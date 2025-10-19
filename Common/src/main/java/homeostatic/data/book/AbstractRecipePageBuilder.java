@@ -4,8 +4,8 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.resources.ResourceLocation;
 
-import guidebook.api.data.AbstractPageBuilder;
-import guidebook.api.data.EntryBuilder;
+import handbook.api.data.AbstractPageBuilder;
+import handbook.api.data.EntryBuilder;
 
 public abstract class AbstractRecipePageBuilder<T extends AbstractRecipePageBuilder<T>> extends AbstractPageBuilder<T> {
 
