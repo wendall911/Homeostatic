@@ -42,8 +42,8 @@ dependencies {
     implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
     jarJar group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
 
-    implementation group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-neoforge", version: "${guidebook_version}"
-    jarJar group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-neoforge", version: "${guidebook_version}"
+    implementation group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-neoforge", version: "${handbook_version}"
+    jarJar group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-neoforge", version: "${handbook_version}"
 
     compileOnly "mezz.jei:jei-${jei_minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}"

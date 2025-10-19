@@ -11,15 +11,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-import guidebook.api.data.BookBuilder;
-import guidebook.api.data.CategoryBuilder;
-import guidebook.api.data.EntryBuilder;
-import guidebook.api.data.GuidebookBookProvider;
+import handbook.api.data.BookBuilder;
+import handbook.api.data.CategoryBuilder;
+import handbook.api.data.EntryBuilder;
+import handbook.api.data.HandbookBookProvider;
 
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.Homeostatic;
 
-public class HomeostaticBookProvider extends GuidebookBookProvider {
+public class HomeostaticBookProvider extends HandbookBookProvider {
 
     private final String translationLoc = "info.homeostatic.book";
     private int categorySortNum = -1;

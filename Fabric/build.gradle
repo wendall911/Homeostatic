@@ -19,8 +19,8 @@ dependencies {
     modImplementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_version}"
     include group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_version}"
 
-    modImplementation group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-fabric", version: "${guidebook_version}"
-    include group: 'technology.roughness.guidebook', name: "guidebook-${minecraft_version}-fabric", version: "${guidebook_version}"
+    modImplementation group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-fabric", version: "${handbook_version}"
+    include group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-fabric", version: "${handbook_version}"
 
     modApi "dev.architectury:architectury-fabric:${architectury_version}"
     modApi("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
@@ -82,6 +82,7 @@ loom {
         accessWidenerPath.set(aw)
     }
     mixin {
+        useLegacyMixinAp = true
         defaultRefmapName.set("${mod_id}.refmap.json")
     }
     runs {
