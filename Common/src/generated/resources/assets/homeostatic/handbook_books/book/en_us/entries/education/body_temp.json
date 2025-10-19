@@ -4,7 +4,7 @@
   "name": "info.homeostatic.book.education.body_temp.name",
   "pages": [
     {
-      "type": "guidebook:text",
+      "type": "handbook:text",
       "text": "info.homeostatic.book.education.body_temp.intro"
     }
   ],

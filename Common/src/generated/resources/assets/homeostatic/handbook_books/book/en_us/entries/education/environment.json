@@ -4,7 +4,7 @@
   "name": "info.homeostatic.book.education.environment.name",
   "pages": [
     {
-      "type": "guidebook:text",
+      "type": "handbook:text",
       "text": "info.homeostatic.book.education.environment.intro"
     }
   ],
