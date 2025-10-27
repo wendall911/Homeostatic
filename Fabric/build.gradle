@@ -68,6 +68,18 @@ dependencies {
         modRuntimeOnly "curse.maven:tyg-962544:${tyg_fabric_version}"
         modRuntimeOnly "curse.maven:corgilib-693313:${corgilib_fabric_version}"
         modRuntimeOnly "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_fabric_version}"
+        //modRuntimeOnly "curse.maven:crafttweaker-239197:${crafttweaker_fabric_version}"
+        // Bakery and Beach crash in a dev environment.
+        // Let's NOT Do architectury please
+        //modRuntimeOnly "curse.maven:letsdo_bakery-1038130:${letsdo_bakery_fabric_version}"
+        //modRuntimeOnly "curse.maven:letsdo_beach-858691:${letsdo_beach_fabric_version}"
+        //modRuntimeOnly "curse.maven:letsdo_blooming-962885:${letsdo_blooming_fabric_version}"
+        //modRuntimeOnly "curse.maven:letsdo_brewery-1038106:${letsdo_brewery_fabric_version}"
+        //modRuntimeOnly "curse.maven:letsdo_candlelight-1038117:${letsdo_candlelight_fabric_version}"
+        //modRuntimeOnly "curse.maven:letsdo_herbal-951221:${letsdo_herbal_fabric_version}"
+        //modRuntimeOnly "curse.maven:letsdo_meadow-821483:${letsdo_meadow_fabric_version}"
+        //modRuntimeOnly "curse.maven:letsdo_farm-1038103:${letsdo_farm_fabric_version}"
+        //modRuntimeOnly "curse.maven:letsdo_vinery-704465:${letsdo_vinery_fabric_version}"
     }
 }
 

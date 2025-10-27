@@ -65,7 +65,7 @@ dependencies {
         //runtimeOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
         runtimeOnly "curse.maven:ecliptic-1118306:${ecliptic_neoforge_version}"
         //runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
-        //runtimeOnly "dev.architectury:architectury-neoforge:${architectury_version}"
+        runtimeOnly "dev.architectury:architectury-neoforge:${architectury_version}"
         //runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
         runtimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_neoforge_version}"
         //runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"
@@ -81,7 +81,7 @@ dependencies {
         //runtimeOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_neoforge_version}"
         //runtimeOnly "curse.maven:twilightforest-227639:${twilight_forest_neoforge_version}"
         //runtimeOnly "curse.maven:botania-225643:???"
-        //runtimeOnly "curse.maven:curios-309927:${curios_neoforge_version}"
+        runtimeOnly "curse.maven:curios-309927:${curios_neoforge_version}"
         //runtimeOnly "curse.maven:croptopia-415438:4512807"
         //runtimeOnly "curse.maven:farmers_delight-398521:???"
         //runtimeOnly "curse.maven:xerca-341575:???"
@@ -115,6 +115,16 @@ dependencies {
         //runtimeOnly "curse.maven:puzzles_lib-495476:${puzzles_lib_neoforge_version}"
         //runtimeOnly "curse.maven:lmba-281715:${lmba_neoforge_version}"
         //runtimeOnly "curse.maven:vampirism-233029:${vampirism_neoforge_version}"
+        //runtimeOnly "curse.maven:letsdo_bakery-1038130:${letsdo_bakery_neoforge_version}"
+        //runtimeOnly "curse.maven:letsdo_beach-858691:${letsdo_beach_neoforge_version}"
+        //runtimeOnly "curse.maven:letsdo_blooming-962885:${letsdo_blooming_neoforge_version}"
+        //runtimeOnly "curse.maven:letsdo_brewery-1038106:${letsdo_brewery_neoforge_version}"
+        //runtimeOnly "curse.maven:letsdo_candlelight-1038117:${letsdo_candlelight_neoforge_version}"
+        //runtimeOnly "curse.maven:letsdo_herbal-951221:${letsdo_herbal_neoforge_version}"
+        //runtimeOnly "curse.maven:letsdo_meadow-821483:${letsdo_meadow_neoforge_version}"
+        //runtimeOnly "curse.maven:letsdo_farm-1038103:${letsdo_farm_neoforge_version}"
+        //runtimeOnly "curse.maven:letsdo_vinery-704465:${letsdo_vinery_neoforge_version}"
+        //runtimeOnly "curse.maven:letsdo_wilder-1071657:${letsdo_wilder_neoforge_version}"
     }
 }
 
@@ -194,6 +204,13 @@ publishMods {
             optional('terralith')
             optional('ecliptic-seasons')
             optional('regions-unexplored')
+            optional('lets-do-bakery-farm-charm-compat')
+            optional('lets-do-brewery-farm-charm-compat')
+            optional('lets-do-candlelight-farm-charm-compat')
+            optional('lets-do-herbal-brews')
+            optional('lets-do-meadow')
+            optional('lets-do-farm-charm')
+            optional('lets-do-vinery')
         }
     }
     if (project.hasProperty("${modrinth_api_key_prop}")) {
@@ -229,6 +246,13 @@ publishMods {
             optional('the-undergarden')
             optional('terralith')
             optional('regions-unexplored')
+            optional('lets-do-bakery-farmcharm-compat')
+            optional('lets-do-brewery-farmcharm-compat')
+            optional('lets-do-candlelight-farmcharm-compat')
+            optional('lets-do-herbalbrews')
+            optional('lets-do-meadow')
+            optional('lets-do-farm-charm')
+            optional('lets-do-vinery')
         }
     }
     if (project.hasProperty("${discord_webhook_prop}")) {
