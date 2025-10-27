@@ -17,6 +17,22 @@
       "id": "scuba_gear:scuba_boots",
       "required": false
     },
+    {
+      "id": "meadow:fur_helmet",
+      "required": false
+    },
+    {
+      "id": "meadow:fur_chestplate",
+      "required": false
+    },
+    {
+      "id": "meadow:fur_leggings",
+      "required": false
+    },
+    {
+      "id": "meadow:fur_boots",
+      "required": false
+    },
     "#homeostatic:sewingkit_wearable"
   ]
 }
