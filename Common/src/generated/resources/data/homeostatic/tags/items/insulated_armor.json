@@ -33,6 +33,10 @@
       "id": "meadow:fur_boots",
       "required": false
     },
+    {
+      "id": "wildernature:fur_cloak",
+      "required": false
+    },
     "#homeostatic:sewingkit_wearable"
   ]
 }
