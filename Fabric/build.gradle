@@ -80,6 +80,7 @@ dependencies {
         //modRuntimeOnly "curse.maven:letsdo_meadow-821483:${letsdo_meadow_fabric_version}"
         //modRuntimeOnly "curse.maven:letsdo_farm-1038103:${letsdo_farm_fabric_version}"
         //modRuntimeOnly "curse.maven:letsdo_vinery-704465:${letsdo_vinery_fabric_version}"
+        //modRuntimeOnly "curse.maven:letsdo_wilder-1071657:${letsdo_wilder_fabric_version}"
     }
 }
 
