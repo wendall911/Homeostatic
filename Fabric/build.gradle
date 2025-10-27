@@ -177,6 +177,13 @@ publishMods {
             optional('eternal-starlight')
             optional('terralith')
             optional('regions-unexplored')
+            optional('lets-do-bakery-farm-charm-compat')
+            optional('lets-do-brewery-farm-charm-compat')
+            optional('lets-do-candlelight-farm-charm-compat')
+            optional('lets-do-herbal-brews')
+            optional('lets-do-meadow')
+            optional('lets-do-farm-charm')
+            optional('lets-do-vinery')
         }
     }
     if (project.hasProperty("${modrinth_api_key_prop}")) {
@@ -206,6 +213,13 @@ publishMods {
             optional('eternal-starlight')
             optional('terralith')
             optional('regions-unexplored')
+            optional('lets-do-bakery-farmcharm-compat')
+            optional('lets-do-brewery-farmcharm-compat')
+            optional('lets-do-candlelight-farmcharm-compat')
+            optional('lets-do-herbalbrews')
+            optional('lets-do-meadow')
+            optional('lets-do-farm-charm')
+            optional('lets-do-vinery')
         }
     }
     if (project.hasProperty("${discord_webhook_prop}")) {
