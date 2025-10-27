@@ -1673,39 +1673,232 @@ public class DrinkableItemsProvider implements DataProvider {
         addMeal(ModIntegration.phcLoc("friedeggitem"));
         addMeal(ModIntegration.pcropsLoc("barrelcactusitem"));
 
-        // The Veggie Way
-        // Drinks
-        addDrink(ModIntegration.veggieLoc("energy_drink"));
-
-        // Fruit
-        addFruit(ModIntegration.veggieLoc("melon_chunk"));
-        addFruit(ModIntegration.veggieLoc("cactus_chunk"));
+        // Let's Do Bakery
+        // Cake / Cupcake / Bread
+        addCake(ModIntegration.ldBakeryLoc("apple_cupcake"));
+        addCake(ModIntegration.ldBakeryLoc("baguette"));
+        addCake(ModIntegration.ldBakeryLoc("braided_bread"));
+        addCake(ModIntegration.ldBakeryLoc("bread"));
+        addCake(ModIntegration.ldBakeryLoc("bread_with_jam"));
+        addCake(ModIntegration.ldBakeryLoc("bun"));
+        addCake(ModIntegration.ldBakeryLoc("bundt_cake_slice"));
+        addCake(ModIntegration.ldBakeryLoc("chocolate_cake_slice"));
+        addCake(ModIntegration.ldBakeryLoc("chocolate_gateau_slice"));
+        addCake(ModIntegration.ldBakeryLoc("chocolate_glazed_cookie"));
+        addCake(ModIntegration.ldBakeryLoc("chocolate_tart_slice"));
+        addCake(ModIntegration.ldBakeryLoc("chocolate_truffle"));
+        addCake(ModIntegration.ldBakeryLoc("cornet"));
+        addCake(ModIntegration.ldBakeryLoc("croissant"));
+        addCake(ModIntegration.ldBakeryLoc("crusty_bread"));
+        addCake(ModIntegration.ldBakeryLoc("jam_roll"));
+        addCake(ModIntegration.ldBakeryLoc("linzer_tart_slice"));
+        addCake(ModIntegration.ldBakeryLoc("misslilitu_biscuit"));
+        addCake(ModIntegration.ldBakeryLoc("pudding_slice"));
+        addCake(ModIntegration.ldBakeryLoc("strawberry_cake_slice"));
+        addCake(ModIntegration.ldBakeryLoc("strawberry_cupcake"));
+        addCake(ModIntegration.ldBakeryLoc("strawberry_glazed_cookie"));
+        addCake(ModIntegration.ldBakeryLoc("sweetberry_cake_slice"));
+        addCake(ModIntegration.ldBakeryLoc("sweetberry_cupcake"));
+        addCake(ModIntegration.ldBakeryLoc("sweetberry_glazed_cookie"));
+        addCake(ModIntegration.ldBakeryLoc("toast"));
+        addCake(ModIntegration.ldBakeryLoc("waffle"));
 
         // Pie
-        addPie(ModIntegration.veggieLoc("apple_pie"));
-        addPie(ModIntegration.veggieLoc("melon_pie"));
-        addPie(ModIntegration.veggieLoc("sweet_berry_pie"));
-        addPie(ModIntegration.veggieLoc("cactus_pie"));
+        addPie(ModIntegration.ldBakeryLoc("apple_pie_slice"));
+        addPie(ModIntegration.ldBakeryLoc("glowberry_pie_slice"));
 
-        // Shake
-        addShake(ModIntegration.veggieLoc("superfood_shake"));
-        addShake(ModIntegration.veggieLoc("superfood_smoothie"));
+        // Meal
+        addMeal(ModIntegration.ldBakeryLoc("grilled_bacon_sandwich"));
+        addMeal(ModIntegration.ldBakeryLoc("grilled_salmon_sandwich"));
+        addMeal(ModIntegration.ldBakeryLoc("sandwich"));
+        addMeal(ModIntegration.ldBakeryLoc("vegetable_sandwich"));
+
+        // Let's Do Brewery
+        // Beer / Whiskey
+        addDrink(ModIntegration.ldBreweryLoc("beer_barley"));
+        addDrink(ModIntegration.ldBreweryLoc("beer_haley"));
+        addDrink(ModIntegration.ldBreweryLoc("beer_hops"));
+        addDrink(ModIntegration.ldBreweryLoc("beer_nettle"));
+        addDrink(ModIntegration.ldBreweryLoc("beer_oat"));
+        addDrink(ModIntegration.ldBreweryLoc("beer_wheat"));
+        addDrink(ModIntegration.ldBreweryLoc("whiskey_ak"));
+        addDrink(ModIntegration.ldBreweryLoc("whiskey_carrasconlabel"));
+        addDrink(ModIntegration.ldBreweryLoc("whiskey_cristelwalker"));
+        addDrink(ModIntegration.ldBreweryLoc("whiskey_highland_hearth"));
+        addDrink(ModIntegration.ldBreweryLoc("whiskey_jamesons_malt"));
+        addDrink(ModIntegration.ldBreweryLoc("whiskey_jojannik"));
+        addDrink(ModIntegration.ldBreweryLoc("whiskey_lilitusinglemalt"));
+        addDrink(ModIntegration.ldBreweryLoc("whiskey_maggoallan"));
+        addDrink(ModIntegration.ldBreweryLoc("whiskey_smokey_reverie"));
+
+        // Meal
+        addMeal(ModIntegration.ldBreweryLoc("dumplings"));
+        addMeal(ModIntegration.ldBreweryLoc("fried_chicken"));
+        addMeal(ModIntegration.ldBreweryLoc("half_chicken"));
+        addMeal(ModIntegration.ldBreweryLoc("mashed_potatoes"));
+        addMeal(ModIntegration.ldBreweryLoc("pork_knuckle"));
+        addMeal(ModIntegration.ldBreweryLoc("potato_salad"));
+        addMeal(ModIntegration.ldBreweryLoc("sausage"));
+
+        // Bread
+        addCake(ModIntegration.ldBreweryLoc("pretzel"));
+
+        // Let's Do Candlelight
+        addMeal(ModIntegration.ldCandlelightLoc("beef_tartare"));
+        addMeal(ModIntegration.ldCandlelightLoc("beef_wellington"));
+        addMeal(ModIntegration.ldCandlelightLoc("beef_with_mushroom_in_wine_and_potatoes"));
+        addMeal(ModIntegration.ldCandlelightLoc("beetroot_salad"));
+        addMeal(ModIntegration.ldCandlelightLoc("bolognese"));
+        addMeal(ModIntegration.ldCandlelightLoc("chicken_alfredo"));
+        addMeal(ModIntegration.ldCandlelightLoc("chicken_teriyaki"));
+        addMeal(ModIntegration.ldCandlelightLoc("chicken_with_vegetables"));
+        addMeal(ModIntegration.ldCandlelightLoc("chocolate_mousse"));
+        addMeal(ModIntegration.ldCandlelightLoc("fillet_steak"));
+        addMeal(ModIntegration.ldCandlelightLoc("fresh_garden_salad"));
+        addMeal(ModIntegration.ldCandlelightLoc("harvest_plate"));
+        addMeal(ModIntegration.ldCandlelightLoc("khinkali"));
+        addMeal(ModIntegration.ldCandlelightLoc("lasagne"));
+        addMeal(ModIntegration.ldCandlelightLoc("mozzarella"));
+        addSoup(ModIntegration.ldCandlelightLoc("mushroom_soup"));
+        addMeal(ModIntegration.ldCandlelightLoc("omelet"));
+        addMeal(ModIntegration.ldCandlelightLoc("pasta_with_bolognese"));
+        addMeal(ModIntegration.ldCandlelightLoc("pasta_with_lettuce"));
+        addMeal(ModIntegration.ldCandlelightLoc("pasta_with_mozzarella"));
+        addMeal(ModIntegration.ldCandlelightLoc("pork_ribs"));
+        addMeal(ModIntegration.ldCandlelightLoc("roastbeef_with_glazed_carrots"));
+        addMeal(ModIntegration.ldCandlelightLoc("roasted_lamb_with_lettuce"));
+        addMeal(ModIntegration.ldCandlelightLoc("salad"));
+        addMeal(ModIntegration.ldCandlelightLoc("salmon_on_white_wine"));
+        addMeal(ModIntegration.ldCandlelightLoc("tomato_mozzarella_salad"));
+        addSoup(ModIntegration.ldCandlelightLoc("tomato_soup"));
+        addMeal(ModIntegration.ldCandlelightLoc("tropical_fish_supreme"));
+
+        // Let's Do Farm and Charm
+        // Fruits and Veggies
+        addFruit(ModIntegration.ldFarmLoc("strawberry"));
+        addVeggie(ModIntegration.ldFarmLoc("tomato"));
+
+        // Drinks
+        addDrink(ModIntegration.ldFarmLoc("nettle_tea"));
+        addDrink(ModIntegration.ldFarmLoc("nettle_tea_cup"));
+        addDrink(ModIntegration.ldFarmLoc("ribwort_tea"));
+        addDrink(ModIntegration.ldFarmLoc("ribwort_tea_cup"));
+        addDrink(ModIntegration.ldFarmLoc("strawberry_tea"));
+        addDrink(ModIntegration.ldFarmLoc("strawberry_tea_cup"));
+
+        // Meal
+        addMeal(ModIntegration.ldFarmLoc("bacon_with_eggs"));
+        addMeal(ModIntegration.ldFarmLoc("baked_lamb_ham"));
+        addMeal(ModIntegration.ldFarmLoc("barley_patties_with_potatoes"));
+        addMeal(ModIntegration.ldFarmLoc("beef_patty_with_vegetables"));
+        addMeal(ModIntegration.ldFarmLoc("chicken_wrapped_in_bacon"));
+        addMeal(ModIntegration.ldFarmLoc("cooked_cod"));
+        addMeal(ModIntegration.ldFarmLoc("cooked_salmon"));
+        addMeal(ModIntegration.ldFarmLoc("corn_grits"));
+        addMeal(ModIntegration.ldFarmLoc("farmer_salad"));
+        addMeal(ModIntegration.ldFarmLoc("farmers_bread"));
+        addMeal(ModIntegration.ldFarmLoc("farmers_breakfast"));
+        addMeal(ModIntegration.ldFarmLoc("goulash"));
+        addMeal(ModIntegration.ldFarmLoc("grandmothers_strawberry_cake"));
+        addMeal(ModIntegration.ldFarmLoc("lamb_with_corn"));
+        addMeal(ModIntegration.ldFarmLoc("oatmeal_with_strawberries"));
+        addMeal(ModIntegration.ldFarmLoc("oat_pancake"));
+        addMeal(ModIntegration.ldFarmLoc("pasta_with_onion_sauce"));
+        addMeal(ModIntegration.ldFarmLoc("potato_with_roast_meat"));
+        addMeal(ModIntegration.ldFarmLoc("roasted_chicken"));
+        addMeal(ModIntegration.ldFarmLoc("roasted_corn"));
+        addMeal(ModIntegration.ldFarmLoc("sausage_with_oat_patty"));
+        addMeal(ModIntegration.ldFarmLoc("stuffed_chicken"));
+        addMeal(ModIntegration.ldFarmLoc("stuffed_rabbit"));
 
         // Soup
-        addSoup(ModIntegration.veggieLoc("cactus_soup"));
-        addSoup(ModIntegration.veggieLoc("pumpkin_soup"));
-        addSoup(ModIntegration.veggieLoc("melon_soup"));
-        addSoup(ModIntegration.veggieLoc("carrot_soup"));
-        addSoup(ModIntegration.veggieLoc("lentil_soup"));
+        addSoup(ModIntegration.ldFarmLoc("barley_soup"));
+        addSoup(ModIntegration.ldFarmLoc("onion_soup"));
+        addSoup(ModIntegration.ldFarmLoc("potato_soup"));
+        addSoup(ModIntegration.ldFarmLoc("simple_tomato_soup"));
 
-        // Veggies
-        addVeggie(ModIntegration.veggieLoc("corn"));
-        addVeggie(ModIntegration.veggieLoc("cooked_carrot"));
-        addVeggie(ModIntegration.veggieLoc("cooked_beetroot"));
-        addVeggie(ModIntegration.veggieLoc("chocolate_bar"));
-        addVeggie(ModIntegration.veggieLoc("pumpkin_chunk"));
-        addVeggie(ModIntegration.veggieLoc("soybean"));
-        addVeggie(ModIntegration.veggieLoc("lentil"));
+        // Let's Do Herbal Brews
+        addDrink(ModIntegration.ldHerbalLoc("black_tea"));
+        addDrink(ModIntegration.ldHerbalLoc("coffee"));
+        addDrink(ModIntegration.ldHerbalLoc("flask"));
+        addDrink(ModIntegration.ldHerbalLoc("green_tea"));
+        addDrink(ModIntegration.ldHerbalLoc("hibiscus_tea"));
+        addDrink(ModIntegration.ldHerbalLoc("lavender_tea"));
+        addDrink(ModIntegration.ldHerbalLoc("milk_coffee"));
+        addDrink(ModIntegration.ldHerbalLoc("oolong_tea"));
+        addDrink(ModIntegration.ldHerbalLoc("rooibos_tea"));
+        addDrink(ModIntegration.ldHerbalLoc("yerba_mate_tea"));
+
+        // Let's Do Meadow
+        // Cakes and Meals
+        addCake(ModIntegration.ldMeadowLoc("cheesecake_slice"));
+        addMeal(ModIntegration.ldMeadowLoc("cheese_roll"));
+        addMeal(ModIntegration.ldMeadowLoc("cheese_sandwich"));
+        addCake(ModIntegration.ldMeadowLoc("cheese_tart_slice"));
+        addMeal(ModIntegration.ldMeadowLoc("sausage_with_cheese"));
+
+        // Milk Buckets
+        add(ModIntegration.ldMeadowLoc("wooden_buffalo_milk_bucket"), 9, 2.1F,  0, 0, 0.0F);
+        add(ModIntegration.ldMeadowLoc("wooden_goat_milk_bucket"), 9, 2.1F,  0, 0, 0.0F);
+        add(ModIntegration.ldMeadowLoc("wooden_grain_milk_bucket"), 9, 2.1F,  0, 0, 0.0F);
+        add(ModIntegration.ldMeadowLoc("wooden_milk_bucket"), 9, 2.1F,  0, 0, 0.0F);
+        add(ModIntegration.ldMeadowLoc("wooden_sheep_milk_bucket"), 9, 2.1F,  0, 0, 0.0F);
+
+        // Let's Do Vinery
+        // Fruits
+        addFruit(ModIntegration.ldVineryLoc("cherry"));
+        addFruit(ModIntegration.ldVineryLoc("jungle_grapes_red"));
+        addFruit(ModIntegration.ldVineryLoc("jungle_grapes_white"));
+        addFruit(ModIntegration.ldVineryLoc("red_grape"));
+        addFruit(ModIntegration.ldVineryLoc("savanna_grapes_red"));
+        addFruit(ModIntegration.ldVineryLoc("savanna_grapes_white"));
+        addFruit(ModIntegration.ldVineryLoc("taiga_grapes_red"));
+        addFruit(ModIntegration.ldVineryLoc("taiga_grapes_white"));
+        addFruit(ModIntegration.ldVineryLoc("white_grape"));
+
+        // Drinks
+        addDrink(ModIntegration.ldVineryLoc("aegis_wine"));
+        addDrink(ModIntegration.ldVineryLoc("apple_cider"));
+        addDrink(ModIntegration.ldVineryLoc("apple_juice"));
+        addDrink(ModIntegration.ldVineryLoc("apple_wine"));
+        addDrink(ModIntegration.ldVineryLoc("bolvar_wine"));
+        addDrink(ModIntegration.ldVineryLoc("bottle_mojang_noir"));
+        addDrink(ModIntegration.ldVineryLoc("chenet_wine"));
+        addDrink(ModIntegration.ldVineryLoc("cherry_bag"));
+        addDrink(ModIntegration.ldVineryLoc("cherry_lattice"));
+        addDrink(ModIntegration.ldVineryLoc("cherry_wine"));
+        addDrink(ModIntegration.ldVineryLoc("chorus_wine"));
+        addDrink(ModIntegration.ldVineryLoc("clark_wine"));
+        addDrink(ModIntegration.ldVineryLoc("creepers_crush"));
+        addDrink(ModIntegration.ldVineryLoc("cristel_wine"));
+        addDrink(ModIntegration.ldVineryLoc("eiswein"));
+        addDrink(ModIntegration.ldVineryLoc("glowing_wine"));
+        addDrink(ModIntegration.ldVineryLoc("jellie_wine"));
+        addDrink(ModIntegration.ldVineryLoc("jo_special_mixture"));
+        addDrink(ModIntegration.ldVineryLoc("kelp_cider"));
+        addDrink(ModIntegration.ldVineryLoc("lilitu_wine"));
+        addDrink(ModIntegration.ldVineryLoc("magnetic_wine"));
+        addDrink(ModIntegration.ldVineryLoc("mead"));
+        addDrink(ModIntegration.ldVineryLoc("mellohi_wine"));
+        addDrink(ModIntegration.ldVineryLoc("noir_wine"));
+        addDrink(ModIntegration.ldVineryLoc("red_grapejuice"));
+        addDrink(ModIntegration.ldVineryLoc("red_jungle_grapejuice"));
+        addDrink(ModIntegration.ldVineryLoc("red_savanna_grapejuice"));
+        addDrink(ModIntegration.ldVineryLoc("red_taiga_grapejuice"));
+        addDrink(ModIntegration.ldVineryLoc("red_wine"));
+        addDrink(ModIntegration.ldVineryLoc("solaris_wine"));
+        addDrink(ModIntegration.ldVineryLoc("stal_wine"));
+        addDrink(ModIntegration.ldVineryLoc("strad_wine"));
+        addDrink(ModIntegration.ldVineryLoc("villagers_fright"));
+        addDrink(ModIntegration.ldVineryLoc("white_grape_bag"));
+        addDrink(ModIntegration.ldVineryLoc("white_grapejuice"));
+        addDrink(ModIntegration.ldVineryLoc("white_grape_seeds"));
+        addDrink(ModIntegration.ldVineryLoc("white_jungle_grape_bag"));
+        addDrink(ModIntegration.ldVineryLoc("white_jungle_grapejuice"));
+        addDrink(ModIntegration.ldVineryLoc("white_savanna_grape_bag"));
+        addDrink(ModIntegration.ldVineryLoc("white_savanna_grapejuice"));
+        addDrink(ModIntegration.ldVineryLoc("white_taiga_grape_bag"));
+        addDrink(ModIntegration.ldVineryLoc("white_taiga_grapejuice"));
     }
 
     protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {

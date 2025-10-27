@@ -41,6 +41,10 @@ public class HomeostaticItemTagsProvider extends ItemTagsProvider {
             .addOptional(ModIntegration.scubaLoc("scuba_chestplate"))
             .addOptional(ModIntegration.scubaLoc("scuba_leggings"))
             .addOptional(ModIntegration.scubaLoc("scuba_boots"))
+            .addOptional(ModIntegration.ldMeadowLoc("fur_helmet"))
+            .addOptional(ModIntegration.ldMeadowLoc("fur_chestplate"))
+            .addOptional(ModIntegration.ldMeadowLoc("fur_leggings"))
+            .addOptional(ModIntegration.ldMeadowLoc("fur_boots"))
             .addTag(TagManager.Items.SEWINGKIT_WEARABLE);
 
         this.tag(TagManager.Items.WATERPROOF_ARMOR)
