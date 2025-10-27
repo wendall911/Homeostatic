@@ -21,6 +21,16 @@ public class ModIntegration {
     public static final String FT_MODID = "fruitfulfun";
     public static final String IE_MODID = "immersiveengineering";
     public static final String KOBOLDS_MODID = "kobolds";
+    public static final String LD_BAKERY_MODID = "bakery";
+    public static final String LD_BEACH_MODID = "beachparty";
+    public static final String LD_BLOOMING_MODID = "bloomingnature";
+    public static final String LD_BREWERY_MODID = "brewery";
+    public static final String LD_CANDLELIGHT_MODID = "candlelight";
+    public static final String LD_FARM_MODID = "farm_and_charm";
+    public static final String LD_HERBAL_MODID = "herbalbrews";
+    public static final String LD_MEADOW_MODID = "meadow";
+    public static final String LD_VINERY_MODID = "vinery";
+    public static final String LD_WILDER_MODID = "wildernature";
     public static final String MC_MODID = "minecraft";
     public static final String MORE_FOOD_MODID = "more_food";
     public static final String MORECRAFT_MODID = "morecraft";
@@ -39,7 +49,6 @@ public class ModIntegration {
     public static final String TL_MODID = "terralith";
     public static final String TF_MODID = "twilightforest";
     public static final String UG_MODID = "undergarden";
-    public static final String VEGGIE_MODID = "veggie_way";
     public static final String XERCA_MODID = "xercamod";
     public static final String VAMPIRISM_MODID = "vampirism";
     public static final String LMBA_MODID = "leavemybarsalone";
@@ -144,10 +153,6 @@ public class ModIntegration {
         return loc(PHC_FOOD_EXTENDED_MODID, name);
     }
 
-    public static ResourceLocation veggieLoc(String name) {
-        return loc(VEGGIE_MODID, name);
-    }
-
     public static ResourceLocation esLoc(String name) {
         return loc(ES_MODID, name);
     }
@@ -162,6 +167,46 @@ public class ModIntegration {
 
     public static ResourceLocation regionsLoc(String name) {
         return loc(REGIONS_MODID, name);
+    }
+
+    public static ResourceLocation ldBakeryLoc(String name) {
+        return loc(LD_BAKERY_MODID, name);
+    }
+
+    public static ResourceLocation ldBeachLoc(String name) {
+        return loc(LD_BEACH_MODID, name);
+    }
+
+    public static ResourceLocation ldBloomingLoc(String name) {
+        return loc(LD_BLOOMING_MODID, name);
+    }
+
+    public static ResourceLocation ldBreweryLoc(String name) {
+        return loc(LD_BREWERY_MODID, name);
+    }
+
+    public static ResourceLocation ldCandlelightLoc(String name) {
+        return loc(LD_CANDLELIGHT_MODID, name);
+    }
+
+    public static ResourceLocation ldFarmLoc(String name) {
+        return loc(LD_FARM_MODID, name);
+    }
+
+    public static ResourceLocation ldHerbalLoc(String name) {
+        return loc(LD_HERBAL_MODID, name);
+    }
+
+    public static ResourceLocation ldMeadowLoc(String name) {
+        return loc(LD_MEADOW_MODID, name);
+    }
+
+    public static ResourceLocation ldVineryLoc(String name) {
+        return loc(LD_VINERY_MODID, name);
+    }
+
+    public static ResourceLocation ldWilderLoc(String name) {
+        return loc(LD_WILDER_MODID, name);
     }
 
 }

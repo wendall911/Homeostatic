@@ -42,7 +42,11 @@ public class HomeostaticItemTagsProvider extends IntrinsicHolderTagsProvider<Ite
             .addOptionalElement(ModIntegration.scubaLoc("scuba_chestplate"))
             .addOptionalElement(ModIntegration.scubaLoc("scuba_leggings"))
             .addOptionalElement(ModIntegration.scubaLoc("scuba_boots"))
-            .addTag(TagManager.Items.SEWINGKIT_WEARABLE.location());
+            .addTag(TagManager.Items.SEWINGKIT_WEARABLE.location())
+            .addOptionalElement(ModIntegration.ldMeadowLoc("fur_helmet"))
+            .addOptionalElement(ModIntegration.ldMeadowLoc("fur_chestplate"))
+            .addOptionalElement(ModIntegration.ldMeadowLoc("fur_leggings"))
+            .addOptionalElement(ModIntegration.ldMeadowLoc("fur_boots"));
 
         getOrCreateRawBuilder(TagManager.Items.WATERPROOF_ARMOR)
             .addOptionalElement(ModIntegration.scubaLoc("scuba_helmet"))
