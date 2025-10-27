@@ -45,6 +45,7 @@ public class HomeostaticItemTagsProvider extends ItemTagsProvider {
             .addOptional(ModIntegration.ldMeadowLoc("fur_chestplate"))
             .addOptional(ModIntegration.ldMeadowLoc("fur_leggings"))
             .addOptional(ModIntegration.ldMeadowLoc("fur_boots"))
+            .addOptional(ModIntegration.ldWilderLoc("fur_cloak"))
             .addTag(TagManager.Items.SEWINGKIT_WEARABLE);
 
         this.tag(TagManager.Items.WATERPROOF_ARMOR)
