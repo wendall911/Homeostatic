@@ -71,7 +71,7 @@ public class Water implements IWater {
                 new DamageSource(
                     DamageHelper.getHolder(player.level().getServer(), HomeostaticDamageTypes.DEHYDRATION)
                 ),
-                1.0F
+                0.5F
             );
         }
     }
