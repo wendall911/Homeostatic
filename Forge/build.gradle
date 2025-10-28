@@ -317,6 +317,7 @@ publishMods {
             optional('lets-do-meadow')
             optional('lets-do-farm-charm')
             optional('lets-do-vinery')
+            optional('lets-do-wildernature')
         }
     }
     if (project.hasProperty("${modrinth_api_key_prop}")) {
@@ -359,6 +360,7 @@ publishMods {
             optional('lets-do-meadow')
             optional('lets-do-farm-charm')
             optional('lets-do-vinery')
+            optional('lets-do-wildernature')
         }
     }
     if (project.hasProperty("${discord_webhook_prop}")) {
