@@ -1700,6 +1700,15 @@ public class DrinkableItemsProvider implements DataProvider {
         // Bread
         addCake(ModIntegration.ldBreweryLoc("pretzel"));
 
+        // Let's Do Beachparty
+        // Drinks
+        addDrink(ModIntegration.ldBeachLoc("coconut_cocktail"));
+        addDrink(ModIntegration.ldBeachLoc("sweetberries_cocktail"));
+        addDrink(ModIntegration.ldBeachLoc("cocoa_cocktail"));
+        addDrink(ModIntegration.ldBeachLoc("pumpkin_cocktail"));
+        addDrink(ModIntegration.ldBeachLoc("honey_cocktail"));
+        addDrink(ModIntegration.ldBeachLoc("melon_cocktail"));
+
         // Let's Do Candlelight
         addMeal(ModIntegration.ldCandlelightLoc("beef_tartare"));
         addMeal(ModIntegration.ldCandlelightLoc("beef_wellington"));
