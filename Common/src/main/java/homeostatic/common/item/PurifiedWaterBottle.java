@@ -53,20 +53,6 @@ public class PurifiedWaterBottle extends Item {
 
         stack.setCount(stack.getCount() - 1);
 
-        if (player == null || !player.getAbilities().instabuild) {
-            ItemStack remainder = stack.getItem().getCraftingRemainder();
-
-            if (stack.isEmpty() && !remainder.isEmpty()) {
-                return remainder;
-            }
-
-            if (player != null && !remainder.isEmpty()) {
-                if (!player.getInventory().add(remainder)) {
-                    player.drop(remainder, true);
-                }
-            }
-        }
-
         return stack;
     }
 
