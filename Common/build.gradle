@@ -22,6 +22,7 @@ dependencies {
     compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: "${mixin_extras_version}"
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: "${mixin_extras_version}"
     implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-common", version: "${whitenoise_version}"
+    implementation group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-common", version: "${climatesettings_version}"
 
     compileOnly group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-common", version: "${handbook_version}"
 

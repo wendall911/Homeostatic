@@ -24,7 +24,6 @@ import homeostatic.common.attachments.TemperatureData;
 import homeostatic.common.attachments.ThermometerData;
 import homeostatic.common.attachments.WaterData;
 import homeostatic.common.attachments.WetnessData;
-import homeostatic.common.biome.ClimateSettings;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.item.IItemStackFluid;
 import homeostatic.common.item.LeatherFlask;
@@ -109,19 +108,6 @@ public class NeoForgePlatform implements IPlatform {
         FluidInfo fluidInfo = new FluidInfo(fluid);
 
         return fluid.getFluidType().getDescription(new FluidStack(fluidInfo.fluid(), (int) fluidInfo.amount()));
-    }
-
-    @Override
-    public ClimateSettings getClimateSettings(Holder<Biome> biomeHolder) {
-        Biome.ClimateSettings climateSettings = biomeHolder.value().getModifiedClimateSettings();
-
-        return new ClimateSettings(
-            biomeHolder,
-            climateSettings.hasPrecipitation(),
-            climateSettings.temperature(),
-            climateSettings.temperatureModifier(),
-            climateSettings.downfall()
-        );
     }
 
     @Override

@@ -39,6 +39,9 @@ neoForge {
 }
 
 dependencies {
+    implementation group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-neoforge", version: "${climatesettings_version}"
+    jarJar group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-neoforge", version: "${climatesettings_version}"
+
     implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
     jarJar group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
 

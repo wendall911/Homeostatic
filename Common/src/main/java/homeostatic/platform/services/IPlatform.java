@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ServerLevelData;
 
-import homeostatic.common.biome.ClimateSettings;
 import homeostatic.network.ITemperature;
 import homeostatic.network.IThermometer;
 import homeostatic.network.IWater;
@@ -45,8 +44,6 @@ public interface IPlatform {
     long getFluidCapacity(ItemStack stack);
 
     Component getDisplayName(Fluid fluid);
-
-    ClimateSettings getClimateSettings(Holder<Biome> biomeHolder);
 
     SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder);
 

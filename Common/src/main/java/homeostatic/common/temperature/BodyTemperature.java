@@ -3,7 +3,8 @@ package homeostatic.common.temperature;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
 
-import homeostatic.common.biome.BiomeTypeData;
+import climatesettings.common.biome.BiomeTypeData;
+
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.config.ConfigHandler;
 import homeostatic.Homeostatic;
