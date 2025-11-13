@@ -38,6 +38,7 @@ import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.common.water.WaterInfo;
 import homeostatic.common.wetness.WetnessInfo;
 import homeostatic.data.integration.ModIntegration;
+import homeostatic.network.IPacket;
 import homeostatic.network.ITemperature;
 import homeostatic.network.IThermometer;
 import homeostatic.network.IWater;
@@ -204,6 +205,11 @@ public class NeoForgePlatform implements IPlatform {
     public boolean isVampire(Player player) {
         //return VampirismHelperNeoForge.isVampire(player);
         return false; // TODO re-enable when Vampirism is updated
+    }
+
+    @Override
+    public void sendPacketToPlayer(IPacket packet, ServerPlayer player) {
+        PacketDistributor.sendToPlayer(player, packet);
     }
 
 }

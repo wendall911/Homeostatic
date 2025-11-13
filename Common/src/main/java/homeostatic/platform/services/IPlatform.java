@@ -16,6 +16,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ServerLevelData;
 
 import homeostatic.common.biome.ClimateSettings;
+import homeostatic.network.IPacket;
 import homeostatic.network.ITemperature;
 import homeostatic.network.IThermometer;
 import homeostatic.network.IWater;
@@ -71,5 +72,7 @@ public interface IPlatform {
     <T> void registerDataComponent(ResourceLocation name, DataComponentType<T> component);
 
     boolean isVampire(Player player);
+
+    void sendPacketToPlayer(IPacket packet, ServerPlayer player);
 
 }

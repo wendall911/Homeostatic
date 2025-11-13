@@ -1,6 +1,7 @@
 package homeostatic.common.fluid;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -10,10 +11,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.ExtraCodecs;
@@ -21,6 +28,8 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.material.Fluid;
 
 import homeostatic.Homeostatic;
+import homeostatic.network.SyncDrinkingFluid;
+import homeostatic.platform.Services;
 
 public class DrinkingFluidManager extends SimpleJsonResourceReloadListener<JsonElement> {
 
@@ -37,6 +46,18 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener<JsonE
 
     public static DrinkingFluid get(Fluid fluid) {
         return FLUIDS.get(fluid);
+    }
+
+    public static void update(List<DrinkingFluid> drinkingFluids) {
+        FLUIDS.clear();
+
+        for (DrinkingFluid drinkingFluid : drinkingFluids) {
+            Optional<Reference<Fluid>> fluid = BuiltInRegistries.FLUID.get(drinkingFluid.loc());
+
+            fluid.ifPresent(reference -> FLUIDS.put(reference.value(), drinkingFluid));
+        }
+
+        Homeostatic.LOGGER.info("Updated {} drinking fluids", FLUIDS.size());
     }
 
     @Override
@@ -56,6 +77,18 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener<JsonE
         }
 
         Homeostatic.LOGGER.info("Loaded {} drinking fluids", FLUIDS.size());
+    }
+
+    public static void syncWithClient(ServerPlayer player) {
+        if (player != null) {
+            List<DrinkingFluid> drinkingFluids = FLUIDS.values().stream().toList();
+            DataResult<Tag> result = Codec.list(DrinkingFluid.CODEC).encodeStart(NbtOps.INSTANCE, drinkingFluids);
+            Tag data = result.getOrThrow((fluids) -> {
+                throw new IllegalStateException("Failed to encode drinking fluids: " + fluids);
+            });
+
+            Services.PLATFORM.sendPacketToPlayer(new SyncDrinkingFluid(data), player);
+        }
     }
 
 }
