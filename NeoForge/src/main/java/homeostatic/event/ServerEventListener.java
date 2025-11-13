@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -69,6 +70,20 @@ public class ServerEventListener {
         event.addListener(new BlockRadiationManager());
         event.addListener(new DrinkingFluidManager());
         event.addListener(new DrinkableItemManager());
+    }
+
+    @SubscribeEvent
+    public static void onDatapackSync(OnDatapackSyncEvent event) {
+        ServerPlayer player = event.getPlayer();
+
+        if (player == null) {
+            for (ServerPlayer sp : event.getPlayerList().getPlayers()) {
+                DrinkingFluidManager.syncWithClient(sp);
+            }
+        }
+        else {
+            DrinkingFluidManager.syncWithClient(player);
+        }
     }
 
 }

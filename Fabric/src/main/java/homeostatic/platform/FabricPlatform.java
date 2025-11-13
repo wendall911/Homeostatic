@@ -2,6 +2,7 @@ package homeostatic.platform;
 
 import java.util.Optional;
 
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.storage.ServerLevelData;
 
 import technology.roughness.whitenoise.platform.Services;
 
+import homeostatic.network.IPacket;
 import homeostatic.network.ITemperature;
 import homeostatic.network.IThermometer;
 import homeostatic.network.IWater;
@@ -172,6 +174,11 @@ public class FabricPlatform implements IPlatform {
     @Override
     public boolean isVampire(Player player) {
         return false;
+    }
+
+    @Override
+    public void sendPacketToPlayer(IPacket packet, ServerPlayer player) {
+        ServerPlayNetworking.send(player, packet);
     }
 
 }
