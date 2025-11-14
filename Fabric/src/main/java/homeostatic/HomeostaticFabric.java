@@ -16,8 +16,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import homeostatic.common.biome.FabricBiomeCategoryManager;
-import homeostatic.common.biome.FabricBiomeTypeDataManager;
 import homeostatic.common.block.FabricBlockRadiationManager;
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.component.HomeostaticComponents;
@@ -31,6 +29,7 @@ import homeostatic.common.potions.HomeostaticPotions;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.event.ServerEventListener;
 import homeostatic.network.DrinkWater;
+import homeostatic.network.SyncDrinkingFluid;
 import homeostatic.util.WaterHelper;
 
 public class HomeostaticFabric implements ModInitializer {
@@ -41,8 +40,6 @@ public class HomeostaticFabric implements ModInitializer {
         Homeostatic.init();
         ServerEventListener.init();
 
-        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricBiomeCategoryManager());
-        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricBiomeTypeDataManager());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricBlockRadiationManager());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricDrinkingFluidManager());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricDrinkableItemManager());
@@ -51,6 +48,7 @@ public class HomeostaticFabric implements ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(DrinkWater.TYPE, ((payload, context) -> {
             WaterHelper.drinkWater(context.player());
         }));
+        PayloadTypeRegistry.playS2C().register(SyncDrinkingFluid.TYPE, SyncDrinkingFluid.CODEC);
 
         FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
             builder.registerPotionRecipe(

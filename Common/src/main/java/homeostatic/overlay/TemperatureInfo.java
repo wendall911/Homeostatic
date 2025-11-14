@@ -11,9 +11,10 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
 
-import homeostatic.common.biome.BiomeCategoryManager;
-import homeostatic.common.biome.BiomeTypeData;
-import homeostatic.common.biome.BiomeTypeDataManager;
+import climatesettings.common.biome.BiomeCategoryManager;
+import climatesettings.common.biome.BiomeTypeData;
+import climatesettings.common.biome.BiomeTypeDataManager;
+
 import homeostatic.common.temperature.TemperatureDirection;
 import homeostatic.common.temperature.TemperatureRange;
 import homeostatic.config.ConfigHandler;
@@ -23,7 +24,7 @@ import homeostatic.util.ColorHelper;
 import homeostatic.util.FontHelper;
 import homeostatic.util.TempHelper;
 
-import static homeostatic.Homeostatic.prefix;
+import static climatesettings.ClimateSettings.prefix;
 
 public class TemperatureInfo extends Overlay {
 

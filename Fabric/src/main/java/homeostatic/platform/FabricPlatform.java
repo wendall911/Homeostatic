@@ -2,6 +2,7 @@ package homeostatic.platform;
 
 import java.util.Optional;
 
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
@@ -19,7 +20,7 @@ import net.minecraft.world.level.storage.ServerLevelData;
 
 import technology.roughness.whitenoise.platform.Services;
 
-import homeostatic.common.biome.ClimateSettings;
+import homeostatic.network.IPacket;
 import homeostatic.network.ITemperature;
 import homeostatic.network.IThermometer;
 import homeostatic.network.IWater;
@@ -35,7 +36,6 @@ import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.common.water.WaterInfo;
 import homeostatic.common.wetness.WetnessInfo;
 import homeostatic.data.integration.ModIntegration;
-import homeostatic.mixin.FabricBiomeAccessor;
 import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.platform.services.IPlatform;
 import homeostatic.util.CreateHelper;
@@ -99,19 +99,6 @@ public class FabricPlatform implements IPlatform {
     @Override
     public Component getDisplayName(Fluid fluid) {
         return fluid.defaultFluidState().createLegacyBlock().getBlock().getName();
-    }
-
-    @Override
-    public ClimateSettings getClimateSettings(Holder<Biome> biomeHolder) {
-        Biome.ClimateSettings climateSettings = ((FabricBiomeAccessor) (Object) biomeHolder.value()).homoestatic$getClimateSettings();
-
-        return new ClimateSettings(
-            biomeHolder,
-            climateSettings.hasPrecipitation(),
-            climateSettings.temperature(),
-            climateSettings.temperatureModifier(),
-            climateSettings.downfall()
-        );
     }
 
     @Override
@@ -187,6 +174,11 @@ public class FabricPlatform implements IPlatform {
     @Override
     public boolean isVampire(Player player) {
         return false;
+    }
+
+    @Override
+    public void sendPacketToPlayer(IPacket packet, ServerPlayer player) {
+        ServerPlayNetworking.send(player, packet);
     }
 
 }

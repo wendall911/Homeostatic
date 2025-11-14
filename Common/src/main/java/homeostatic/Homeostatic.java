@@ -22,7 +22,6 @@ public class Homeostatic {
     public static final String MOD_NAME = "Homeostatic";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
     public static final Random RANDOM = new Random();
-    public static boolean DATA_GEN = System.getenv("DATA_GEN") != null && System.getenv("DATA_GEN").contains("all");
 
     public static void init() {
         HomeostaticDamageTypes.init();

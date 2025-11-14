@@ -3,6 +3,7 @@ package homeostatic;
 import java.util.Map;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -15,6 +16,7 @@ import homeostatic.common.book.PageCustomCrafting;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.event.ClientEventListener;
+import homeostatic.network.SyncDrinkingFluid;
 
 public class HomeostaticClientFabric implements ClientModInitializer {
 
@@ -32,6 +34,14 @@ public class HomeostaticClientFabric implements ClientModInitializer {
                 entries.accept(entry.getValue());
             }
         });
+        ClientPlayNetworking.registerGlobalReceiver(
+            SyncDrinkingFluid.TYPE,
+            (SyncDrinkingFluid packet, ClientPlayNetworking.Context context) -> {
+                context.client().execute(() -> {
+                    packet.handle(context.player());
+                });
+            }
+        );
     }
 
 }

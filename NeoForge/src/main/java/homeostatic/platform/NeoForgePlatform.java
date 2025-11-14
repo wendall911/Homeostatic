@@ -24,7 +24,6 @@ import homeostatic.common.attachments.TemperatureData;
 import homeostatic.common.attachments.ThermometerData;
 import homeostatic.common.attachments.WaterData;
 import homeostatic.common.attachments.WetnessData;
-import homeostatic.common.biome.ClimateSettings;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.item.IItemStackFluid;
 import homeostatic.common.item.LeatherFlask;
@@ -35,6 +34,7 @@ import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.common.water.WaterInfo;
 import homeostatic.common.wetness.WetnessInfo;
 import homeostatic.data.integration.ModIntegration;
+import homeostatic.network.IPacket;
 import homeostatic.network.ITemperature;
 import homeostatic.network.IThermometer;
 import homeostatic.network.IWater;
@@ -112,19 +112,6 @@ public class NeoForgePlatform implements IPlatform {
     }
 
     @Override
-    public ClimateSettings getClimateSettings(Holder<Biome> biomeHolder) {
-        Biome.ClimateSettings climateSettings = biomeHolder.value().getModifiedClimateSettings();
-
-        return new ClimateSettings(
-            biomeHolder,
-            climateSettings.hasPrecipitation(),
-            climateSettings.temperature(),
-            climateSettings.temperatureModifier(),
-            climateSettings.downfall()
-        );
-    }
-
-    @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
         if (Services.PLATFORM.isModLoaded(ModIntegration.SS_MODID)
                 && SereneSeasonsForgeHelper.isSeasonDimension(level)) {
@@ -196,6 +183,11 @@ public class NeoForgePlatform implements IPlatform {
     @Override
     public boolean isVampire(Player player) {
         return VampirismHelperNeoForge.isVampire(player);
+    }
+
+    @Override
+    public void sendPacketToPlayer(IPacket packet, ServerPlayer player) {
+        PacketDistributor.sendToPlayer(player, packet);
     }
 
 }

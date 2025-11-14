@@ -7,9 +7,7 @@ import static technology.roughness.whitenoise.util.ResourceLocationHelper.loc;
 public class ModIntegration {
 
     public static final String ALEX_MODID = "alexsmobs";
-    public static final String ARSE_MODID = "ars_elemental";
     public static final String ARS_MODID = "ars_nouveau";
-    public static final String BOP_MODID = "biomesoplenty";
     public static final String BYG_MODID = "biomeswevegone";
     public static final String CREATE_MODID = "create";
     public static final String CC_MODID = "createcafe";
@@ -23,7 +21,6 @@ public class ModIntegration {
     public static final String KOBOLDS_MODID = "kobolds";
     public static final String LD_BAKERY_MODID = "bakery";
     public static final String LD_BEACH_MODID = "beachparty";
-    public static final String LD_BLOOMING_MODID = "bloomingnature";
     public static final String LD_BREWERY_MODID = "brewery";
     public static final String LD_CANDLELIGHT_MODID = "candlelight";
     public static final String LD_FARM_MODID = "farm_and_charm";
@@ -34,21 +31,16 @@ public class ModIntegration {
     public static final String MC_MODID = "minecraft";
     public static final String MORE_FOOD_MODID = "more_food";
     public static final String MORECRAFT_MODID = "morecraft";
-    public static final String PATCHOULI_MODID = "patchouli";
     public static final String PHC_CORE_MODID = "pamhc2foodcore";
     public static final String PHC_CROPS_MODID = "pamhc2crops";
     public static final String PHC_FOOD_EXTENDED_MODID = "pamhc2foodextended";
     public static final String PW_MODID = "primalwinter";
-    public static final String REGIONS_MODID = "regions_unexplored";
     public static final String SEASONS_MODID = "seasons";
     public static final String SPROUT_MODID = "sprout";
     public static final String SCUBA_GEAR_MODID = "scuba_gear";
     public static final String SK_MODID = "sewingkit";
     public static final String SS_MODID = "sereneseasons";
     public static final String TCON_MODID = "tconstruct";
-    public static final String TL_MODID = "terralith";
-    public static final String TF_MODID = "twilightforest";
-    public static final String UG_MODID = "undergarden";
     public static final String XERCA_MODID = "xercamod";
     public static final String VAMPIRISM_MODID = "vampirism";
     public static final String LMBA_MODID = "leavemybarsalone";
@@ -57,16 +49,8 @@ public class ModIntegration {
         return loc(ALEX_MODID, path);
     }
 
-    public static ResourceLocation arseLoc(String path) {
-        return loc(ARSE_MODID, path);
-    }
-
     public static ResourceLocation arsLoc(String path) {
         return loc(ARS_MODID, path);
-    }
-
-    public static ResourceLocation bopLoc(String path) {
-        return loc(BOP_MODID, path);
     }
 
     public static ResourceLocation bygLoc(String path) {
@@ -121,10 +105,6 @@ public class ModIntegration {
         return loc(KOBOLDS_MODID, path);
     }
 
-    public static ResourceLocation tfLoc(String path) {
-        return loc(TF_MODID, path);
-    }
-
     public static ResourceLocation createLoc(String path) {
         return loc(CREATE_MODID, path);
     }
@@ -157,28 +137,12 @@ public class ModIntegration {
         return loc(ES_MODID, name);
     }
 
-    public static ResourceLocation terralithLoc(String name) {
-        return loc(TL_MODID, name);
-    }
-
-    public static ResourceLocation ugLoc(String name) {
-        return loc(UG_MODID, name);
-    }
-
-    public static ResourceLocation regionsLoc(String name) {
-        return loc(REGIONS_MODID, name);
-    }
-
     public static ResourceLocation ldBakeryLoc(String name) {
         return loc(LD_BAKERY_MODID, name);
     }
 
     public static ResourceLocation ldBeachLoc(String name) {
         return loc(LD_BEACH_MODID, name);
-    }
-
-    public static ResourceLocation ldBloomingLoc(String name) {
-        return loc(LD_BLOOMING_MODID, name);
     }
 
     public static ResourceLocation ldBreweryLoc(String name) {
