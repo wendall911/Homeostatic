@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_author}"
+  ],
+  "contributors": [
+    "${mod_credits}"
+  ],
+  "contact": {
+    "homepage": "https://github.com/${mod_author}/${mod_name}",
+    "issues": "https://github.com/${mod_author}/${mod_name}/issues",
+    "sources": "https://github.com/${mod_author}/${mod_name}"
+  },
+  "license": "${license}",
+  "icon": "${mod_id}_icon.png",
+  "environment": "*",
+  "accessWidener": "${mod_id}.accesswidener",
+  "entrypoints": {
+    "main": [
+      "${mod_id}.${mod_name}Fabric"
+    ],
+    "fabric-datagen": [
+      "${mod_id}.data.FabricDatagenInitializer"
+    ]
+  },
+  "mixins": [
+    "${mod_id}.fabric.mixins.json"
+  ],
+  "custom": {
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
+    }
+  },
+  "depends": {
+    "fabricloader": "${fabric_loader_min_version}",
+    "fabric": "*",
+    "minecraft": ${fabric_mc_version_range},
+    "whitenoise": ${fabric_whitenoise_range},
+    "java": ">=${java_version}"
+  }
+}

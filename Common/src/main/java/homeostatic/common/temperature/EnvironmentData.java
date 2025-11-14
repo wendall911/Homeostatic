@@ -27,14 +27,17 @@ import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
 
-import homeostatic.common.biome.BiomeTypeData;
-import homeostatic.common.biome.BiomeTypeDataManager;
-import homeostatic.common.biome.ClimateSettings;
+import climatesettings.common.biome.BiomeTypeData;
+import climatesettings.common.biome.BiomeTypeDataManager;
+import climatesettings.common.biome.HomeostaticClimateSettings;
+
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.platform.Services;
 import homeostatic.util.RegistryHelper;
 import homeostatic.util.TempHelper;
 import homeostatic.util.WetnessHelper;
+
+import static climatesettings.platform.Services.CLIMATE;
 
 public class EnvironmentData {
 
@@ -269,7 +272,7 @@ public class EnvironmentData {
 
         BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biome);
         long time = (level.getDayTime() % 24000);
-        ClimateSettings climateSettings = Services.PLATFORM.getClimateSettings(biome);
+        HomeostaticClimateSettings climateSettings = CLIMATE.getClimateSettings(biome);
         float maxTemp = biomeTypeData.getDayNightOffset(climateSettings.getPrecipitationType());
 
         if (maxTemp == 0F) return maxTemp;

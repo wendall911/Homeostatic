@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "climatesettings.mixin",
+  "refmap": "${mod_id}.refmap.json",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "FabricBiomeAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

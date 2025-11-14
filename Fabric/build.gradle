@@ -16,6 +16,9 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
+    modImplementation group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-fabric", version: "${climatesettings_version}"
+    include group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-fabric", version: "${climatesettings_version}"
+
     modImplementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_version}"
     include group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_version}"
 

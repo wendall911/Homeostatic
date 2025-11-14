@@ -15,9 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ServerLevelData;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -27,17 +24,17 @@ import homeostatic.common.attachments.TemperatureData;
 import homeostatic.common.attachments.ThermometerData;
 import homeostatic.common.attachments.WaterData;
 import homeostatic.common.attachments.WetnessData;
-import homeostatic.common.biome.ClimateSettings;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.item.IItemStackFluid;
 import homeostatic.common.item.LeatherFlask;
-import homeostatic.common.temperature.SubSeason;
 import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.common.temperature.EnvironmentData;
+import homeostatic.common.temperature.SubSeason;
 import homeostatic.common.temperature.ThermometerInfo;
 import homeostatic.common.water.WaterInfo;
 import homeostatic.common.wetness.WetnessInfo;
 import homeostatic.data.integration.ModIntegration;
+import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.network.IPacket;
 import homeostatic.network.ITemperature;
 import homeostatic.network.IThermometer;
@@ -47,12 +44,9 @@ import homeostatic.network.NeoForgeTemperatureData;
 import homeostatic.network.NeoForgeThermometerData;
 import homeostatic.network.NeoForgeWaterData;
 import homeostatic.network.NeoForgeWetnessData;
-import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.platform.services.IPlatform;
 import homeostatic.registries.HomeostaticNeoForgeRegistries;
 import homeostatic.util.CreateHelper;
-// TODO re-enable when Ecliptic Seasons is updated
-//import homeostatic.util.EclipticSeasonsHelper;
 import homeostatic.util.ItemStackFluidHelper;
 import homeostatic.util.SereneSeasonsForgeHelper;
 // TODO re-enable when Vampirism is updated
@@ -115,19 +109,6 @@ public class NeoForgePlatform implements IPlatform {
         FluidInfo fluidInfo = new FluidInfo(fluid);
 
         return fluid.getFluidType().getDescription(new FluidStack(fluidInfo.fluid(), (int) fluidInfo.amount()));
-    }
-
-    @Override
-    public ClimateSettings getClimateSettings(Holder<Biome> biomeHolder) {
-        Biome.ClimateSettings climateSettings = biomeHolder.value().getModifiedClimateSettings();
-
-        return new ClimateSettings(
-            biomeHolder,
-            climateSettings.hasPrecipitation(),
-            climateSettings.temperature(),
-            climateSettings.temperatureModifier(),
-            climateSettings.downfall()
-        );
     }
 
     @Override

@@ -38,6 +38,9 @@ neoForge {
 }
 
 dependencies {
+    implementation group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-neoforge", version: "${climatesettings_version}"
+    jarJar group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-neoforge", version: "${climatesettings_version}"
+
     implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
     jarJar group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
 
@@ -67,7 +70,8 @@ dependencies {
         //runtimeOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
         //runtimeOnly "curse.maven:ecliptic-1118306:${ecliptic_neoforge_version}"
         //runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
-        runtimeOnly "dev.architectury:architectury-neoforge:${architectury_version}"
+        // Crashing on 1.21.10 latest
+        //runtimeOnly "dev.architectury:architectury-neoforge:${architectury_version}"
         //runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
         //runtimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_neoforge_version}"
         //runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"

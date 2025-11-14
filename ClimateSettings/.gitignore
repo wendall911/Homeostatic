@@ -1,0 +1,10 @@
+# gradle
+build
+.gradle
+run
+
+# IntelliJ
+.idea
+
+# Minecraft datagen
+.cache
