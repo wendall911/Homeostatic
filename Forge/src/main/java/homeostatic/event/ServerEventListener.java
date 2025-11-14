@@ -13,6 +13,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -107,6 +108,20 @@ public class ServerEventListener {
                     }
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onDatapackSync(OnDatapackSyncEvent event) {
+        ServerPlayer player = event.getPlayer();
+
+        if (player == null) {
+            for (ServerPlayer sp : event.getPlayerList().getPlayers()) {
+                Services.PLATFORM.syncFluidData(sp);
+            }
+        }
+        else {
+            Services.PLATFORM.syncFluidData(player);
         }
     }
 

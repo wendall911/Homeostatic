@@ -47,7 +47,8 @@
       "${mod_id}:thermometer_data_provider",
       "${mod_id}:water_data_provider",
       "${mod_id}:wetness_data_provider",
-      "${mod_id}:item_fluid_provider"
+      "${mod_id}:item_fluid_provider",
+      "${mod_id}:drinking_fluid_manager"
     ]
   },
   "mixins": [

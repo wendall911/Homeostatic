@@ -13,6 +13,7 @@ import static homeostatic.Homeostatic.loc;
 public class HomeostaticComponents implements EntityComponentInitializer {
 
     public static ResourceLocation DRINK_WATER_KEY = loc("drink_water");
+    public static final ResourceLocation DRINKING_FLUIDS_SYNC_KEY = loc("drinking_fluids_sync");
     public static final ComponentKey<ComponentTemperatureData> TEMPERATURE_DATA =
         ComponentRegistry.getOrCreate(loc("temperature_data_provider"), ComponentTemperatureData.class);
     public static final ComponentKey<ComponentThermometerData> THERMOMETER_DATA =
@@ -21,6 +22,8 @@ public class HomeostaticComponents implements EntityComponentInitializer {
         ComponentRegistry.getOrCreate(loc("water_data_provider"), ComponentWaterData.class);
     public static final ComponentKey<ComponentWetnessData> WETNESS_DATA =
         ComponentRegistry.getOrCreate(loc("wetness_data_provider"), ComponentWetnessData.class);
+    public static final ComponentKey<ComponentDrinkingFluidManager> DRINKING_FLUID_MANAGER =
+        ComponentRegistry.getOrCreate(loc("drinking_fluid_manager"), ComponentDrinkingFluidManager.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
@@ -28,6 +31,7 @@ public class HomeostaticComponents implements EntityComponentInitializer {
         registry.registerForPlayers(THERMOMETER_DATA, player -> new ComponentThermometerData(), RespawnCopyStrategy.NEVER_COPY);
         registry.registerForPlayers(WATER_DATA, player -> new ComponentWaterData(), RespawnCopyStrategy.NEVER_COPY);
         registry.registerForPlayers(WETNESS_DATA, player -> new ComponentWetnessData(), RespawnCopyStrategy.NEVER_COPY);
+        registry.registerForPlayers(DRINKING_FLUID_MANAGER, player -> new ComponentDrinkingFluidManager(), RespawnCopyStrategy.ALWAYS_COPY);
     }
 
 }

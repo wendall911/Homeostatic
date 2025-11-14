@@ -1,5 +1,6 @@
 package homeostatic.platform;
 
+import java.util.List;
 import java.util.Optional;
 
 import net.minecraft.core.Holder;
@@ -34,6 +35,7 @@ import homeostatic.common.capabilities.ThermometerCapability;
 import homeostatic.common.capabilities.WaterCapability;
 import homeostatic.common.capabilities.IWetness;
 import homeostatic.common.capabilities.WetnessCapability;
+import homeostatic.common.fluid.DrinkingFluid;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.temperature.SubSeason;
 import homeostatic.common.temperature.BodyTemperature;
@@ -43,6 +45,7 @@ import homeostatic.common.water.WaterInfo;
 import homeostatic.common.wetness.WetnessInfo;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.mixin.ServerLevelAccessor;
+import homeostatic.network.ForgeDrinkingFluidData;
 import homeostatic.network.ForgeThermometerData;
 import homeostatic.network.ForgeWaterData;
 import homeostatic.network.ForgeWetnessData;
@@ -217,6 +220,14 @@ public class ForgePlatform implements IPlatform {
         ServerLevelAccessor serverLevel = (ServerLevelAccessor) level;
 
         return serverLevel.getServerLevelData();
+    }
+
+    @Override
+    public void syncFluidData(ServerPlayer sp) {
+        NetworkHandler.INSTANCE.send(
+            PacketDistributor.PLAYER.with(() -> sp),
+            new ForgeDrinkingFluidData()
+        );
     }
 
     public void updateDamage(ItemStack stack) {

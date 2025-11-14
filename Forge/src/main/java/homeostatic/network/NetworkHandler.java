@@ -28,6 +28,7 @@ public final class NetworkHandler {
         registerMessage(id++, ForgeThermometerData.class, ForgeThermometerData::new);
         registerMessage(id++, ForgeWaterData.class, ForgeWaterData::new);
         registerMessage(id++, ForgeWetnessData.class, ForgeWetnessData::new);
+        registerMessage(id++, ForgeDrinkingFluidData.class, ForgeDrinkingFluidData::new);
     }
 
     private static <T extends IData> void registerMessage(int idx, Class<T> type, Function<FriendlyByteBuf, T> decoder) {

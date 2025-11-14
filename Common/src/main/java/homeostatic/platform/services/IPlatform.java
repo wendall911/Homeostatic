@@ -77,4 +77,6 @@ public interface IPlatform {
 
     ServerLevelData getServerLevelData(ServerLevel level);
 
+    void syncFluidData(ServerPlayer sp);
+
 }

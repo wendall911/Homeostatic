@@ -2,8 +2,11 @@ package homeostatic.platform;
 
 import java.util.Optional;
 
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -23,6 +26,7 @@ import homeostatic.common.capabilities.IThermometer;
 import homeostatic.common.capabilities.IWater;
 import homeostatic.common.capabilities.IWetness;
 import homeostatic.common.components.HomeostaticComponents;
+import homeostatic.common.fluid.DrinkingFluidManager;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.item.IItemStackFluid;
 import homeostatic.common.item.LeatherFlask;
@@ -35,6 +39,7 @@ import homeostatic.common.wetness.WetnessInfo;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.mixin.FabricBiomeAccessor;
 import homeostatic.mixin.ServerLevelAccessor;
+import homeostatic.network.SyncDrinkingFluids;
 import homeostatic.platform.services.IPlatform;
 import homeostatic.util.CreateHelper;
 import homeostatic.util.FabricSeasonsHelper;
@@ -186,6 +191,14 @@ public class FabricPlatform implements IPlatform {
         ServerLevelAccessor serverLevel = (ServerLevelAccessor) level;
 
         return serverLevel.getServerLevelData();
+    }
+
+    @Override
+    public void syncFluidData(ServerPlayer sp) {
+        SyncDrinkingFluids drinkingFluids = new SyncDrinkingFluids();
+        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.wrappedBuffer(drinkingFluids.bytes));
+
+        ServerPlayNetworking.send(sp, HomeostaticComponents.DRINKING_FLUIDS_SYNC_KEY, buf);
     }
 
 }

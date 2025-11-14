@@ -10,6 +10,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 
@@ -53,6 +54,30 @@ public record DrinkingFluid(ResourceLocation loc, int amount, float saturation, 
             return json;
         }
 
+    }
+
+    public static CompoundTag serialize(DrinkingFluid drinkingFluid) {
+        CompoundTag tag = new CompoundTag();
+
+        tag.putString("loc", drinkingFluid.loc().toString());
+        tag.putInt("amount", drinkingFluid.amount());
+        tag.putFloat("saturation", drinkingFluid.saturation());
+        tag.putInt("potency", drinkingFluid.potency());
+        tag.putInt("duration", drinkingFluid.duration());
+        tag.putFloat("chance", drinkingFluid.chance());
+
+        return tag;
+    }
+
+    public static DrinkingFluid deserialize(CompoundTag tag) {
+        return new DrinkingFluid(
+            mcLoc(tag.getString("loc")),
+            tag.getInt("amount"),
+            tag.getFloat("saturation"),
+            tag.getInt("potency"),
+            tag.getInt("duration"),
+            tag.getFloat("chance")
+        );
     }
 
 }

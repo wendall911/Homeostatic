@@ -7,6 +7,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -32,6 +35,61 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
 
     public static DrinkingFluid get(Fluid fluid) {
         return FLUIDS.get(fluid);
+    }
+
+    public static void write(FriendlyByteBuf buf) {
+        buf.writeInt(FLUIDS.size());
+
+        for (Map.Entry<Fluid, DrinkingFluid> entry : FLUIDS.entrySet()) {
+            CompoundTag drinkingFluidTag = DrinkingFluid.serialize(entry.getValue());
+            buf.writeResourceLocation(Services.PLATFORM.getFluidResourceLocation(entry.getKey()));
+            buf.writeNbt(drinkingFluidTag);
+        }
+    }
+
+    public static ListTag write() {
+        ListTag tag = new ListTag();
+
+        for (Map.Entry<Fluid, DrinkingFluid> entry : FLUIDS.entrySet()) {
+            CompoundTag drinkingFluidTag = DrinkingFluid.serialize(entry.getValue());
+            tag.add(drinkingFluidTag);
+        }
+
+        return tag;
+    }
+
+    public static void read(FriendlyByteBuf buf) {
+        FLUIDS.clear();
+        int size = buf.readInt();
+
+        for (int i = 0; i < size; i++) {
+            ResourceLocation fluidLoc = buf.readResourceLocation();
+            CompoundTag drinkingFluidTag = buf.readNbt();
+            Fluid fluid = Services.PLATFORM.getFluid(fluidLoc);
+
+            if (fluid != Fluids.EMPTY && fluid != null && drinkingFluidTag != null) {
+                DrinkingFluid drinkingFluid = DrinkingFluid.deserialize(drinkingFluidTag);
+                FLUIDS.put(fluid, drinkingFluid);
+            }
+        }
+
+        Homeostatic.LOGGER.info("Synchronized {} drinking fluids", FLUIDS.size());
+    }
+
+    public static void read(ListTag tag) {
+        FLUIDS.clear();
+
+        for (int i = 0; i < tag.size(); i++) {
+            CompoundTag drinkingFluidTag = tag.getCompound(i);
+            DrinkingFluid drinkingFluid = DrinkingFluid.deserialize(drinkingFluidTag);
+            Fluid fluid = Services.PLATFORM.getFluid(drinkingFluid.loc());
+
+            if (fluid != Fluids.EMPTY && fluid != null) {
+                FLUIDS.put(fluid, drinkingFluid);
+            }
+        }
+
+        Homeostatic.LOGGER.info("Loaded {} drinking fluids from NBT", FLUIDS.size());
     }
 
     @Override
