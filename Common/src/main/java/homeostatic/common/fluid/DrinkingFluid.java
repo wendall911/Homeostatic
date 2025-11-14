@@ -12,6 +12,7 @@ import com.google.gson.JsonSerializer;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 
@@ -21,10 +22,6 @@ import static technology.roughness.whitenoise.util.ResourceLocationHelper.parse;
 
 public record DrinkingFluid(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
 
-    public static Hydration getHydration(DrinkingFluid fluid) {
-        return new Hydration(fluid.amount(), fluid.saturation(), fluid.potency(), fluid.duration(), fluid.chance());
-    }
-
     public static final Codec<DrinkingFluid> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         ResourceLocation.CODEC.fieldOf("fluid").forGetter(DrinkingFluid::loc),
         Codec.INT.fieldOf("amount").forGetter(DrinkingFluid::amount),
@@ -33,6 +30,10 @@ public record DrinkingFluid(ResourceLocation loc, int amount, float saturation, 
         Codec.INT.fieldOf("effect_duration").forGetter(DrinkingFluid::duration),
         Codec.FLOAT.fieldOf("effect_chance").forGetter(DrinkingFluid::chance)
     ).apply(instance, DrinkingFluid::new));
+
+    public static Hydration getHydration(DrinkingFluid fluid) {
+        return new Hydration(fluid.amount(), fluid.saturation(), fluid.potency(), fluid.duration(), fluid.chance());
+    }
 
     public static class Serializer implements JsonDeserializer<DrinkingFluid>, JsonSerializer<DrinkingFluid> {
 

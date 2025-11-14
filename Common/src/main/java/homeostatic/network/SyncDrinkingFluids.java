@@ -21,16 +21,16 @@ import homeostatic.common.fluid.DrinkingFluidManager;
 
 import static homeostatic.Homeostatic.prefix;
 
-public record SyncDrinkingFluid(Tag data) implements IPacket {
+public record SyncDrinkingFluids(Tag data) implements IPacket {
 
-    public static final ResourceLocation ID = prefix("sync_drinking_fluid");
-    public static final StreamCodec<RegistryFriendlyByteBuf, SyncDrinkingFluid> CODEC = StreamCodec.composite(
+    public static final ResourceLocation ID = prefix("sync_drinking_fluids");
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncDrinkingFluids> CODEC = StreamCodec.composite(
         ByteBufCodecs.TAG,
-        SyncDrinkingFluid::data,
-        SyncDrinkingFluid::new
+        SyncDrinkingFluids::data,
+        SyncDrinkingFluids::new
     );
 
-    public static final CustomPacketPayload.Type<SyncDrinkingFluid> TYPE = new Type<>(ID);
+    public static final CustomPacketPayload.Type<SyncDrinkingFluids> TYPE = new Type<>(ID);
 
     @Override
     public void handle(Player player) {
