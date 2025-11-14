@@ -5,8 +5,6 @@ import java.util.function.Consumer;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
@@ -41,7 +39,7 @@ import homeostatic.network.NeoForgeTemperatureData;
 import homeostatic.network.NeoForgeThermometerData;
 import homeostatic.network.NeoForgeWaterData;
 import homeostatic.network.NeoForgeWetnessData;
-import homeostatic.network.SyncDrinkingFluid;
+import homeostatic.network.SyncDrinkingFluids;
 import homeostatic.registries.HomeostaticNeoForgeRegistries;
 
 @Mod(Homeostatic.MODID)
@@ -99,7 +97,7 @@ public class HomeostaticNeoForge {
         registrar.playToClient(NeoForgeThermometerData.TYPE, NeoForgeThermometerData.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processThermometerData);
         registrar.playToClient(NeoForgeWaterData.TYPE, NeoForgeWaterData.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processWaterData);
         registrar.playToClient(NeoForgeWetnessData.TYPE, NeoForgeWetnessData.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processWetnessData);
-        registrar.playToClient(SyncDrinkingFluid.TYPE, SyncDrinkingFluid.CODEC, NeoForgeNetworkManager.getInstance()::processDrinkingFluid);
+        registrar.playToClient(SyncDrinkingFluids.TYPE, SyncDrinkingFluids.CODEC, NeoForgeNetworkManager.getInstance()::processDrinkingFluids);
     }
 
     private static <T> void bind(IEventBus bus, ResourceKey<Registry<T>> registry, Consumer<BiConsumer<T, ResourceLocation>> source) {

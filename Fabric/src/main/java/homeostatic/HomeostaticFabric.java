@@ -29,7 +29,7 @@ import homeostatic.common.potions.HomeostaticPotions;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.event.ServerEventListener;
 import homeostatic.network.DrinkWater;
-import homeostatic.network.SyncDrinkingFluid;
+import homeostatic.network.SyncDrinkingFluids;
 import homeostatic.util.WaterHelper;
 
 public class HomeostaticFabric implements ModInitializer {
@@ -48,7 +48,7 @@ public class HomeostaticFabric implements ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(DrinkWater.TYPE, ((payload, context) -> {
             WaterHelper.drinkWater(context.player());
         }));
-        PayloadTypeRegistry.playS2C().register(SyncDrinkingFluid.TYPE, SyncDrinkingFluid.CODEC);
+        PayloadTypeRegistry.playS2C().register(SyncDrinkingFluids.TYPE, SyncDrinkingFluids.CODEC);
 
         FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
             builder.registerPotionRecipe(

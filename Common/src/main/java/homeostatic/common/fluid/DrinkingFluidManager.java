@@ -22,7 +22,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
 import homeostatic.Homeostatic;
-import homeostatic.network.SyncDrinkingFluid;
+import homeostatic.network.SyncDrinkingFluids;
 import homeostatic.platform.Services;
 
 public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
@@ -85,7 +85,7 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
                 throw new IllegalStateException("Failed to encode drinking fluids: " + fluids);
             });
 
-            Services.PLATFORM.sendPacketToPlayer(new SyncDrinkingFluid(data), player);
+            Services.PLATFORM.sendPacketToPlayer(new SyncDrinkingFluids(data), player);
         }
     }
 
