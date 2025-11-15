@@ -1,14 +1,22 @@
 package homeostatic.common.item;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -19,6 +27,10 @@ import net.minecraft.world.item.Items;
 
 import homeostatic.common.TagManager;
 import homeostatic.Homeostatic;
+import homeostatic.common.fluid.DrinkingFluid;
+import homeostatic.network.SyncDrinkableItems;
+import homeostatic.network.SyncDrinkingFluids;
+import homeostatic.platform.Services;
 
 public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
 
@@ -56,8 +68,22 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
         return null;
     }
 
+    public static void update(List<DrinkableItem> drinkableItems) {
+        ITEMS.clear();
+
+        for (DrinkableItem drinkableItem : drinkableItems) {
+            Item item = BuiltInRegistries.ITEM.get(drinkableItem.loc());
+
+            if (item != Items.AIR) {
+                ITEMS.put(item, drinkableItem);
+            }
+        }
+
+        Homeostatic.LOGGER.info("Updated {} drinkable items", ITEMS.size());
+    }
+
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+    protected void apply(Map<ResourceLocation, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
         ITEMS.clear();
 
         for (Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet()) {
@@ -76,5 +102,18 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener {
 
         Homeostatic.LOGGER.info("Loaded {} drinkable items", ITEMS.size());
     }
+
+    public static void syncWithClient(ServerPlayer player) {
+        if (player != null) {
+            List<DrinkableItem> drinkableItems = ITEMS.values().stream().toList();
+            DataResult<Tag> result = Codec.list(DrinkableItem.CODEC).encodeStart(NbtOps.INSTANCE, drinkableItems);
+            Tag data = result.getOrThrow((items) -> {
+                throw new IllegalStateException("Failed to encode drinkable items: " + items);
+            });
+
+            Services.PLATFORM.sendPacketToPlayer(new SyncDrinkableItems(data), player);
+        }
+    }
+
 
 }

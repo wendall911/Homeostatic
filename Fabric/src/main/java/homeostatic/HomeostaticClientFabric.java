@@ -16,6 +16,7 @@ import homeostatic.common.book.PageCustomCrafting;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.event.ClientEventListener;
+import homeostatic.network.SyncDrinkableItems;
 import homeostatic.network.SyncDrinkingFluids;
 
 public class HomeostaticClientFabric implements ClientModInitializer {
@@ -37,6 +38,14 @@ public class HomeostaticClientFabric implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(
             SyncDrinkingFluids.TYPE,
             (SyncDrinkingFluids packet, ClientPlayNetworking.Context context) -> {
+                context.client().execute(() -> {
+                    packet.handle(context.player());
+                });
+            }
+        );
+        ClientPlayNetworking.registerGlobalReceiver(
+            SyncDrinkableItems.TYPE,
+            (SyncDrinkableItems packet, ClientPlayNetworking.Context context) -> {
                 context.client().execute(() -> {
                     packet.handle(context.player());
                 });
