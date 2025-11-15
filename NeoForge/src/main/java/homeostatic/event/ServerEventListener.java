@@ -81,10 +81,12 @@ public class ServerEventListener {
         if (player == null) {
             for (ServerPlayer sp : event.getPlayerList().getPlayers()) {
                 DrinkingFluidManager.syncWithClient(sp);
+                DrinkableItemManager.syncWithClient(sp);
             }
         }
         else {
             DrinkingFluidManager.syncWithClient(player);
+            DrinkableItemManager.syncWithClient(player);
         }
     }
 

@@ -49,4 +49,8 @@ public class NeoForgeNetworkManager {
         ctx.enqueueWork(() -> syncDrinkingFluid.handle(ctx.player()));
     }
 
+    public void processDrinkableItems(SyncDrinkableItems syncDrinkableItems, IPayloadContext ctx) {
+        ctx.enqueueWork(() -> syncDrinkableItems.handle(ctx.player()));
+    }
+
 }

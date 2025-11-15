@@ -39,6 +39,7 @@ import homeostatic.network.NeoForgeTemperatureData;
 import homeostatic.network.NeoForgeThermometerData;
 import homeostatic.network.NeoForgeWaterData;
 import homeostatic.network.NeoForgeWetnessData;
+import homeostatic.network.SyncDrinkableItems;
 import homeostatic.network.SyncDrinkingFluids;
 import homeostatic.registries.HomeostaticNeoForgeRegistries;
 
@@ -98,6 +99,7 @@ public class HomeostaticNeoForge {
         registrar.playToClient(NeoForgeWaterData.TYPE, NeoForgeWaterData.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processWaterData);
         registrar.playToClient(NeoForgeWetnessData.TYPE, NeoForgeWetnessData.STREAM_CODEC, NeoForgeNetworkManager.getInstance()::processWetnessData);
         registrar.playToClient(SyncDrinkingFluids.TYPE, SyncDrinkingFluids.CODEC, NeoForgeNetworkManager.getInstance()::processDrinkingFluids);
+        registrar.playToClient(SyncDrinkableItems.TYPE, SyncDrinkableItems.CODEC, NeoForgeNetworkManager.getInstance()::processDrinkableItems);
     }
 
     private static <T> void bind(IEventBus bus, ResourceKey<Registry<T>> registry, Consumer<BiConsumer<T, ResourceLocation>> source) {

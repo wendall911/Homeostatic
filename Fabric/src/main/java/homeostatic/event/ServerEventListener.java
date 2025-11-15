@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 
 import homeostatic.common.fluid.DrinkingFluidManager;
+import homeostatic.common.item.DrinkableItemManager;
 
 public class ServerEventListener {
 
@@ -11,6 +12,7 @@ public class ServerEventListener {
         ServerEntityEvents.EQUIPMENT_CHANGE.register(PlayerEventHandler::onEquipmentChange);
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
             DrinkingFluidManager.syncWithClient(player);
+            DrinkableItemManager.syncWithClient(player);
         });
     }
 

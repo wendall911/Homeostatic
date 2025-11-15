@@ -10,6 +10,8 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 
@@ -18,6 +20,15 @@ import homeostatic.common.Hydration;
 import static technology.roughness.whitenoise.util.ResourceLocationHelper.parse;
 
 public record DrinkableItem(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
+
+    public static final Codec<DrinkableItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ResourceLocation.CODEC.fieldOf("type").forGetter(DrinkableItem::loc),
+            Codec.INT.fieldOf("amount").forGetter(DrinkableItem::amount),
+            Codec.FLOAT.fieldOf("saturation").forGetter(DrinkableItem::saturation),
+            Codec.INT.fieldOf("effect_potency").forGetter(DrinkableItem::potency),
+            Codec.INT.fieldOf("effect_duration").forGetter(DrinkableItem::duration),
+            Codec.FLOAT.fieldOf("effect_chance").forGetter(DrinkableItem::chance)
+    ).apply(instance, DrinkableItem::new));
 
     public static Hydration getHydration(DrinkableItem item) {
         return new Hydration(item.amount(), item.saturation(), item.potency(), item.duration(), item.chance());
