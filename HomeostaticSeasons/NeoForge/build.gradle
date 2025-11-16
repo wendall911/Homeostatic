@@ -1,0 +1,156 @@
+plugins {
+    id 'multiloader-loader'
+    id 'net.neoforged.moddev'
+    id 'io.github.goooler.shadow'
+}
+
+def modLoader = "${project.name}".toUpperCase()
+def actualVersion = version
+version = "${version}-${modLoader}"
+
+neoForge {
+    version = neoforge_version
+    parchment {
+        minecraftVersion = minecraft_version
+        mappingsVersion = mappings_version
+    }
+    runs {
+        configureEach {
+            systemProperty('neoforge.enabledGameTestNamespaces', mod_id)
+            ideName = "NeoForge ${it.name.capitalize()} (${project.path})" // Unify the run config names with fabric
+        }
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+        data {
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            data()
+        }
+    }
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+dependencies {
+    implementation group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-neoforge", version: "${climatesettings_version}"
+    jarJar group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-neoforge", version: "${climatesettings_version}"
+
+    implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
+    jarJar group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
+
+    compileOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
+
+    if (System.getenv('DATA_GEN') != null) {
+    }
+    else {
+        //runtimeOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
+        runtimeOnly "dev.architectury:architectury-neoforge:${architectury_version}"
+        //runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+        runtimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_neoforge_version}"
+        //runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${minecraft_version}:${sewingkit_version}"
+        //runtimeOnly "curse.maven:configured-457570:4462839"
+        //runtimeOnly "curse.maven:biomesoplenty-220318:${bop_neoforge_version}"
+        runtimeOnly "curse.maven:terrablender-940057:${terrablender_neoforge_version}"
+        runtimeOnly "curse.maven:regions-659110:${regions_neoforge_version}"
+        //runtimeOnly "curse.maven:terralith-513688:5512077"
+        //runtimeOnly "curse.maven:primalwinter-393321:4575861"
+        //runtimeOnly "curse.maven:byg-1070751:${byg_neoforge_version}"
+        //runtimeOnly "curse.maven:tyg-962544:${tyg_neoforge_version}"
+        //runtimeOnly "curse.maven:corgilib-693313:${corgilib_neoforge_version}"
+        //runtimeOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_neoforge_version}"
+        //runtimeOnly "curse.maven:twilightforest-227639:${twilight_forest_neoforge_version}"
+        //runtimeOnly "curse.maven:botania-225643:???"
+        //runtimeOnly "curse.maven:curios-309927:${curios_neoforge_version}"
+        //runtimeOnly "curse.maven:arsnouveau-401955:${ars_neoforge_version}"
+    }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+shadowJar {
+    archiveClassifier = ''
+}
+
+def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
+def publishFile = project(":").projectDir.toString() + "/NeoForge/build/libs/${archivesBaseName}-${version}.jar"
+def display_name = "${project.name} ${minecraft_version}-${version}"
+def display_version = "${minecraft_version}-${version}"
+
+publishMods {
+    file = file(publishFile)
+    if (file(changelogFile).exists()) {
+        changelog = file(changelogFile).text
+    }
+    displayName = "${display_name}"
+    version = "${display_version}"
+    type = "${release_type}".startsWith("release") ? STABLE : ("${release_type}".startsWith("beta") ? BETA : ALPHA)
+    modLoaders.add('neoforge')
+    dryRun = providers.environmentVariable('DO_RELEASE').getOrNull() == null
+
+    if (project.hasProperty("${curseforge_api_key_prop}")) {
+        curseforge {
+            accessToken = project.property("${curseforge_api_key_prop}")
+            projectId = "${curseforge_id}"
+            projectSlug = "${curseforge_slug}"
+            javaVersions.add(JavaVersion.toVersion("${java_version}"))
+            clientRequired = true
+            serverRequired = true
+            minecraftVersions.addAll("${release_versions}".split(','))
+            optional('actually-harvest')
+            optional('betterdays')
+            optional('charged-charms')
+            optional('creeper-fireworks')
+            optional('homeostatic')
+            optional('magical-psi-revival')
+            optional('mobchampions')
+            optional('simpletextoverlay')
+            optional('ready-player-fun')
+            optional('survivalist-essentials')
+            optional('tinkersurvival')
+            optional('biomes-o-plenty')
+            optional('oh-the-biomes-weve-gone')
+            optional('ars-nouveau')
+            optional('terralith')
+            optional('regions-unexplored')
+        }
+    }
+    if (project.hasProperty("${modrinth_api_key_prop}")) {
+        modrinth {
+            accessToken = project.property("${modrinth_api_key_prop}")
+            projectId = "${modrinth_id}"
+            minecraftVersions.addAll("${release_versions}".split(','))
+            optional('actually-harvest')
+            optional('betterdays')
+            optional('charged-charms')
+            optional('creeper-fireworks-mod')
+            optional('homeostatic')
+            optional('magical-psi-revival')
+            optional('mobchampions')
+            optional('simpletextoverlay')
+            optional('ready-player-fun')
+            optional('survivalist-essentials')
+            optional('tinkersurvival')
+            optional('biomes-o-plenty')
+            optional('terralith')
+            optional('regions-unexplored')
+        }
+    }
+    if (project.hasProperty("${discord_webhook_prop}")) {
+        discord {
+            webhookUrl = project.property("${discord_webhook_prop}")
+            dryRunWebhookUrl = project.property("${discord_dryrun_webhook_prop}")
+            username = "${mod_author}"
+            content = changelog.map {
+                "# A new version of ${mod_display_name} for NeoForge ${minecraft_version} has been released! \n" + it
+            }
+        }
+    }
+}

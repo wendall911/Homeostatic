@@ -1,0 +1,70 @@
+import se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask
+
+plugins {
+    id 'multiloader-common'
+    id 'net.neoforged.moddev'
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin'
+}
+
+archivesBaseName = "${mod_id}-common"
+
+neoForge {
+    neoFormVersion = neo_form_version
+    parchment {
+        minecraftVersion = minecraft_version
+        mappingsVersion = mappings_version
+    }
+}
+
+dependencies {
+    compileOnly group: 'org.spongepowered', name: 'mixin', version: "${mixin_version}"
+    // fabric and neoforge both bundle mixinextras, so it is safe to use it in common
+    compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: "${mixin_extras_version}"
+    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: "${mixin_extras_version}"
+    implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-common", version: "${whitenoise_version}"
+    implementation group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-common", version: "${climatesettings_version}"
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+configurations {
+    commonJava {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+    commonResources {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+}
+
+artifacts {
+    commonJava sourceSets.main.java.sourceDirectories.singleFile
+    commonResources sourceSets.main.resources.sourceDirectories.files
+}
+
+tasks.register('changelog', GitChangelogTask) {
+    file.set(new File(project(":").projectDir.toString() + '/build/libs/changelog.txt'));
+    templateContent.set(file(project(":").projectDir.toString() + '/files/templates/changelog.mustache').getText('UTF-8'));
+    toRevision.set('HEAD');
+    fromRevision.set("${minecraft_version}-${last_mod_version}");
+}
+
+def updates = tasks.register("generateUpdates", Copy) {
+    it.outputs.upToDateWhen {
+        false
+    }
+
+    it.from("../files/templates/") {
+        include 'updates.json'
+        expand expandProps
+    }
+
+    it.into '../files/'
+}
+
+tasks.generateUpdates.mustRunAfter('jar')
+
+tasks.build.dependsOn('changelog', 'generateUpdates')
