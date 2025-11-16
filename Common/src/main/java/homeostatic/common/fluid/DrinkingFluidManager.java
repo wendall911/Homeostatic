@@ -59,8 +59,13 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
     }
 
     public static void read(FriendlyByteBuf buf) {
+        int size = buf.readVarInt();
+
+        if (size <= 0) {
+            return;
+        }
+
         FLUIDS.clear();
-        int size = buf.readInt();
 
         for (int i = 0; i < size; i++) {
             ResourceLocation fluidLoc = buf.readResourceLocation();
@@ -77,6 +82,10 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener {
     }
 
     public static void read(ListTag tag) {
+        if (tag == null || tag.isEmpty()) {
+            return;
+        }
+
         FLUIDS.clear();
 
         for (int i = 0; i < tag.size(); i++) {

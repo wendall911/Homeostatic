@@ -3,13 +3,15 @@ package homeostatic.common.components;
 import org.jetbrains.annotations.NotNull;
 
 import dev.onyxstudios.cca.api.v3.component.Component;
+import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
+
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 
 import homeostatic.common.fluid.DrinkingFluidManager;
 
-public class ComponentDrinkingFluidManager extends DrinkingFluidManager implements Component {
+public class ComponentDrinkingFluidManager extends DrinkingFluidManager implements Component, AutoSyncedComponent {
 
     @Override
     public void readFromNbt(@NotNull CompoundTag tag) {

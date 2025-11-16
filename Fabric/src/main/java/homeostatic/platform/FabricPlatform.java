@@ -195,10 +195,7 @@ public class FabricPlatform implements IPlatform {
 
     @Override
     public void syncFluidData(ServerPlayer sp) {
-        SyncDrinkingFluids drinkingFluids = new SyncDrinkingFluids();
-        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.wrappedBuffer(drinkingFluids.bytes));
-
-        ServerPlayNetworking.send(sp, HomeostaticComponents.DRINKING_FLUIDS_SYNC_KEY, buf);
+        // NO-OP
     }
 
 }

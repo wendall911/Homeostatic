@@ -2,26 +2,20 @@ package homeostatic;
 
 import java.util.Map;
 
-import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 
-import homeostatic.common.components.HomeostaticComponents;
-import homeostatic.common.fluid.DrinkingFluidManager;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.event.ClientEventListener;
 import homeostatic.integrations.patchouli.PageCustomCrafting;
-import homeostatic.network.SyncDrinkingFluids;
 import homeostatic.platform.Services;
 
 public class HomeostaticClientFabric implements ClientModInitializer {
@@ -44,15 +38,6 @@ public class HomeostaticClientFabric implements ClientModInitializer {
                 entries.accept(entry.getValue());
             }
         });
-
-        ClientPlayNetworking.registerGlobalReceiver(
-            HomeostaticComponents.DRINKING_FLUIDS_SYNC_KEY,
-            (client, handler, buf, responseSender) -> {
-                SyncDrinkingFluids drinkingFluids = new SyncDrinkingFluids(new byte[buf.readableBytes()]);
-
-                DrinkingFluidManager.read(new FriendlyByteBuf(Unpooled.wrappedBuffer(drinkingFluids.bytes)));
-            }
-        );
 
     }
 

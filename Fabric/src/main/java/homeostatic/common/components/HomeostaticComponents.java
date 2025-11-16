@@ -13,7 +13,6 @@ import static homeostatic.Homeostatic.loc;
 public class HomeostaticComponents implements EntityComponentInitializer {
 
     public static ResourceLocation DRINK_WATER_KEY = loc("drink_water");
-    public static final ResourceLocation DRINKING_FLUIDS_SYNC_KEY = loc("drinking_fluids_sync");
     public static final ComponentKey<ComponentTemperatureData> TEMPERATURE_DATA =
         ComponentRegistry.getOrCreate(loc("temperature_data_provider"), ComponentTemperatureData.class);
     public static final ComponentKey<ComponentThermometerData> THERMOMETER_DATA =
