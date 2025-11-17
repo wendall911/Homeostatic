@@ -8,18 +8,18 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
+
+import technology.roughness.whitenoise.platform.Services;
 
 import homeostatic.common.attachments.AttachmentsRegistry;
 import homeostatic.common.block.HomeostaticBlocks;
@@ -54,7 +54,7 @@ public class HomeostaticNeoForge {
         Homeostatic.init();
         Homeostatic.initConfig();
 
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (Services.PLATFORM.isPhysicalClient()) {
             HomeostaticClientNeoForge.init(bus);
         }
 
