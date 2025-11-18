@@ -7,13 +7,13 @@
 ## Description
 
 Homeostatic Seasons adds the four traditional seasons to Minecraft, each
-comprised of three distinct sub-seasons. The combination of the seasons and
-sub-seasons results in 12 distinct solar terms. Each term has its own visual
-changes, with mid-spring biomes matching the default state in Vanilla Minecraft.
+comprised of three distinct subseasons, for a total of twelve distinct
+subseasons. Each subseason has its own visual changes, with mid-spring
+biomes matching the default state in Vanilla Minecraft.
 
-Subseasons last 10 in-game days (configurable), resulting in 30-day seasons.
-The current season is defined by the world time (using /time set 0 will reset
-to day 1 of mid-spring).
+The duration of each subseason is 3 in-game days (configurable), resulting in
+9-day seasons. The current season is defined by the world time (using /time set
+0 will reset to day 1 of early-spring).
 
 ## Seasonal Biomes
 
