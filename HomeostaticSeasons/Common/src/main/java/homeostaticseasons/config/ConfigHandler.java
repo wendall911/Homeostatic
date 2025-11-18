@@ -282,7 +282,16 @@ public class ConfigHandler {
         }
 
         public static Season getSeasonFromGameTime(long gameTime) {
-            return seasonMap.floorEntry(gameTime).getValue();
+            long timeOfYear;
+
+            if (gameTime < getTotalYearLength()) {
+                timeOfYear = gameTime;
+            }
+            else {
+                timeOfYear = gameTime % getTotalYearLength();
+            }
+
+            return seasonMap.floorEntry(timeOfYear).getValue();
         }
 
         public static long getTimeUntilNextSeason(long gameTime) {
@@ -297,14 +306,21 @@ public class ConfigHandler {
         }
 
         public static long getTimeUntilSeason(long gameTime, Season season) {
-            long seasonTime = gameTime % 24000L;
-            long targetSeasonTime = getSeasonTime(season);
+            long timeOfYear;
+            long seasonStartTime = seasonStartTimes.get(season);
 
-            if (targetSeasonTime >= seasonTime) {
-                return targetSeasonTime - seasonTime;
+            if (gameTime < getTotalYearLength()) {
+                timeOfYear = gameTime;
             }
             else {
-                return getTotalYearLength() - seasonTime + targetSeasonTime;
+                timeOfYear = gameTime % getTotalYearLength();
+            }
+
+            if (seasonStartTime >= timeOfYear) {
+                return seasonStartTime - timeOfYear;
+            }
+            else {
+                return (getTotalYearLength() - timeOfYear) + seasonStartTime;
             }
         }
 
