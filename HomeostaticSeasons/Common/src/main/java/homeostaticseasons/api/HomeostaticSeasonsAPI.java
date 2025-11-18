@@ -1,5 +1,6 @@
 package homeostaticseasons.api;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 import net.minecraft.world.level.Level;
@@ -33,13 +34,26 @@ public class HomeostaticSeasonsAPI {
         return Season.EARLY_SPRING;
     }
 
-    public static long getTimeUntilNextSeason(Level level) {
+    public static long getSeasonTime(Level level, Season season) {
         if (ConfigHandler.Common.seasonChangeMethod() == SeasonChangeMethod.CONFIGURED
                 && ConfigHandler.Common.isValidDimension(level.dimension())) {
-            return ConfigHandler.Common.getTimeUntilNextSeason(level.getGameTime());
+            return ConfigHandler.Common.getSeasonTime(season);
         }
 
-        return Long.MAX_VALUE;
+        return -1L;
+    }
+
+    public static long getTimeUntilNextSeason(Level level) {
+        if (ConfigHandler.Common.isValidDimension(level.dimension())) {
+            if (ConfigHandler.Common.seasonChangeMethod() == SeasonChangeMethod.REALTIME) {
+                return getRealtimeUntilNextSeason();
+            }
+            else if (ConfigHandler.Common.seasonChangeMethod() == SeasonChangeMethod.CONFIGURED) {
+                return ConfigHandler.Common.getTimeUntilNextSeason(level.getGameTime());
+            }
+        }
+
+        return 0L;
     }
 
     public static long getTimeUntilSeason(Level level, Season season) {
@@ -48,7 +62,50 @@ public class HomeostaticSeasonsAPI {
             return ConfigHandler.Common.getTimeUntilSeason(level.getGameTime(), season);
         }
 
-        return Long.MAX_VALUE;
+        return -1L;
+    }
+
+    private static long getRealtimeUntilNextSeason() {
+        LocalDateTime date = LocalDateTime.now();
+        LocalDateTime nextSeasonDate;
+        Season cuurrentSeason = getRealtimeSeason();
+
+        if (ConfigHandler.Common.hemisphere() == Hemisphere.NORTHERN) {
+            nextSeasonDate = switch (cuurrentSeason) {
+                case EARLY_SPRING -> LocalDateTime.of(date.getYear(), 4, 20, 0, 0);
+                case MID_SPRING -> LocalDateTime.of(date.getYear(), 5, 21, 0, 0);
+                case LATE_SPRING -> LocalDateTime.of(date.getYear(), 6, 21, 0, 0);
+                case EARLY_SUMMER -> LocalDateTime.of(date.getYear(), 7, 23, 0, 0);
+                case MID_SUMMER -> LocalDateTime.of(date.getYear(), 8, 23, 0, 0);
+                case LATE_SUMMER -> LocalDateTime.of(date.getYear(), 9, 23, 0, 0);
+                case EARLY_AUTUMN -> LocalDateTime.of(date.getYear(), 10, 23, 0, 0);
+                case MID_AUTUMN -> LocalDateTime.of(date.getYear(), 11, 22, 0, 0);
+                case LATE_AUTUMN -> LocalDateTime.of(date.getYear(), 12, 21, 0, 0);
+                case EARLY_WINTER -> LocalDateTime.of(date.getYear() + 1, 1, 20, 0, 0);
+                case MID_WINTER -> LocalDateTime.of(date.getYear() + 1, 2, 19, 0, 0);
+                case LATE_WINTER -> LocalDateTime.of(date.getYear(), 3, 21, 0, 0);
+            };
+        }
+        else {
+            nextSeasonDate = switch (cuurrentSeason) {
+                case EARLY_SPRING -> LocalDateTime.of(date.getYear(), 10, 23, 0, 0);
+                case MID_SPRING -> LocalDateTime.of(date.getYear(), 11, 22, 0, 0);
+                case LATE_SPRING -> LocalDateTime.of(date.getYear(), 12, 21, 0, 0);
+                case EARLY_SUMMER -> LocalDateTime.of(date.getYear() + 1, 1, 20, 0, 0);
+                case MID_SUMMER -> LocalDateTime.of(date.getYear() + 1, 2, 19, 0, 0);
+                case LATE_SUMMER -> LocalDateTime.of(date.getYear(), 3, 21, 0, 0);
+                case EARLY_AUTUMN -> LocalDateTime.of(date.getYear(), 4, 20, 0, 0);
+                case MID_AUTUMN -> LocalDateTime.of(date.getYear(), 5, 21, 0, 0);
+                case LATE_AUTUMN -> LocalDateTime.of(date.getYear(), 6, 21, 0, 0);
+                case EARLY_WINTER -> LocalDateTime.of(date.getYear(), 7, 23, 0, 0);
+                case MID_WINTER -> LocalDateTime.of(date.getYear(), 8, 23, 0, 0);
+                case LATE_WINTER -> LocalDateTime.of(date.getYear(), 9, 23, 0, 0);
+            };
+        }
+
+        Duration duration = Duration.between(date, nextSeasonDate);
+
+        return duration.toDays() * 24000L;
     }
 
     private static Season getRealtimeSeason() {
