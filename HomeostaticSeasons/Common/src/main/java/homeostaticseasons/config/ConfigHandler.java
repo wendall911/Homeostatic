@@ -1,6 +1,5 @@
 package homeostaticseasons.config;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +9,7 @@ import java.util.TreeMap;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -49,31 +46,7 @@ public class ConfigHandler {
     public static void initClient() {
     }
 
-    public static void initCommon(MinecraftServer server) {
-        // Initialize whitelist dimension keys
-        Common.whitelistDimensionsKeys.clear();
-
-        for (String dimensionString : COMMON.whitelistDimensions.get()) {
-            ResourceLocation dimension = ResourceLocation.tryParse(dimensionString);
-
-            if (dimension != null) {
-                ResourceKey<Level> dimensionKey = ResourceKey.create(Registries.DIMENSION, dimension);
-
-                try {
-                    if (server.registryAccess().registryOrThrow(Registries.DIMENSION).containsKey(dimensionKey)) {
-                        Common.whitelistDimensionsKeys.add(dimensionKey);
-                    }
-                }
-                catch (Exception e) {
-                    HomeostaticSeasons.LOGGER.error(
-                        "Error dimension {} in whitelist does not exist. {}",
-                        dimension,
-                        e.getMessage()
-                    );
-                }
-            }
-        }
-
+    public static void initCommon() {
         Common.seasonLengths = new SeasonLengths(
             COMMON.earlySpringDaysLength.get(),
             COMMON.midSpringDaysLength.get(),
@@ -107,14 +80,6 @@ public class ConfigHandler {
 
         if (Services.PLATFORM.isDevelopmentEnvironment()) {
             HomeostaticSeasons.LOGGER.warn("initialized seasonMap {}", Common.seasonMap);
-
-            ServerLevel overworld = server.getLevel(Level.OVERWORLD);
-            if (overworld != null) {
-                long gameTime = overworld.getGameTime();
-
-                HomeostaticSeasons.LOGGER.warn("Current season {} for {}", Common.getSeasonFromGameTime(gameTime), gameTime);
-                HomeostaticSeasons.LOGGER.warn("Next season in {} ticks", Common.getTimeUntilNextSeason(gameTime));
-            }
         }
     }
 
@@ -132,7 +97,6 @@ public class ConfigHandler {
         private static final String[] defaultWhitelistDimensions = new String[] {
             "minecraft:overworld"
         };
-        private static final List<ResourceKey<Level>> whitelistDimensionsKeys = new ArrayList<>(5);
         private static final Predicate<Object> resourceLocationValidator = s -> s instanceof String
             && ((String) s).matches("[a-z]+[:]{1}[a-z_]+");
         private final WhiteNoiseConfigSpec.EnumValue<SeasonChangeMethod> seasonChangeMethod;
@@ -329,7 +293,7 @@ public class ConfigHandler {
         }
 
         public static boolean isValidDimension(ResourceKey<Level> dimensionKey) {
-            return whitelistDimensionsKeys.contains(dimensionKey);
+            return COMMON.whitelistDimensions.get().contains(dimensionKey.location().toString());
         }
 
         private static Supplier<List<? extends String>> getDefaultWhitelistDimensions() {

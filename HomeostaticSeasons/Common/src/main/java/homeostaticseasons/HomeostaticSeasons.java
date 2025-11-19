@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import technology.roughness.whitenoise.config.WhiteNoiseConfig;
+import technology.roughness.whitenoise.config.WhiteNoiseConfig.Type;
 import technology.roughness.whitenoise.config.WhiteNoiseConfigLoader;
 import technology.roughness.whitenoise.platform.Services;
 
@@ -23,7 +24,10 @@ public class HomeostaticSeasons {
     }
 
     public static void initConfig() {
-        WhiteNoiseConfigLoader.add(WhiteNoiseConfig.Type.COMMON, ConfigHandler.COMMON_SPEC, MODID);
+        WhiteNoiseConfig commonConfig = WhiteNoiseConfigLoader.add(Type.COMMON, ConfigHandler.COMMON_SPEC, MODID);
+        commonConfig.addLoadListener((config, flag) -> {
+            ConfigHandler.initCommon();
+        });
 
         if (Services.PLATFORM.isPhysicalClient()) {
             WhiteNoiseConfigLoader.add(WhiteNoiseConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC, MODID);

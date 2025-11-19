@@ -7,7 +7,6 @@ import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 
-import homeostaticseasons.HomeostaticSeasons;
 import homeostaticseasons.api.HomeostaticSeasonsAPI;
 import homeostaticseasons.common.biome.BiomeColormap;
 import homeostaticseasons.common.biome.BiomeColormapManager;

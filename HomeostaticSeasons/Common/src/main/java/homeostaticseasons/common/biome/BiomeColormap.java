@@ -45,6 +45,10 @@ public class BiomeColormap {
         return getColor(originalColor, this.foliageColor, this.foliageSaturation, biomeHolder);
     }
 
+    public int getBirchColor(int originalColor, Holder<Biome> biomeHolder) {
+        return getColor(originalColor, this.birchColor, -1, biomeHolder);
+    }
+
     private int getColor(int originalColor, int newColor, float saturation, Holder<Biome> biomeHolder) {
         int color = newColor == 0xFFFFFF ? originalColor : ColorHelper.blend(originalColor, newColor);
         int mutedColor = color;

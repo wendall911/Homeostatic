@@ -7,6 +7,8 @@ public interface IPlatform {
 
     boolean isDevelopmentEnvironment();
 
+    boolean isPhysicalClient();
+
     ServerLevelData getServerLevelData(ServerLevel level);
 
 }

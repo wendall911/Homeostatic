@@ -1,15 +1,15 @@
 package homeostaticseasons.event;
 
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.minecraft.client.Minecraft;
 
-import homeostaticseasons.common.biome.BiomeColormapManager;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 public class ClientEventListener {
 
     @SubscribeEvent
-    public static void registerReloadListeners(RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(new BiomeColormapManager());
+    public static void onClientTickEvent(ClientTickEvent.Post event) {
+        ClientEventHandler.onClientTick(Minecraft.getInstance());
     }
 
 }
