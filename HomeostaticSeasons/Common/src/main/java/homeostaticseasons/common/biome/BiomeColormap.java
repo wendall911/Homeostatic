@@ -1,6 +1,7 @@
 package homeostaticseasons.common.biome;
 
 import java.lang.reflect.Type;
+import java.util.Locale;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -26,6 +27,10 @@ public class BiomeColormap {
         this.foliageColor = foliageColor;
         this.foliageSaturation = foliageSaturation;
         this.birchColor = birchColor;
+    }
+
+    public BiomeColormap(int grassColor, int foliageColor, int birchColor) {
+        this(grassColor, -1, foliageColor, -1, birchColor);
     }
 
     public static class Serializer implements JsonDeserializer<BiomeColormap>, JsonSerializer<BiomeColormap> {
@@ -67,6 +72,17 @@ public class BiomeColormap {
                 ", foliageSaturation=" + foliageSaturation +
                 ", birchColor=" + birchColor +
                 '}';
+    }
+
+    public enum ColormapType {
+        NORMAL,
+        TEMPERATE;
+
+        @Override
+        public String toString() {
+            return this.name().toLowerCase(Locale.ROOT);
+        }
+
     }
 
 }
