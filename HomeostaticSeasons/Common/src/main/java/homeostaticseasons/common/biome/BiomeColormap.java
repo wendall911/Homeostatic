@@ -11,7 +11,11 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import net.minecraft.core.Holder;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.level.biome.Biome;
+
+import homeostaticseasons.util.ColorHelper;
 
 public class BiomeColormap {
 
@@ -31,6 +35,27 @@ public class BiomeColormap {
 
     public BiomeColormap(int grassColor, int foliageColor, int birchColor) {
         this(grassColor, -1, foliageColor, -1, birchColor);
+    }
+
+    public int getGrassColor(int originalColor, Holder<Biome> biomeHolder) {
+        return getColor(originalColor, this.grassColor, this.grassSaturation, biomeHolder);
+    }
+
+    public int getFoliageColor(int originalColor, Holder<Biome> biomeHolder) {
+        return getColor(originalColor, this.foliageColor, this.foliageSaturation, biomeHolder);
+    }
+
+    private int getColor(int originalColor, int newColor, float saturation, Holder<Biome> biomeHolder) {
+        int color = newColor == 0xFFFFFF ? originalColor : ColorHelper.blend(originalColor, newColor);
+        int mutedColor = color;
+        boolean muted = false;
+
+        // TODO Add biome condition tag for muting
+        if (muted) {
+            mutedColor = ColorHelper.mix(color, originalColor, 0.75F);
+        }
+
+        return saturation != -1 ? ColorHelper.saturate(mutedColor, saturation) : mutedColor;
     }
 
     public static class Serializer implements JsonDeserializer<BiomeColormap>, JsonSerializer<BiomeColormap> {

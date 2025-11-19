@@ -15,6 +15,7 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.biome.Biome;
 
+import climatesettings.ClimateSettings;
 import climatesettings.common.biome.BiomeCategory;
 import climatesettings.common.biome.BiomeCategoryManager;
 
@@ -22,12 +23,12 @@ import homeostaticseasons.HomeostaticSeasons;
 import homeostaticseasons.api.Season;
 import homeostaticseasons.common.biome.BiomeColormap.ColormapType;
 
-import static climatesettings.ClimateSettings.prefix;
+import static homeostaticseasons.HomeostaticSeasons.prefix;
 
 public class BiomeColormapManager extends SimpleJsonResourceReloadListener {
 
     private static final Map<ResourceLocation, BiomeColormap> COLORMAPS = new java.util.HashMap<>();
-    private  static final Map<ResourceLocation, ResourceLocation> BIOMETYPE_TO_COLORMAP = new java.util.HashMap<>();
+    private  static final Map<ResourceLocation, ColormapType> BIOMETYPE_TO_COLORMAPTYPE = new java.util.HashMap<>();
 
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(BiomeColormap.class, new BiomeColormap.Serializer()).create();
 
@@ -37,14 +38,10 @@ public class BiomeColormapManager extends SimpleJsonResourceReloadListener {
         for (BiomeCategory.Type type : BiomeCategory.Type.values()) {
             switch (type) {
                 case BOG, COLD_DESERT, DESERT, DRYLAND, LUSH_DESERT, MESA, MUSHROOM, RAINFOREST, SAVANNA, SWAMP, VOLCANIC, WARM_OCEAN -> {
-                    for (Season season : Season.values()) {
-                        BIOMETYPE_TO_COLORMAP.put(prefix(type.toString()), getSerializedName(ColormapType.TEMPERATE, season));
-                    }
+                    BIOMETYPE_TO_COLORMAPTYPE.put(ClimateSettings.prefix(type.toString()), ColormapType.TEMPERATE);
                 }
                 default -> {
-                    for (Season season : Season.values()) {
-                        BIOMETYPE_TO_COLORMAP.put(prefix(type.toString()), getSerializedName(ColormapType.NORMAL, season));
-                    }
+                    BIOMETYPE_TO_COLORMAPTYPE.put(ClimateSettings.prefix(type.toString()), ColormapType.NORMAL);
                 }
             }
         }
@@ -62,11 +59,11 @@ public class BiomeColormapManager extends SimpleJsonResourceReloadListener {
         return COLORMAPS.get(type);
     }
 
-    public static BiomeColormap getColormapForBiome(Holder<Biome> biome) {
-        ResourceLocation biomeCategory = prefix(BiomeCategoryManager.getBiomeCategory(biome).toString());
-        ResourceLocation biomeTypeColormap = BIOMETYPE_TO_COLORMAP.get(biomeCategory);
+    public static BiomeColormap getColormap(Holder<Biome> biome, Season season) {
+        ResourceLocation biomeCategory = ClimateSettings.prefix(BiomeCategoryManager.getBiomeCategory(biome).toString());
+        ColormapType biomeTypeColormap = BIOMETYPE_TO_COLORMAPTYPE.getOrDefault(biomeCategory, ColormapType.NORMAL);
 
-        return getBiomeColormap(biomeTypeColormap);
+        return getBiomeColormap(getSerializedName(biomeTypeColormap, season));
     }
 
     @Override

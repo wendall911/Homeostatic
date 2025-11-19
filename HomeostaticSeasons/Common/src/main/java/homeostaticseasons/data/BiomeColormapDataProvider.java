@@ -88,7 +88,7 @@ public class BiomeColormapDataProvider implements DataProvider {
     }
 
     private PackOutput.PathProvider getPath() {
-        return this.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "biome/colormaps/");
+        return this.packOutput.createPathProvider(PackOutput.Target.RESOURCE_PACK, "biome/colormaps/");
     }
 
 }
