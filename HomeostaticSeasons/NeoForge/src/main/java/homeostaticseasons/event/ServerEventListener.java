@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.tick.LevelTickEvent;
 public class ServerEventListener {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onWorldTick(LevelTickEvent.Post event) {
+    public static void onWorldTick(LevelTickEvent.Post event) {
         if (event.getLevel().isClientSide()) {
             return;
         }
