@@ -56,6 +56,10 @@ public class BiomeTemperature {
     }
 
     public boolean isWarmEnoughToRain() {
+        return getAirTemperature() >= 0.15F;
+    }
+
+    public float getAirTemperature() {
         float biomeDryTemp = getHeightAdjustedTemperature();
         double biomeHumidity = getBiomeHumidity();
 
@@ -64,9 +68,8 @@ public class BiomeTemperature {
 
         float wetTemp = (float) TemperatureHelper.getHeatIndex(biomeDryTemp, biomeHumidity);
         float blackGlobeTemp = (float) getBlackGlobeTemp(biomeDryTemp, biomeHumidity);
-        float airTemperature = (wetTemp * 0.7F) + (blackGlobeTemp * 0.2F) + (biomeDryTemp * 0.1F);
 
-        return airTemperature >= 0.15F;
+        return (wetTemp * 0.7F) + (blackGlobeTemp * 0.2F) + (biomeDryTemp * 0.1F);
     }
 
     /*
