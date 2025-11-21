@@ -21,7 +21,12 @@ public class HomeostaticSeasonsLanguageProvider extends FabricLanguageProvider {
     public void generateTranslations(Provider provider, TranslationBuilder translationBuilder) {
         addCommand(translationBuilder, "query_season", "The current season is %s.");
         addCommand(translationBuilder, "query_next_season", "There are %s days (%s ticks) left until %s.");
+
         addConfigTitle(translationBuilder, "Homeostatic Seasons");
+        addConfigTranslation(translationBuilder, "visuals");
+        addConfigTranslation(translationBuilder, "changefoliagecolor");
+        addConfigTranslation(translationBuilder, "changegrasscolor");
+        addConfigTranslation(translationBuilder, "changebirchcolor");
         addConfigTranslation(translationBuilder, "seasons");
         addConfigTranslation(translationBuilder, "whitelistdimensions");
         addConfigTranslation(translationBuilder, "seasonchangemethod");
@@ -40,6 +45,9 @@ public class HomeostaticSeasonsLanguageProvider extends FabricLanguageProvider {
         addConfigTranslation(translationBuilder, "earlywinterdayslength");
         addConfigTranslation(translationBuilder, "midwinterdayslength");
         addConfigTranslation(translationBuilder, "latewinterdayslength");
+        addConfigTranslation(translationBuilder, "weather");
+        addConfigTranslation(translationBuilder, "seasonalweather");
+        addConfigTranslation(translationBuilder, "seasonalsnowandice");
 
         addSeasonTranslations(translationBuilder);
     }

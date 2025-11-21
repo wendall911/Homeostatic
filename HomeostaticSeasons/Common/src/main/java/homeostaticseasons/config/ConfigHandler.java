@@ -85,7 +85,37 @@ public class ConfigHandler {
 
     public static final class Client {
 
+        private final WhiteNoiseConfigSpec.BooleanValue changeFoliageColor;
+        private final WhiteNoiseConfigSpec.BooleanValue changeGrassColor;
+        private final WhiteNoiseConfigSpec.BooleanValue changeBirchColor;
+
         Client(WhiteNoiseConfigSpec.Builder builder) {
+
+            builder.push("visuals").comment(getTranslation("visuals"));
+
+            changeFoliageColor = builder
+                .comment(getTranslation("changefoliagecolor"))
+                .define("changeFoliageColor", true);
+            changeGrassColor = builder
+                .comment(getTranslation("changegrasscolor"))
+                .define("changeGrassColor", true);
+            changeBirchColor = builder
+                .comment(getTranslation("changebirchcolor"))
+                .define("changeBirchColor", true);
+
+            builder.pop(); // visuals
+        }
+
+        public static boolean changeFoliageColor() {
+            return CLIENT.changeFoliageColor.get();
+        }
+
+        public static boolean changeGrassColor() {
+            return CLIENT.changeGrassColor.get();
+        }
+
+        public static boolean changeBirchColor() {
+            return CLIENT.changeBirchColor.get();
         }
 
     }
@@ -118,6 +148,8 @@ public class ConfigHandler {
         private final WhiteNoiseConfigSpec.LongValue earlyWinterDaysLength;
         private final WhiteNoiseConfigSpec.LongValue midWinterDaysLength;
         private final WhiteNoiseConfigSpec.LongValue lateWinterDaysLength;
+        private final WhiteNoiseConfigSpec.BooleanValue seasonalWeather;
+        private final WhiteNoiseConfigSpec.BooleanValue seasonalSnowAndIce;
 
         Common(WhiteNoiseConfigSpec.Builder builder) {
             builder.push("seasons").comment(getTranslation("seasons"));
@@ -175,6 +207,17 @@ public class ConfigHandler {
                 .defineInRange("lateWinterDaysLength", 3L, 1L, 60L);
 
             builder.pop(); // seasons
+
+            builder.push("weather").comment(getTranslation("weather"));
+
+            seasonalWeather = builder
+                .comment(getTranslation("seasonalweather"))
+                .define("seasonalWeather", true);
+            seasonalSnowAndIce = builder
+                .comment(getTranslation("seasonalsnowandice"))
+                .define("seasonalSnowAndIce", true);
+
+            builder.pop(); // weather
         }
 
         public static SeasonChangeMethod seasonChangeMethod() {
@@ -298,6 +341,14 @@ public class ConfigHandler {
 
         private static Supplier<List<? extends String>> getDefaultWhitelistDimensions() {
             return () -> Arrays.asList(Common.defaultWhitelistDimensions);
+        }
+
+        public static boolean seasonalWeather() {
+            return COMMON.seasonalWeather.get();
+        }
+
+        public static boolean seasonalSnowAndIce() {
+            return COMMON.seasonalSnowAndIce.get();
         }
 
     }

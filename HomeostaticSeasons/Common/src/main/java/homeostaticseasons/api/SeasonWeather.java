@@ -13,7 +13,7 @@ import homeostaticseasons.config.ConfigHandler;
 public class SeasonWeather {
 
     public static boolean warmEnoughToRain(Biome biome, BlockPos pos, LevelReader level) {
-        if (level instanceof ServerLevel serverLevel) {
+        if (level instanceof ServerLevel serverLevel && isValid(serverLevel)) {
             return warmEnoughToRain(biome, pos, serverLevel);
         }
         else {
@@ -41,20 +41,23 @@ public class SeasonWeather {
         else {
             Holder<Biome> biome = level.getBiome(pos);
 
-            if (ConfigHandler.Common.isValidDimension(level.dimension())) {
+            if (isValid(level)) {
                 BiomeTemperature biomeTemperature = new BiomeTemperature(biome, level, pos);
 
                 return biomeTemperature.getPrecipitationType()
                     == Biome.Precipitation.RAIN && biomeTemperature.isWarmEnoughToRain();
             }
             else {
-                return biome.value().getPrecipitationAt(pos)
-                    == Biome.Precipitation.RAIN && biome.value().getTemperature(pos) >= 0.15F;
+                return biome.value().getPrecipitationAt(pos) == Biome.Precipitation.RAIN;
             }
         }
     }
 
     public static Biome.Precipitation getPrecipitationType(Biome biome, BlockPos pos, ServerLevel level) {
+        if (!isValid(level)) {
+            return biome.getPrecipitationAt(pos);
+        }
+
         BiomeTemperature biomeTemperature = new BiomeTemperature(biome, level, pos);
         Biome.Precipitation biomePrecipitationOverride = biomeTemperature.getPrecipitationType();
 
@@ -66,6 +69,10 @@ public class SeasonWeather {
 
             return coldEnoughToSnow ? Biome.Precipitation.SNOW : Biome.Precipitation.RAIN;
         }
+    }
+
+    public static boolean isValid(ServerLevel level) {
+        return ConfigHandler.Common.isValidDimension(level.dimension()) && ConfigHandler.Common.seasonalWeather();
     }
 
 }

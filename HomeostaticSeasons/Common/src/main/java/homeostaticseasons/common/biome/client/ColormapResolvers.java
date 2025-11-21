@@ -38,6 +38,13 @@ public class ColormapResolvers {
         Minecraft mc = Minecraft.getInstance();
         Level level = mc.level;
 
+        if (type == ColormapType.GRASS && !ConfigHandler.Client.changeGrassColor()) {
+            return originalColor;
+        }
+        else if (type == ColormapType.FOLIAGE && !ConfigHandler.Client.changeFoliageColor()) {
+            return originalColor;
+        }
+
         if (level != null && ConfigHandler.Common.isValidDimension(level.dimension())) {
             Holder<Biome> biomeHolder = RegistryHelper.getBiomeHolder(biome, level);
 

@@ -11,6 +11,14 @@ public class Translations {
     private static final Map<String, String> translations = Maps.newHashMap();
 
     static {
+        translations.put("visuals.title", "Visual Settings");
+        translations.put("visuals", "All settings related to visual effects.");
+        translations.put("changefoliagecolor.title", "Change Foliage Color");
+        translations.put("changefoliagecolor", "Whether or not the foliage color changes based on the current season.");
+        translations.put("changegrasscolor.title", "Change Grass Color");
+        translations.put("changegrasscolor", "Whether or not the grass color changes based on the current season.");
+        translations.put("changebirchcolor.title", "Change Birch Color");
+        translations.put("changebirchcolor", "Whether or not the birch leaves color changes based on the current season.");
         translations.put("seasons.title", "Seasons Settings");
         translations.put("seasons", "All settings related to the seasons system.");
         translations.put("whitelistdimensions.title", "Whitelisted Dimensions");
@@ -56,6 +64,16 @@ public class Translations {
         translations.put("midwinterdayslength", "The length of Mid Winter subseason in Minecraft days.");
         translations.put("latewinterdayslength.title", "Late Winter Subseason Length");
         translations.put("latewinterdayslength", "The length of Late Winter subseason in Minecraft days.");
+        translations.put("weather.title", "Weather Settings");
+        translations.put("weather", "All settings related to weather effects.");
+        translations.put("seasonalweather.title", "Seasonal Weather");
+        translations.put("seasonalweather", joiner(
+            "Whether or not weather changes based on the current season.",
+            "This feature has performance implications until Mojang fixes snow tick performance issues.",
+            "Disable if you experience lag spikes during weather changes, or have another weather mod enabled."
+        ));
+        translations.put("seasonalsnowandice.title", "Seasonal Snow and Ice");
+        translations.put("seasonalsnowandice", "Whether or not snow and ice formation changes based on the current season.");
     }
 
     public static String get(String key) {
