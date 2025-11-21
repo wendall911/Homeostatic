@@ -7,6 +7,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap;
 
+import homeostaticseasons.HomeostaticSeasons;
 import homeostaticseasons.common.biome.BiomeTemperature;
 import homeostaticseasons.config.ConfigHandler;
 
@@ -59,16 +60,8 @@ public class SeasonWeather {
         }
 
         BiomeTemperature biomeTemperature = new BiomeTemperature(biome, level, pos);
-        Biome.Precipitation biomePrecipitationOverride = biomeTemperature.getPrecipitationType();
 
-        if (biomePrecipitationOverride == Biome.Precipitation.NONE) {
-            return biomePrecipitationOverride;
-        }
-        else {
-            boolean coldEnoughToSnow = coldEnoughToSnow(biome, pos, level);
-
-            return coldEnoughToSnow ? Biome.Precipitation.SNOW : Biome.Precipitation.RAIN;
-        }
+        return biomeTemperature.getPrecipitationType();
     }
 
     public static boolean isValid(ServerLevel level) {
