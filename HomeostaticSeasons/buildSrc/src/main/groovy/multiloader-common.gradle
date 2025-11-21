@@ -6,7 +6,7 @@ plugins {
 }
 
 base {
-    archivesName = "${mod_id}-${minecraft_version}"
+    archivesName = "${mod_id}-${minecraft_version}-${project.name}".toLowerCase()
 }
 
 java {
@@ -105,7 +105,7 @@ repositories {
 // Read more about capabilities here: https://docs.gradle.org/current/userguide/component_capabilities.html#sec:declaring-additional-capabilities-for-a-local-component
 ['apiElements', 'runtimeElements'].each { variant ->
     configurations."$variant".outgoing {
-        capability("$group:$mod_id-${project.name}:$version")
+        capability("$group:$mod_id-${minecraft_version}-${project.name}:$version".toLowerCase())
         capability("$group:$mod_id:$version")
     }
     publishing.publications.configureEach {
@@ -167,14 +167,6 @@ processResources {
 }
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId project.group
-            artifactId project.archivesBaseName
-            version project.version
-            from components.java
-        }
-    }
     repositories {
         if (System.getenv('local_maven') != null) {
             maven {
