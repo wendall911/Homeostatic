@@ -37,7 +37,11 @@ public class FoliageColorMixin {
                 );
 
                 if (biomeColormap != null) {
-                    cir.setReturnValue(biomeColormap.getBirchColor(originalColor, biomeHolder));
+                    int newColor = biomeColormap.getBirchColor(originalColor, biomeHolder);
+
+                    if (newColor != originalColor) {
+                        cir.setReturnValue(newColor);
+                    }
                 }
             }
         }

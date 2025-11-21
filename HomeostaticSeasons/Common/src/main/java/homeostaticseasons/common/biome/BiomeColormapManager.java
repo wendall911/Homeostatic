@@ -60,10 +60,15 @@ public class BiomeColormapManager extends SimpleJsonResourceReloadListener {
     }
 
     public static BiomeColormap getColormap(Holder<Biome> biome, Season season) {
-        ResourceLocation biomeCategory = ClimateSettings.prefix(BiomeCategoryManager.getBiomeCategory(biome).toString());
-        ColormapType biomeTypeColormap = BIOMETYPE_TO_COLORMAPTYPE.getOrDefault(biomeCategory, ColormapType.NORMAL);
+        ColormapType biomeTypeColormap = getColormapType(biome);
 
         return getBiomeColormap(getSerializedName(biomeTypeColormap, season));
+    }
+
+    public static BiomeColormap.ColormapType getColormapType(Holder<Biome> biome) {
+        ResourceLocation biomeCategory = ClimateSettings.prefix(BiomeCategoryManager.getBiomeCategory(biome).toString());
+
+        return BIOMETYPE_TO_COLORMAPTYPE.getOrDefault(biomeCategory, ColormapType.NORMAL);
     }
 
     @Override

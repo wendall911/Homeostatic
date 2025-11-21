@@ -4,7 +4,10 @@
   "package": "homeostaticseasons.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ServerLevelAccessor"
+    "BiomeMixin",
+    "LevelMixin",
+    "ServerLevelAccessor",
+    "ServerLevelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
