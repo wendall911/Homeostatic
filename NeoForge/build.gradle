@@ -1,7 +1,6 @@
 plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev'
-    id 'io.github.goooler.shadow'
 }
 
 def modLoader = "${project.name}".toUpperCase()
@@ -132,10 +131,6 @@ dependencies {
 
 sourceSets.main.resources {
     srcDir 'src/generated/resources'
-}
-
-shadowJar {
-    archiveClassifier = ''
 }
 
 def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
