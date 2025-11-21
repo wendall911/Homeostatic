@@ -36,11 +36,4 @@ publishing {
             artifact jar
         }
     }
-    repositories {
-        if (System.getenv('local_maven') != null) {
-            maven {
-                url 'file://' + System.getenv('local_maven')
-            }
-        }
-    }
 }

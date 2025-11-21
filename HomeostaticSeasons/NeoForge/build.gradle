@@ -50,11 +50,10 @@ dependencies {
     implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
     jarJar group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-neoforge", version: "${whitenoise_version}"
 
-    compileOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
-
     if (System.getenv('DATA_GEN') != null) {
     }
     else {
+        runtimeOnly group: 'com.github.wendall911.homeostatic', name: "homeostatic-${minecraft_version}-neoforge", version: "${homeostatic_version}"
         //runtimeOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
         runtimeOnly "dev.architectury:architectury-neoforge:${architectury_version}"
         //runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"

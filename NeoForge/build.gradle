@@ -3,10 +3,6 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
-def modLoader = "${project.name}".toUpperCase()
-def actualVersion = version
-version = "${version}-${modLoader}"
-
 neoForge {
     version = neoforge_version
     parchment {
@@ -260,6 +256,18 @@ publishMods {
             content = changelog.map {
                 "# A new version of ${mod_display_name} for NeoForge ${minecraft_version} has been released! \n" + it
             }
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            // This gives us the built version NeoForge requires
+            artifact jar
         }
     }
 }

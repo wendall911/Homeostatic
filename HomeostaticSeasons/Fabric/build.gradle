@@ -36,6 +36,7 @@ dependencies {
         // Datagen mods
     }
     else {
+        modRuntimeOnly group: 'com.github.wendall911.homeostatic', name: "homeostatic-${minecraft_version}-fabric", version: "${homeostatic_version}"
         // Runtime testing mods
         modRuntimeOnly "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
         //modRuntimeOnly "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
