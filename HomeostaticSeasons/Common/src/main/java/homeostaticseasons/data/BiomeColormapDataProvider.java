@@ -67,19 +67,19 @@ public class BiomeColormapDataProvider implements DataProvider {
     @Override
     @NotNull
     public CompletableFuture<?> run(@NotNull CachedOutput cache) {
-        List<CompletableFuture<?>> recipeList = new ArrayList<>();
+        List<CompletableFuture<?>> futures = new ArrayList<>();
 
         registerBiomeColormapData();
 
         for (Map.Entry<ResourceLocation, BiomeColormap> entry : BIOME_TYPES_MAP.entrySet()) {
             PackOutput.PathProvider pathProvider = getPath();
 
-            recipeList.add(DataProvider.saveStable(cache,
+            futures.add(DataProvider.saveStable(cache,
                 BiomeColormapManager.parseBiomeColormapData(entry.getValue()),
                 pathProvider.json(entry.getKey())));
         }
 
-        return CompletableFuture.allOf(recipeList.toArray(CompletableFuture[]::new));
+        return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
     }
 
     @Override

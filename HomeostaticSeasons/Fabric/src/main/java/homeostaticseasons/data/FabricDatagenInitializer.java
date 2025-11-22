@@ -11,6 +11,7 @@ public class FabricDatagenInitializer implements DataGeneratorEntrypoint {
 
         pack.addProvider(HomeostaticSeasonsLanguageProvider::new);
         pack.addProvider((dataOutput, registryFuture) -> new BiomeColormapDataProvider(dataOutput));
+        pack.addProvider((dataOutput, registryFuture) -> new WeatherDataProvider(dataOutput));
     }
 
 }
