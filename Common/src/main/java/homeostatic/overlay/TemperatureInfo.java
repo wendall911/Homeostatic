@@ -18,6 +18,7 @@ import climatesettings.common.biome.BiomeTypeDataManager;
 import homeostatic.common.temperature.TemperatureDirection;
 import homeostatic.common.temperature.TemperatureRange;
 import homeostatic.config.ConfigHandler;
+import homeostatic.data.integration.ModIntegration;
 import homeostatic.platform.Services;
 import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
@@ -95,6 +96,16 @@ public class TemperatureInfo extends Overlay {
                     ConfigHandler.Client.debugOffsetX(), 1.0F), y + (mc.font.lineHeight * 3),
                     -1, false);
             });
+
+            if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.HS_MODID)) {
+                String season = homeostaticseasons.api.HomeostaticSeasonsAPI.getCurrentSeason(mc.level).toString();
+                int seasonWidth = mc.font.width(season);
+
+                FontHelper.draw(mc, guiGraphics, season,
+                    Alignment.getTextX(ConfigHandler.Client.debugPosition(), scaledWidth, seasonWidth,
+                    ConfigHandler.Client.debugOffsetX(), 1.0F), y + (mc.font.lineHeight * 4),
+                    -1, false);
+            }
         });
     }
 

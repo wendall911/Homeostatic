@@ -113,6 +113,11 @@ public class NeoForgePlatform implements IPlatform {
 
     @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
+        if (Services.PLATFORM.isModLoaded(ModIntegration.HS_MODID)) {
+            int season = homeostaticseasons.api.HomeostaticSeasonsAPI.getCurrentSeason(level).ordinal();
+
+            return SubSeason.values()[season];
+        }
         if (Services.PLATFORM.isModLoaded(ModIntegration.SS_MODID)
                 && SereneSeasonsForgeHelper.isSeasonDimension(level)) {
             return SereneSeasonsForgeHelper.getSubSeason(level);
