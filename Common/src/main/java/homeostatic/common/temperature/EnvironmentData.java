@@ -17,6 +17,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.Precipitation;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.storage.ServerLevelData;
 import climatesettings.common.biome.BiomeTypeData;
 import climatesettings.common.biome.BiomeTypeDataManager;
 import climatesettings.common.biome.HomeostaticClimateSettings;
+import homeostatic.Homeostatic;
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.platform.Services;
 import homeostatic.util.TempHelper;
@@ -156,6 +158,19 @@ public class EnvironmentData {
         else {
             this.localTemperature = this.airTemperature;
         }
+        /*
+        Homeostatic.LOGGER.warn("[BiomeTemperature] Biome: {}, surrounding biomes: {}, Pos: {}, DryTemp: {}, WetTemp: {}, BlackGlobeTemp: {}, RH: {}, DayNightOffset: {}, AirTemp: {}",
+            biome.getRegisteredName(),
+            biomes.size(),
+            pos,
+            dryTemp,
+            wetTemp,
+            blackGlobeTemp,
+            relativeHumidity,
+            dayNightOffset,
+            this.airTemperature
+        );
+         */
     }
 
     public boolean isSubmerged() {
@@ -238,7 +253,7 @@ public class EnvironmentData {
     private static double getMaxBiomeHumidity(Holder<Biome> biomeHolder, BlockPos pos) {
         BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biomeHolder);
 
-        return biomeTypeData.getHumidity(biomeHolder.value().getPrecipitationAt(pos));
+        return biomeTypeData.getHumidity(getPrecipitationAt(biomeHolder.value(), pos));
     }
 
     private static float getWaterTemperature(float airTemperature, double waterVolume) {
@@ -293,7 +308,7 @@ public class EnvironmentData {
     private static float getHeightAdjustedTemperature(ServerLevel world, Holder<Biome> biomeHolder, BlockPos pos) {
         ResourceKey<Level> worldKey = world.dimension();
         BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biomeHolder);
-        Biome.Precipitation precipitation = biomeHolder.value().getPrecipitationAt(pos);
+        Biome.Precipitation precipitation = getPrecipitationAt(biomeHolder.value(), pos);
         float temperature = biomeTypeData.getTemperature(precipitation);
 
         /*
@@ -344,7 +359,7 @@ public class EnvironmentData {
             int season;
             float lateSummerOffset = biomeTypeData.MC_DEGREE * 5;
             int subSeason = subSeasonHolder.ordinal();
-            float variation = biomeTypeData.getSeasonVariation(biomeHolder.value().getPrecipitationAt(pos)) / 2.0F;
+            float variation = biomeTypeData.getSeasonVariation(getPrecipitationAt(biomeHolder.value(), pos)) / 2.0F;
 
             if ((subSeason + 9) <= 12) {
                 season = subSeason + 9;
@@ -381,6 +396,27 @@ public class EnvironmentData {
 
     private static double getSeasonTemperature(int season, float variation, float biomeTemp) {
         return variation * Math.cos(((season - 1) * Math.PI) / 6) + biomeTemp;
+    }
+
+    /*
+     * Need to mock what the internal biome method does for precipitation type,
+     * this ensures if another mod installed, the default vanilla behavior is preserved.
+     */
+    public static Precipitation getPrecipitationAt(Biome biome, BlockPos pos) {
+        if (!biome.hasPrecipitation()) {
+            return Biome.Precipitation.NONE;
+        }
+        else {
+            return coldEnoughToSnow(biome, pos) ? Biome.Precipitation.SNOW : Biome.Precipitation.RAIN;
+        }
+    }
+
+    public static boolean coldEnoughToSnow(Biome biome, BlockPos pos) {
+        return !warmEnoughToRain(biome, pos);
+    }
+
+    public static boolean warmEnoughToRain(Biome biome, BlockPos pos) {
+        return biome.getTemperature(pos) >= 0.15F;
     }
 
     @Override
