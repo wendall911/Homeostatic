@@ -4,6 +4,7 @@ mutable field net/minecraft/client/renderer/BiomeColors GRASS_COLOR_RESOLVER Lne
 mutable field net/minecraft/client/renderer/BiomeColors FOLIAGE_COLOR_RESOLVER Lnet/minecraft/world/level/ColorResolver;
 
 accessible method net/minecraft/world/level/biome/Biome getTemperature (Lnet/minecraft/core/BlockPos;)F
+accessible class net/minecraft/world/level/biome/Biome$ClimateSettings
 
 accessible field net/minecraft/server/level/ServerLevel THUNDER_DELAY Lnet/minecraft/util/valueproviders/IntProvider;
 accessible field net/minecraft/server/level/ChunkMap level Lnet/minecraft/server/level/ServerLevel;

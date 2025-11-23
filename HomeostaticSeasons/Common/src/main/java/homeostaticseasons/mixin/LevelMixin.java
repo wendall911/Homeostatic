@@ -1,7 +1,6 @@
 package homeostaticseasons.mixin;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,11 +17,7 @@ public abstract class LevelMixin {
     public void homeostaticseasons$isRainingAt(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         Level level = (Level)(Object)this;
 
-        if (level instanceof ServerLevel serverLevel) {
-            boolean isRaining = SeasonWeather.isRainingAt(serverLevel, pos);
-
-            cir.setReturnValue(isRaining);
-        }
+        cir.setReturnValue(SeasonWeather.isRainingAt(level, pos));
     }
 
 }
