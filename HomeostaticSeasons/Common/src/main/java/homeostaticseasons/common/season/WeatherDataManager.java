@@ -29,7 +29,7 @@ public class WeatherDataManager extends SimpleJsonResourceReloadListener {
     }
 
     public static WeatherData getWeatherData(Season season) {
-        return WEATHER_DATA.get(season);
+        return WEATHER_DATA.getOrDefault(season, null);
     }
 
     public static JsonElement parseWeatherData(WeatherData weatherData) {

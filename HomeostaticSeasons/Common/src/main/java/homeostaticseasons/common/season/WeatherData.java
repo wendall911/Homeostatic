@@ -42,4 +42,12 @@ public record WeatherData(int minRainTime, int maxRainTime, int minThunderTime, 
 
     }
 
+    public boolean canRain() {
+        return this.minRainTime != -1 && this.maxRainTime != -1;
+    }
+
+    public boolean canThunder() {
+        return this.minThunderTime != -1 && this.maxThunderTime != -1;
+    }
+
 }

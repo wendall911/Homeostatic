@@ -17,7 +17,7 @@ public class ClientEventHandler {
         if (player != null && player.tickCount % 20 == 0) {
             Season currentSeason = HomeostaticSeasonsAPI.getCurrentSeason(player.level());
 
-            if (lastSeason != currentSeason) {
+            if (currentSeason != null && lastSeason != currentSeason) {
                 lastSeason = currentSeason;
                 minecraft.levelRenderer.allChanged();
             }

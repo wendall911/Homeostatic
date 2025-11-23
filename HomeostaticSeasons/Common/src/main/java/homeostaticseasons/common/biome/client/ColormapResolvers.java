@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 
 import homeostaticseasons.api.HomeostaticSeasonsAPI;
+import homeostaticseasons.api.Season;
 import homeostaticseasons.common.biome.BiomeColormap;
 import homeostaticseasons.common.biome.BiomeColormapManager;
 import homeostaticseasons.config.ConfigHandler;
@@ -47,11 +48,12 @@ public class ColormapResolvers {
 
         if (level != null && ConfigHandler.Common.isValidDimension(level.dimension())) {
             Holder<Biome> biomeHolder = RegistryHelper.getBiomeHolder(biome, level);
+            Season currentSeason = HomeostaticSeasonsAPI.getCurrentSeason(level);
 
-            if (biomeHolder != null) {
+            if (biomeHolder != null && currentSeason != null) {
                 BiomeColormap biomeColormap = BiomeColormapManager.getColormap(
                     biomeHolder,
-                    HomeostaticSeasonsAPI.getCurrentSeason(level)
+                    currentSeason
                 );
 
                 if (biomeColormap != null) {

@@ -22,7 +22,7 @@ public class HomeostaticSeasonsAPI {
             }
         }
         else {
-            return Season.EARLY_SPRING;
+            return null;
         }
     }
 
@@ -31,7 +31,7 @@ public class HomeostaticSeasonsAPI {
             return currentSeason.next();
         }
 
-        return Season.EARLY_SPRING;
+        return null;
     }
 
     public static long getSeasonTime(Level level, Season season) {
