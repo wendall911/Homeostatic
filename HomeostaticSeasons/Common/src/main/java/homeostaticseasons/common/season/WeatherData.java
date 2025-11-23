@@ -12,8 +12,7 @@ import com.google.gson.JsonSerializer;
 
 import net.minecraft.util.GsonHelper;
 
-public record WeatherData(float meltChance, int meltRolls, int minRainTime, int maxRainTime,
-                          int minThunderTime, int maxThunderTime) {
+public record WeatherData(int minRainTime, int maxRainTime, int minThunderTime, int maxThunderTime) {
 
     public static class Serializer implements JsonDeserializer<WeatherData>, JsonSerializer<WeatherData> {
 
@@ -22,8 +21,6 @@ public record WeatherData(float meltChance, int meltRolls, int minRainTime, int 
             JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
 
             return new WeatherData(
-                GsonHelper.getAsFloat(json, "melt_chance"),
-                GsonHelper.getAsInt(json, "melt_rolls"),
                 GsonHelper.getAsInt(json, "min_rain_time"),
                 GsonHelper.getAsInt(json, "max_rain_time"),
                 GsonHelper.getAsInt(json, "min_thunder_time"),
@@ -35,8 +32,6 @@ public record WeatherData(float meltChance, int meltRolls, int minRainTime, int 
         public JsonElement serialize(WeatherData weatherData, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject json = new JsonObject();
 
-            json.addProperty("melt_chance", weatherData.meltChance);
-            json.addProperty("melt_rolls", weatherData.meltRolls);
             json.addProperty("min_rain_time", weatherData.minRainTime);
             json.addProperty("max_rain_time", weatherData.maxRainTime);
             json.addProperty("min_thunder_time", weatherData.minThunderTime);

@@ -1,8 +1,6 @@
 {
   "max_rain_time": 36000,
   "max_thunder_time": 96000,
-  "melt_chance": 8.33,
-  "melt_rolls": 1,
   "min_rain_time": 12000,
   "min_thunder_time": 12000
 }
