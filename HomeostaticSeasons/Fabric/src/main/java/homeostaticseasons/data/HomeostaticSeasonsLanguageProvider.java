@@ -48,6 +48,8 @@ public class HomeostaticSeasonsLanguageProvider extends FabricLanguageProvider {
         addConfigTranslation(translationBuilder, "weather");
         addConfigTranslation(translationBuilder, "seasonalweather");
         addConfigTranslation(translationBuilder, "seasonalsnowandice");
+        addConfigTranslation(translationBuilder, "seasonalsnowreplacevegetation");
+        addConfigTranslation(translationBuilder, "melticenearwater");
 
         addSeasonTranslations(translationBuilder);
     }

@@ -5,9 +5,12 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BiomeMixin",
+    "BlockBehaviorMixin",
+    "IceBlockMixin",
     "LevelMixin",
     "ServerLevelAccessor",
-    "ServerLevelMixin"
+    "ServerLevelMixin",
+    "SnowLayerBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

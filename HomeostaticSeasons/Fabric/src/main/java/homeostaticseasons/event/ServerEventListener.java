@@ -13,6 +13,9 @@ public class ServerEventListener {
         );
 
         ServerTickEvents.END_WORLD_TICK.register(ServerEventHandler::onLevelTick);
+        ServerTickEvents.END_SERVER_TICK.register((minecraftServer) -> {
+            SnowAndIceEventHandler.onEndServerTick();
+        });
     }
 
 }

@@ -9,7 +9,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 
-public class RegistryHelper {
+import technology.roughness.whitenoise.util.ResourceLocationHelper;
+
+public class RegistryHelper extends ResourceLocationHelper {
 
     public static Holder<Biome> getBiomeHolder(Biome biome, Level level) {
         Registry<Biome> biomeRegistry;

@@ -150,6 +150,8 @@ public class ConfigHandler {
         private final WhiteNoiseConfigSpec.LongValue lateWinterDaysLength;
         private final WhiteNoiseConfigSpec.BooleanValue seasonalWeather;
         private final WhiteNoiseConfigSpec.BooleanValue seasonalSnowAndIce;
+        private final WhiteNoiseConfigSpec.BooleanValue seasonalSnowReplaceVegetation;
+        private final WhiteNoiseConfigSpec.BooleanValue meltIceNearWater;
 
         Common(WhiteNoiseConfigSpec.Builder builder) {
             builder.push("seasons").comment(getTranslation("seasons"));
@@ -216,6 +218,12 @@ public class ConfigHandler {
             seasonalSnowAndIce = builder
                 .comment(getTranslation("seasonalsnowandice"))
                 .define("seasonalSnowAndIce", true);
+            seasonalSnowReplaceVegetation = builder
+                .comment(getTranslation("seasonalsnowreplacevegetation"))
+                .define("seasonalSnowReplaceVegetation", true);
+            meltIceNearWater = builder
+                .comment(getTranslation("melticenearwater"))
+                .define("meltIceNearWater", true);
 
             builder.pop(); // weather
         }
@@ -349,6 +357,14 @@ public class ConfigHandler {
 
         public static boolean seasonalSnowAndIce() {
             return COMMON.seasonalSnowAndIce.get();
+        }
+
+        public static boolean seasonalSnowReplaceVegetation() {
+            return COMMON.seasonalSnowReplaceVegetation.get();
+        }
+
+        public static boolean meltIceNearWater() {
+            return COMMON.meltIceNearWater.get();
         }
 
     }

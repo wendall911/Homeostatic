@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 public class ServerEventListener {
 
@@ -17,6 +18,11 @@ public class ServerEventListener {
         if (event.getLevel() instanceof ServerLevel level) {
             ServerEventHandler.onLevelTick(level);
         }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onServerTick(ServerTickEvent.Post event) {
+        SnowAndIceEventHandler.onEndServerTick();
     }
 
 }

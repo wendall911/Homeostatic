@@ -6,7 +6,9 @@ import net.minecraft.world.level.biome.Biome;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import homeostaticseasons.api.SeasonWeather;
 
@@ -17,11 +19,10 @@ import homeostaticseasons.api.SeasonWeather;
 @Mixin(Biome.class)
 public abstract class BiomeMixin {
 
-    @Redirect(method = "shouldSnow", at = @At(value = "INVOKE", target = "net/minecraft/world/level/biome/Biome.warmEnoughToRain(Lnet/minecraft/core/BlockPos;)Z"))
-    public boolean homeostaticseasons$shouldSnow_warmEnoughToRain(Biome biome, BlockPos pos, LevelReader level) {
-        return SeasonWeather.warmEnoughToRain(biome, pos, level);
+    @Inject(method = "shouldSnow", at = @At("HEAD"), cancellable = true)
+    public void homeostaticseasons$shouldSnow(LevelReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(!SeasonWeather.warmEnoughToRain((Biome)(Object)this, pos, level));
     }
-
 
     @Redirect(method = "shouldFreeze(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Z)Z", at=@At(value = "INVOKE", target = "net/minecraft/world/level/biome/Biome.warmEnoughToRain(Lnet/minecraft/core/BlockPos;)Z"))
     public boolean homeostaticseasons$shouldFreeze_warmEnoughToRain(Biome biome, BlockPos pos, LevelReader level) {

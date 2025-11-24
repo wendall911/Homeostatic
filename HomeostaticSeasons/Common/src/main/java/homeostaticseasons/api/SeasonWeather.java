@@ -88,6 +88,13 @@ public class SeasonWeather {
         return ConfigHandler.Common.isValidDimension(level.dimension()) && ConfigHandler.Common.seasonalWeather();
     }
 
+    public static void invalidateCacheAt(BlockPos pos) {
+        long i = pos.asLong();
+        Long2FloatLinkedOpenHashMap long2floatlinkedopenhashmap = temperatureCache.get();
+
+        long2floatlinkedopenhashmap.remove(i);
+    }
+
     public static BiomeTemperature getBiomeTemperature(Biome biome, Level level, BlockPos pos) {
         long i = pos.asLong();
         Long2FloatLinkedOpenHashMap long2floatlinkedopenhashmap = temperatureCache.get();

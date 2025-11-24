@@ -74,6 +74,15 @@ public class Translations {
         ));
         translations.put("seasonalsnowandice.title", "Seasonal Snow and Ice");
         translations.put("seasonalsnowandice", "Whether or not snow and ice formation changes based on the current season.");
+        translations.put("seasonalsnowreplacevegetation.title", "Seasonal Snow Replaces Vegetation");
+        translations.put("seasonalsnowreplacevegetation", joiner(
+            "Whether or not snow layers placed by seasonal snow replace vegetation such as tall grass and flowers.",
+            "Disable this if you want seasonal snow to behave like normal snow."
+        ));
+        translations.put("melticenearwater.title", "Melt Ice Near Water");
+        translations.put("melticenearwater", joiner(
+            "Whether or not ice blocks near water melt during warm seasons."
+        ));
     }
 
     public static String get(String key) {

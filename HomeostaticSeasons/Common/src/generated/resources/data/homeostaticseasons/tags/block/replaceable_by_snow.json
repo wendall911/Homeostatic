@@ -1,0 +1,30 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:saplings",
+      "required": false
+    },
+    {
+      "id": "#minecraft:flowers",
+      "required": false
+    },
+    {
+      "id": "#minecraft:tall_flowers",
+      "required": false
+    },
+    "minecraft:short_grass",
+    "minecraft:tall_grass",
+    "minecraft:fern",
+    "minecraft:large_fern",
+    "minecraft:dead_bush",
+    "minecraft:glow_lichen",
+    {
+      "id": "#c:flowers",
+      "required": false
+    },
+    {
+      "id": "#seaons:replaceable_by_snow",
+      "required": false
+    }
+  ]
+}
