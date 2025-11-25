@@ -66,22 +66,10 @@ public class Translations {
         translations.put("latewinterdayslength", "The length of Late Winter subseason in Minecraft days.");
         translations.put("weather.title", "Weather Settings");
         translations.put("weather", "All settings related to weather effects.");
-        translations.put("seasonalweather.title", "Seasonal Weather");
-        translations.put("seasonalweather", joiner(
-            "Whether or not weather changes based on the current season.",
-            "This feature has performance implications until Mojang fixes snow tick performance issues.",
-            "Disable if you experience lag spikes during weather changes, or have another weather mod enabled."
-        ));
-        translations.put("seasonalsnowandice.title", "Seasonal Snow and Ice");
-        translations.put("seasonalsnowandice", "Whether or not snow and ice formation changes based on the current season.");
         translations.put("seasonalsnowreplacevegetation.title", "Seasonal Snow Replaces Vegetation");
         translations.put("seasonalsnowreplacevegetation", joiner(
             "Whether or not snow layers placed by seasonal snow replace vegetation such as tall grass and flowers.",
             "Disable this if you want seasonal snow to behave like normal snow."
-        ));
-        translations.put("melticenearwater.title", "Melt Ice Near Water");
-        translations.put("melticenearwater", joiner(
-            "Whether or not ice blocks near water melt during warm seasons."
         ));
     }
 

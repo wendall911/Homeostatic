@@ -18,7 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import homeostaticseasons.api.SeasonWeather;
 import homeostaticseasons.common.block.Meltable;
-import homeostaticseasons.config.ConfigHandler;
 import homeostaticseasons.event.SnowAndIceEventHandler;
 
 @Mixin(IceBlock.class)
@@ -37,7 +36,7 @@ public abstract class IceBlockMixin extends Block implements Meltable {
             if (!SnowAndIceEventHandler.getPlacedMeltablesSavedData(level).isManuallyPlaced(pos)) {
                 this.melt(state, level, pos);
             }
-            else if (ConfigHandler.Common.meltIceNearWater()) {
+            else {
                 boolean neaarWater = false;
 
                 for (BlockPos nearbyPos : BlockPos.withinManhattan(pos, 1, 1, 1)) {

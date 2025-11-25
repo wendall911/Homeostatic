@@ -148,10 +148,7 @@ public class ConfigHandler {
         private final WhiteNoiseConfigSpec.LongValue earlyWinterDaysLength;
         private final WhiteNoiseConfigSpec.LongValue midWinterDaysLength;
         private final WhiteNoiseConfigSpec.LongValue lateWinterDaysLength;
-        private final WhiteNoiseConfigSpec.BooleanValue seasonalWeather;
-        private final WhiteNoiseConfigSpec.BooleanValue seasonalSnowAndIce;
         private final WhiteNoiseConfigSpec.BooleanValue seasonalSnowReplaceVegetation;
-        private final WhiteNoiseConfigSpec.BooleanValue meltIceNearWater;
 
         Common(WhiteNoiseConfigSpec.Builder builder) {
             builder.push("seasons").comment(getTranslation("seasons"));
@@ -212,18 +209,9 @@ public class ConfigHandler {
 
             builder.push("weather").comment(getTranslation("weather"));
 
-            seasonalWeather = builder
-                .comment(getTranslation("seasonalweather"))
-                .define("seasonalWeather", true);
-            seasonalSnowAndIce = builder
-                .comment(getTranslation("seasonalsnowandice"))
-                .define("seasonalSnowAndIce", true);
             seasonalSnowReplaceVegetation = builder
                 .comment(getTranslation("seasonalsnowreplacevegetation"))
                 .define("seasonalSnowReplaceVegetation", true);
-            meltIceNearWater = builder
-                .comment(getTranslation("melticenearwater"))
-                .define("meltIceNearWater", true);
 
             builder.pop(); // weather
         }
@@ -351,20 +339,8 @@ public class ConfigHandler {
             return () -> Arrays.asList(Common.defaultWhitelistDimensions);
         }
 
-        public static boolean seasonalWeather() {
-            return COMMON.seasonalWeather.get();
-        }
-
-        public static boolean seasonalSnowAndIce() {
-            return COMMON.seasonalSnowAndIce.get();
-        }
-
         public static boolean seasonalSnowReplaceVegetation() {
             return COMMON.seasonalSnowReplaceVegetation.get();
-        }
-
-        public static boolean meltIceNearWater() {
-            return COMMON.meltIceNearWater.get();
         }
 
     }

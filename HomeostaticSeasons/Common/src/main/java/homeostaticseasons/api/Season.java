@@ -67,8 +67,13 @@ public enum Season implements StringRepresentable {
     }
 
     public boolean isWetSeason() {
-        if (ConfigHandler.Common.hemisphere() == Hemisphere.NORTHERN) {
-            return ordinal() < 7 && ordinal() > 1;
+        if (ConfigHandler.Common.seasonChangeMethod() == SeasonChangeMethod.REALTIME) {
+            if (ConfigHandler.Common.hemisphere() == Hemisphere.NORTHERN) {
+                return ordinal() > 6;
+            }
+            else {
+                return ordinal() < 7 && ordinal() > 1;
+            }
         }
         else {
             return ordinal() > 6;

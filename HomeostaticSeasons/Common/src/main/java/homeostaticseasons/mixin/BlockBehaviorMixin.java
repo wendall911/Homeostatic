@@ -19,14 +19,14 @@ public abstract class BlockBehaviorMixin {
 
     @Inject(method = "onPlace", at = @At("HEAD"))
     public void checkIfMeltablePlaced(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston, CallbackInfo ci) {
-        if (level instanceof ServerLevel serverLevel && !SnowAndIceEventHandler.isMeltableBlock(pos) && state.getBlock() instanceof Meltable meltable) {
+        if (level instanceof ServerLevel serverLevel && !SnowAndIceEventHandler.isCachedMeltableBlock(pos) && state.getBlock() instanceof Meltable meltable) {
             meltable.onMeltableManuallyPlaced(serverLevel, pos);
         }
     }
 
     @Inject(method = "onRemove", at = @At("HEAD"))
     public void checkIfMeltableRemoved(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving, CallbackInfo ci) {
-        if (level instanceof ServerLevel serverLevel && state.getBlock() instanceof Meltable meltable) {
+        if (level instanceof ServerLevel serverLevel && state.getBlock() instanceof Meltable meltable && newState.isAir()) {
             meltable.onMeltableReplaced(serverLevel, pos);
         }
     }

@@ -17,11 +17,11 @@ public class SnowAndIceEventHandler {
         meltableCache.clear();
     }
 
-    public static void trackMeltableBlock(BlockPos pos) {
+    public static void cacheMeltableBlock(BlockPos pos) {
         meltableCache.add(pos.asLong());
     }
 
-    public static boolean isMeltableBlock(BlockPos pos) {
+    public static boolean isCachedMeltableBlock(BlockPos pos) {
         return meltableCache.contains(pos.asLong());
     }
 

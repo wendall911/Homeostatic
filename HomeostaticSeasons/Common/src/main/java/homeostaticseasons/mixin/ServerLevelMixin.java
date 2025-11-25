@@ -8,21 +8,24 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.Precipitation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.storage.WritableLevelData;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import homeostaticseasons.HomeostaticSeasons;
 import homeostaticseasons.api.SeasonWeather;
 import homeostaticseasons.common.block.Meltable;
 import homeostaticseasons.config.ConfigHandler;
@@ -36,41 +39,57 @@ public abstract class ServerLevelMixin extends Level implements WorldGenLevel {
     }
 
     /*
-     * Determine the precipitation type based on the current season and biome.
+     * Here we are effectively disabling the vanilla precipitation tick handling
+     * so that we can implement our own via a separate functionality taking into account seasonal weather.
      */
-    @Redirect(method="tickPrecipitation", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/biome/Biome;getPrecipitationAt(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/biome/Biome$Precipitation;"))
-    public Biome.Precipitation homeostaticseasons$tickPrecipitation(Biome biome, BlockPos pos) {
-        return SeasonWeather.getPrecipitationType(biome, pos, (ServerLevel)(Object) this);
-    }
+    @Inject(method = "tickPrecipitation", at = @At("HEAD"), cancellable = true)
+    private void homeostaticseasons$tickPrecipitationOverride(BlockPos pos, CallbackInfo ci) {
+        BlockPos blockpos = this.getHeightmapPos(Types.MOTION_BLOCKING, pos);
+        BlockPos blockpos1 = blockpos.below();
+        Biome biome = this.getBiome(blockpos).value();
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 0), method = "tickPrecipitation(Lnet/minecraft/core/BlockPos;)V", locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void homeostaticseasons$addMeltableIce(BlockPos pos, CallbackInfo ci, BlockPos blockPos, BlockPos blockPos2, Biome biome) {
-        SnowAndIceEventHandler.trackMeltableBlock(blockPos2);
-    }
-
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 1), method = "tickPrecipitation(Lnet/minecraft/core/BlockPos;)V", locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void homeostaticseasons$addMeltableLayeredSnow(BlockPos pos, CallbackInfo ci, BlockPos blockPos, BlockPos blockPos2, Biome biome, int i, BlockState blockState, int j, BlockState blockState2) {
-        SnowAndIceEventHandler.trackMeltableBlock(blockPos);
-    }
-
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 2), method = "tickPrecipitation(Lnet/minecraft/core/BlockPos;)V", locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void homeostaticseasons$addMeltableSnow(BlockPos pos, CallbackInfo ci, BlockPos blockPos, BlockPos blockPos2, Biome biome) {
-        SnowAndIceEventHandler.trackMeltableBlock(blockPos);
-    }
-
-    @Inject(
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/level/block/Block;handlePrecipitation(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/biome/Biome$Precipitation;)V"
-        ),
-        method = "tickPrecipitation(Lnet/minecraft/core/BlockPos;)V",
-        locals = LocalCapture.CAPTURE_FAILSOFT
-    )
-    public void homeostaticseasons$setReplacedMeltable(BlockPos pos, CallbackInfo ci, BlockPos blockPos, BlockPos blockPos2, Biome biome, int i, Biome.Precipitation precipitation, BlockState blockState3) {
-        if (ConfigHandler.Common.seasonalSnowReplaceVegetation() && precipitation == Biome.Precipitation.SNOW) {
-            Meltable.replaceBlockOnSnow((ServerLevel)(Object)this, blockPos, biome);
+        if (biome.shouldFreeze(this.getLevel(), blockpos1)) {
+            SnowAndIceEventHandler.cacheMeltableBlock(blockpos1);
+            this.setBlockAndUpdate(blockpos1, Blocks.ICE.defaultBlockState());
         }
-    }
 
+        if (this.isRaining()) {
+            int i = this.getGameRules().getInt(GameRules.RULE_SNOW_ACCUMULATION_HEIGHT);
+
+            Biome.Precipitation biome$precipitation = SeasonWeather.getPrecipitationType(biome, blockpos, this.getLevel());
+
+            boolean shouldPlaceSnow = SeasonWeather.canPlaceSnow(biome, blockpos, this.getLevel());
+
+            if (i > 0 && shouldPlaceSnow) {
+                BlockState blockstate = this.getBlockState(blockpos);
+
+                if (blockstate.is(Blocks.SNOW)) {
+                    int j = blockstate.getValue(SnowLayerBlock.LAYERS);
+
+                    if (j < Math.min(i, 8)) {
+                        BlockState blockstate1 = blockstate.setValue(SnowLayerBlock.LAYERS, j + 1);
+                        Block.pushEntitiesUp(blockstate, blockstate1, this.getLevel(), blockpos);
+                        SnowAndIceEventHandler.cacheMeltableBlock(blockpos);
+                        this.setBlockAndUpdate(blockpos, blockstate1);
+                    }
+                }
+                else {
+                    SnowAndIceEventHandler.cacheMeltableBlock(blockpos);
+                    this.setBlockAndUpdate(blockpos, Blocks.SNOW.defaultBlockState());
+                }
+            }
+
+            if (biome$precipitation != Precipitation.NONE) {
+                BlockState blockstate2 = this.getBlockState(blockpos1);
+                blockstate2.getBlock().handlePrecipitation(blockstate2, this.getLevel(), blockpos1, biome$precipitation);
+
+                if (ConfigHandler.Common.seasonalSnowReplaceVegetation() && biome$precipitation == Biome.Precipitation.SNOW) {
+                    Meltable.replaceBlockOnSnow(this.getLevel(), blockpos);
+                }
+            }
+        }
+
+        ci.cancel();
+    }
 
 }

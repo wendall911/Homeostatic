@@ -20,8 +20,8 @@ import homeostaticseasons.api.SeasonWeather;
 public abstract class BiomeMixin {
 
     @Inject(method = "shouldSnow", at = @At("HEAD"), cancellable = true)
-    public void homeostaticseasons$shouldSnow(LevelReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(!SeasonWeather.warmEnoughToRain((Biome)(Object)this, pos, level));
+    public void homeostaticseasons$canPlaceSnow(LevelReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(SeasonWeather.canPlaceSnow((Biome)(Object)this, pos, level));
     }
 
     @Redirect(method = "shouldFreeze(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Z)Z", at=@At(value = "INVOKE", target = "net/minecraft/world/level/biome/Biome.warmEnoughToRain(Lnet/minecraft/core/BlockPos;)Z"))
