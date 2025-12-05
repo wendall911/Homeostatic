@@ -1,5 +1,6 @@
 package homeostaticseasons.common.biome;
 
+import java.util.List;
 import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
@@ -8,8 +9,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.minecraft.core.Holder;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -18,10 +24,12 @@ import net.minecraft.world.level.biome.Biome;
 import climatesettings.ClimateSettings;
 import climatesettings.common.biome.BiomeCategory;
 import climatesettings.common.biome.BiomeCategoryManager;
+import climatesettings.platform.Services;
 
 import homeostaticseasons.HomeostaticSeasons;
 import homeostaticseasons.api.Season;
 import homeostaticseasons.common.biome.BiomeColormap.ColormapType;
+import homeostaticseasons.network.SyncBiomeColormap;
 
 import static homeostaticseasons.HomeostaticSeasons.prefix;
 
@@ -71,6 +79,16 @@ public class BiomeColormapManager extends SimpleJsonResourceReloadListener {
         return BIOMETYPE_TO_COLORMAPTYPE.getOrDefault(biomeCategory, ColormapType.NORMAL);
     }
 
+    public static void update(List<BiomeColormap> biomeColormapList) {
+        COLORMAPS.clear();
+
+        for (BiomeColormap biomeColormap : biomeColormapList) {
+            COLORMAPS.put(biomeColormap.type(), biomeColormap);
+        }
+
+        HomeostaticSeasons.LOGGER.info("Updated {} biome colormap entries.", COLORMAPS.size());
+    }
+
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> pObject, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller profilerFiller) {
         COLORMAPS.clear();
@@ -88,6 +106,18 @@ public class BiomeColormapManager extends SimpleJsonResourceReloadListener {
         }
 
         HomeostaticSeasons.LOGGER.info("Loaded {} biome colormap entries.", COLORMAPS.size());
+    }
+
+    public static void syncWithClient(ServerPlayer player) {
+        if (player != null) {
+            List<BiomeColormap> biomeColormapList = COLORMAPS.values().stream().toList();
+            DataResult<Tag> result = Codec.list(BiomeColormap.CODEC).encodeStart(NbtOps.INSTANCE, biomeColormapList);
+            Tag data = result.getOrThrow((error) -> {
+                throw new IllegalStateException("Failed to encode biome colormap data for syncing: " + error);
+            });
+
+            Services.CLIMATE.syncDataToPlayer(new SyncBiomeColormap(data), player);
+        }
     }
 
 }

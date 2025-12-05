@@ -3,6 +3,8 @@ package homeostaticseasons.common.biome;
 import java.lang.reflect.Type;
 import java.util.Locale;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -11,30 +13,32 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.biome.Biome;
 
 import homeostaticseasons.util.ColorHelper;
 
-public class BiomeColormap {
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.parse;
 
-    private final int grassColor;
-    private final float grassSaturation;
-    private final int foliageColor;
-    private final float foliageSaturation;
-    private final int birchColor;
+public record BiomeColormap(ResourceLocation type, int grassColor, float grassSaturation, int foliageColor,
+                            float foliageSaturation, int birchColor) {
 
-    public BiomeColormap(int grassColor, float grassSaturation, int foliageColor, float foliageSaturation, int birchColor) {
-        this.grassColor = grassColor;
-        this.grassSaturation = grassSaturation;
-        this.foliageColor = foliageColor;
-        this.foliageSaturation = foliageSaturation;
-        this.birchColor = birchColor;
-    }
+    public static final Codec<BiomeColormap> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        ResourceLocation.CODEC.fieldOf("type").forGetter(BiomeColormap::type),
+        Codec.INT.fieldOf("grass_color").forGetter(BiomeColormap::grassColor),
+        Codec.FLOAT.fieldOf("grass_saturation").forGetter(BiomeColormap::grassSaturation),
+        Codec.INT.fieldOf("foliage_color").forGetter(BiomeColormap::foliageColor),
+        Codec.FLOAT.fieldOf("foliage_saturation").forGetter(BiomeColormap::foliageSaturation),
+        Codec.INT.fieldOf("birch_color").forGetter(BiomeColormap::birchColor)
+    ).apply(instance, BiomeColormap::new));
 
-    public BiomeColormap(int grassColor, int foliageColor, int birchColor) {
-        this(grassColor, -1, foliageColor, -1, birchColor);
+    public BiomeColormap(ResourceLocation type, int grassColor, int foliageColor, int birchColor) {
+        this(type, grassColor, -1, foliageColor, -1, birchColor);
     }
 
     public int getGrassColor(int originalColor, Holder<Biome> biomeHolder) {
@@ -69,6 +73,7 @@ public class BiomeColormap {
             JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
 
             return new BiomeColormap(
+                parse(GsonHelper.getAsString(json, "type")),
                 GsonHelper.getAsInt(json, "grass_color"),
                 GsonHelper.getAsFloat(json, "grass_saturation"),
                 GsonHelper.getAsInt(json, "foliage_color"),
@@ -81,6 +86,7 @@ public class BiomeColormap {
         public JsonElement serialize(BiomeColormap biomeColormap, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject json = new JsonObject();
 
+            json.addProperty("type", biomeColormap.type.toString());
             json.addProperty("grass_color", biomeColormap.grassColor);
             json.addProperty("grass_saturation", biomeColormap.grassSaturation);
             json.addProperty("foliage_color", biomeColormap.foliageColor);
@@ -93,14 +99,14 @@ public class BiomeColormap {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "BiomeColormap{" +
-                "grassColor=" + grassColor +
-                ", grassSaturation=" + grassSaturation +
-                ", foliageColor=" + foliageColor +
-                ", foliageSaturation=" + foliageSaturation +
-                ", birchColor=" + birchColor +
-                '}';
+            "grassColor=" + grassColor +
+            ", grassSaturation=" + grassSaturation +
+            ", foliageColor=" + foliageColor +
+            ", foliageSaturation=" + foliageSaturation +
+            ", birchColor=" + birchColor +
+            '}';
     }
 
     public enum ColormapType {
