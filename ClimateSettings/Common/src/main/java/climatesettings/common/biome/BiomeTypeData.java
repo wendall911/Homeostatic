@@ -10,8 +10,13 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.biome.Biome;
+
+import static technology.roughness.whitenoise.util.ResourceLocationHelper.parse;
 
 public class BiomeTypeData {
 
@@ -19,13 +24,24 @@ public class BiomeTypeData {
     public static final float SNOW_OFFSET = -0.446F;
     public static final float MC_DEGREE = 0.022289157F;
 
+    public static final Codec<BiomeTypeData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        ResourceLocation.CODEC.fieldOf("location").forGetter(biomeTypeData -> biomeTypeData.location),
+        Codec.FLOAT.fieldOf("temperature").forGetter(biomeTypeData -> biomeTypeData.temperature),
+        Codec.DOUBLE.fieldOf("humidity").forGetter(biomeTypeData -> biomeTypeData.humidity),
+        Codec.DOUBLE.fieldOf("season_variation").forGetter(biomeTypeData -> biomeTypeData.seasonVariation),
+        Codec.DOUBLE.fieldOf("day_night_offset").forGetter(biomeTypeData -> biomeTypeData.dayNightOffset),
+        Codec.BOOL.fieldOf("is_frozen").forGetter(biomeTypeData -> biomeTypeData.isFrozen)
+    ).apply(instance, BiomeTypeData::new));
+
+    private final ResourceLocation location;
     private final float temperature;
     private double humidity;
     private final double seasonVariation;
     private final double dayNightOffset;
     private final boolean isFrozen;
 
-    public BiomeTypeData(float temperature, double humidity, double seasonVariation, double dayNightOffset, boolean isFrozen) {
+    public BiomeTypeData(ResourceLocation location, float temperature, double humidity, double seasonVariation, double dayNightOffset, boolean isFrozen) {
+        this.location = location;
         this.temperature = temperature;
         this.humidity = humidity;
         this.seasonVariation = seasonVariation;
@@ -40,6 +56,7 @@ public class BiomeTypeData {
             JsonObject json = GsonHelper.convertToJsonObject(jsonElement, "data");
 
             return new BiomeTypeData(
+                parse(GsonHelper.getAsString(json, "location")),
                 GsonHelper.getAsFloat(json, "temperature"),
                 GsonHelper.getAsDouble(json, "humidity"),
                 GsonHelper.getAsDouble(json, "season_variation"),
@@ -52,6 +69,7 @@ public class BiomeTypeData {
         public JsonElement serialize(BiomeTypeData biomeTypeData, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject json = new JsonObject();
 
+            json.addProperty("location", biomeTypeData.location.toString());
             json.addProperty("temperature", biomeTypeData.temperature);
             json.addProperty("humidity", biomeTypeData.humidity);
             json.addProperty("season_variation", biomeTypeData.seasonVariation);
@@ -106,6 +124,10 @@ public class BiomeTypeData {
 
     public boolean isFrozen() {
         return this.isFrozen;
+    }
+
+    public ResourceLocation getLocation() {
+        return location;
     }
 
     @Override

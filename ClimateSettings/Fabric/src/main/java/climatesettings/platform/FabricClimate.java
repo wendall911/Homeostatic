@@ -1,10 +1,14 @@
 package climatesettings.platform;
 
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+
 import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.biome.Biome;
 
 import climatesettings.common.biome.HomeostaticClimateSettings;
 import climatesettings.mixin.FabricBiomeAccessor;
+import climatesettings.network.IPacket;
 import climatesettings.platform.services.IClimate;
 
 public class FabricClimate implements IClimate {
@@ -20,6 +24,11 @@ public class FabricClimate implements IClimate {
             climateSettings.temperatureModifier(),
             climateSettings.downfall()
         );
+    }
+
+    @Override
+    public void syncDataToPlayer(IPacket packet, ServerPlayer player) {
+        ServerPlayNetworking.send(player, packet);
     }
 
 }

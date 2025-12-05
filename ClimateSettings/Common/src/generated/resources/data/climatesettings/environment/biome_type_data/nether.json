@@ -2,6 +2,7 @@
   "day_night_offset": 0.0,
   "humidity": 20.0,
   "is_frozen": false,
+  "location": "climatesettings:nether",
   "season_variation": 40.0,
   "temperature": 1.666
 }

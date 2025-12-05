@@ -2,6 +2,7 @@
   "day_night_offset": 12.0,
   "humidity": 50.0,
   "is_frozen": false,
+  "location": "climatesettings:forest",
   "season_variation": 40.0,
   "temperature": 0.663
 }
