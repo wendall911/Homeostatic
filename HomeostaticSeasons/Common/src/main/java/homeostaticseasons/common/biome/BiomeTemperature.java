@@ -290,7 +290,7 @@ public class BiomeTemperature {
 
         if (colormapType == BiomeColormap.ColormapType.TEMPERATE) {
             if (currentSeason.isWetSeason()) {
-                return Biome.Precipitation.RAIN;
+                return isWarmEnoughToRain() ? Biome.Precipitation.RAIN : Biome.Precipitation.SNOW;
             }
             else {
                 return Biome.Precipitation.NONE;
@@ -320,6 +320,15 @@ public class BiomeTemperature {
 
     public static boolean warmEnoughToRain(Biome biome, BlockPos pos) {
         return biome.getTemperature(pos) >= 0.15F;
+    }
+
+    @Override
+    public String toString() {
+        return "BiomeTemperature{biome=" + biomeHolder.getRegisteredName() +
+               ", pos=" + blockPos +
+               ", season=" + currentSeason +
+               ", airTemperature=" + airTemperature +
+               '}';
     }
 
 }
