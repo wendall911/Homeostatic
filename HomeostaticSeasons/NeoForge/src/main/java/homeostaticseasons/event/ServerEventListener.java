@@ -10,6 +10,7 @@ import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
+import climatesettings.common.biome.BiomeCategoryManager;
 import climatesettings.common.biome.BiomeTypeDataManager;
 import homeostaticseasons.common.biome.BiomeColormapManager;
 
@@ -48,6 +49,7 @@ public class ServerEventListener {
         }
         else {
             BiomeTypeDataManager.syncWithClient(player);
+            BiomeCategoryManager.syncWithClient(player);
             BiomeColormapManager.syncWithClient(player);
         }
     }
