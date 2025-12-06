@@ -14,4 +14,8 @@ public class NeoForgeNetworkManager {
         ctx.enqueueWork(() -> syncBiomeTypeData.handle(ctx.player()));
     }
 
+    public void processBiomeCategoryDataPacket(SyncBiomeCategoryData syncBiomeCategoryData, IPayloadContext ctx) {
+        ctx.enqueueWork(() -> syncBiomeCategoryData.handle(ctx.player()));
+    }
+
 }

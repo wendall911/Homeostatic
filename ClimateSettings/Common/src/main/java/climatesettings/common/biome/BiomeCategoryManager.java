@@ -1,6 +1,7 @@
 package climatesettings.common.biome;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -9,15 +10,22 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+
 import net.minecraft.core.Holder;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.biome.Biome;
 
 import climatesettings.ClimateSettings;
+import climatesettings.network.SyncBiomeCategoryData;
+import climatesettings.platform.Services;
 
 public class BiomeCategoryManager extends SimpleJsonResourceReloadListener {
 
@@ -53,6 +61,16 @@ public class BiomeCategoryManager extends SimpleJsonResourceReloadListener {
         return BiomeCategory.Type.MISSING;
     }
 
+    public static void update(List<BiomeCategory> biomeCategories) {
+        BIOME_CATEGORIES.clear();
+
+        for (BiomeCategory biomeCategory : biomeCategories) {
+            BIOME_CATEGORIES.put(biomeCategory.loc(), biomeCategory);
+        }
+
+        ClimateSettings.LOGGER.info("Updated category for {} biomes.", BIOME_CATEGORIES.size());
+    }
+
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
         BIOME_CATEGORIES.clear();
@@ -69,6 +87,18 @@ public class BiomeCategoryManager extends SimpleJsonResourceReloadListener {
         }
 
         ClimateSettings.LOGGER.info("Loaded category for {} biomes.", BIOME_CATEGORIES.size());
+    }
+
+    public static void syncWithClient(ServerPlayer player) {
+        if (player != null) {
+            List<BiomeCategory> biomeCategories = BIOME_CATEGORIES.values().stream().toList();
+            DataResult<Tag> result = Codec.list(BiomeCategory.CODEC).encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, biomeCategories);
+            Tag data = result.getOrThrow((error) -> {
+                throw new IllegalStateException("Failed to encode biome categories for syncing to client: " + error);
+            });
+
+            Services.CLIMATE.syncDataToPlayer(new SyncBiomeCategoryData(data), player);
+        }
     }
 
 }
