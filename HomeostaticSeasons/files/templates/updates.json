@@ -1,7 +1,0 @@
-{
-  "homepage": "https://www.curseforge.com/minecraft/mc-mods/${curseforge_slug}",
-  "promos": {
-    "${minecraft_version}-latest": "${version}",
-    "${minecraft_version}-recommended": "${version}"
-  }
-}
