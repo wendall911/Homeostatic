@@ -3,16 +3,20 @@ package homeostatic.util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.Level;
 
+import homeostaticseasons.api.HomeostaticSeasonsAPI;
+
 public class HomeostaticSeasonsHelper {
 
     public static String getSeasonName(Minecraft mc) {
-        //return homeostaticseasons.api.HomeostaticSeasonsAPI.getCurrentSeason(mc.level).toString();
-        return "SPRING";
+        if (mc.level == null) {
+            return "UNKNOWN";
+        }
+
+        return HomeostaticSeasonsAPI.getCurrentSeason(mc.level).toString();
     }
 
     public static int getCurrentSeason(Level level) {
-        //return homeostaticseasons.api.HomeostaticSeasonsAPI.getCurrentSeason(level).ordinal();
-        return 0;
+        return HomeostaticSeasonsAPI.getCurrentSeason(level).ordinal();
     }
 
 }

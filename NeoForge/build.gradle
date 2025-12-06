@@ -51,7 +51,7 @@ dependencies {
     implementation group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-neoforge", version: "${handbook_version}"
     jarJar group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-neoforge", version: "${handbook_version}"
 
-    //implementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-neoforge", version: "${homeostaticseasons_version}"
+    implementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-neoforge", version: "${homeostaticseasons_version}"
 
     compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
     compileOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
