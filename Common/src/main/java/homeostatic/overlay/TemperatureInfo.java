@@ -23,6 +23,7 @@ import homeostatic.platform.Services;
 import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
 import homeostatic.util.FontHelper;
+import homeostatic.util.HomeostaticSeasonsHelper;
 import homeostatic.util.TempHelper;
 
 import static climatesettings.ClimateSettings.prefix;
@@ -98,7 +99,7 @@ public class TemperatureInfo extends Overlay {
             });
 
             if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.HS_MODID)) {
-                String season = homeostaticseasons.api.HomeostaticSeasonsAPI.getCurrentSeason(mc.level).toString();
+                String season = HomeostaticSeasonsHelper.getSeasonName(mc);
                 int seasonWidth = mc.font.width(season);
 
                 FontHelper.draw(mc, guiGraphics, season,
