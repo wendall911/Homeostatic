@@ -34,8 +34,10 @@ public class BiomeTypeDataProvider implements DataProvider {
         add(prefix(BiomeCategory.Type.FROZEN_OCEAN.toString()), 0.373F, 20.0F, 20F, 5F, true);
         add(prefix(BiomeCategory.Type.COLD_OCEAN.toString()), 0.373F, 20.0F, 20F, 5F, false);
         add(prefix(BiomeCategory.Type.COLD_FOREST.toString()), 0.373F, 60.0F, 40F, 12F, false);
+        add(prefix(BiomeCategory.Type.FROZEN_RIVER.toString()), 0.385F, 70.0F, 40F, 10F, false);
         add(prefix(BiomeCategory.Type.COLD_DESERT.toString()), 0.395F, 20.0F, 40F, 20F, false);
         add(prefix(BiomeCategory.Type.DEEP_COLD_OCEAN.toString()), 0.440F, 20.0F, 20F, 5F, false);
+        add(prefix(BiomeCategory.Type.COLD_BEACH.toString()), 0.503F, 70.0F, 40F, 10F, false);
         add(prefix(BiomeCategory.Type.ICY.toString()), 0.507F, 20.0F, 20F, 5F, false);
         add(prefix(BiomeCategory.Type.TAIGA.toString()), 0.507F, 50.0F, 40F, 10F, false);
         add(prefix(BiomeCategory.Type.OCEAN.toString()), 0.551F, 70.0F, 40F, 10F, false);
@@ -44,12 +46,14 @@ public class BiomeTypeDataProvider implements DataProvider {
         add(prefix(BiomeCategory.Type.EXTREME_HILLS.toString()), 0.618F, 50.0F, 40F, 10F, false);
         add(prefix(BiomeCategory.Type.MOUNTAIN.toString()), 0.618F, 50.0F, 40F, 10F, false);
         add(prefix(BiomeCategory.Type.LUKEWARM_OCEAN.toString()), 0.640F, 70.0F, 40F, 10F, false);
+        add(prefix(BiomeCategory.Type.WARM_RIVER.toString()), 0.651F, 70.0F, 40F, 10F, false);
         add(prefix(BiomeCategory.Type.BEACH.toString()), 0.663F, 70.0F, 40F, 10F, false);
         add(prefix(BiomeCategory.Type.FOREST.toString()), 0.663F, 50.0F, 40F, 12F, false);
         add(prefix(BiomeCategory.Type.UNDERGROUND.toString()), 0.663F, 40.0F, 40F, 12F, false);
         add(prefix(BiomeCategory.Type.SWAMP.toString()), 0.685F, 90.0F, 40F, 12F, false);
         add(prefix(BiomeCategory.Type.MUSHROOM.toString()), 0.685F, 70.0F, 40F, 12F, false);
         add(prefix(BiomeCategory.Type.WARM_OCEAN.toString()), 0.730F, 70.0F, 40F, 10F, false);
+        add(prefix(BiomeCategory.Type.WARM_BEACH.toString()), 0.763F, 70.0F, 40F, 10F, false);
         add(prefix(BiomeCategory.Type.PLAINS.toString()), 0.774F, 60.0F, 40F, 15F, false);
         add(prefix(BiomeCategory.Type.MISSING.toString()), 0.774F, 40.0F, 40F, 15F, false);
         add(prefix(BiomeCategory.Type.LUSH_DESERT.toString()), 0.886F, 60.0F, 40F, 15F, false);
