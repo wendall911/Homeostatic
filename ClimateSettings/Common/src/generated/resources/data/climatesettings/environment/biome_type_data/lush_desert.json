@@ -2,6 +2,7 @@
   "day_night_offset": 15.0,
   "humidity": 60.0,
   "is_frozen": false,
+  "location": "climatesettings:lush_desert",
   "season_variation": 40.0,
   "temperature": 0.886
 }
