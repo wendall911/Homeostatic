@@ -27,6 +27,7 @@ import homeostatic.common.attachments.WetnessData;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.item.IItemStackFluid;
 import homeostatic.common.item.LeatherFlask;
+import homeostatic.common.temperature.SubSeason;
 import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.common.temperature.EnvironmentData;
 import homeostatic.common.temperature.SubSeason;
@@ -47,6 +48,7 @@ import homeostatic.network.NeoForgeWetnessData;
 import homeostatic.platform.services.IPlatform;
 import homeostatic.registries.HomeostaticNeoForgeRegistries;
 import homeostatic.util.CreateHelper;
+import homeostatic.util.HomeostaticSeasonsHelper;
 import homeostatic.util.ItemStackFluidHelper;
 import homeostatic.util.SereneSeasonsForgeHelper;
 // TODO re-enable when Vampirism is updated
@@ -113,6 +115,11 @@ public class NeoForgePlatform implements IPlatform {
 
     @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
+        if (Services.PLATFORM.isModLoaded(ModIntegration.HS_MODID)) {
+            int season = HomeostaticSeasonsHelper.getCurrentSeason(level);
+
+            return SubSeason.values()[season];
+        }
         if (Services.PLATFORM.isModLoaded(ModIntegration.SS_MODID)
                 && SereneSeasonsForgeHelper.isSeasonDimension(level)) {
             return SereneSeasonsForgeHelper.getSubSeason(level);

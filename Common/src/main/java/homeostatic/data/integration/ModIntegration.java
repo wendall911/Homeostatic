@@ -52,6 +52,7 @@ public class ModIntegration {
     public static final String XERCA_MODID = "xercamod";
     public static final String VAMPIRISM_MODID = "vampirism";
     public static final String LMBA_MODID = "leavemybarsalone";
+    public static final String HS_MODID = "homeostaticseasons";
 
     public static ResourceLocation alexLoc(String path) {
         return loc(ALEX_MODID, path);

@@ -18,13 +18,15 @@ import climatesettings.common.biome.BiomeTypeDataManager;
 import homeostatic.common.temperature.TemperatureDirection;
 import homeostatic.common.temperature.TemperatureRange;
 import homeostatic.config.ConfigHandler;
+import homeostatic.data.integration.ModIntegration;
 import homeostatic.platform.Services;
 import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
 import homeostatic.util.FontHelper;
+import homeostatic.util.HomeostaticSeasonsClientHelper;
 import homeostatic.util.TempHelper;
 
-import static homeostatic.Homeostatic.prefix;
+import static climatesettings.ClimateSettings.prefix;
 
 public class TemperatureInfo extends Overlay {
 
@@ -95,6 +97,16 @@ public class TemperatureInfo extends Overlay {
                     ConfigHandler.Client.debugOffsetX(), 1.0F), y + (mc.font.lineHeight * 3),
                     -1, false);
             });
+
+            if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.HS_MODID)) {
+                String season = HomeostaticSeasonsClientHelper.getSeasonName(mc);
+                int seasonWidth = mc.font.width(season);
+
+                FontHelper.draw(mc, guiGraphics, season,
+                    Alignment.getTextX(ConfigHandler.Client.debugPosition(), scaledWidth, seasonWidth,
+                    ConfigHandler.Client.debugOffsetX(), 1.0F), y + (mc.font.lineHeight * 4),
+                    -1, false);
+            }
         });
     }
 

@@ -18,6 +18,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.Precipitation;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
@@ -159,6 +160,19 @@ public class EnvironmentData {
         else {
             this.localTemperature = this.airTemperature;
         }
+        /*
+        Homeostatic.LOGGER.warn("[BiomeTemperature] Biome: {}, surrounding biomes: {}, Pos: {}, DryTemp: {}, WetTemp: {}, BlackGlobeTemp: {}, RH: {}, DayNightOffset: {}, AirTemp: {}",
+            biome.getRegisteredName(),
+            biomes.size(),
+            pos,
+            dryTemp,
+            wetTemp,
+            blackGlobeTemp,
+            relativeHumidity,
+            dayNightOffset,
+            this.airTemperature
+        );
+         */
     }
 
     public boolean isSubmerged() {
@@ -384,6 +398,28 @@ public class EnvironmentData {
 
     private static double getSeasonTemperature(int season, float variation, float biomeTemp) {
         return variation * Math.cos(((season - 1) * Math.PI) / 6) + biomeTemp;
+    }
+
+    /*
+     * Need to mock what the internal biome method does for precipitation type,
+     * this ensures if another mod installed, the default vanilla behavior is preserved.
+     */
+    public static Precipitation getPrecipitationAt(Biome biome, BlockPos pos, Level level) {
+        if (!biome.hasPrecipitation()) {
+            return Biome.Precipitation.NONE;
+        }
+        else {
+            return coldEnoughToSnow(biome, pos, level) ? Biome.Precipitation.SNOW : Biome.Precipitation.RAIN;
+        }
+    }
+
+    public static boolean coldEnoughToSnow(Biome biome, BlockPos pos, Level level) {
+        return !warmEnoughToRain(biome, pos, level);
+    }
+
+    @SuppressWarnings("deprecation")
+    public static boolean warmEnoughToRain(Biome biome, BlockPos pos, Level level) {
+        return biome.getTemperature(pos, level.getSeaLevel()) >= 0.15F;
     }
 
     @Override

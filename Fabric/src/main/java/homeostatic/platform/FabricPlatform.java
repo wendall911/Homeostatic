@@ -40,6 +40,7 @@ import homeostatic.mixin.ServerLevelAccessor;
 import homeostatic.platform.services.IPlatform;
 import homeostatic.util.CreateHelper;
 import homeostatic.util.FabricSeasonsHelper;
+import homeostatic.util.HomeostaticSeasonsHelper;
 import homeostatic.util.ItemStackFluidHelper;
 import homeostatic.util.SereneSeasonsFabricHelper;
 
@@ -103,7 +104,12 @@ public class FabricPlatform implements IPlatform {
 
     @Override
     public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
-        if (Services.PLATFORM.isModLoaded(ModIntegration.SS_MODID)
+        if (Services.PLATFORM.isModLoaded(ModIntegration.HS_MODID)) {
+            int season = HomeostaticSeasonsHelper.getCurrentSeason(level);
+
+            return SubSeason.values()[season];
+        }
+        else if (Services.PLATFORM.isModLoaded(ModIntegration.SS_MODID)
                 && SereneSeasonsFabricHelper.isSeasonDimension(level)) {
             return SereneSeasonsFabricHelper.getSubSeason(level);
         }
