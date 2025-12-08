@@ -8,6 +8,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 
@@ -16,6 +19,10 @@ import static technology.roughness.whitenoise.util.ResourceLocationHelper.parse;
 public record BiomeCategory(ResourceLocation loc, String type) {
 
     public static final BiomeCategory MISSING = new BiomeCategory(ResourceLocation.withDefaultNamespace("missing"), "MISSING");
+    public static final Codec<BiomeCategory> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        ResourceLocation.CODEC.fieldOf("biome").forGetter(BiomeCategory::loc),
+        Codec.STRING.fieldOf("category").forGetter(BiomeCategory::type)
+    ).apply(instance, BiomeCategory::new));
 
     public static class Serializer implements JsonDeserializer<BiomeCategory>, JsonSerializer<BiomeCategory> {
 
@@ -50,11 +57,15 @@ public record BiomeCategory(ResourceLocation loc, String type) {
         COLD_DESERT,
         COLD_FOREST,
         BOG,
+        FROZEN_RIVER,
         RIVER,
+        WARM_RIVER,
         TAIGA,
         EXTREME_HILLS,
         MOUNTAIN,
+        COLD_BEACH,
         BEACH,
+        WARM_BEACH,
         FOREST,
         SWAMP,
         UNDERGROUND,

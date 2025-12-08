@@ -23,6 +23,9 @@
     "main": [
       "${mod_id}.${mod_name}Fabric"
     ],
+    "client": [
+      "${mod_id}.${mod_name}ClientFabric"
+    ],
     "fabric-datagen": [
       "${mod_id}.data.FabricDatagenInitializer"
     ]
