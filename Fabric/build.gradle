@@ -22,7 +22,7 @@ dependencies {
     modImplementation group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-fabric", version: "${handbook_version}"
     include group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-fabric", version: "${handbook_version}"
 
-    //modImplementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-fabric", version: "${homeostaticseasons_version}"
+    modImplementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-fabric", version: "${homeostaticseasons_version}"
 
     modLocalRuntime "dev.architectury:architectury-fabric:${architectury_version}"
     modLocalRuntime("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {

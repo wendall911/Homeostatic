@@ -2,7 +2,7 @@ package homeostatic.util;
 
 import net.minecraft.client.Minecraft;
 
-//import homeostaticseasons.api.HomeostaticSeasonsAPI;
+import homeostaticseasons.api.HomeostaticSeasonsAPI;
 
 public class HomeostaticSeasonsClientHelper {
 
@@ -11,8 +11,7 @@ public class HomeostaticSeasonsClientHelper {
             return "UNKNOWN";
         }
 
-        //return HomeostaticSeasonsAPI.getCurrentSeason(mc.level).toString();
-        return "FIXME";
+        return HomeostaticSeasonsAPI.getCurrentSeason(mc.level).toString();
     }
 
 }
