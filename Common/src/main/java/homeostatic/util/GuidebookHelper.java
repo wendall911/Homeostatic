@@ -2,7 +2,7 @@ package homeostatic.util;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
@@ -20,7 +20,7 @@ import homeostatic.platform.Services;
 
 public class GuidebookHelper {
 
-    public static Recipe<?> getRecipe(Level level, ResourceLocation loc) {
+    public static Recipe<?> getRecipe(Level level, Identifier loc) {
         Ingredient ingredient = null;
         ItemStack armorStackBase = null;
         ItemStack armorStack = null;

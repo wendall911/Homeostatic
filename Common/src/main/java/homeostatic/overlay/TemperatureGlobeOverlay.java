@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 
@@ -25,7 +25,7 @@ import homeostatic.util.TempHelper;
 
 public class TemperatureGlobeOverlay extends Overlay {
 
-    public final static ResourceLocation SPRITE = Homeostatic.prefix("textures/gui/icons.png");
+    public final static Identifier SPRITE = Homeostatic.prefix("textures/gui/icons.png");
     protected final static int ICON_WIDTH = 18;
     protected final static int ICON_HEIGHT = 14;
 

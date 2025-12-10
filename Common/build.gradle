@@ -6,6 +6,8 @@ plugins {
     id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin'
 }
 
+def identifier = "${mod_id}-${minecraft_version}-common"
+
 neoForge {
     neoFormVersion = neo_form_version
     validateAccessTransformers = true
@@ -13,10 +15,6 @@ neoForge {
     def at = file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
         accessTransformers.from(at.absolutePath)
-    }
-    parchment {
-        minecraftVersion = mappings_minecraft_version
-        mappingsVersion = mappings_version
     }
 }
 
@@ -27,7 +25,7 @@ dependencies {
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: "${mixin_extras_version}"
     implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-common", version: "${whitenoise_version}"
     implementation group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-common", version: "${climatesettings_version}"
-    implementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-common", version: "${homeostaticseasons_version}"
+    //implementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-common", version: "${homeostaticseasons_version}"
 
     compileOnly group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-common", version: "${handbook_version}"
 
@@ -85,7 +83,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId project.group
-            artifactId project.archivesBaseName
+            artifactId identifier
             version project.version
             from components.java
         }

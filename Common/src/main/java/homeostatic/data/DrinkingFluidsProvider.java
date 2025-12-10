@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import homeostatic.common.fluid.DrinkingFluid;
 import homeostatic.common.fluid.DrinkingFluidManager;
@@ -20,7 +20,7 @@ import homeostatic.Homeostatic;
 
 public class DrinkingFluidsProvider implements DataProvider {
 
-    private final Map<ResourceLocation, DrinkingFluid> DRINKING_FLUIDS = new HashMap<>();
+    private final Map<Identifier, DrinkingFluid> DRINKING_FLUIDS = new HashMap<>();
     private final PackOutput packOutput;
 
     public DrinkingFluidsProvider(@NotNull final PackOutput packOutput) {
@@ -32,7 +32,7 @@ public class DrinkingFluidsProvider implements DataProvider {
         add(Homeostatic.prefix("purified_water"), 3, 0.7F,  0, 0, 0.0F);
     }
 
-    protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
+    protected void add(Identifier loc, int amount, float saturation, int potency, int duration, float chance) {
         DRINKING_FLUIDS.put(loc, new DrinkingFluid(loc, amount, saturation, potency, duration, chance));
     }
 
@@ -48,7 +48,7 @@ public class DrinkingFluidsProvider implements DataProvider {
 
         addDrinkingFluids();
 
-        for (Map.Entry<ResourceLocation, DrinkingFluid> entry : DRINKING_FLUIDS.entrySet()) {
+        for (Map.Entry<Identifier, DrinkingFluid> entry : DRINKING_FLUIDS.entrySet()) {
             PackOutput.PathProvider pathProvider = getPath(entry.getKey());
 
             recipeList.add(DataProvider.saveStable(cache,
@@ -59,7 +59,7 @@ public class DrinkingFluidsProvider implements DataProvider {
         return CompletableFuture.allOf(recipeList.toArray(CompletableFuture[]::new));
     }
 
-    private PackOutput.PathProvider getPath(ResourceLocation loc) {
+    private PackOutput.PathProvider getPath(Identifier loc) {
         return this.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "environment/fluids/");
     }
 

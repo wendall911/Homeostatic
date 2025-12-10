@@ -7,7 +7,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 
@@ -19,7 +19,7 @@ import homeostatic.util.WaterHelper;
 public class WaterHud extends Overlay {
 
     protected static int tickCount = 0;
-    public final static ResourceLocation SPRITE = Homeostatic.prefix("textures/gui/icons.png");
+    public final static Identifier SPRITE = Homeostatic.prefix("textures/gui/icons.png");
     public final static int BAR_WIDTH = 9;
     public final static int BAR_HEIGHT = 9;
 

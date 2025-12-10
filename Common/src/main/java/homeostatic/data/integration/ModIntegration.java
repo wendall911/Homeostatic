@@ -1,6 +1,6 @@
 package homeostatic.data.integration;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import static technology.roughness.whitenoise.util.ResourceLocationHelper.loc;
 
@@ -54,159 +54,159 @@ public class ModIntegration {
     public static final String LMBA_MODID = "leavemybarsalone";
     public static final String HS_MODID = "homeostaticseasons";
 
-    public static ResourceLocation alexLoc(String path) {
+    public static Identifier alexLoc(String path) {
         return loc(ALEX_MODID, path);
     }
 
-    public static ResourceLocation arseLoc(String path) {
+    public static Identifier arseLoc(String path) {
         return loc(ARSE_MODID, path);
     }
 
-    public static ResourceLocation arsLoc(String path) {
+    public static Identifier arsLoc(String path) {
         return loc(ARS_MODID, path);
     }
 
-    public static ResourceLocation bopLoc(String path) {
+    public static Identifier bopLoc(String path) {
         return loc(BOP_MODID, path);
     }
 
-    public static ResourceLocation bygLoc(String path) {
+    public static Identifier bygLoc(String path) {
         return loc(BYG_MODID, path);
     }
 
-    public static ResourceLocation ccLoc(String path) {
+    public static Identifier ccLoc(String path) {
         return loc(CC_MODID, path);
     }
 
-    public static ResourceLocation croptopiaLoc(String path) {
+    public static Identifier croptopiaLoc(String path) {
         return loc(CROPTOPIA_MODID, path);
     }
 
-    public static ResourceLocation ecoLoc(String path) {
+    public static Identifier ecoLoc(String path) {
         return loc(ECO_MODID, path);
     }
 
-    public static ResourceLocation fdLoc(String path) {
+    public static Identifier fdLoc(String path) {
         return loc(FD_MODID, path);
     }
 
-    public static ResourceLocation ftLoc(String path) {
+    public static Identifier ftLoc(String path) {
         return loc(FT_MODID, path);
     }
 
-    public static ResourceLocation ieLoc(String path) {
+    public static Identifier ieLoc(String path) {
         return loc(IE_MODID, path);
     }
 
-    public static ResourceLocation mcLoc(String path) {
+    public static Identifier mcLoc(String path) {
         return loc(MC_MODID, path);
     }
 
-    public static ResourceLocation sproutLoc(String path) {
+    public static Identifier sproutLoc(String path) {
         return loc(SPROUT_MODID, path);
     }
 
-    public static ResourceLocation morecraftLoc(String path) {
+    public static Identifier morecraftLoc(String path) {
         return loc(MORECRAFT_MODID, path);
     }
 
-    public static ResourceLocation xercaLoc(String path) {
+    public static Identifier xercaLoc(String path) {
         return loc(XERCA_MODID, path);
     }
 
-    public static ResourceLocation scubaLoc(String path) {
+    public static Identifier scubaLoc(String path) {
         return loc(SCUBA_GEAR_MODID, path);
     }
 
-    public static ResourceLocation koboldsLoc(String path) {
+    public static Identifier koboldsLoc(String path) {
         return loc(KOBOLDS_MODID, path);
     }
 
-    public static ResourceLocation tfLoc(String path) {
+    public static Identifier tfLoc(String path) {
         return loc(TF_MODID, path);
     }
 
-    public static ResourceLocation createLoc(String path) {
+    public static Identifier createLoc(String path) {
         return loc(CREATE_MODID, path);
     }
 
-    public static ResourceLocation tconLoc(String path) {
+    public static Identifier tconLoc(String path) {
         return loc(TCON_MODID, path);
     }
 
-    public static ResourceLocation skLoc(String name) {
+    public static Identifier skLoc(String name) {
         return loc(SK_MODID, name);
     }
 
-    public static ResourceLocation mfLoc(String name) {
+    public static Identifier mfLoc(String name) {
         return loc(MORE_FOOD_MODID, name);
     }
 
-    public static ResourceLocation phcLoc(String name) {
+    public static Identifier phcLoc(String name) {
         return loc(PHC_CORE_MODID, name);
     }
 
-    public static ResourceLocation pcropsLoc(String name) {
+    public static Identifier pcropsLoc(String name) {
         return loc(PHC_CROPS_MODID, name);
     }
 
-    public static ResourceLocation pheLoc(String name) {
+    public static Identifier pheLoc(String name) {
         return loc(PHC_FOOD_EXTENDED_MODID, name);
     }
 
-    public static ResourceLocation esLoc(String name) {
+    public static Identifier esLoc(String name) {
         return loc(ES_MODID, name);
     }
 
-    public static ResourceLocation terralithLoc(String name) {
+    public static Identifier terralithLoc(String name) {
         return loc(TL_MODID, name);
     }
 
-    public static ResourceLocation ugLoc(String name) {
+    public static Identifier ugLoc(String name) {
         return loc(UG_MODID, name);
     }
 
-    public static ResourceLocation regionsLoc(String name) {
+    public static Identifier regionsLoc(String name) {
         return loc(REGIONS_MODID, name);
     }
 
-    public static ResourceLocation ldBakeryLoc(String name) {
+    public static Identifier ldBakeryLoc(String name) {
         return loc(LD_BAKERY_MODID, name);
     }
 
-    public static ResourceLocation ldBeachLoc(String name) {
+    public static Identifier ldBeachLoc(String name) {
         return loc(LD_BEACH_MODID, name);
     }
 
-    public static ResourceLocation ldBloomingLoc(String name) {
+    public static Identifier ldBloomingLoc(String name) {
         return loc(LD_BLOOMING_MODID, name);
     }
 
-    public static ResourceLocation ldBreweryLoc(String name) {
+    public static Identifier ldBreweryLoc(String name) {
         return loc(LD_BREWERY_MODID, name);
     }
 
-    public static ResourceLocation ldCandlelightLoc(String name) {
+    public static Identifier ldCandlelightLoc(String name) {
         return loc(LD_CANDLELIGHT_MODID, name);
     }
 
-    public static ResourceLocation ldFarmLoc(String name) {
+    public static Identifier ldFarmLoc(String name) {
         return loc(LD_FARM_MODID, name);
     }
 
-    public static ResourceLocation ldHerbalLoc(String name) {
+    public static Identifier ldHerbalLoc(String name) {
         return loc(LD_HERBAL_MODID, name);
     }
 
-    public static ResourceLocation ldMeadowLoc(String name) {
+    public static Identifier ldMeadowLoc(String name) {
         return loc(LD_MEADOW_MODID, name);
     }
 
-    public static ResourceLocation ldVineryLoc(String name) {
+    public static Identifier ldVineryLoc(String name) {
         return loc(LD_VINERY_MODID, name);
     }
 
-    public static ResourceLocation ldWilderLoc(String name) {
+    public static Identifier ldWilderLoc(String name) {
         return loc(LD_WILDER_MODID, name);
     }
 

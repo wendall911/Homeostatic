@@ -69,7 +69,7 @@ public class REIPlugin implements REIClientPlugin {
             });
 
 
-            helper.add(new DefaultCustomDisplay(input, Collections.singletonList(EntryIngredients.of(recipePair.getFirst())), Optional.of(recipePair.getSecond().id().location())));
+            helper.add(new DefaultCustomDisplay(input, Collections.singletonList(EntryIngredients.of(recipePair.getFirst())), Optional.of(recipePair.getSecond().id().identifier())));
         });
 
         campfireRecipes.forEach(recipe -> {

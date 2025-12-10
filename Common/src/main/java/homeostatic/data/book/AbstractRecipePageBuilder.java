@@ -2,7 +2,7 @@ package homeostatic.data.book;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import handbook.api.data.AbstractPageBuilder;
 import handbook.api.data.EntryBuilder;
@@ -14,7 +14,7 @@ public abstract class AbstractRecipePageBuilder<T extends AbstractRecipePageBuil
     private String title;
     private String text;
 
-    protected AbstractRecipePageBuilder(String type, String processor, ResourceLocation recipe, EntryBuilder parent) {
+    protected AbstractRecipePageBuilder(String type, String processor, Identifier recipe, EntryBuilder parent) {
         super(type, parent);
 
         this.recipe = recipe.toString();

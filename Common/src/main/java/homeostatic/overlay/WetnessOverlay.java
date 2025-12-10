@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.wetness.WetnessInfo;
@@ -15,7 +15,7 @@ import homeostatic.util.OverlayHelper;
 
 public class WetnessOverlay extends Overlay {
 
-    public final static ResourceLocation WETNESS_OVERLAY = Homeostatic.prefix("textures/gui/wetness.png");
+    public final static Identifier WETNESS_OVERLAY = Homeostatic.prefix("textures/gui/wetness.png");
 
     public WetnessOverlay() {}
 

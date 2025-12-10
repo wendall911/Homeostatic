@@ -1,6 +1,6 @@
 package homeostatic.common.book;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 
@@ -22,7 +22,7 @@ public class PageCustomCrafting extends PageCrafting {
 	}
 
 	@Override
-	public Recipe<?> loadRecipe(Level level, BookContentsBuilder builder, BookEntry entry, ResourceLocation loc, boolean linkRecipe) {
+	public Recipe<?> loadRecipe(Level level, BookContentsBuilder builder, BookEntry entry, Identifier loc, boolean linkRecipe) {
 		return GuidebookHelper.getRecipe(level, loc);
 	}
 

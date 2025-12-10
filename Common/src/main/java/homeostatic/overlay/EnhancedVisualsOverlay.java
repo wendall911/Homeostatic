@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.Homeostatic;
@@ -16,7 +16,7 @@ import homeostatic.util.OverlayHelper;
 
 public class EnhancedVisualsOverlay extends Overlay {
 
-    public final static ResourceLocation HYPERTHERMIA_OVERLAY = Homeostatic.prefix("textures/gui/hyperthermia.png");
+    public final static Identifier HYPERTHERMIA_OVERLAY = Homeostatic.prefix("textures/gui/hyperthermia.png");
     private final LastTick lastTick;
 
     public EnhancedVisualsOverlay() {

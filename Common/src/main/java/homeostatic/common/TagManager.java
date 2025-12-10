@@ -1,7 +1,7 @@
 package homeostatic.common;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
@@ -28,7 +28,7 @@ public final class TagManager {
         }
 
         private static TagKey<Item> createCommon(String id) {
-            return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", id));
+            return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", id));
         }
 
     }
@@ -43,7 +43,7 @@ public final class TagManager {
 
     }
 
-    public static ResourceLocation identifier(String path) {
+    public static Identifier identifier(String path) {
         return Homeostatic.prefix(path);
     }
 

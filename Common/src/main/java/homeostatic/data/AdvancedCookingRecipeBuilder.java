@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import net.minecraft.core.registries.Registries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,12 +11,12 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
@@ -102,7 +101,7 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput recipeOutput, ResourceKey<Recipe<?>> resourceKey) {
-        this.ensureValid(resourceKey.location());
+        this.ensureValid(resourceKey.identifier());
         Advancement.Builder advancement = recipeOutput.advancement().addCriterion(
             "has_the_recipe",
             RecipeUnlockedTrigger.unlocked(resourceKey)
@@ -117,10 +116,10 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
             this.experience,
             this.cookingTime
         );
-        recipeOutput.accept(resourceKey, recipe, advancement.build(resourceKey.location().withPrefix("recipes/" + this.category.getFolderName() + "/")));
+        recipeOutput.accept(resourceKey, recipe, advancement.build(resourceKey.identifier().withPrefix("recipes/" + this.category.getFolderName() + "/")));
     }
 
-    private void ensureValid(ResourceLocation resourceLocation) {
+    private void ensureValid(Identifier resourceLocation) {
         if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + resourceLocation);
         }

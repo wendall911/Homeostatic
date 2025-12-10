@@ -1,6 +1,6 @@
 package homeostatic.common.fluid;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -16,12 +16,12 @@ public class NeoForgeFluidClientHandler {
     public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override
-            public ResourceLocation getStillTexture() {
+            public Identifier getStillTexture() {
                 return HomeostaticFluids.STILL_FLUID_TEXTURE;
             }
 
             @Override
-            public ResourceLocation getFlowingTexture() {
+            public Identifier getFlowingTexture() {
                 return HomeostaticFluids.FLOWING_FLUID_TEXTURE;
             }
         }, NeoForgeFluidType.PURIFIED_WATER_TYPE);

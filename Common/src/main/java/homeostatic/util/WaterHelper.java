@@ -11,7 +11,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
@@ -157,7 +157,7 @@ public class WaterHelper {
         drink(sp, air, Fluids.WATER, update);
     }
 
-    public static void drawWaterBar(ResourceLocation sprite, int scaledWidth, int scaledHeight, MobEffectInstance effectInstance, Gui gui, GuiGraphics guiGraphics, float waterSaturationLevel, int waterLevel, int tickCount) {
+    public static void drawWaterBar(Identifier sprite, int scaledWidth, int scaledHeight, MobEffectInstance effectInstance, Gui gui, GuiGraphics guiGraphics, float waterSaturationLevel, int waterLevel, int tickCount) {
         int offsetX;
         int offsetY;
         int pV = 0;
@@ -212,7 +212,7 @@ public class WaterHelper {
         return Services.PLATFORM.fillFluid(stack, fluid, amount);
     }
 
-    public static ItemStack getFilledItem(ItemStack stack, ResourceLocation key, int amount) {
+    public static ItemStack getFilledItem(ItemStack stack, Identifier key, int amount) {
         Optional<Holder.Reference<Fluid>> fluid = RegistryHelper.getRegistry(Registries.FLUID).get(key);
 
         if (fluid.isEmpty()) {

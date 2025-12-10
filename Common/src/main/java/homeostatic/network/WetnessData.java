@@ -2,7 +2,7 @@ package homeostatic.network;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.wetness.WetnessInfo;
@@ -15,7 +15,7 @@ public class WetnessData {
     private final int wetnessLevel;
     private final float moistureLevel;
     private final WetnessInfo wetnessInfo;
-    public static final ResourceLocation ID = prefix("wetness_data");
+    public static final Identifier ID = prefix("wetness_data");
 
     public WetnessData(WetnessInfo wetnessInfo) {
         this.wetnessLevel = wetnessInfo.getWetnessLevel();

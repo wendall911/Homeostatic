@@ -57,7 +57,7 @@ public class Environment {
         BlockPos eyePos = new BlockPos((int)spPos.x(), (int)spPos.y(), (int)spPos.z());
         ResourceKey<Level> worldKey = world.dimension();
         MobEffectInstance effectInstance = sp.getEffect(MobEffects.FIRE_RESISTANCE);
-        boolean inOverworld = worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString());
+        boolean inOverworld = worldKey.identifier().toString().contains(BuiltinDimensionTypes.OVERWORLD.identifier().toString());
         boolean isSubmerged = sp.isUnderWater() && sp.isInWater() && sp.isInWaterOrRain();
         boolean isSheltered = true;
         boolean isUnderground = true;

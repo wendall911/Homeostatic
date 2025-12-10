@@ -11,7 +11,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +22,7 @@ import homeostatic.util.TConHelper;
 
 import static technology.roughness.whitenoise.util.ResourceLocationHelper.parse;
 
-public record BlockRadiation(ResourceLocation loc, double maxRadiation) {
+public record BlockRadiation(Identifier loc, double maxRadiation) {
 
     public double getBlockRadiation(BlockState state, double distance, boolean obscured, int y) {
         double radiation;

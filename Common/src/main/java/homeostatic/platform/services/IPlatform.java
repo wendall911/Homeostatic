@@ -5,7 +5,7 @@ import java.util.Optional;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +30,7 @@ import homeostatic.common.wetness.WetnessInfo;
 
 public interface IPlatform {
 
-    ResourceLocation getFluidResourceLocation(Fluid fluid);
+    Identifier getFluidIdentifier(Fluid fluid);
 
     double getCreateBlockRadiation(BlockState state, Double radiation);
 
@@ -66,7 +66,7 @@ public interface IPlatform {
 
     ServerLevelData getServerLevelData(ServerLevel level);
 
-    <T> void registerDataComponent(ResourceLocation name, DataComponentType<T> component);
+    <T> void registerDataComponent(Identifier name, DataComponentType<T> component);
 
     boolean isVampire(Player player);
 

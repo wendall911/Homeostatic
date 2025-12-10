@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -135,7 +135,7 @@ public class HomeostaticBookProvider extends HandbookBookProvider {
             .setTitle(prefix("gameplay.hydration.title"))
             .setText(prefix("gameplay.hydration.intro")).build()
         .addTextPage(prefix("gameplay.hydration.details")).build()
-        .addCraftingPage(ResourceLocation.fromNamespaceAndPath("minecraft", "glass_bottle"))
+        .addCraftingPage(Identifier.fromNamespaceAndPath("minecraft", "glass_bottle"))
             .setTitle(prefix("gameplay.hydration.water_bottle.title"))
             .setText(prefix("gameplay.hydration.water_bottle.text")).build()
         .addCampfirePage(Homeostatic.prefix("campfire_purified_water_bottle"))
@@ -192,8 +192,8 @@ public class HomeostaticBookProvider extends HandbookBookProvider {
         return translationLoc + "." + name;
     }
 
-    private ResourceLocation bookImage(String id) {
-        return ResourceLocation.fromNamespaceAndPath(Homeostatic.MODID, "textures/gui/book/" + id + ".png");
+    private Identifier bookImage(String id) {
+        return Identifier.fromNamespaceAndPath(Homeostatic.MODID, "textures/gui/book/" + id + ".png");
     }
 
 }

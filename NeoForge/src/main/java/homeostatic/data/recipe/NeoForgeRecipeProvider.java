@@ -47,6 +47,8 @@ public class NeoForgeRecipeProvider extends RecipeProvider.Runner {
                 RecipeOutput wrapped = recipeOutput.withConditions(new ModLoadedCondition(ModIntegration.SK_MODID));
                 HolderLookup.RegistryLookup<Item> itemRegistry = provider.lookupOrThrow(Registries.ITEM);
 
+                /*
+                // TODO Update Sewing Kit when it is available on 1.21.11
                 SewingRecipeBuilder.begin(itemRegistry, RecipeCategory.MISC, HomeostaticItems.LEATHER_FLASK)
                     .withTool(SewingKitMod.WOOD_OR_HIGHER)
                     .addMaterial(SewingKitMod.LEATHER_SHEET.get(), 4)
@@ -55,6 +57,7 @@ public class NeoForgeRecipeProvider extends RecipeProvider.Runner {
                     .addMaterial(ItemTags.PLANKS)
                     .addCriterion("has_leather", has(Tags.Items.LEATHERS))
                     .save(wrapped, prefix("leather_flask_via_sewing"));
+                 */
             }
         };
     }

@@ -13,7 +13,7 @@ import com.google.gson.JsonElement;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.ExtraCodecs;
@@ -41,10 +41,10 @@ public class BlockRadiationManager extends SimpleJsonResourceReloadListener<Json
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
+    protected void apply(Map<Identifier, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
         RADIATION_BLOCKS.clear();
 
-        for (Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet()) {
+        for (Map.Entry<Identifier, JsonElement> entry : pObject.entrySet()) {
             try {
                 BlockRadiation blockRadiation = GSON.fromJson(entry.getValue(), BlockRadiation.class);
                 Optional<Holder.Reference<Block>> block = BuiltInRegistries.BLOCK.get(blockRadiation.loc());

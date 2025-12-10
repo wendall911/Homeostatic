@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 
@@ -31,7 +31,7 @@ public class HomeostaticClientFabric implements ClientModInitializer {
             HomeostaticFluids.FLOWING_FLUID_TEXTURE
         ));
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> {
-            for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
+            for (Map.Entry<Identifier, Item> entry : HomeostaticItems.getAll().entrySet()) {
                 entries.accept(entry.getValue());
             }
         });

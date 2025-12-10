@@ -5,7 +5,7 @@ import java.util.Optional;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -27,7 +27,6 @@ import homeostatic.common.attachments.WetnessData;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.item.IItemStackFluid;
 import homeostatic.common.item.LeatherFlask;
-import homeostatic.common.temperature.SubSeason;
 import homeostatic.common.temperature.BodyTemperature;
 import homeostatic.common.temperature.EnvironmentData;
 import homeostatic.common.temperature.SubSeason;
@@ -57,7 +56,7 @@ import homeostatic.util.SereneSeasonsForgeHelper;
 public class NeoForgePlatform implements IPlatform {
 
     @Override
-    public ResourceLocation getFluidResourceLocation(Fluid fluid) {
+    public Identifier getFluidIdentifier(Fluid fluid) {
         return BuiltInRegistries.FLUID.getKey(fluid);
     }
 
@@ -182,7 +181,7 @@ public class NeoForgePlatform implements IPlatform {
     }
 
     @Override
-    public <T> void registerDataComponent(net.minecraft.resources.ResourceLocation name, net.minecraft.core.component.DataComponentType<T> component) {
+    public <T> void registerDataComponent(net.minecraft.resources.Identifier name, net.minecraft.core.component.DataComponentType<T> component) {
         HomeostaticNeoForgeRegistries.COMPONENT_TYPE_DEFERRED_REGISTER.register(
             name.getPath(),
             () -> component

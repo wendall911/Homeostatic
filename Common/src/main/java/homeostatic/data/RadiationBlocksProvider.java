@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import homeostatic.common.block.BlockRadiation;
 import homeostatic.common.block.BlockRadiationManager;
@@ -19,7 +19,7 @@ import homeostatic.data.integration.ModIntegration;
 
 public class RadiationBlocksProvider implements DataProvider {
 
-    private final Map<ResourceLocation, BlockRadiation> RADIATION_MAP = new HashMap<>();
+    private final Map<Identifier, BlockRadiation> RADIATION_MAP = new HashMap<>();
     private final PackOutput packOutput;
 
     public RadiationBlocksProvider(@NotNull final PackOutput packOutput) {
@@ -59,7 +59,7 @@ public class RadiationBlocksProvider implements DataProvider {
         add(ModIntegration.esLoc("torreya_campfire"), 5550);
     }
 
-    protected void add(ResourceLocation loc, double maxRadiation) {
+    protected void add(Identifier loc, double maxRadiation) {
         RADIATION_MAP.put(loc, new BlockRadiation(loc, maxRadiation));
     }
 
@@ -75,7 +75,7 @@ public class RadiationBlocksProvider implements DataProvider {
 
         registerRadiationBlocks();
 
-        for (Map.Entry<ResourceLocation, BlockRadiation> entry : RADIATION_MAP.entrySet()) {
+        for (Map.Entry<Identifier, BlockRadiation> entry : RADIATION_MAP.entrySet()) {
             PackOutput.PathProvider pathProvider = getPath(entry.getKey());
 
             recipeList.add(DataProvider.saveStable(cache,
@@ -86,7 +86,7 @@ public class RadiationBlocksProvider implements DataProvider {
         return CompletableFuture.allOf(recipeList.toArray(CompletableFuture[]::new));
     }
 
-    private PackOutput.PathProvider getPath(ResourceLocation loc) {
+    private PackOutput.PathProvider getPath(Identifier loc) {
         return this.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "environment/block_radiation/");
     }
 

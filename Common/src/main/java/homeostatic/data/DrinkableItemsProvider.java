@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import homeostatic.common.item.DrinkableItem;
 import homeostatic.common.item.DrinkableItemManager;
@@ -21,7 +21,7 @@ import static homeostatic.Homeostatic.prefix;
 
 public class DrinkableItemsProvider implements DataProvider {
 
-    private final Map<ResourceLocation, DrinkableItem> DRINKABLE_ITEMS = new HashMap<>();
+    private final Map<Identifier, DrinkableItem> DRINKABLE_ITEMS = new HashMap<>();
     private final PackOutput packOutput;
 
     public DrinkableItemsProvider(@NotNull final PackOutput packOutput) {
@@ -1858,55 +1858,55 @@ public class DrinkableItemsProvider implements DataProvider {
         addDrink(ModIntegration.ldVineryLoc("white_taiga_grapejuice"));
     }
 
-    protected void add(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
+    protected void add(Identifier loc, int amount, float saturation, int potency, int duration, float chance) {
         DRINKABLE_ITEMS.put(loc, new DrinkableItem(loc, amount, saturation, potency, duration, chance));
     }
 
-    protected void addDrink(ResourceLocation loc) {
+    protected void addDrink(Identifier loc) {
         add(loc, 3, 0.7F,  0, 0, 0.0F);
     }
 
-    protected void addBerries(ResourceLocation loc) {
+    protected void addBerries(Identifier loc) {
         add(loc, 2, 0.3F,  0, 0, 0.0F);
     }
 
-    protected void addJam(ResourceLocation loc) {
+    protected void addJam(Identifier loc) {
         add(loc, 2, 0.6F,  0, 0, 0.0F);
     }
 
-    protected void addPie(ResourceLocation loc) {
+    protected void addPie(Identifier loc) {
         add(loc, 3, 1.2F,  0, 0, 0.0F);
     }
 
-    protected void addShake(ResourceLocation loc) {
+    protected void addShake(Identifier loc) {
         add(loc, 5, 1.2F,  0, 0, 0.0F);
     }
 
-    protected void addFruit(ResourceLocation loc) {
+    protected void addFruit(Identifier loc) {
         add(loc, 2, 0.6F,  0, 0, 0.0F);
     }
 
-    protected void addIcecream(ResourceLocation loc) {
+    protected void addIcecream(Identifier loc) {
         add(loc, 5, 1.0F,  0, 0, 0.0F);
     }
 
-    protected void addSoup(ResourceLocation loc) {
+    protected void addSoup(Identifier loc) {
         add(loc, 3, 0.7F,  0, 0, 0.0F);
     }
 
-    protected void addSpecialCake(ResourceLocation loc) {
+    protected void addSpecialCake(Identifier loc) {
         add(loc, 5, 1.3F,  0, 0, 0.0F);
     }
 
-    protected void addVeggie(ResourceLocation loc) {
+    protected void addVeggie(Identifier loc) {
         add(loc, 1, 0.1F,  0, 0, 0.0F);
     }
 
-    protected void addMeal(ResourceLocation loc) {
+    protected void addMeal(Identifier loc) {
         add(loc, 2, 0.6F,  0, 0, 0.0F);
     }
 
-    protected void addCake(ResourceLocation loc) {
+    protected void addCake(Identifier loc) {
         add(loc, 2, 0.2F,  0, 0, 0.0F);
     }
 
@@ -1922,7 +1922,7 @@ public class DrinkableItemsProvider implements DataProvider {
 
         addDrinkableItems();
 
-        for (Map.Entry<ResourceLocation, DrinkableItem> entry : DRINKABLE_ITEMS.entrySet()) {
+        for (Map.Entry<Identifier, DrinkableItem> entry : DRINKABLE_ITEMS.entrySet()) {
             PackOutput.PathProvider pathProvider = getPath(entry.getKey());
 
             recipeList.add(DataProvider.saveStable(cache,
@@ -1933,7 +1933,7 @@ public class DrinkableItemsProvider implements DataProvider {
         return CompletableFuture.allOf(recipeList.toArray(CompletableFuture[]::new));
     }
 
-    private PackOutput.PathProvider getPath(ResourceLocation loc) {
+    private PackOutput.PathProvider getPath(Identifier loc) {
         return this.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "environment/drinkable/");
     }
 

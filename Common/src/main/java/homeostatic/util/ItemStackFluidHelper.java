@@ -5,7 +5,7 @@ import java.util.Optional;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.material.Fluid;
@@ -34,7 +34,7 @@ public class ItemStackFluidHelper {
             return Fluids.EMPTY;
         }
 
-        return BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluidName.get())).map(Holder.Reference::value).orElse(Fluids.EMPTY);
+        return BuiltInRegistries.FLUID.get(Identifier.parse(fluidName.get())).map(Holder.Reference::value).orElse(Fluids.EMPTY);
     }
 
     public static void setFluid(ItemStack stack, Fluid fluid) {
@@ -42,7 +42,7 @@ public class ItemStackFluidHelper {
 
         tag.putString(
             Services.PLATFORM.fluidStackTag(),
-            Services.PLATFORM.getFluidResourceLocation(fluid).toString()
+            Services.PLATFORM.getFluidIdentifier(fluid).toString()
         );
 
         stack.set(HomeostaticComponents.WATER_CONTAINER, CustomData.of(tag));

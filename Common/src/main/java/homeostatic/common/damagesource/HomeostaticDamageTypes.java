@@ -24,7 +24,7 @@ public class HomeostaticDamageTypes {
     }
 
     private static void register(BootstrapContext<DamageType> context, ResourceKey<DamageType> key) {
-        context.register(key, new DamageType( key.location().getPath(), 0.0F));
+        context.register(key, new DamageType(key.identifier().getPath(), 0.0F));
     }
 
     private static ResourceKey<DamageType> register(String name) {

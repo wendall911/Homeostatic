@@ -1,5 +1,6 @@
 package homeostatic.integrations.jei;
 
+/*
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IdentityHashMap;
@@ -15,7 +16,7 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.common.Internal;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -46,7 +47,7 @@ import homeostatic.integrations.WaterFilterRecipeMaker;
 public class JEIPlugin implements IModPlugin {
 
     @Override
-    public ResourceLocation getPluginUid() {
+    public Identifier getPluginUid() {
         return Homeostatic.prefix("jei_plugin");
     }
 
@@ -209,3 +210,4 @@ public class JEIPlugin implements IModPlugin {
     }
 
 }
+*/

@@ -19,7 +19,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -82,10 +82,10 @@ public class DrinkableItemManager extends SimpleJsonResourceReloadListener<JsonE
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
+    protected void apply(Map<Identifier, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
         ITEMS.clear();
 
-        for (Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet()) {
+        for (Map.Entry<Identifier, JsonElement> entry : pObject.entrySet()) {
             try {
                 DrinkableItem drinkableItem = GSON.fromJson(entry.getValue(), DrinkableItem.class);
                 Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.get(drinkableItem.loc());

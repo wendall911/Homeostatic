@@ -6,5 +6,5 @@ run
 # IntelliJ
 .idea
 
-#Minecraft datagen
+# Minecraft datagen
 .cache

@@ -13,7 +13,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.item.DrinkableItem;
@@ -23,7 +23,7 @@ import static homeostatic.Homeostatic.prefix;
 
 public record SyncDrinkableItems(Tag data) implements IPacket {
 
-    public static final ResourceLocation ID = prefix("sync_drinkable_items");
+    public static final Identifier ID = prefix("sync_drinkable_items");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncDrinkableItems> CODEC = StreamCodec.composite(
         ByteBufCodecs.TAG,
         SyncDrinkableItems::data,

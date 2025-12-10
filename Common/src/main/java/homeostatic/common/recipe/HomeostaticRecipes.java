@@ -2,7 +2,7 @@ package homeostatic.common.recipe;
 
 import java.util.function.BiConsumer;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
 import net.minecraft.world.item.crafting.CustomRecipe;
@@ -25,7 +25,7 @@ public class HomeostaticRecipes {
     public static RecipeSerializer<SmeltingRecipe> SMELTING_PURIFIED_WATER_BOTTLE_SERIALIZER;
     public static RecipeSerializer<SmokingRecipe> SMOKING_PURIFIED_WATER_BOTTLE_SERIALIZER;
 
-    public static void init(BiConsumer<RecipeSerializer<?>, ResourceLocation> consumer) {
+    public static void init(BiConsumer<RecipeSerializer<?>, Identifier> consumer) {
         ARMOR_ENHANCEMENT_SERIALIZER = new CustomRecipe.Serializer<>(ArmorEnhancement::new);
         PURIFIED_LEATHER_FLASK_SERIALIZER = new CustomRecipe.Serializer<>(PurifiedLeatherFlask::new);
         HELMET_THERMOMETER_SERIALIZER = new CustomRecipe.Serializer<>(HelmetThermometer::new);

@@ -7,7 +7,7 @@ import java.util.function.BiConsumer;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.item.Item;
@@ -18,7 +18,7 @@ import homeostatic.Homeostatic;
 
 public final class HomeostaticItems {
 
-    private static final Map<ResourceLocation, Item> ALL = new LinkedHashMap<>();
+    private static final Map<Identifier, Item> ALL = new LinkedHashMap<>();
 
     public static final Item LEATHER_FLASK = make(
         "leather_flask",
@@ -66,21 +66,21 @@ public final class HomeostaticItems {
         )
     );
 
-    public static void init(BiConsumer<Item, ResourceLocation> consumer) {
-        for (Map.Entry<ResourceLocation, Item> entry : ALL.entrySet()) {
+    public static void init(BiConsumer<Item, Identifier> consumer) {
+        for (Map.Entry<Identifier, Item> entry : ALL.entrySet()) {
             consumer.accept(entry.getValue(), entry.getKey());
         }
     }
 
     public static <T extends Item> T make(String name, T item) {
-        ResourceLocation loc = Homeostatic.prefix(name);
+        Identifier loc = Homeostatic.prefix(name);
 
         ALL.put(loc, item);
 
         return item;
     }
 
-    public static Map<ResourceLocation, Item> getAll() {
+    public static Map<Identifier, Item> getAll() {
         return ALL;
     }
 

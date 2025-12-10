@@ -10,7 +10,7 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
@@ -77,7 +77,7 @@ public class HomeostaticFabric implements ModInitializer {
         HomeostaticComponents.registerDataComponents();
     }
 
-    private static <T> BiConsumer<T, ResourceLocation> bind(Registry<? super T> registry) {
+    private static <T> BiConsumer<T, Identifier> bind(Registry<? super T> registry) {
         return (t, id) -> Registry.register(registry, id, t);
     }
 

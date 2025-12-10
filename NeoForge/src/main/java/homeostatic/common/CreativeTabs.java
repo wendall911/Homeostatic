@@ -3,7 +3,7 @@ package homeostatic.common;
 import java.util.Map;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,7 +28,7 @@ public class CreativeTabs extends HomeostaticModule {
         ALL_ITEMS_TAB = CreativeModeTab.builder().icon(() -> new ItemStack(icon))
             .title(Component.translatable(Homeostatic.MODID + ".items"))
             .displayItems((features, output) -> {
-                for (Map.Entry<ResourceLocation, Item> entry : HomeostaticItems.getAll().entrySet()) {
+                for (Map.Entry<Identifier, Item> entry : HomeostaticItems.getAll().entrySet()) {
                     Item item = entry.getValue();
                     output.accept(new ItemStack(item));
                 }

@@ -13,17 +13,17 @@ import com.google.gson.JsonSerializer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 
 import homeostatic.common.Hydration;
 
 import static technology.roughness.whitenoise.util.ResourceLocationHelper.parse;
 
-public record DrinkingFluid(ResourceLocation loc, int amount, float saturation, int potency, int duration, float chance) {
+public record DrinkingFluid(Identifier loc, int amount, float saturation, int potency, int duration, float chance) {
 
     public static final Codec<DrinkingFluid> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-        ResourceLocation.CODEC.fieldOf("fluid").forGetter(DrinkingFluid::loc),
+        Identifier.CODEC.fieldOf("fluid").forGetter(DrinkingFluid::loc),
         Codec.INT.fieldOf("amount").forGetter(DrinkingFluid::amount),
         Codec.FLOAT.fieldOf("saturation").forGetter(DrinkingFluid::saturation),
         Codec.INT.fieldOf("effect_potency").forGetter(DrinkingFluid::potency),

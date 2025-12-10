@@ -1,7 +1,7 @@
 package homeostatic.common.component;
 
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.component.CustomData;
 
 import homeostatic.platform.Services;
@@ -18,7 +18,7 @@ public class HomeostaticComponents {
         register(prefix("water_container"), WATER_CONTAINER);
     }
 
-    private static <T> void register(ResourceLocation name, DataComponentType<T> component) {
+    private static <T> void register(Identifier name, DataComponentType<T> component) {
         Services.PLATFORM.registerDataComponent(name, component);
     }
 

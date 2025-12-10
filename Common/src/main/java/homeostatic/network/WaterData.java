@@ -2,7 +2,7 @@ package homeostatic.network;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.water.WaterInfo;
@@ -16,7 +16,7 @@ public class WaterData {
     private final float waterSaturationLevel;
     private final float waterExhaustionLevel;
     private final WaterInfo waterInfo;
-    public static final ResourceLocation ID = prefix("water_data");
+    public static final Identifier ID = prefix("water_data");
 
     public WaterData(WaterInfo waterInfo) {
         this.waterLevel = waterInfo.getWaterLevel();

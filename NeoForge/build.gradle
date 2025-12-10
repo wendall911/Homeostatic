@@ -3,6 +3,8 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+def identifier = "${mod_id}-${minecraft_version}-neoforge"
+
 neoForge {
     version = neoforge_version
     validateAccessTransformers = true
@@ -10,10 +12,6 @@ neoForge {
     def at = project(':Common').file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
         accessTransformers.from(at.absolutePath)
-    }
-    parchment {
-        minecraftVersion = mappings_minecraft_version
-        mappingsVersion = mappings_version
     }
     runs {
         configureEach {
@@ -48,7 +46,7 @@ dependencies {
     implementation group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-neoforge", version: "${handbook_version}"
     jarJar group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-neoforge", version: "${handbook_version}"
 
-    implementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-neoforge", version: "${homeostaticseasons_version}"
+    //implementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-neoforge", version: "${homeostaticseasons_version}"
 
     compileOnly "mezz.jei:jei-${jei_minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}"
@@ -142,7 +140,7 @@ sourceSets.main.resources {
 }
 
 def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
-def publishFile = project(":").projectDir.toString() + "/NeoForge/build/libs/${archivesBaseName}-${version}.jar"
+def publishFile = project(":").projectDir.toString() + "/NeoForge/build/libs/${identifier}-${version}.jar"
 def display_name = "${project.name} ${minecraft_version}-${version}"
 def display_version = "${minecraft_version}-${version}"
 
@@ -276,7 +274,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId project.group
-            artifactId project.archivesBaseName
+            artifactId identifier
             version project.version
             // This gives us the built version NeoForge requires
             artifact jar

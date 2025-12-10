@@ -19,7 +19,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -61,10 +61,10 @@ public class DrinkingFluidManager extends SimpleJsonResourceReloadListener<JsonE
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
+    protected void apply(Map<Identifier, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
         FLUIDS.clear();
 
-        for (Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet()) {
+        for (Map.Entry<Identifier, JsonElement> entry : pObject.entrySet()) {
             try {
                 DrinkingFluid drinkingFluid = GSON.fromJson(entry.getValue(), DrinkingFluid.class);
                 Optional<Holder.Reference<Fluid>> fluid = BuiltInRegistries.FLUID.get(drinkingFluid.loc());

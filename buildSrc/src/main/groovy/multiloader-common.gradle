@@ -26,20 +26,6 @@ repositories {
         filter { includeGroupAndSubgroups('org.spongepowered') }
     }
 
-    exclusiveContent {
-        forRepositories(
-            maven {
-                name = 'ParchmentMC'
-                url = 'https://maven.parchmentmc.org/'
-            },
-            maven {
-                name = 'NeoForge'
-                url = 'https://maven.neoforged.net/releases'
-            }
-        )
-        filter { includeGroup('org.parchmentmc.data') }
-    }
-
     maven {
         name = 'BlameJared Maven (CrT / Bookshelf / JEI (Newer) / vazkii / xyz)'
         url = 'https://maven.blamejared.com'

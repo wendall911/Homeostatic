@@ -13,14 +13,14 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
@@ -41,7 +41,7 @@ public abstract class RecipeProviderBase {
     public static final ItemStack waterBottle = PotionContents.createItemStack(Items.POTION, Potions.WATER);
 
     protected static void specialRecipe(RecipeOutput exporter, CustomRecipe.Serializer<?> serializer, Function<CraftingBookCategory, Recipe<?>> recipeFunction) {
-        ResourceLocation name = BuiltInRegistries.RECIPE_SERIALIZER.getKey(serializer);
+        Identifier name = BuiltInRegistries.RECIPE_SERIALIZER.getKey(serializer);
 
         SpecialRecipeBuilder.special(recipeFunction).save(exporter, prefix("dynamic/" + Objects.requireNonNull(name).getPath()).toString());
     }

@@ -2,7 +2,7 @@ package homeostatic.network;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.platform.Services;
@@ -14,7 +14,7 @@ public class TemperatureData {
     public float localTemperature;
     public float skinTemperature;
     public float coreTemperature;
-    public static final ResourceLocation ID = prefix("temperature_data");
+    public static final Identifier ID = prefix("temperature_data");
 
     public TemperatureData(float localTemperature, float skinTemperature, float coreTemperature) {
         this.localTemperature = localTemperature;

@@ -5,7 +5,7 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import technology.roughness.whitenoise.config.WhiteNoiseConfig;
 import technology.roughness.whitenoise.config.WhiteNoiseConfigLoader;
@@ -38,7 +38,7 @@ public class Homeostatic {
         }
     }
 
-    public static ResourceLocation prefix(String path) {
+    public static Identifier prefix(String path) {
         return loc(MODID, path);
     }
 

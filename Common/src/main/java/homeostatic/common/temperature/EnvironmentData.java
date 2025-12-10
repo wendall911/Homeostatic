@@ -14,7 +14,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
@@ -22,6 +21,7 @@ import net.minecraft.world.level.biome.Biome.Precipitation;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
@@ -126,7 +126,7 @@ public class EnvironmentData {
             accumulatedDryTemp += isUnderground ? chunkTemp : getSeasonAdjustedTemperature(level, chunkBiome, chunkTemp, chunkPos);
 
             // If weather is enabled
-            if (level.getGameRules().getBoolean(GameRules.RULE_WEATHER_CYCLE)) {
+            if (level.getGameRules().get(GameRules.ADVANCE_WEATHER)) {
                 double chunkHumidity = getBiomeHumidity(level, chunkBiome, chunkPos);
 
                 accumulatedHumidity += chunkHumidity;
@@ -239,7 +239,7 @@ public class EnvironmentData {
     private static double getSunRadiation(ServerLevel level, BlockPos pos) {
         double radiation = 0.0;
         double sunlight = level.getBrightness(LightLayer.SKY, pos.above()) - level.getSkyDarken();
-        float f = level.getSunAngle(1.0F);
+        float f = getSunAngle(level);
 
         if (sunlight > 0) {
             float f1 = f < (float)Math.PI ? 0.0F : ((float)Math.PI * 2F);
@@ -250,6 +250,16 @@ public class EnvironmentData {
         radiation += sunlight * 100;
 
         return Math.max(radiation, 0);
+    }
+
+    private static float getSunAngle(ServerLevel level) {
+        return timeOfDay(level) * ((float)Math.PI * 2F);
+    }
+
+    private static float timeOfDay(ServerLevel level) {
+        double d0 = Mth.frac(level.getDayTime() / 24000.0 - 0.25);
+        double d1 = 0.5 - Math.cos(d0 * Math.PI) / 2.0;
+        return (float)(d0 * 2.0 + d1) / 3.0F;
     }
 
     private static double getMaxBiomeHumidity(ServerLevel level, Holder<Biome> biomeHolder, BlockPos pos) {
@@ -280,7 +290,7 @@ public class EnvironmentData {
         /*
          * Only calculate in Overworld.
          */
-        if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
+        if (!worldKey.identifier().toString().contains(BuiltinDimensionTypes.OVERWORLD.identifier().toString())) {
             return 0F;
         }
 
@@ -316,7 +326,7 @@ public class EnvironmentData {
         /*
          * Only calculate in Overworld.
          */
-        if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
+        if (!worldKey.identifier().toString().contains(BuiltinDimensionTypes.OVERWORLD.identifier().toString())) {
             return temperature;
         }
 
@@ -350,7 +360,7 @@ public class EnvironmentData {
         /*
          * Only calculate season temperatures in Overworld
          */
-        if (!worldKey.location().toString().contains(BuiltinDimensionTypes.OVERWORLD.location().toString())) {
+        if (!worldKey.identifier().toString().contains(BuiltinDimensionTypes.OVERWORLD.identifier().toString())) {
             return biomeTemp;
         }
 

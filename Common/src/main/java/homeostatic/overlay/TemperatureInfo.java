@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
@@ -79,15 +79,15 @@ public class TemperatureInfo extends Overlay {
                 ColorHelper.getTemperatureColor(coreRangeStep), false);
 
             biome.unwrapKey().ifPresent(key -> {
-                ResourceLocation biomeCategory = prefix(BiomeCategoryManager.getBiomeCategory(biome).toString());
+                Identifier biomeCategory = prefix(BiomeCategoryManager.getBiomeCategory(biome).toString());
                 BiomeTypeData biomeTypeData = BiomeTypeDataManager.getBiomeData(biomeCategory);
                 String biomeString;
 
                 if (biomeTypeData != null) {
-                    biomeString = String.format("%s (%s) frozen: %s", key.location(), biomeCategory, biomeTypeData.isFrozen());
+                    biomeString = String.format("%s (%s) frozen: %s", key.identifier(), biomeCategory, biomeTypeData.isFrozen());
                 }
                 else {
-                    biomeString = String.format("%s (%s) frozen: %s", key.location(), biomeCategory, "unknown");
+                    biomeString = String.format("%s (%s) frozen: %s", key.identifier(), biomeCategory, "unknown");
                 }
 
                 int biomeStringWidth = mc.font.width(biomeString);

@@ -2,7 +2,7 @@ package homeostatic.network;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.temperature.ThermometerInfo;
@@ -13,7 +13,7 @@ import static homeostatic.Homeostatic.prefix;
 public class ThermometerData {
 
     public boolean hasThermometer;
-    public static final ResourceLocation ID = prefix("thermometer_data");
+    public static final Identifier ID = prefix("thermometer_data");
 
     public ThermometerData(ThermometerInfo info) {
         this.hasThermometer = info.hasThermometer();
