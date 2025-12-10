@@ -13,7 +13,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import climatesettings.common.biome.BiomeTypeData;
@@ -23,7 +23,7 @@ import static climatesettings.ClimateSettings.prefix;
 
 public record SyncBiomeTypeData(Tag data) implements IPacket {
 
-    public static final ResourceLocation ID = prefix("sync_biome_type_data");
+    public static final Identifier ID = prefix("sync_biome_type_data");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncBiomeTypeData> CODEC = StreamCodec.composite(
         ByteBufCodecs.TAG,
         SyncBiomeTypeData::data,

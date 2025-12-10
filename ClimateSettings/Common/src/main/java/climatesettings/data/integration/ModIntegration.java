@@ -1,6 +1,6 @@
 package climatesettings.data.integration;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import static technology.roughness.whitenoise.util.ResourceLocationHelper.loc;
 
@@ -16,37 +16,37 @@ public class ModIntegration {
     public static final String REGIONS_MODID = "regions_unexplored";
     public static final String UG_MODID = "undergarden";
 
-    public static ResourceLocation arsLoc(String path) {
+    public static Identifier arsLoc(String path) {
         return loc(ARS_MODID, path);
     }
 
-    public static ResourceLocation arseLoc(String path) {
+    public static Identifier arseLoc(String path) {
         return loc(ARSE_MODID, path);
     }
 
-    public static ResourceLocation esLoc(String name) {
+    public static Identifier esLoc(String name) {
         return loc(ES_MODID, name);
     }
 
-    public static ResourceLocation bopLoc(String path) {
+    public static Identifier bopLoc(String path) {
         return loc(BOP_MODID, path);
     }
 
-    public static ResourceLocation bygLoc(String path) {
+    public static Identifier bygLoc(String path) {
         return loc(BYG_MODID, path);
     }
 
-    public static ResourceLocation regionsLoc(String name) {
+    public static Identifier regionsLoc(String name) {
         return loc(REGIONS_MODID, name);
     }
-    public static ResourceLocation terralithLoc(String name) {
+    public static Identifier terralithLoc(String name) {
         return loc(TL_MODID, name);
     }
-    public static ResourceLocation tfLoc(String path) {
+    public static Identifier tfLoc(String path) {
         return loc(TF_MODID, path);
     }
 
-    public static ResourceLocation ugLoc(String name) {
+    public static Identifier ugLoc(String name) {
         return loc(UG_MODID, name);
     }
 

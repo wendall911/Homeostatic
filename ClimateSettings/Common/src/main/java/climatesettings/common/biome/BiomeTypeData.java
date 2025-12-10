@@ -12,7 +12,7 @@ import com.google.gson.JsonSerializer;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.biome.Biome;
 
@@ -25,7 +25,7 @@ public class BiomeTypeData {
     public static final float MC_DEGREE = 0.022289157F;
 
     public static final Codec<BiomeTypeData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-        ResourceLocation.CODEC.fieldOf("location").forGetter(biomeTypeData -> biomeTypeData.location),
+        Identifier.CODEC.fieldOf("location").forGetter(biomeTypeData -> biomeTypeData.location),
         Codec.FLOAT.fieldOf("temperature").forGetter(biomeTypeData -> biomeTypeData.temperature),
         Codec.DOUBLE.fieldOf("humidity").forGetter(biomeTypeData -> biomeTypeData.humidity),
         Codec.DOUBLE.fieldOf("season_variation").forGetter(biomeTypeData -> biomeTypeData.seasonVariation),
@@ -33,14 +33,14 @@ public class BiomeTypeData {
         Codec.BOOL.fieldOf("is_frozen").forGetter(biomeTypeData -> biomeTypeData.isFrozen)
     ).apply(instance, BiomeTypeData::new));
 
-    private final ResourceLocation location;
+    private final Identifier location;
     private final float temperature;
     private double humidity;
     private final double seasonVariation;
     private final double dayNightOffset;
     private final boolean isFrozen;
 
-    public BiomeTypeData(ResourceLocation location, float temperature, double humidity, double seasonVariation, double dayNightOffset, boolean isFrozen) {
+    public BiomeTypeData(Identifier location, float temperature, double humidity, double seasonVariation, double dayNightOffset, boolean isFrozen) {
         this.location = location;
         this.temperature = temperature;
         this.humidity = humidity;
@@ -126,7 +126,7 @@ public class BiomeTypeData {
         return this.isFrozen;
     }
 
-    public ResourceLocation getLocation() {
+    public Identifier getLocation() {
         return location;
     }
 

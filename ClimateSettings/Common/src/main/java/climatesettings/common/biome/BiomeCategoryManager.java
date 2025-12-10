@@ -19,7 +19,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -33,7 +33,7 @@ import climatesettings.platform.Services;
 
 public class BiomeCategoryManager extends SimpleJsonResourceReloadListener<JsonElement> {
 
-    private static final Map<ResourceLocation, BiomeCategory> BIOME_CATEGORIES = new HashMap<>();
+    private static final Map<Identifier, BiomeCategory> BIOME_CATEGORIES = new HashMap<>();
 
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(BiomeCategory.class, new BiomeCategory.Serializer()).create();
 
@@ -51,7 +51,7 @@ public class BiomeCategoryManager extends SimpleJsonResourceReloadListener<JsonE
             BiomeCategory biomeCategory;
 
             if (key.isPresent()) {
-                biomeCategory = BIOME_CATEGORIES.getOrDefault(key.get().location(), BiomeCategory.MISSING);
+                biomeCategory = BIOME_CATEGORIES.getOrDefault(key.get().identifier(), BiomeCategory.MISSING);
             }
             else {
                 biomeCategory = BiomeCategory.MISSING;
@@ -76,10 +76,10 @@ public class BiomeCategoryManager extends SimpleJsonResourceReloadListener<JsonE
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
+    protected void apply(Map<Identifier, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
         BIOME_CATEGORIES.clear();
 
-        for (Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet()) {
+        for (Map.Entry<Identifier, JsonElement> entry : pObject.entrySet()) {
             try {
                 BiomeCategory biomeCategory = GSON.fromJson(entry.getValue(), BiomeCategory.class);
 

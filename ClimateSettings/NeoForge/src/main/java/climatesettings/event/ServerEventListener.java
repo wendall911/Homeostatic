@@ -6,7 +6,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.biome.Biome;
 
@@ -38,7 +38,7 @@ public class ServerEventListener {
 
         for (Map.Entry<ResourceKey<Biome>, Biome> entry : biomeRegistry.entrySet()) {
             ResourceKey<Biome> biomeResourceKey = entry.getKey();
-            ResourceLocation biomeName = biomeResourceKey.location();
+            Identifier biomeName = biomeResourceKey.identifier();
             Holder<Biome> biomeHolder = biomeRegistry.wrapAsHolder(biomeRegistry.getValueOrThrow(biomeResourceKey));
             BiomeCategory.Type biomeCategory = BiomeCategoryManager.getBiomeCategory(biomeHolder);
             BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biomeHolder);

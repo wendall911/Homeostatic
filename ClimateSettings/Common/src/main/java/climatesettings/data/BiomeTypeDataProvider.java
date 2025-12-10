@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import climatesettings.ClimateSettings;
 import climatesettings.common.biome.BiomeCategory;
@@ -22,7 +22,7 @@ import static climatesettings.ClimateSettings.prefix;
 
 public class BiomeTypeDataProvider implements DataProvider {
 
-    private final Map<ResourceLocation, BiomeTypeData> BIOME_TYPES_MAP = new HashMap<>();
+    private final Map<Identifier, BiomeTypeData> BIOME_TYPES_MAP = new HashMap<>();
     private final PackOutput packOutput;
 
     public BiomeTypeDataProvider(@NotNull final PackOutput packOutput) {
@@ -70,7 +70,7 @@ public class BiomeTypeDataProvider implements DataProvider {
         add(prefix(BiomeCategory.Type.NETHER.toString()), 1.666F, 20.0F, 40F, 0F, false);
     }
 
-    protected void add(ResourceLocation loc, float temperature, double humidity, double seasonVariation, double dayNightOffset, boolean isFrozen) {
+    protected void add(Identifier loc, float temperature, double humidity, double seasonVariation, double dayNightOffset, boolean isFrozen) {
         BiomeTypeData biomeTypeData = new BiomeTypeData(loc, temperature, humidity, seasonVariation, dayNightOffset, isFrozen);
 
         BIOME_TYPES_MAP.put(loc, biomeTypeData);
@@ -88,7 +88,7 @@ public class BiomeTypeDataProvider implements DataProvider {
 
         registerBiomeTypeData();
 
-        for (Map.Entry<ResourceLocation, BiomeTypeData> entry : BIOME_TYPES_MAP.entrySet()) {
+        for (Map.Entry<Identifier, BiomeTypeData> entry : BIOME_TYPES_MAP.entrySet()) {
             PackOutput.PathProvider pathProvider = getPath(entry.getKey());
 
             recipeList.add(DataProvider.saveStable(cache,
@@ -99,7 +99,7 @@ public class BiomeTypeDataProvider implements DataProvider {
         return CompletableFuture.allOf(recipeList.toArray(CompletableFuture[]::new));
     }
 
-    private PackOutput.PathProvider getPath(ResourceLocation loc) {
+    private PackOutput.PathProvider getPath(Identifier loc) {
         return this.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "environment/biome_type_data/");
     }
 

@@ -3,12 +3,10 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+def identifier = "${mod_id}-${minecraft_version}-neoforge"
+
 neoForge {
     version = neoforge_version
-    parchment {
-        minecraftVersion = mappings_minecraft_version
-        mappingsVersion = mappings_version
-    }
     runs {
     }
     mods {
@@ -30,7 +28,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId project.group
-            artifactId project.archivesBaseName
+            artifactId identifier
             version project.version
             // This gives us the built version NeoForge requires
             artifact jar

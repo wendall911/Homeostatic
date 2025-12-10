@@ -12,7 +12,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 
@@ -23,7 +23,7 @@ import climatesettings.data.integration.ModIntegration;
 
 public class BiomeCategoryProvider implements DataProvider {
 
-    private final Map<ResourceLocation, BiomeCategory> BIOME_CATEGORY_MAP = new HashMap<>();
+    private final Map<Identifier, BiomeCategory> BIOME_CATEGORY_MAP = new HashMap<>();
     private final PackOutput packOutput;
 
     public BiomeCategoryProvider(@NotNull final PackOutput packOutput) {
@@ -465,10 +465,10 @@ public class BiomeCategoryProvider implements DataProvider {
     }
 
     protected void add(ResourceKey<Biome> biomeResourceKey, BiomeCategory.Type type) {
-        BIOME_CATEGORY_MAP.put(biomeResourceKey.location(), new BiomeCategory(biomeResourceKey.location(), type.name()));
+        BIOME_CATEGORY_MAP.put(biomeResourceKey.identifier(), new BiomeCategory(biomeResourceKey.identifier(), type.name()));
     }
     
-    protected void add(ResourceLocation loc, BiomeCategory.Type type) {
+    protected void add(Identifier loc, BiomeCategory.Type type) {
         BIOME_CATEGORY_MAP.put(loc, new BiomeCategory(loc, type.name()));
     }
 
@@ -484,7 +484,7 @@ public class BiomeCategoryProvider implements DataProvider {
 
         registerBiomeCategories();
 
-        for (Map.Entry<ResourceLocation, BiomeCategory> entry : BIOME_CATEGORY_MAP.entrySet()) {
+        for (Map.Entry<Identifier, BiomeCategory> entry : BIOME_CATEGORY_MAP.entrySet()) {
             PackOutput.PathProvider pathProvider = getPath(entry.getKey());
 
             recipeList.add(DataProvider.saveStable(cache,
@@ -495,7 +495,7 @@ public class BiomeCategoryProvider implements DataProvider {
         return CompletableFuture.allOf(recipeList.toArray(CompletableFuture[]::new));
     }
 
-    private PackOutput.PathProvider getPath(ResourceLocation loc) {
+    private PackOutput.PathProvider getPath(Identifier loc) {
         return this.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, "environment/biome_category/");
     }
 

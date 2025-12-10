@@ -3,13 +3,10 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+def identifier = "${mod_id}-${minecraft_version}-common"
+
 neoForge {
     neoFormVersion = neo_form_version
-
-    parchment {
-        minecraftVersion = mappings_minecraft_version
-        mappingsVersion = mappings_version
-    }
 }
 
 dependencies {
@@ -44,7 +41,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId project.group
-            artifactId project.archivesBaseName
+            artifactId identifier
             version project.version
             from components.java
         }

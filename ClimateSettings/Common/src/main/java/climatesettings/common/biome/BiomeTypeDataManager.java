@@ -20,7 +20,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.ExtraCodecs;
@@ -34,9 +34,9 @@ import static climatesettings.ClimateSettings.prefix;
 
 public class BiomeTypeDataManager extends SimpleJsonResourceReloadListener<JsonElement> {
 
-    private static final Map<ResourceLocation, BiomeTypeData> BIOME_TYPES = new HashMap<>();
+    private static final Map<Identifier, BiomeTypeData> BIOME_TYPES = new HashMap<>();
 
-    private static final ResourceLocation MISSING_LOC = ClimateSettings.prefix(BiomeCategory.Type.MISSING.toString());
+    private static final Identifier MISSING_LOC = ClimateSettings.prefix(BiomeCategory.Type.MISSING.toString());
 
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(BiomeTypeData.class, new BiomeTypeData.Serializer()).create();
 
@@ -48,12 +48,12 @@ public class BiomeTypeDataManager extends SimpleJsonResourceReloadListener<JsonE
         return GSON.toJsonTree(biomeTypeData);
     }
 
-    public static BiomeTypeData getBiomeData(ResourceLocation type) {
+    public static BiomeTypeData getBiomeData(Identifier type) {
         return BIOME_TYPES.getOrDefault(type, BIOME_TYPES.get(MISSING_LOC));
     }
 
     public static BiomeTypeData getDataForBiome(Holder<Biome> biome) {
-        ResourceLocation biomeCategory = prefix(BiomeCategoryManager.getBiomeCategory(biome).toString());
+        Identifier biomeCategory = prefix(BiomeCategoryManager.getBiomeCategory(biome).toString());
 
         return getBiomeData(biomeCategory);
     }
@@ -69,10 +69,10 @@ public class BiomeTypeDataManager extends SimpleJsonResourceReloadListener<JsonE
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
+    protected void apply(Map<Identifier, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
         BIOME_TYPES.clear();
 
-        for (Map.Entry<ResourceLocation, JsonElement> entry : pObject.entrySet()) {
+        for (Map.Entry<Identifier, JsonElement> entry : pObject.entrySet()) {
             try {
                 BiomeTypeData biomeTypeData = GSON.fromJson(entry.getValue(), BiomeTypeData.class);
 
