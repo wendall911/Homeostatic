@@ -7,6 +7,7 @@ import static technology.roughness.whitenoise.util.ResourceLocationHelper.loc;
 public class ModIntegration {
 
     public static final String ALEX_MODID = "alexsmobs";
+    public static final String ALLOY_MODID = "alloy-forgery";
     public static final String ARSE_MODID = "ars_elemental";
     public static final String ARS_MODID = "ars_nouveau";
     public static final String BOP_MODID = "biomesoplenty";
@@ -20,6 +21,7 @@ public class ModIntegration {
     public static final String FD_MODID = "farmersdelight";
     public static final String FT_MODID = "fruitfulfun";
     public static final String IE_MODID = "immersiveengineering";
+    public static final String HS_MODID = "homeostaticseasons";
     public static final String KOBOLDS_MODID = "kobolds";
     public static final String LD_BAKERY_MODID = "bakery";
     public static final String LD_BEACH_MODID = "beachparty";
@@ -31,10 +33,10 @@ public class ModIntegration {
     public static final String LD_MEADOW_MODID = "meadow";
     public static final String LD_VINERY_MODID = "vinery";
     public static final String LD_WILDER_MODID = "wildernature";
+    public static final String LMBA_MODID = "leavemybarsalone";
     public static final String MC_MODID = "minecraft";
     public static final String MORE_FOOD_MODID = "more_food";
     public static final String MORECRAFT_MODID = "morecraft";
-    public static final String PATCHOULI_MODID = "patchouli";
     public static final String PHC_CORE_MODID = "pamhc2foodcore";
     public static final String PHC_CROPS_MODID = "pamhc2crops";
     public static final String PHC_FOOD_EXTENDED_MODID = "pamhc2foodextended";
@@ -51,8 +53,6 @@ public class ModIntegration {
     public static final String UG_MODID = "undergarden";
     public static final String XERCA_MODID = "xercamod";
     public static final String VAMPIRISM_MODID = "vampirism";
-    public static final String LMBA_MODID = "leavemybarsalone";
-    public static final String HS_MODID = "homeostaticseasons";
 
     public static Identifier alexLoc(String path) {
         return loc(ALEX_MODID, path);
@@ -208,6 +208,10 @@ public class ModIntegration {
 
     public static Identifier ldWilderLoc(String name) {
         return loc(LD_WILDER_MODID, name);
+    }
+
+    public static Identifier alloyForgeryLoc(String path) {
+        return loc(ALLOY_MODID, path);
     }
 
 }
