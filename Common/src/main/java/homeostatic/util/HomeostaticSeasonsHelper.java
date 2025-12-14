@@ -10,4 +10,8 @@ public class HomeostaticSeasonsHelper {
         return HomeostaticSeasonsAPI.getCurrentSeason(level).ordinal();
     }
 
+    public static boolean isDimensionWhitelisted(Level level) {
+        return HomeostaticSeasonsAPI.isSeasonalDimension(level.dimension());
+    }
+
 }
