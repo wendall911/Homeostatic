@@ -95,6 +95,7 @@ public class BiomeCategoryProvider implements DataProvider {
         add(Biomes.END_MIDLANDS, BiomeCategory.Type.THEEND);
         add(Biomes.SMALL_END_ISLANDS, BiomeCategory.Type.THEEND);
         add(Biomes.END_BARRENS, BiomeCategory.Type.THEEND);
+        add(Biomes.PALE_GARDEN, BiomeCategory.Type.FOREST);
 
         // BOP
         add(ModIntegration.bopLoc("seasonal_forest"), BiomeCategory.Type.COLD_FOREST);
