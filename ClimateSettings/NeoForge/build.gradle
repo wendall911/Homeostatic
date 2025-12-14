@@ -5,10 +5,6 @@ plugins {
 
 neoForge {
     version = neoforge_version
-    parchment {
-        minecraftVersion = mappings_minecraft_version
-        mappingsVersion = mappings_version
-    }
     runs {
     }
     mods {

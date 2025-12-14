@@ -9,7 +9,6 @@ dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings(loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${mappings_minecraft_version}:${mappings_version}@zip")
     })
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
@@ -101,7 +100,6 @@ loom {
         accessWidenerPath.set(aw)
     }
     mixin {
-        useLegacyMixinAp = true
         defaultRefmapName.set("${mod_id}.refmap.json")
     }
     runs {
