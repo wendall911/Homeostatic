@@ -3,6 +3,8 @@ plugins {
     id 'fabric-loom'
 }
 
+def identifier = "${mod_id}-${minecraft_version}-fabric"
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings(loom.layered {
@@ -87,6 +89,9 @@ dependencies {
         //modLocalRuntime "curse.maven:letsdo_farm-1038103:${letsdo_farm_fabric_version}"
         //modLocalRuntime "curse.maven:letsdo_vinery-704465:${letsdo_vinery_fabric_version}"
         //modLocalRuntime "curse.maven:letsdo_wilder-1071657:${letsdo_wilder_fabric_version}"
+        // I don't think they test in environments outside of their own bizarre build system, so this isn't working
+        //modLocalRuntime "curse.maven:owo-532610:${owo_fabric}"
+        //modLocalRuntime "curse.maven:alloy_forgery-438718:${alloy_forgery_fabric}"
     }
 }
 
@@ -133,7 +138,7 @@ sourceSets.main.resources {
 }
 
 def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
-def publishFile = project(":").projectDir.toString() + "/Fabric/build/libs/${archivesBaseName}-${version}.jar"
+def publishFile = project(":").projectDir.toString() + "/Fabric/build/libs/${identifier}-${version}.jar"
 def display_name = "${project.name} ${minecraft_version}-${version}"
 def display_version = "${minecraft_version}-${version}"
 
@@ -247,7 +252,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId project.group
-            artifactId project.archivesBaseName
+            artifactId identifier
             version project.version
             from components.java
         }

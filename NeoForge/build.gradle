@@ -3,6 +3,8 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+def identifier = "${mod_id}-${minecraft_version}-neoforge"
+
 neoForge {
     version = neoforge_version
     validateAccessTransformers = true
@@ -51,7 +53,7 @@ dependencies {
     implementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-neoforge", version: "${homeostaticseasons_version}"
 
     compileOnly "mezz.jei:jei-${jei_minecraft_version}-common-api:${jei_version}"
-    compileOnly "mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}"
+    implementation "mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}"
 
     compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
     compileOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
@@ -134,6 +136,8 @@ dependencies {
         //runtimeOnly "curse.maven:letsdo_farm-1038103:${letsdo_farm_neoforge_version}"
         //runtimeOnly "curse.maven:letsdo_vinery-704465:${letsdo_vinery_neoforge_version}"
         //runtimeOnly "curse.maven:letsdo_wilder-1071657:${letsdo_wilder_neoforge_version}"
+        //runtimeOnly "curse.maven:owo-532610:${owo_neoforge}"
+        ////runtimeOnly "curse.maven:alloy_forgery-438718:${alloy_forgery_neoforge}"
     }
 }
 
@@ -142,7 +146,7 @@ sourceSets.main.resources {
 }
 
 def changelogFile = project(":").projectDir.toString() + '/build/libs/changelog.txt'
-def publishFile = project(":").projectDir.toString() + "/NeoForge/build/libs/${archivesBaseName}-${version}.jar"
+def publishFile = project(":").projectDir.toString() + "/NeoForge/build/libs/${identifier}-${version}.jar"
 def display_name = "${project.name} ${minecraft_version}-${version}"
 def display_version = "${minecraft_version}-${version}"
 
@@ -276,7 +280,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId project.group
-            artifactId project.archivesBaseName
+            artifactId identifier
             version project.version
             // This gives us the built version NeoForge requires
             artifact jar
