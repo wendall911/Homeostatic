@@ -57,6 +57,14 @@ public class RadiationBlocksProvider implements DataProvider {
 
         // Eternal Starlight
         add(ModIntegration.esLoc("torreya_campfire"), 5550);
+
+        // Alloy Forgery
+        add(ModIntegration.alloyForgeryLoc("bricks_forge_controller"), 5550);
+        add(ModIntegration.alloyForgeryLoc("stone_bricks_forge_controller"), 5550);
+        add(ModIntegration.alloyForgeryLoc("deepslate_bricks_forge_controller"), 5550);
+        add(ModIntegration.alloyForgeryLoc("end_stone_bricks_forge_controller"), 5550);
+        add(ModIntegration.alloyForgeryLoc("polished_blackstone_forge_controller"), 5550);
+        add(ModIntegration.alloyForgeryLoc("prismarine_bricks_forge_controller"), 5550);
     }
 
     protected void add(ResourceLocation loc, double maxRadiation) {
