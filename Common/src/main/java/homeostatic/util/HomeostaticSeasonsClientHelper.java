@@ -11,6 +11,10 @@ public class HomeostaticSeasonsClientHelper {
             return "UNKNOWN";
         }
 
+        if (!HomeostaticSeasonsAPI.isSeasonalDimension(mc.level.dimension())) {
+            return "NONE";
+        }
+
         return HomeostaticSeasonsAPI.getCurrentSeason(mc.level).toString();
     }
 
