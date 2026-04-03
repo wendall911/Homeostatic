@@ -26,6 +26,11 @@ repositories {
     }
 
     maven {
+        name = 'TerraformersMC (Trinkets / Mod Menu)'
+        url = 'https://maven.terraformersmc.com/'
+    }
+
+    maven {
         name = 'WhiteNoise' // Library for wendall911 mods
         url = 'https://raw.githubusercontent.com/wendall911/maven/main/'
     }
@@ -39,7 +44,7 @@ repositories {
 
 // Declare capabilities on the outgoing configurations.
 // Read more about capabilities here: https://docs.gradle.org/current/userguide/component_capabilities.html#sec:declaring-additional-capabilities-for-a-local-component
-['apiElements', 'runtimeElements'].each { variant ->
+['apiElements'].each { variant ->
     configurations."$variant".outgoing {
         capability("$group:$mod_id-${minecraft_version}-${project.name}:$version".toLowerCase())
         capability("$group:$mod_id:$version")
@@ -80,6 +85,7 @@ ext.expandProps = [
     'minecraft_version': minecraft_version,
     'fabric_loader_min_version': fabric_loader_min_version,
     'fabric_mc_version_range': fabric_mc_version_range,
+    'fabric_api_min_version': fabric_api_min_version,
     'neoforge_loader_version_range': neoforge_loader_version_range,
     'neoforge_mc_version_range': neoforge_mc_version_range,
     'mod_credits': mod_credits,

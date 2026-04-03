@@ -16,8 +16,8 @@ public class ClimateSettingsFabric implements ModInitializer {
     public void onInitialize() {
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricBiomeCategoryManager());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricBiomeTypeDataManager());
-        PayloadTypeRegistry.playS2C().register(SyncBiomeTypeData.TYPE, SyncBiomeTypeData.CODEC);
-        PayloadTypeRegistry.playS2C().register(SyncBiomeCategoryData.TYPE, SyncBiomeCategoryData.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(SyncBiomeTypeData.TYPE, SyncBiomeTypeData.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(SyncBiomeCategoryData.TYPE, SyncBiomeCategoryData.CODEC);
     }
 
 }
