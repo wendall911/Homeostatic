@@ -2,7 +2,7 @@ package climatesettings.network;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -42,7 +42,7 @@ public record SyncBiomeTypeData(Tag data) implements IPacket {
     }
 
     @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
+    public @NonNull Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 

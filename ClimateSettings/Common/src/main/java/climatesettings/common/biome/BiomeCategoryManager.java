@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -76,7 +76,7 @@ public class BiomeCategoryManager extends SimpleJsonResourceReloadListener<JsonE
     }
 
     @Override
-    protected void apply(Map<Identifier, JsonElement> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
+    protected void apply(Map<Identifier, JsonElement> pObject, @NonNull ResourceManager pResourceManager, @NonNull ProfilerFiller pProfiler) {
         BIOME_CATEGORIES.clear();
 
         for (Map.Entry<Identifier, JsonElement> entry : pObject.entrySet()) {

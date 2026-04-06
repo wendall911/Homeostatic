@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -25,7 +25,7 @@ public class BiomeTypeDataProvider implements DataProvider {
     private final Map<Identifier, BiomeTypeData> BIOME_TYPES_MAP = new HashMap<>();
     private final PackOutput packOutput;
 
-    public BiomeTypeDataProvider(@NotNull final PackOutput packOutput) {
+    public BiomeTypeDataProvider(@NonNull final PackOutput packOutput) {
         this.packOutput = packOutput;
     }
 
@@ -77,13 +77,13 @@ public class BiomeTypeDataProvider implements DataProvider {
     }
 
     @Override
-    public @NotNull String getName() {
+    public @NonNull String getName() {
         return ClimateSettings.MOD_NAME + " - Biome Type Data";
     }
 
     @Override
-    @NotNull
-    public CompletableFuture<?> run(@NotNull CachedOutput cache) throws IllegalStateException {
+    @NonNull
+    public CompletableFuture<?> run(@NonNull CachedOutput cache) throws IllegalStateException {
         List<CompletableFuture<?>> recipeList = new ArrayList<>();
 
         registerBiomeTypeData();
