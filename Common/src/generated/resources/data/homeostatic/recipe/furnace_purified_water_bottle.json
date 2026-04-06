@@ -1,5 +1,5 @@
 {
-  "type": "homeostatic:smelting_purified_water_bottle",
+  "type": "minecraft:smelting",
   "category": "misc",
   "cookingtime": 75,
   "experience": 0.05,

@@ -3,12 +3,14 @@ package homeostatic.data.book;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 
 import handbook.api.data.BookBuilder;
@@ -25,15 +27,15 @@ public class HomeostaticBookProvider extends HandbookBookProvider {
     private int categorySortNum = -1;
     private int entrySortNum = -1;
 
-    public HomeostaticBookProvider(@NotNull final PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+    public HomeostaticBookProvider(@NonNull final PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(packOutput, Homeostatic.MODID, "en_us", lookupProvider);
     }
 
     @Override
     protected void addBooks(Consumer<BookBuilder> consumer, HolderLookup.Provider provider) {
-        BookBuilder bookBuilder = createBookBuilder("book", "item.homeostatic.book", prefix("intro"), provider)
+        BookBuilder bookBuilder = createBookBuilder("book", "item.homeostatic.book", prefix("intro"))
             .setSubtitle(prefix("subtitle"))
-            .setCustomBookItem(new ItemStack(HomeostaticItems.BOOK))
+            .setCustomBookItem(new ItemStackTemplate(HomeostaticItems.BOOK))
             .setCreativeTab(Homeostatic.MODID + ".items")
             .setModel(Homeostatic.MODID + ":book")
             .setDontGenerateBook(true)
@@ -48,11 +50,14 @@ public class HomeostaticBookProvider extends HandbookBookProvider {
     }
 
     private BookBuilder addGameplay(BookBuilder bookBuilder) {
-        ItemStack sword = new ItemStack(Items.IRON_SWORD);
-        ItemStack flask = new ItemStack(HomeostaticItems.LEATHER_FLASK);
-
-        flask.setDamageValue(0);
-        sword.setDamageValue(0);
+        ItemStackTemplate sword = new ItemStackTemplate(
+            Items.IRON_SWORD,
+            DataComponentPatch.builder().set(DataComponents.DAMAGE, 0).build()
+        );
+        ItemStackTemplate flask = new ItemStackTemplate(
+            HomeostaticItems.LEATHER_FLASK,
+            DataComponentPatch.builder().set(DataComponents.DAMAGE, 0).build()
+        );
 
         CategoryBuilder category = bookBuilder.addCategory(
             "gameplay",
@@ -65,7 +70,7 @@ public class HomeostaticBookProvider extends HandbookBookProvider {
         EntryBuilder gameplayEnvironmentEntry = category.addEntry(
             "gameplay/environment",
             prefix("gameplay.environment.name"),
-            new ItemStack(Items.CAMPFIRE)
+            new ItemStackTemplate(Items.CAMPFIRE)
         ).setSortnum(entrySortNum++);
 
         gameplayEnvironmentEntry.addImagePage(bookImage("normal_outside"))
@@ -76,7 +81,7 @@ public class HomeostaticBookProvider extends HandbookBookProvider {
         EntryBuilder gameplayBodyTempEntry = category.addEntry(
             "gameplay/body_temp",
             prefix("gameplay.body_temp.name"),
-            new ItemStack(Items.LIGHT_GRAY_WOOL)
+            new ItemStackTemplate(Items.LIGHT_GRAY_WOOL)
         ).setSortnum(entrySortNum++);
 
         gameplayBodyTempEntry.addImagePage(bookImage("normal_body"))
@@ -162,27 +167,27 @@ public class HomeostaticBookProvider extends HandbookBookProvider {
             "education",
             prefix("education.name"),
             prefix("education.desc"),
-            new ItemStack(Items.BOOKSHELF)
+            new ItemStackTemplate(Items.BOOKSHELF)
         )
         .setSortnum(categorySortNum++)
         .addEntry(
             "education/environment",
             prefix("education.environment.name"),
-            new ItemStack(Items.SOUL_CAMPFIRE)
+            new ItemStackTemplate(Items.SOUL_CAMPFIRE)
         ).setSortnum(entrySortNum++)
         .addTextPage(prefix("education.environment.intro")).build()
         .build()
         .addEntry(
             "education/body_temp",
             prefix("education.body_temp.name"),
-            new ItemStack(Items.GREEN_WOOL)
+            new ItemStackTemplate(Items.GREEN_WOOL)
         ).setSortnum(entrySortNum++)
         .addTextPage(prefix("education.body_temp.intro")).build()
         .build()
         .addEntry(
             "education/hydration",
             prefix("education.hydration.name"),
-            new ItemStack(HomeostaticItems.PURIFIED_WATER_BUCKET)
+            new ItemStackTemplate(HomeostaticItems.PURIFIED_WATER_BUCKET)
         ).setSortnum(entrySortNum++)
         .addTextPage(prefix("education.hydration.intro")).build()
         .build().build();

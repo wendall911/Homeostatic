@@ -2,6 +2,8 @@ package homeostatic.common.temperature;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.Level;
 
@@ -20,7 +22,7 @@ public enum SubSeason implements StringRepresentable {
     LATE_WINTER();
 
     @Override
-    public String getSerializedName() {
+    public @NonNull String getSerializedName() {
         return this.name().toLowerCase(Locale.ROOT);
     }
 
@@ -29,7 +31,7 @@ public enum SubSeason implements StringRepresentable {
      */
     public static SubSeason getSubSeason(Level level, int seasonDuration) {
         int subSeasonLength = seasonDuration / 3;
-        int dayTime = Math.toIntExact(level.getDayTime());
+        int dayTime = Math.toIntExact(level.getDefaultClockTime());
         int subSeasonTime = dayTime / subSeasonLength;
 
         return SubSeason.values()[subSeasonTime % 12];

@@ -1,6 +1,6 @@
 package homeostatic.network;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.storage.ValueInput;
@@ -48,7 +48,7 @@ public class Wetness implements IWetness {
     }
 
     @Override
-    public ValueOutput write(@NotNull ValueOutput valueOutput) {
+    public ValueOutput write(@NonNull ValueOutput valueOutput) {
         valueOutput.putInt("wetnessLevel", this.getWetnessLevel());
         valueOutput.putFloat("moistureLevel", this.getMoistureLevel());
 
@@ -62,7 +62,7 @@ public class Wetness implements IWetness {
     }
 
     @Override
-    public void read(@NotNull ValueInput valueInput) {
+    public void read(@NonNull ValueInput valueInput) {
         this.setWetnessLevel(valueInput.getIntOr("wetnessLevel", 0));
         this.setMoistureLevel(valueInput.getFloatOr("moistureLevel", 0.0F));
     }

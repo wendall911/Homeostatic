@@ -2,7 +2,7 @@ package homeostatic.common.fluid;
 
 import java.util.Optional;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,58 +29,58 @@ import homeostatic.common.item.HomeostaticItems;
 public abstract class PurifiedWater extends FlowingFluid {
 
     @Override
-    public @NotNull Fluid getFlowing() {
+    public @NonNull Fluid getFlowing() {
         return HomeostaticFluids.PURIFIED_WATER_FLOWING;
     }
 
     @Override
-    public @NotNull Fluid getSource() {
+    public @NonNull Fluid getSource() {
         return HomeostaticFluids.PURIFIED_WATER;
     }
 
     @Override
-    public @NotNull Item getBucket() {
+    public @NonNull Item getBucket() {
         return HomeostaticItems.PURIFIED_WATER_BUCKET;
     }
 
     @Override
-    protected boolean canConvertToSource(@NotNull ServerLevel level) {
+    protected boolean canConvertToSource(@NonNull ServerLevel level) {
         return false;
     }
 
     @Override
-    public @NotNull BlockState createLegacyBlock(@NotNull FluidState fluidState) {
+    public @NonNull BlockState createLegacyBlock(@NonNull FluidState fluidState) {
         return HomeostaticBlocks.PURIFIED_WATER_FLUID.defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(fluidState));
     }
 
     @Override
-    public boolean isSame(@NotNull Fluid fluid) {
+    public boolean isSame(@NonNull Fluid fluid) {
         return fluid == HomeostaticFluids.PURIFIED_WATER || fluid == HomeostaticFluids.PURIFIED_WATER_FLOWING;
     }
 
     @Override
-    public boolean canBeReplacedWith(@NotNull FluidState fluidState, @NotNull BlockGetter blockGetter, @NotNull BlockPos blockPos, @NotNull Fluid fluid, @NotNull Direction direction) {
+    public boolean canBeReplacedWith(@NonNull FluidState fluidState, @NonNull BlockGetter blockGetter, @NonNull BlockPos blockPos, @NonNull Fluid fluid, @NonNull Direction direction) {
         return direction == Direction.DOWN && !fluid.is(TagManager.Fluids.PURIFIED_WATER);
     }
 
     @Override
-    protected void beforeDestroyingBlock(@NotNull LevelAccessor $$0, @NotNull BlockPos $$1, BlockState $$2) {
+    protected void beforeDestroyingBlock(@NonNull LevelAccessor $$0, @NonNull BlockPos $$1, BlockState $$2) {
         BlockEntity $$3 = $$2.hasBlockEntity() ? $$0.getBlockEntity($$1) : null;
         Block.dropResources($$2, $$0, $$1, $$3);
     }
 
     @Override
-    public int getSlopeFindDistance(@NotNull LevelReader $$0) {
+    public int getSlopeFindDistance(@NonNull LevelReader $$0) {
         return 4;
     }
 
     @Override
-    public int getDropOff(@NotNull LevelReader $$0) {
+    public int getDropOff(@NonNull LevelReader $$0) {
         return 1;
     }
 
     @Override
-    public int getTickDelay(@NotNull LevelReader $$0) {
+    public int getTickDelay(@NonNull LevelReader $$0) {
         return 5;
     }
 
@@ -90,7 +90,7 @@ public abstract class PurifiedWater extends FlowingFluid {
     }
 
     @Override
-    public @NotNull Optional<SoundEvent> getPickupSound() {
+    public @NonNull Optional<SoundEvent> getPickupSound() {
         return Optional.of(SoundEvents.BUCKET_FILL);
     }
 
@@ -98,13 +98,13 @@ public abstract class PurifiedWater extends FlowingFluid {
 
         public Flowing() {}
 
-        protected void createFluidStateDefinition(StateDefinition.@NotNull Builder<Fluid, FluidState> $$0) {
+        protected void createFluidStateDefinition(StateDefinition.@NonNull Builder<Fluid, FluidState> $$0) {
             super.createFluidStateDefinition($$0);
             $$0.add(LEVEL);
         }
 
         @Override
-        public boolean isSource(@NotNull FluidState fluidState) {
+        public boolean isSource(@NonNull FluidState fluidState) {
             return false;
         }
 
@@ -120,12 +120,12 @@ public abstract class PurifiedWater extends FlowingFluid {
         public Source() {}
 
         @Override
-        public boolean isSource(@NotNull FluidState fluidState) {
+        public boolean isSource(@NonNull FluidState fluidState) {
             return true;
         }
 
         @Override
-        public int getAmount(@NotNull FluidState fluidState) {
+        public int getAmount(@NonNull FluidState fluidState) {
             return 8;
         }
 

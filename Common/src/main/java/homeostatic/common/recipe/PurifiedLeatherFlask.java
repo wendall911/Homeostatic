@@ -1,12 +1,13 @@
 package homeostatic.common.recipe;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.MapCodec;
 
-import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -21,12 +22,13 @@ import homeostatic.platform.Services;
 
 public class PurifiedLeatherFlask extends CustomRecipe {
 
-    public PurifiedLeatherFlask(CraftingBookCategory category) {
-        super(category);
-    }
+    public static final PurifiedLeatherFlask INSTANCE = new PurifiedLeatherFlask();
+    public static final MapCodec<PurifiedLeatherFlask> MAP_CODEC = MapCodec.unit(INSTANCE);
+    public static final StreamCodec<RegistryFriendlyByteBuf, PurifiedLeatherFlask> STREAM_CODEC = StreamCodec.unit(INSTANCE);
+    public static final RecipeSerializer<PurifiedLeatherFlask> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     @Override
-    public boolean matches(@NotNull CraftingInput craftingInput, @NotNull Level level) {
+    public boolean matches(@NonNull CraftingInput craftingInput, @NonNull Level level) {
         Pair<ItemStack, ItemStack> check = checkContainer(craftingInput);
         ItemStack flask = check.getFirst();
         ItemStack filter = check.getSecond();
@@ -35,7 +37,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(@NotNull CraftingInput craftingInput, HolderLookup.@NotNull Provider provider) {
+    public ItemStack assemble(CraftingInput craftingInput) {
         Pair<ItemStack, ItemStack> check = checkContainer(craftingInput);
         ItemStack flaskCopy = check.getFirst().copy();
         FluidInfo fluidInfo = Services.PLATFORM.getFluidInfo(flaskCopy).get();
@@ -48,7 +50,7 @@ public class PurifiedLeatherFlask extends CustomRecipe {
 
     @Override
     public RecipeSerializer<PurifiedLeatherFlask> getSerializer() {
-        return HomeostaticRecipes.PURIFIED_LEATHER_FLASK_SERIALIZER;
+        return SERIALIZER;
     }
 
     public Pair<ItemStack, ItemStack> checkContainer(CraftingInput craftingInput) {

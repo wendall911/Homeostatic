@@ -7,86 +7,84 @@ def identifier = "${mod_id}-${minecraft_version}-fabric"
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings(loom.layered {
-        officialMojangMappings()
-    })
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
-    modImplementation group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-fabric", version: "${climatesettings_version}"
+    implementation group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-fabric", version: "${climatesettings_version}"
     include group: 'com.github.wendall911.climatesettings', name: "climatesettings-${minecraft_version}-fabric", version: "${climatesettings_version}"
 
-    modImplementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_version}"
+    implementation group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_version}"
     include group: 'technology.roughness.whitenoise', name: "whitenoise-${minecraft_version}-fabric", version: "${whitenoise_version}"
 
-    modImplementation group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-fabric", version: "${handbook_version}"
+    implementation group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-fabric", version: "${handbook_version}"
     include group: 'technology.roughness.handbook', name: "handbook-${minecraft_version}-fabric", version: "${handbook_version}"
 
-    modImplementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-fabric", version: "${homeostaticseasons_version}"
+    implementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-fabric", version: "${homeostaticseasons_version}"
 
-    //modLocalRuntime "dev.architectury:architectury-fabric:${architectury_version}"
-    modLocalRuntime("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
+    //runtimeOnly "dev.architectury:architectury-fabric:${architectury_version}"
+    runtimeOnly("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rei_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rei_version}"
     /*
      * TODO Re-enable REI when it is released
-    modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
+    runtimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
     */
 
-    modCompileOnly "mezz.jei:jei-${jei_minecraft_version}-common-api:${jei_version}"
-    modCompileOnly "mezz.jei:jei-${jei_minecraft_version}-fabric:${jei_version}"
-    //modCompileOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
-    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
-    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
+    compileOnly "mezz.jei:jei-${jei_minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${jei_minecraft_version}-fabric:${jei_version}"
+    //compileOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
+    implementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
+    implementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     include "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     include "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-    //modCompileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
-    modCompileOnly "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
-    modCompileOnly "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
+    //compileOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
+    compileOnly "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
+    compileOnly "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
 
-    modLocalRuntime "net.jodah:typetools:0.6.3"
-    modImplementation "com.electronwill.night-config:core:3.6.7"
+    runtimeOnly "net.jodah:typetools:0.6.3"
+    implementation "com.electronwill.night-config:core:3.6.7"
 
-    modLocalRuntime group: 'com.terraformersmc', name: 'modmenu', version: "${mod_menu_version}"
+    runtimeOnly group: 'com.terraformersmc', name: 'modmenu', version: "${mod_menu_version}"
 
     if (System.getenv('DATA_GEN') != null) {
         // Datagen mods
     }
     else {
         // Runtime testing mods
+        runtimeOnly "mezz.jei:jei-${jei_minecraft_version}-fabric:${jei_version}"
         // This doesn't work for whatever reason. Such a strange port
-        //modLocalRuntime "curse.maven:create_fabric-624165:${create_fabric_version}"
-        //modLocalRuntime "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
-        //modLocalRuntime "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
-        //modLocalRuntime "curse.maven:terrablender-565956:${terrablender_fabric_version}"
-        //modLocalRuntime "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
-        //modLocalRuntime "curse.maven:regions-659110:${regions_fabric_version}"
-        //modLocalRuntime "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
-        //modLocalRuntime "curse.maven:more_food-874343:${more_food_fabric_version}"
-        //modLocalRuntime "curse.maven:colorful_hearts-854213:${colorful_hearts_fabric_version}"
-        //modLocalRuntime "curse.maven:puzzles_lib-495476:${puzzles_lib_fabric_version}"
-        //modLocalRuntime "curse.maven:forge_config_api_port-547434:${forge_config_api_fabric_version}"
-        //modLocalRuntime "curse.maven:lmba-281715:${lmba_fabric_version}"
-        //modLocalRuntime "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
-        //modLocalRuntime "curse.maven:fabric_seasons_extras-839878:${fabric_seasons_extras_version}"
-        //modLocalRuntime "curse.maven:byg-1070751:${byg_fabric_version}"
-        //modLocalRuntime "curse.maven:tyg-962544:${tyg_fabric_version}"
-        //modLocalRuntime "curse.maven:corgilib-693313:${corgilib_fabric_version}"
-        //modLocalRuntime "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_fabric_version}"
+        //runtimeOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
+        //runtimeOnly "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
+        //runtimeOnly "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
+        //runtimeOnly "curse.maven:terrablender-565956:${terrablender_fabric_version}"
+        //runtimeOnly "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
+        //runtimeOnly "curse.maven:regions-659110:${regions_fabric_version}"
+        //runtimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
+        //runtimeOnly "curse.maven:more_food-874343:${more_food_fabric_version}"
+        //runtimeOnly "curse.maven:colorful_hearts-854213:${colorful_hearts_fabric_version}"
+        //runtimeOnly "curse.maven:puzzles_lib-495476:${puzzles_lib_fabric_version}"
+        //runtimeOnly "curse.maven:forge_config_api_port-547434:${forge_config_api_fabric_version}"
+        //runtimeOnly "curse.maven:lmba-281715:${lmba_fabric_version}"
+        //runtimeOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
+        //runtimeOnly "curse.maven:fabric_seasons_extras-839878:${fabric_seasons_extras_version}"
+        //runtimeOnly "curse.maven:byg-1070751:${byg_fabric_version}"
+        //runtimeOnly "curse.maven:tyg-962544:${tyg_fabric_version}"
+        //runtimeOnly "curse.maven:corgilib-693313:${corgilib_fabric_version}"
+        //runtimeOnly "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_fabric_version}"
         // Bakery and Beach crash in a dev environment.
         // Let's NOT Do architectury please
-        //modLocalRuntime "curse.maven:letsdo_bakery-1038130:${letsdo_bakery_fabric_version}"
-        //modLocalRuntime "curse.maven:letsdo_beach-858691:${letsdo_beach_fabric_version}"
-        //modLocalRuntime "curse.maven:letsdo_blooming-962885:${letsdo_blooming_fabric_version}"
-        //modLocalRuntime "curse.maven:letsdo_brewery-1038106:${letsdo_brewery_fabric_version}"
-        //modLocalRuntime "curse.maven:letsdo_candlelight-1038117:${letsdo_candlelight_fabric_version}"
-        //modLocalRuntime "curse.maven:letsdo_herbal-951221:${letsdo_herbal_fabric_version}"
-        //modLocalRuntime "curse.maven:letsdo_meadow-821483:${letsdo_meadow_fabric_version}"
-        //modLocalRuntime "curse.maven:letsdo_farm-1038103:${letsdo_farm_fabric_version}"
-        //modLocalRuntime "curse.maven:letsdo_vinery-704465:${letsdo_vinery_fabric_version}"
-        //modLocalRuntime "curse.maven:letsdo_wilder-1071657:${letsdo_wilder_fabric_version}"
+        //runtimeOnly "curse.maven:letsdo_bakery-1038130:${letsdo_bakery_fabric_version}"
+        //runtimeOnly "curse.maven:letsdo_beach-858691:${letsdo_beach_fabric_version}"
+        //runtimeOnly "curse.maven:letsdo_blooming-962885:${letsdo_blooming_fabric_version}"
+        //runtimeOnly "curse.maven:letsdo_brewery-1038106:${letsdo_brewery_fabric_version}"
+        //runtimeOnly "curse.maven:letsdo_candlelight-1038117:${letsdo_candlelight_fabric_version}"
+        //runtimeOnly "curse.maven:letsdo_herbal-951221:${letsdo_herbal_fabric_version}"
+        //runtimeOnly "curse.maven:letsdo_meadow-821483:${letsdo_meadow_fabric_version}"
+        //runtimeOnly "curse.maven:letsdo_farm-1038103:${letsdo_farm_fabric_version}"
+        //runtimeOnly "curse.maven:letsdo_vinery-704465:${letsdo_vinery_fabric_version}"
+        //runtimeOnly "curse.maven:letsdo_wilder-1071657:${letsdo_wilder_fabric_version}"
     }
 }
 
@@ -94,9 +92,6 @@ loom {
     def aw = project(":Common").file("src/main/resources/${mod_id}.accesswidener")
     if (aw.exists()) {
         accessWidenerPath.set(aw)
-    }
-    mixin {
-        defaultRefmapName.set("${mod_id}.refmap.json")
     }
     runs {
         client {

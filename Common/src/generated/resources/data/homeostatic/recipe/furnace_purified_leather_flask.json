@@ -7,8 +7,8 @@
   "result": {
     "components": {
       "homeostatic:water_container": {
-        "Amount": 0,
-        "Fluid": "minecraft:empty"
+        "Amount": 1000,
+        "Fluid": "homeostatic:block/purified_water_fluid"
       }
     },
     "id": "homeostatic:leather_flask"

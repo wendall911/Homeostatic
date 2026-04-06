@@ -2,7 +2,7 @@ package homeostatic.common.item;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,17 +25,17 @@ public class PurifiedWaterBottle extends Item {
     }
 
     @Override
-    public @NotNull ItemUseAnimation getUseAnimation(@NotNull ItemStack stack) {
+    public @NonNull ItemUseAnimation getUseAnimation(@NonNull ItemStack stack) {
         return ItemUseAnimation.DRINK;
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
+    public int getUseDuration(@NonNull ItemStack stack, @NonNull LivingEntity entity) {
         return 32;
     }
 
     @Override
-    public @NotNull InteractionResult use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
+    public @NonNull InteractionResult use(@NonNull Level level, Player player, @NonNull InteractionHand hand) {
         if (canDrink(player)) {
             return ItemUtils.startUsingInstantly(level, player, hand);
         }
@@ -44,7 +44,7 @@ public class PurifiedWaterBottle extends Item {
     }
 
     @Override
-    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity entity) {
+    public @NonNull ItemStack finishUsingItem(@NonNull ItemStack stack, @NonNull Level level, @NonNull LivingEntity entity) {
         Player player = entity instanceof Player ? (Player) entity : null;
 
         if (player instanceof ServerPlayer sp) {

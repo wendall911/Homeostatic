@@ -3,7 +3,7 @@ package homeostatic.common;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -18,7 +18,7 @@ import static homeostatic.Homeostatic.prefix;
 
 public class FabricCreativeTabs {
 
-    public static final CreativeModeTab HOMEOSTATIC_ITEM_GROUP = FabricItemGroup.builder()
+    public static final CreativeModeTab HOMEOSTATIC_ITEM_GROUP = FabricCreativeModeTab.builder()
         .icon(() -> new ItemStack(HomeostaticItems.PURIFIED_WATER_BUCKET))
         .title(Component.translatable(Homeostatic.MODID + ".items"))
         .displayItems((features, output) -> {

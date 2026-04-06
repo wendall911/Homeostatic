@@ -1,20 +1,19 @@
 package homeostatic.data;
 
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
 
 import homeostatic.common.block.HomeostaticBlocks;
 import homeostatic.common.item.HomeostaticItems;
 
-import static homeostatic.Homeostatic.prefix;
-
 public class HomeostaticItemModelProvider extends FabricModelProvider {
 
-    public HomeostaticItemModelProvider(FabricDataOutput packOutput) {
+    public HomeostaticItemModelProvider(FabricPackOutput packOutput) {
         super(packOutput);
     }
 
@@ -35,7 +34,7 @@ public class HomeostaticItemModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        blockStateModelGenerator.createAirLikeBlock(HomeostaticBlocks.PURIFIED_WATER_FLUID, prefix("block/fluid/still_water"));
+        blockStateModelGenerator.createAirLikeBlock(HomeostaticBlocks.PURIFIED_WATER_FLUID, TextureMapping.getBlockTexture(HomeostaticBlocks.PURIFIED_WATER_FLUID));
     }
 
 }

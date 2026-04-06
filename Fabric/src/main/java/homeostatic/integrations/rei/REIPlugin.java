@@ -39,6 +39,7 @@ import homeostatic.integrations.WaterFilterRecipeMaker;
 public class REIPlugin implements REIClientPlugin {
 
     // TODO: Figure out if I can show the water recipes correctly in REI. Currently shows Empty Flask as input.
+    // TODO: Update when REI is available for 26.1
     @Override
     public void registerDisplays(DisplayRegistry helper) {
         List<Pair<ItemStack, RecipeHolder<CraftingRecipe>>> recipes = ArmorEnhancementRecipeMaker.createRecipes("rei");
@@ -65,23 +66,23 @@ public class REIPlugin implements REIClientPlugin {
             List<EntryIngredient> input = new ArrayList<>();
 
             recipePair.getSecond().value().placementInfo().ingredients().forEach(ingredient -> {
-                input.add(EntryIngredients.ofIngredient(ingredient));
+                //input.add(EntryIngredients.ofIngredient(ingredient));
             });
 
 
-            helper.add(new DefaultCustomDisplay(input, Collections.singletonList(EntryIngredients.of(recipePair.getFirst())), Optional.of(recipePair.getSecond().id().identifier())));
+            //helper.add(new DefaultCustomDisplay(input, Collections.singletonList(EntryIngredients.of(recipePair.getFirst())), Optional.of(recipePair.getSecond().id().identifier())));
         });
 
         campfireRecipes.forEach(recipe -> {
-            helper.add(new DefaultCampfireDisplay(recipe));
+            //helper.add(new DefaultCampfireDisplay(recipe));
         });
 
         smokingRecipes.forEach(recipe -> {
-            helper.add(new DefaultSmokingDisplay(recipe));
+            //helper.add(new DefaultSmokingDisplay(recipe));
         });
 
         smeltingRecipes.forEach(recipe -> {
-            helper.add(new DefaultSmeltingDisplay(recipe));
+            //helper.add(new DefaultSmeltingDisplay(recipe));
         });
     }
 
@@ -91,6 +92,7 @@ public class REIPlugin implements REIClientPlugin {
     }
 
     private boolean shouldHideEntry(EntryStack<?> entryStack) {
+        /*
         if (entryStack.getType() != VanillaEntryTypes.ITEM) return false;
 
         ItemStack stack = entryStack.castValue();
@@ -98,6 +100,7 @@ public class REIPlugin implements REIClientPlugin {
         if (!ConfigHandler.Common.requireThermometer()) {
             return stack.getItem() == HomeostaticItems.THERMOMETER;
         }
+         */
 
         return false;
     }

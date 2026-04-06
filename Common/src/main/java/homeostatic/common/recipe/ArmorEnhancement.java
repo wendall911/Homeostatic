@@ -2,20 +2,21 @@ package homeostatic.common.recipe;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import com.google.common.collect.Lists;
 
 import com.mojang.datafixers.util.Pair;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -26,12 +27,13 @@ import homeostatic.common.TagManager;
 
 public class ArmorEnhancement extends CustomRecipe {
 
-    public ArmorEnhancement(CraftingBookCategory category) {
-        super(category);
-    }
+    public static final ArmorEnhancement INSTANCE = new ArmorEnhancement();
+    public static final MapCodec<ArmorEnhancement> MAP_CODEC = MapCodec.unit(INSTANCE);
+    public static final StreamCodec<RegistryFriendlyByteBuf, ArmorEnhancement> STREAM_CODEC = StreamCodec.unit(INSTANCE);
+    public static final RecipeSerializer<ArmorEnhancement> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     @Override
-    public boolean matches(@NotNull CraftingInput craftingInput, @NotNull Level level) {
+    public boolean matches(@NonNull CraftingInput craftingInput, @NonNull Level level) {
         Pair<ItemStack, TagKey<Item>> check = checkContainer(craftingInput);
         ItemStack armor = check.getFirst();
         TagKey<Item> tagKey = check.getSecond();
@@ -40,7 +42,7 @@ public class ArmorEnhancement extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(@NotNull CraftingInput craftingInput, HolderLookup.@NotNull Provider provider) {
+    public @NonNull ItemStack assemble(CraftingInput craftingInput) {
         Pair<ItemStack, TagKey<Item>> check = checkContainer(craftingInput);
         ItemStack armorCopy = check.getFirst().copy();
         TagKey<Item> tagKey = check.getSecond();
@@ -74,8 +76,8 @@ public class ArmorEnhancement extends CustomRecipe {
     }
 
     @Override
-    public @NotNull RecipeSerializer<ArmorEnhancement> getSerializer() {
-        return HomeostaticRecipes.ARMOR_ENHANCEMENT_SERIALIZER;
+    public @NonNull RecipeSerializer<ArmorEnhancement> getSerializer() {
+        return SERIALIZER;
     }
 
     public Pair<ItemStack, TagKey<Item>> checkContainer(CraftingInput craftingInput) {

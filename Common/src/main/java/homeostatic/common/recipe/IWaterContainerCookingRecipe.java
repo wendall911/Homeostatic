@@ -1,11 +1,18 @@
 package homeostatic.common.recipe;
 
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.material.Fluids;
 
+import homeostatic.common.component.HomeostaticComponents;
 import homeostatic.common.fluid.FluidInfo;
 import homeostatic.common.fluid.HomeostaticFluids;
+import homeostatic.common.item.LeatherFlask;
 import homeostatic.common.item.WaterContainerItem;
 import homeostatic.platform.Services;
 
@@ -44,6 +51,21 @@ public interface IWaterContainerCookingRecipe {
         Services.PLATFORM.fillFluid(filledStack, HomeostaticFluids.PURIFIED_WATER, Services.PLATFORM.getFluidCapacity(filledStack));
 
         return filledStack;
+    }
+
+    default ItemStackTemplate getCleanWaterFilledWaterContainer(Item original) {
+        CompoundTag tag = new CompoundTag();
+
+        tag.putLong("Amount", LeatherFlask.LEATHER_FLASK_CAPACITY);
+        tag.putString(
+            Services.PLATFORM.fluidStackTag(),
+            Services.PLATFORM.getFluidIdentifier(HomeostaticFluids.PURIFIED_WATER).toString()
+        );
+
+        return new ItemStackTemplate(
+            original,
+            DataComponentPatch.builder().set(HomeostaticComponents.WATER_CONTAINER, CustomData.of(tag)).build()
+        );
     }
 
 }

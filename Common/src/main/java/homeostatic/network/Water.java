@@ -1,5 +1,7 @@
 package homeostatic.network;
 
+import org.jspecify.annotations.NonNull;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -86,7 +88,7 @@ public class Water implements IWater {
     }
 
     @Override
-    public ValueOutput write(ValueOutput valueOutput) {
+    public ValueOutput write(@NonNull ValueOutput valueOutput) {
         valueOutput.putInt("waterLevel", this.getWaterLevel());
         valueOutput.putFloat("waterExhaustion", this.getWaterExhaustionLevel());
         valueOutput.putFloat("waterSaturation", this.getWaterSaturationLevel());

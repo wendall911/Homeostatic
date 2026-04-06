@@ -1,6 +1,6 @@
 package homeostatic.network;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,7 +33,7 @@ public interface IWater {
 
     CompoundTag write(CompoundTag tag);
 
-    ValueOutput write(@NotNull ValueOutput tag);
+    ValueOutput write(@NonNull ValueOutput tag);
 
     void read(CompoundTag tag);
 

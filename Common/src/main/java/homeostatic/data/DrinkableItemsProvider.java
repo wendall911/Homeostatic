@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -24,7 +24,7 @@ public class DrinkableItemsProvider implements DataProvider {
     private final Map<Identifier, DrinkableItem> DRINKABLE_ITEMS = new HashMap<>();
     private final PackOutput packOutput;
 
-    public DrinkableItemsProvider(@NotNull final PackOutput packOutput) {
+    public DrinkableItemsProvider(@NonNull final PackOutput packOutput) {
         this.packOutput = packOutput;
     }
 
@@ -1911,13 +1911,13 @@ public class DrinkableItemsProvider implements DataProvider {
     }
 
     @Override
-    public String getName() {
+    public @NonNull String getName() {
         return "Homeostatic - Drinkable Items";
     }
 
     @Override
-    @NotNull
-    public CompletableFuture<?> run(@NotNull CachedOutput cache) throws IllegalStateException {
+    @NonNull
+    public CompletableFuture<?> run(@NonNull CachedOutput cache) throws IllegalStateException {
         List<CompletableFuture<?>> recipeList = new ArrayList<>();
 
         addDrinkableItems();

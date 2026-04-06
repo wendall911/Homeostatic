@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -22,7 +22,7 @@ public class RadiationBlocksProvider implements DataProvider {
     private final Map<Identifier, BlockRadiation> RADIATION_MAP = new HashMap<>();
     private final PackOutput packOutput;
 
-    public RadiationBlocksProvider(@NotNull final PackOutput packOutput) {
+    public RadiationBlocksProvider(@NonNull final PackOutput packOutput) {
         this.packOutput = packOutput;
     }
 
@@ -72,13 +72,13 @@ public class RadiationBlocksProvider implements DataProvider {
     }
 
     @Override
-    public String getName() {
+    public @NonNull String getName() {
         return "Homeostatic - Block Radiation ";
     }
 
     @Override
-    @NotNull
-    public CompletableFuture<?> run(@NotNull CachedOutput cache) throws IllegalStateException {
+    @NonNull
+    public CompletableFuture<?> run(@NonNull CachedOutput cache) throws IllegalStateException {
         List<CompletableFuture<?>> recipeList = new ArrayList<>();
 
         registerRadiationBlocks();

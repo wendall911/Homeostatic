@@ -64,9 +64,10 @@ dependencies {
 
     if (System.getenv('DATA_GEN') != null) {
         //runtimeOnly "curse.maven:create-328085:${create_neoforge_version}"
-        runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${sewingkit_minecraft_version}:${sewingkit_version}"
+        //runtimeOnly "dev.gigaherz.sewingkit:SewingKit-${sewingkit_minecraft_version}:${sewingkit_version}"
     }
     else {
+        runtimeOnly "mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}"
         //runtimeOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
         //runtimeOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
         //runtimeOnly "curse.maven:ecliptic-1118306:${ecliptic_neoforge_version}"

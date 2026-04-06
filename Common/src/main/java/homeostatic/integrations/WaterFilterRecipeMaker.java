@@ -7,9 +7,11 @@ import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -40,7 +42,12 @@ public class WaterFilterRecipeMaker {
 
         recipes.add(Pair.of(leatherFlask, new RecipeHolder<>(
             ResourceKey.create(Registries.RECIPE, prefix(group + ".purified_leather_flask")),
-            new ShapelessRecipe(group, CraftingBookCategory.MISC, leatherFlask, recipeInputs)
+            new ShapelessRecipe(
+                RecipeBuilder.createCraftingCommonInfo(true),
+                RecipeBuilder.createCraftingBookInfo(RecipeCategory.MISC, group),
+                new ItemStackTemplate(leatherFlask.getItem(), 1),
+                recipeInputs
+            )
         )));
 
         return recipes;

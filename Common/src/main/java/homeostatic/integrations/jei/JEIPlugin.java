@@ -1,6 +1,5 @@
 package homeostatic.integrations.jei;
 
-/*
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IdentityHashMap;
@@ -27,11 +26,8 @@ import net.minecraft.world.item.crafting.SmokingRecipe;
 
 import homeostatic.common.item.HomeostaticItems;
 import homeostatic.common.recipe.ArmorEnhancement;
-import homeostatic.common.recipe.CampfirePurifiedLeatherFlask;
 import homeostatic.common.recipe.CampfirePurifiedWaterBottle;
-import homeostatic.common.recipe.SmeltingPurifiedLeatherFlask;
 import homeostatic.common.recipe.SmeltingPurifiedWaterBottle;
-import homeostatic.common.recipe.SmokingPurifiedLeatherFlask;
 import homeostatic.common.recipe.SmokingPurifiedWaterBottle;
 import homeostatic.common.recipe.HelmetThermometer;
 import homeostatic.config.ConfigHandler;
@@ -131,7 +127,7 @@ public class JEIPlugin implements IModPlugin {
     private static List<RecipeHolder<CampfireCookingRecipe>> addCampfireRecipes(List<RecipeHolder<CampfireCookingRecipe>> campfireRecipes) {
         Map<Class<? extends CampfireCookingRecipe>, Supplier<List<RecipeHolder<CampfireCookingRecipe>>>> replacers = new IdentityHashMap<>();
 
-        replacers.put(CampfirePurifiedLeatherFlask.class, () -> CampfireRecipeMaker.createFlaskRecipes("jei"));
+        replacers.put(CampfireCookingRecipe.class, () -> CampfireRecipeMaker.createFlaskRecipes("jei"));
         replacers.put(CampfirePurifiedWaterBottle.class, () -> CampfireRecipeMaker.createWaterBottleRecipes("jei"));
 
         return campfireRecipes.stream()
@@ -158,7 +154,7 @@ public class JEIPlugin implements IModPlugin {
     private static List<RecipeHolder<SmokingRecipe>> addSmokingRecipes(List<RecipeHolder<SmokingRecipe>> smokingRecipes) {
         Map<Class<? extends SmokingRecipe>, Supplier<List<RecipeHolder<SmokingRecipe>>>> replacers = new IdentityHashMap<>();
 
-        replacers.put(SmokingPurifiedLeatherFlask.class, () -> SmokerRecipeMaker.createFlaskRecipes("jei"));
+        replacers.put(SmokingRecipe.class, () -> SmokerRecipeMaker.createFlaskRecipes("jei"));
         replacers.put(SmokingPurifiedWaterBottle.class, () -> SmokerRecipeMaker.createWaterBottleRecipes("jei"));
 
         return smokingRecipes.stream()
@@ -185,7 +181,7 @@ public class JEIPlugin implements IModPlugin {
     private static List<RecipeHolder<SmeltingRecipe>> addSmeltingRecipes(List<RecipeHolder<SmeltingRecipe>> smeltingRecipes) {
         Map<Class<? extends SmeltingRecipe>, Supplier<List<RecipeHolder<SmeltingRecipe>>>> replacers = new IdentityHashMap<>();
 
-        replacers.put(SmeltingPurifiedLeatherFlask.class, () -> SmeltingRecipeMaker.createFlaskRecipes("jei"));
+        replacers.put(SmeltingRecipe.class, () -> SmeltingRecipeMaker.createFlaskRecipes("jei"));
         replacers.put(SmeltingPurifiedWaterBottle.class, () -> SmeltingRecipeMaker.createWaterBottleRecipes("jei"));
 
         return smeltingRecipes.stream()
@@ -210,4 +206,3 @@ public class JEIPlugin implements IModPlugin {
     }
 
 }
-*/

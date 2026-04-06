@@ -1,6 +1,6 @@
 package homeostatic.network;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.storage.ValueInput;
@@ -28,7 +28,7 @@ public class Thermometer implements IThermometer {
     }
 
     @Override
-    public ValueOutput write(@NotNull ValueOutput valueOutput) {
+    public ValueOutput write(@NonNull ValueOutput valueOutput) {
         valueOutput.putBoolean("thermometer", this.hasThermometer());
 
         return valueOutput;

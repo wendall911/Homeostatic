@@ -1,5 +1,8 @@
 package homeostatic.common.fluid;
 
+import org.jspecify.annotations.NonNull;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 
 import net.neoforged.bus.api.SubscribeEvent;
@@ -16,13 +19,8 @@ public class NeoForgeFluidClientHandler {
     public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override
-            public Identifier getStillTexture() {
+            public Identifier getRenderOverlayTexture(@NonNull Minecraft mc) {
                 return HomeostaticFluids.STILL_FLUID_TEXTURE;
-            }
-
-            @Override
-            public Identifier getFlowingTexture() {
-                return HomeostaticFluids.FLOWING_FLUID_TEXTURE;
             }
         }, NeoForgeFluidType.PURIFIED_WATER_TYPE);
     }

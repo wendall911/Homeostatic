@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.ChatFormatting;
@@ -60,7 +60,7 @@ public class WaterContainerItem extends Item implements IItemStackFluid {
     }
 
     @Override
-    public @NotNull InteractionResult use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
+    public @NonNull InteractionResult use(@NonNull Level level, Player player, @NonNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         BlockHitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
         BlockPos pos = hitResult.getBlockPos();
@@ -94,7 +94,7 @@ public class WaterContainerItem extends Item implements IItemStackFluid {
     }
 
     @Override
-    public @NotNull ItemStack finishUsingItem(ItemStack stack, @NotNull Level level, @NotNull LivingEntity entity) {
+    public @NonNull ItemStack finishUsingItem(ItemStack stack, @NonNull Level level, @NonNull LivingEntity entity) {
         if (entity instanceof ServerPlayer sp) {
             CriteriaTriggers.CONSUME_ITEM.trigger(sp, stack);
         }
@@ -103,7 +103,7 @@ public class WaterContainerItem extends Item implements IItemStackFluid {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull TooltipDisplay tooltipDisplay, @NotNull Consumer<Component> components, @NotNull TooltipFlag flag) {        Component textComponent = Component.translatable("tooltip.water_container.empty").setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY));
+    public void appendHoverText(@NonNull ItemStack stack, @NonNull TooltipContext context, @NonNull TooltipDisplay tooltipDisplay, @NonNull Consumer<Component> components, @NonNull TooltipFlag flag) {        Component textComponent = Component.translatable("tooltip.water_container.empty").setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY));
         Optional<FluidInfo> fluidInfoOptional = Services.PLATFORM.getFluidInfo(stack);
 
         if (fluidInfoOptional.isPresent() && fluidInfoOptional.get().amount() > 0L) {
@@ -119,12 +119,12 @@ public class WaterContainerItem extends Item implements IItemStackFluid {
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
+    public int getUseDuration(@NonNull ItemStack stack, @NonNull LivingEntity entity) {
         return 32;
     }
 
     @Override
-    public @NotNull ItemUseAnimation getUseAnimation(@NotNull ItemStack stack) {
+    public @NonNull ItemUseAnimation getUseAnimation(@NonNull ItemStack stack) {
         return ItemUseAnimation.DRINK;
     }
 

@@ -4,10 +4,12 @@ import java.util.Map;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
-import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderingRegistry;
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+import net.minecraft.client.color.block.BlockTintSources;
+import net.minecraft.client.renderer.block.FluidModel.Unbaked;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -26,11 +28,14 @@ public class HomeostaticClientFabric implements ClientModInitializer {
         ClientEventListener.init();
         PageCustomCrafting.init();
 
-        FluidRenderHandlerRegistry.INSTANCE.register(HomeostaticFluids.PURIFIED_WATER, HomeostaticFluids.PURIFIED_WATER_FLOWING, new SimpleFluidRenderHandler(
-            HomeostaticFluids.STILL_FLUID_TEXTURE,
-            HomeostaticFluids.FLOWING_FLUID_TEXTURE
+        FluidRenderingRegistry.register(HomeostaticFluids.PURIFIED_WATER, HomeostaticFluids.PURIFIED_WATER_FLOWING, new Unbaked(
+            new Material(HomeostaticFluids.STILL_FLUID_TEXTURE),
+            new Material(HomeostaticFluids.FLOWING_FLUID_TEXTURE),
+            new Material(HomeostaticFluids.OVERLAY_FLUID_TEXTURE),
+            BlockTintSources.constant(0xFF73bbd4)
         ));
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> {
+
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> {
             for (Map.Entry<Identifier, Item> entry : HomeostaticItems.getAll().entrySet()) {
                 entries.accept(entry.getValue());
             }

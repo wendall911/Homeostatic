@@ -1,6 +1,6 @@
 package homeostatic.mixin;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
@@ -24,7 +24,8 @@ public class MinecraftMixin {
     public LocalPlayer player;
     @Shadow @Nullable public HitResult hitResult;
 
-    @Shadow @Nullable public MultiPlayerGameMode gameMode;
+    @Shadow @Nullable
+    public MultiPlayerGameMode gameMode;
 
     @Inject(method = "startUseItem", at = @At(value = "HEAD"))
     private void homeostatic$rightClickAir(CallbackInfo ci) {

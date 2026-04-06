@@ -25,6 +25,7 @@ import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
+import net.minecraft.world.level.saveddata.WeatherData;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
 
@@ -210,15 +211,15 @@ public class EnvironmentData {
     private static double getBiomeHumidity(ServerLevel level, Holder<Biome> biomeHolder, BlockPos pos) {
         LevelData info = level.getLevelData();
         Biome biome = biomeHolder.value();
-        ServerLevelData serverInfo = Services.PLATFORM.getServerLevelData(level);
+        WeatherData weatherData = level.getWeatherData();
         double biomeHumidity;
         double maxRH = getMaxBiomeHumidity(level, biomeHolder, pos);
         double minRH = maxRH - 20;
 
         if (biome.hasPrecipitation()) {
-            int nextRain = serverInfo.getClearWeatherTime();
+            int nextRain = weatherData.getClearWeatherTime();
 
-            if (info.isRaining()) {
+            if (weatherData.isRaining()) {
                 biomeHumidity = maxRH;
             } else if (nextRain > 0 && nextRain <= 12000) {
                 biomeHumidity = minRH + (20 * (1 - ((float) nextRain / 12000)));
@@ -257,7 +258,7 @@ public class EnvironmentData {
     }
 
     private static float timeOfDay(ServerLevel level) {
-        double d0 = Mth.frac(level.getDayTime() / 24000.0 - 0.25);
+        double d0 = Mth.frac(level.getDefaultClockTime() / 24000.0 - 0.25);
         double d1 = 0.5 - Math.cos(d0 * Math.PI) / 2.0;
         return (float)(d0 * 2.0 + d1) / 3.0F;
     }
@@ -295,7 +296,7 @@ public class EnvironmentData {
         }
 
         BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biome);
-        long time = (level.getDayTime() % 24000);
+        long time = (level.getDefaultClockTime() % 24000);
         HomeostaticClimateSettings climateSettings = CLIMATE.getClimateSettings(biome);
         float maxTemp = biomeTypeData.getDayNightOffset(climateSettings.getPrecipitationType());
 

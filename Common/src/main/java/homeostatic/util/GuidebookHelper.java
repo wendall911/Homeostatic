@@ -1,9 +1,12 @@
 package homeostatic.util;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -106,13 +109,23 @@ public class GuidebookHelper {
                     armorInputs = NonNullList.of(null, baseArmorIngredient, ingredient, ingredient, ingredient);
                 }
 
-                customRecipe = new ShapelessRecipe("armor.enhancement", CraftingBookCategory.EQUIPMENT, armorStack, armorInputs);
+                customRecipe = new ShapelessRecipe(
+                    RecipeBuilder.createCraftingCommonInfo(true),
+                    RecipeBuilder.createCraftingBookInfo(RecipeCategory.MISC, "armor.enhancement"),
+                    new ItemStackTemplate(armorStack.getItem(), 1),
+                    armorInputs
+                );
             }
             else if (leatherFlask != null) {
                 Ingredient baseFlaskIngredient = Ingredient.of(leatherFlaskBase.getItem());
                 NonNullList<Ingredient> recipeInputs = NonNullList.of(null, baseFlaskIngredient, ingredient);
 
-                customRecipe = new ShapelessRecipe("flask.filter", CraftingBookCategory.MISC, leatherFlask, recipeInputs);
+                customRecipe = new ShapelessRecipe(
+                    RecipeBuilder.createCraftingCommonInfo(true),
+                    RecipeBuilder.createCraftingBookInfo(RecipeCategory.MISC, "flask.filter"),
+                    new ItemStackTemplate(leatherFlask.getItem(), 1),
+                    recipeInputs
+                );
             }
         }
 

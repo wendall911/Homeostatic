@@ -1,6 +1,6 @@
 package homeostatic.common.components;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,24 +16,24 @@ import homeostatic.network.TemperatureData;
 public class ComponentTemperatureData extends Temperature implements Component, AutoSyncedComponent {
 
     @Override
-    public void readData(@NotNull ValueInput valueInput) {
+    public void readData(@NonNull ValueInput valueInput) {
         this.read(valueInput);
     }
 
     @Override
-    public void writeData(@NotNull ValueOutput valueOutput) {
+    public void writeData(@NonNull ValueOutput valueOutput) {
         this.write(valueOutput);
     }
 
     @Override
-    public void writeSyncPacket(RegistryFriendlyByteBuf buf, ServerPlayer sp) {
+    public void writeSyncPacket(@NonNull RegistryFriendlyByteBuf buf, @NonNull ServerPlayer sp) {
         TemperatureData temperatureData = new TemperatureData(getLocalTemperature(), getSkinTemperature(), getCoreTemperature());
 
         temperatureData.write(buf);
     }
 
     @Override
-    public void applySyncPacket(RegistryFriendlyByteBuf buf) {
+    public void applySyncPacket(@NonNull RegistryFriendlyByteBuf buf) {
         TemperatureData temperatureData = new TemperatureData(buf);
 
         this.setLocalTemperature(temperatureData.localTemperature);

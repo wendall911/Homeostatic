@@ -1,7 +1,7 @@
 package homeostatic.data.integration.create;
 
 /*
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
@@ -23,7 +23,7 @@ public class MixingRecipeProvider extends ProcessingRecipeGen {
         .whenModLoaded(ModIntegration.CREATE_MODID)
     );
 
-    public MixingRecipeProvider(@NotNull final PackOutput packOutput) {
+    public MixingRecipeProvider(@NonNull final PackOutput packOutput) {
         super(packOutput);
     }
 

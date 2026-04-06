@@ -22,7 +22,7 @@ public class LivingEntityMixin {
             cir.setReturnValue(false);
         }
         else {
-            cir.setReturnValue(!self.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES));
+            self.getType().builtInRegistryHolder().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES);
         }
     }
 

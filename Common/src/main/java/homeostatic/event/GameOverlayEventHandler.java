@@ -1,7 +1,7 @@
 package homeostatic.event;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import homeostatic.config.ConfigHandler;
 import homeostatic.overlay.OverlayManager;
@@ -9,7 +9,7 @@ import homeostatic.util.ClientGameModeHelper;
 
 public class GameOverlayEventHandler {
 
-    public static void onHudRender(GuiGraphics guiGraphics, float tickDelta, int rightHeight) {
+    public static void onHudRender(GuiGraphicsExtractor guiGraphics, float tickDelta, int rightHeight) {
         OverlayManager overlayManager = OverlayManager.INSTANCE;
         Minecraft mc = Minecraft.getInstance();
 

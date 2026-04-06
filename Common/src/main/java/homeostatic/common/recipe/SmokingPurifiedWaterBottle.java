@@ -1,29 +1,37 @@
 package homeostatic.common.recipe;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
-import net.minecraft.core.HolderLookup;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CookingBookCategory;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmokingRecipe;
 
 public class SmokingPurifiedWaterBottle extends SmokingRecipe implements IWaterBottleCookingRecipe {
 
-    public SmokingPurifiedWaterBottle(String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
-        super(group, category, ingredient, result, experience, cookingTime);
+    public static final MapCodec<SmokingPurifiedWaterBottle> MAP_CODEC = cookingMapCodec(SmokingPurifiedWaterBottle::new, 100);
+    public static final StreamCodec<RegistryFriendlyByteBuf, SmokingPurifiedWaterBottle> STREAM_CODEC = cookingStreamCodec(SmokingPurifiedWaterBottle::new);
+    public static final RecipeSerializer<SmokingPurifiedWaterBottle> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+
+    private final ItemStackTemplate result;
+
+    public SmokingPurifiedWaterBottle(Recipe.CommonInfo commonInfo, AbstractCookingRecipe.CookingBookInfo bookInfo, Ingredient ingredient, ItemStackTemplate result, float experience, int cookingTime) {
+        this.result = result;
+
+        super(commonInfo, bookInfo, ingredient, result, experience, cookingTime);
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull SingleRecipeInput recipeInput, HolderLookup.@NotNull Provider pRegistries) {
-        return assemble(result());
-    }
-
-    @Override
-    public boolean matches(@NotNull SingleRecipeInput recipeInput) {
-        return matches(recipeInput);
+    public @NonNull ItemStack assemble(@NonNull SingleRecipeInput recipeInput) {
+        return assemble(result.create());
     }
 
     @Override
@@ -32,8 +40,8 @@ public class SmokingPurifiedWaterBottle extends SmokingRecipe implements IWaterB
     }
 
     @Override
-    public @NotNull RecipeSerializer<SmokingRecipe> getSerializer() {
-        return HomeostaticRecipes.SMOKING_PURIFIED_WATER_BOTTLE_SERIALIZER;
+    public @NonNull RecipeSerializer<SmokingRecipe> getSerializer() {
+        return SmokingRecipe.SERIALIZER;
     }
 
 }

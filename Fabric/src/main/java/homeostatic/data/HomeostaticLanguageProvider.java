@@ -2,7 +2,7 @@ package homeostatic.data;
 
 import java.util.concurrent.CompletableFuture;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
 import net.minecraft.core.HolderLookup;
@@ -12,7 +12,7 @@ import homeostatic.Homeostatic;
 
 public class HomeostaticLanguageProvider extends FabricLanguageProvider {
 
-    protected HomeostaticLanguageProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryFuture) {
+    protected HomeostaticLanguageProvider(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryFuture) {
         super(dataOutput, registryFuture);
     }
 
@@ -43,6 +43,7 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
         addItem(translationBuilder, "thermometer", "Thermometer");
         addItem(translationBuilder, "purified_water_bottle", "Purified Water Bottle");
         addFluid(translationBuilder, "purified_water_type", "Purified Water");
+        addBlock(translationBuilder, "purified_water", "Purified Water");
         addBlock(translationBuilder, "purified_water_fluid", "Purified Water");
         addBookEntry(translationBuilder, "intro", "Temperature and hydration dynamics that don't defy logic...$(br)" +
                 "$(li)The $(l:homeostatic:education/environment)environment$() has temperature that is affected by " +

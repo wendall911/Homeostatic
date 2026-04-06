@@ -2,12 +2,12 @@ package homeostatic.overlay;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import org.joml.Matrix3x2fStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
@@ -32,7 +32,7 @@ public class TemperatureGlobeOverlay extends Overlay {
     TemperatureGlobeOverlay() {}
 
     @Override
-    public void render(GuiGraphics guiGraphics, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
+    public void render(GuiGraphicsExtractor guiGraphics, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
         Matrix3x2fStack matrix = guiGraphics.pose();
 

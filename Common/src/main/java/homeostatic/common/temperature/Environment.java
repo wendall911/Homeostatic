@@ -172,14 +172,14 @@ public class Environment {
     }
 
     private static LevelChunk getChunk(Level world, ChunkPos pos, Map<ChunkPos, LevelChunk> chunks) {
-        ChunkPos chunkPos = new ChunkPos(pos.x, pos.z);
+        ChunkPos chunkPos = new ChunkPos(pos.x(), pos.z());
         LevelChunk chunk;
 
         if (chunks.containsKey(chunkPos)) {
             chunk = chunks.get(chunkPos);
         }
         else {
-            chunk = world.getChunkSource().getChunkNow(chunkPos.x, chunkPos.z);
+            chunk = world.getChunkSource().getChunkNow(chunkPos.x(), chunkPos.z());
             chunks.put(chunkPos, chunk);
         }
 

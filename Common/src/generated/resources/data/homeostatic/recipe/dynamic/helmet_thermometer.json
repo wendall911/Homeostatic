@@ -1,4 +1,3 @@
 {
-  "type": "homeostatic:helmet_thermometer",
-  "category": "misc"
+  "type": "homeostatic:helmet_thermometer"
 }

@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.joml.Matrix3x2fStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.BlockPos;
 
 import homeostatic.config.ConfigHandler;
@@ -22,7 +22,7 @@ public class OverlayManager {
 
     private OverlayManager() {}
 
-    public void render(GuiGraphics guiGraphics, Overlay overlay, boolean scaled, int rightHeight) {
+    public void render(GuiGraphicsExtractor guiGraphics, Overlay overlay, boolean scaled, int rightHeight) {
         Matrix3x2fStack matrix = guiGraphics.pose();
         Minecraft mc = Minecraft.getInstance();
         BlockPos pos = Objects.requireNonNull(mc.getCameraEntity()).blockPosition();
@@ -51,11 +51,11 @@ public class OverlayManager {
 
     }
 
-    public void renderOverlay(GuiGraphics guiGraphics) {
+    public void renderOverlay(GuiGraphicsExtractor guiGraphics) {
         render(guiGraphics, temperatureInfo, true, 0);
     }
 
-    public void renderWaterOverlay(GuiGraphics guiGraphics, int rightHeight) {
+    public void renderWaterOverlay(GuiGraphicsExtractor guiGraphics, int rightHeight) {
         if (ConfigHandler.Client.forceWaterBarPosition()) {
             rightHeight = 0;
         }
@@ -64,15 +64,15 @@ public class OverlayManager {
         render(guiGraphics, wetnessOverlay, false, 0);
     }
 
-    public void renderTemperatureOverlay(GuiGraphics guiGraphics) {
+    public void renderTemperatureOverlay(GuiGraphicsExtractor guiGraphics) {
         render(guiGraphics, temperatureGlobeOverlay, false, 0);
     }
 
-    public void renderEnhancedVisualsOverlay(GuiGraphics guiGraphics) {
+    public void renderEnhancedVisualsOverlay(GuiGraphicsExtractor guiGraphics) {
         render(guiGraphics, enhancedVisualsOverlay, false, 0);
     }
 
-    public void renderHydrationOverlay(GuiGraphics guiGraphics, int rightHeight) {
+    public void renderHydrationOverlay(GuiGraphicsExtractor guiGraphics, int rightHeight) {
         render(guiGraphics, hydrationOverlay, false, rightHeight);
     }
 

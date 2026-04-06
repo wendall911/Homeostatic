@@ -2,10 +2,10 @@ package homeostatic.util;
 
 import java.util.Optional;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.Holder;
@@ -157,7 +157,7 @@ public class WaterHelper {
         drink(sp, air, Fluids.WATER, update);
     }
 
-    public static void drawWaterBar(Identifier sprite, int scaledWidth, int scaledHeight, MobEffectInstance effectInstance, Gui gui, GuiGraphics guiGraphics, float waterSaturationLevel, int waterLevel, int tickCount) {
+    public static void drawWaterBar(Identifier sprite, int scaledWidth, int scaledHeight, MobEffectInstance effectInstance, Gui gui, GuiGraphicsExtractor guiGraphics, float waterSaturationLevel, int waterLevel, int tickCount) {
         int offsetX;
         int offsetY;
         int pV = 0;

@@ -1,11 +1,16 @@
 package homeostatic.common.recipe;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
-import net.minecraft.core.HolderLookup;
+import com.mojang.serialization.MapCodec;
+
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmokingRecipe;
@@ -13,13 +18,26 @@ import net.minecraft.world.level.Level;
 
 public class SmokingPurifiedLeatherFlask extends SmokingRecipe implements IWaterContainerCookingRecipe {
 
-    public SmokingPurifiedLeatherFlask(String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
-        super(group, category, ingredient, result, experience, cookingTime);
+    public static final MapCodec<SmokingRecipe> CODEC = cookingMapCodec(SmokingPurifiedLeatherFlask::new, 100);
+    public static final StreamCodec<RegistryFriendlyByteBuf, SmokingRecipe> STREAM_CODEC = cookingStreamCodec(SmokingPurifiedLeatherFlask::new);
+    public static final RecipeSerializer<SmokingRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
+
+    private final ItemStackTemplate result;
+
+    public SmokingPurifiedLeatherFlask(Recipe.CommonInfo commonInfo, AbstractCookingRecipe.CookingBookInfo bookInfo, Ingredient ingredient, ItemStackTemplate result, float experience, int cookingTime) {
+        this.result = result;
+
+        super(commonInfo, bookInfo, ingredient, result, experience, cookingTime);
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull SingleRecipeInput recipeInput, HolderLookup.@NotNull Provider pRegistries) {
-        return assemble(recipeInput, result());
+    protected @NonNull ItemStackTemplate result() {
+        return getCleanWaterFilledWaterContainer(result.item().value());
+    }
+
+    @Override
+    public @NonNull ItemStack assemble(@NonNull SingleRecipeInput recipeInput) {
+        return assemble(recipeInput, result.create());
     }
 
 
@@ -29,7 +47,7 @@ public class SmokingPurifiedLeatherFlask extends SmokingRecipe implements IWater
     }
 
     @Override
-    public boolean matches(@NotNull SingleRecipeInput recipeInput, @NotNull Level level) {
+    public boolean matches(@NonNull SingleRecipeInput recipeInput, @NonNull Level level) {
         return matches(recipeInput, 1L);
     }
 
@@ -39,8 +57,8 @@ public class SmokingPurifiedLeatherFlask extends SmokingRecipe implements IWater
     }
 
     @Override
-    public @NotNull RecipeSerializer<SmokingRecipe> getSerializer() {
-        return HomeostaticRecipes.SMOKING_PURIFIED_LEATHER_FLASK_SERIALIZER;
+    public @NonNull RecipeSerializer<SmokingRecipe> getSerializer() {
+        return SERIALIZER;
     }
 
 }

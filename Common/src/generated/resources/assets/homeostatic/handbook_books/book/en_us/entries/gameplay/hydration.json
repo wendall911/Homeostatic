@@ -1,6 +1,6 @@
 {
   "category": "homeostatic:gameplay",
-  "icon": "homeostatic:leather_flask[homeostatic:water_container={Amount:0L,Fluid:\"minecraft:empty\"}]",
+  "icon": "homeostatic:leather_flask",
   "name": "info.homeostatic.book.gameplay.hydration.name",
   "pages": [
     {

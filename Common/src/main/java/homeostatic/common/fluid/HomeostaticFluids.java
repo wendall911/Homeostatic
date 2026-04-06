@@ -13,13 +13,13 @@ public final class HomeostaticFluids {
     public static Fluid PURIFIED_WATER = new PurifiedWater.Source();
     public static FlowingFluid PURIFIED_WATER_FLOWING = new PurifiedWater.Flowing();
 
-    public static final Identifier STILL_FLUID_TEXTURE = prefix("block/fluid/still_water");
-    public static final Identifier FLOWING_FLUID_TEXTURE = prefix("block/fluid/flowing_water");
+    public static final Identifier STILL_FLUID_TEXTURE = prefix("block/purified_water_fluid");
+    public static final Identifier FLOWING_FLUID_TEXTURE = prefix("block/purified_water_flowing");
+    public static final Identifier OVERLAY_FLUID_TEXTURE = prefix("block/purified_water_fluid");
 
     public static void init(BiConsumer<Fluid, Identifier> consumer) {
-        consumer.accept(PURIFIED_WATER, prefix("purified_water"));
-        consumer.accept(PURIFIED_WATER_FLOWING, prefix("purified_water_flowing"));
+        consumer.accept(PURIFIED_WATER, STILL_FLUID_TEXTURE);
+        consumer.accept(PURIFIED_WATER_FLOWING, FLOWING_FLUID_TEXTURE);
     }
-
 
 }

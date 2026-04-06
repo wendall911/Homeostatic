@@ -1,6 +1,6 @@
 package homeostatic.common.components;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,24 +17,24 @@ import homeostatic.network.WaterData;
 public class ComponentWaterData extends Water implements Component, AutoSyncedComponent {
 
     @Override
-    public void readData(@NotNull ValueInput valueInput) {
+    public void readData(@NonNull ValueInput valueInput) {
         this.read(valueInput);
     }
 
     @Override
-    public void writeData(@NotNull ValueOutput valueOutput) {
+    public void writeData(@NonNull ValueOutput valueOutput) {
         this.write(valueOutput);
     }
 
     @Override
-    public void writeSyncPacket(RegistryFriendlyByteBuf buf, ServerPlayer sp) {
+    public void writeSyncPacket(@NonNull RegistryFriendlyByteBuf buf, @NonNull ServerPlayer sp) {
         WaterData waterData = new WaterData(new WaterInfo(getWaterLevel(), getWaterSaturationLevel(), getWaterExhaustionLevel()));
 
         waterData.toBytes(buf);
     }
 
     @Override
-    public void applySyncPacket(RegistryFriendlyByteBuf buf) {
+    public void applySyncPacket(@NonNull RegistryFriendlyByteBuf buf) {
         WaterData waterData = new WaterData(buf);
 
         setWaterData(waterData.getWaterInfo());

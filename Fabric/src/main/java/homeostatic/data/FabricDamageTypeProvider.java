@@ -2,9 +2,9 @@ package homeostatic.data;
 
 import java.util.concurrent.CompletableFuture;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -16,12 +16,12 @@ import homeostatic.common.damagesource.HomeostaticDamageTypes;
 
 public class FabricDamageTypeProvider extends FabricDynamicRegistryProvider {
 
-    public FabricDamageTypeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    public FabricDamageTypeProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    protected void configure(HolderLookup.Provider provider, Entries entries) {
+    protected void configure(HolderLookup.@NonNull Provider provider, @NonNull Entries entries) {
         HomeostaticDamageTypes.ALL.forEach((type) -> add(provider, entries, type));
     }
 
@@ -30,7 +30,7 @@ public class FabricDamageTypeProvider extends FabricDynamicRegistryProvider {
     }
 
     @Override
-    public @NotNull String getName() {
+    public @NonNull String getName() {
         return Homeostatic.MOD_NAME + " Damage Types";
     }
 

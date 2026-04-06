@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -18,7 +18,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -33,7 +33,7 @@ import homeostatic.common.recipe.SmokingPurifiedLeatherFlask;
 import homeostatic.common.recipe.SmokingPurifiedWaterBottle;
 
 public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
-    private final Item result;
+    private final ItemStackTemplate result;
     private final Ingredient ingredient;
     private final RecipeCategory category;
     private final CookingBookCategory bookCategory;
@@ -44,14 +44,18 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
     private final AbstractCookingRecipe.Factory<?> factory;
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
 
-    private AdvancedCookingRecipeBuilder(RecipeCategory pBookCategory, CookingBookCategory pCookingBookCategory, ItemLike pResult, Ingredient pIngredient, float pExperience, int pCookingTime, AbstractCookingRecipe.Factory<?> pFactory) {
-        this.result = pResult.asItem();
+    private AdvancedCookingRecipeBuilder(RecipeCategory pBookCategory, CookingBookCategory pCookingBookCategory, ItemStackTemplate result, Ingredient pIngredient, float pExperience, int pCookingTime, AbstractCookingRecipe.Factory<?> pFactory) {
+        this.result = result;
         this.ingredient = pIngredient;
         this.experience = pExperience;
         this.cookingTime = pCookingTime;
         this.factory = pFactory;
         this.bookCategory = pCookingBookCategory;
         this.category = pBookCategory;
+    }
+
+    private AdvancedCookingRecipeBuilder(RecipeCategory pBookCategory, CookingBookCategory pCookingBookCategory, ItemLike result, Ingredient pIngredient, float pExperience, int pCookingTime, AbstractCookingRecipe.Factory<?> pFactory) {
+        this(pBookCategory, pCookingBookCategory, new ItemStackTemplate(result.asItem()), pIngredient, pExperience, pCookingTime, pFactory);
     }
 
     public static AdvancedCookingRecipeBuilder cooking(RecipeCategory pBookCategory, CookingBookCategory pCookingBookCategory, ItemLike pResult, Ingredient pIngredient, float pExperience, int pCookingTime, AbstractCookingRecipe.Factory<?> pFactory) {
@@ -83,20 +87,25 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public @NotNull RecipeBuilder unlockedBy(@NotNull String criterionName, @NotNull Criterion<?> criterion) {
+    public @NonNull RecipeBuilder unlockedBy(@NonNull String criterionName, @NonNull Criterion<?> criterion) {
         this.criteria.put(criterionName, criterion);
 
         return this;
     }
 
-    public @NotNull AdvancedCookingRecipeBuilder group(@Nullable String pGroupName) {
+    public @NonNull AdvancedCookingRecipeBuilder group(@Nullable String pGroupName) {
         this.group = pGroupName;
 
         return this;
     }
 
-    public @NotNull Item getResult() {
-        return this.result;
+    @Override
+    public @NonNull ResourceKey<Recipe<?>> defaultId() {
+        return RecipeBuilder.getDefaultRecipeId(this.result);
+    }
+
+    public @NonNull Item getResult() {
+        return this.result.create().getItem();
     }
 
     @Override
@@ -109,10 +118,10 @@ public class AdvancedCookingRecipeBuilder implements RecipeBuilder {
         Objects.requireNonNull(advancement);
         this.criteria.forEach(advancement::addCriterion);
         AbstractCookingRecipe recipe = this.factory.create(
-            Objects.requireNonNullElse(this.group, ""),
-            this.bookCategory,
+            RecipeBuilder.createCraftingCommonInfo(true),
+            new AbstractCookingRecipe.CookingBookInfo(this.bookCategory, Objects.requireNonNullElse(this.group, "")),
             this.ingredient,
-            new ItemStack(this.result),
+            this.result,
             this.experience,
             this.cookingTime
         );

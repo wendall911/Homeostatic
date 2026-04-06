@@ -2,7 +2,7 @@ package homeostatic.mixin;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -28,8 +28,8 @@ public abstract class FabricGuiMixin {
     @Final
     private Minecraft minecraft;
 
-    @Inject(method = "renderPlayerHealth", at = @At("HEAD"))
-    private void homeostatic$renderPlayerHealth(GuiGraphics guiGraphics, CallbackInfo ci) {
+    @Inject(method = "extractPlayerHealth", at = @At("HEAD"))
+    private void homeostatic$renderPlayerHealth(GuiGraphicsExtractor guiGraphics, CallbackInfo ci) {
         Player player = this.getCameraPlayer();
 
         if (player != null) {

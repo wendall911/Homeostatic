@@ -1,6 +1,6 @@
 package homeostatic.data.integration.create;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /*
 import com.simibubi.create.AllRecipeTypes;
@@ -26,7 +26,7 @@ public class FillingRecipeProvider extends ProcessingRecipeGen {
     GeneratedRecipe FLASK = createFlaskRecipe("purified_water", TagManager.Fluids.PURIFIED_WATER, prefix("purified_water")),
             WATER = createFlaskRecipe("water", FluidTags.WATER, new ResourceLocation("minecraft", "water"));
 
-    public FillingRecipeProvider(@NotNull final PackOutput packOutput) {
+    public FillingRecipeProvider(@NonNull final PackOutput packOutput) {
         super(packOutput);
     }
 

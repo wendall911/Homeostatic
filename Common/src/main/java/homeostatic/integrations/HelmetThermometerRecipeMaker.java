@@ -9,12 +9,14 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -46,7 +48,12 @@ public final class HelmetThermometerRecipeMaker {
                     armorStack.set(HomeostaticComponents.ARMOR, CustomData.of(tag));
                     recipes.add(Pair.of(armorStack, new RecipeHolder<>(
                         ResourceKey.create(Registries.RECIPE, prefix(group + ".thermometer")),
-                        new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, armorStack, recipeInputs)
+                        new ShapelessRecipe(
+                            RecipeBuilder.createCraftingCommonInfo(true),
+                            RecipeBuilder.createCraftingBookInfo(RecipeCategory.MISC, group),
+                            new ItemStackTemplate(armorStack.getItem(), 1),
+                            recipeInputs
+                        )
                     )));
                 });
 

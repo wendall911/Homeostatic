@@ -2,9 +2,9 @@ package homeostatic.data;
 
 import java.util.concurrent.CompletableFuture;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 
 import net.minecraft.core.HolderLookup;
@@ -16,17 +16,17 @@ import homeostatic.data.recipe.CommonRecipeProvider;
 
 public class HomeostaticRecipeProvider extends FabricRecipeProvider {
 
-    public HomeostaticRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryFuture) {
+    public HomeostaticRecipeProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryFuture) {
         super(output, registryFuture);
     }
 
     @Override
-    protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput recipeOutput) {
+    protected @NonNull RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput recipeOutput) {
         return new CommonRecipeProvider(registryLookup, recipeOutput);
     }
 
     @Override
-    public @NotNull String getName() {
+    public @NonNull String getName() {
         return Homeostatic.MOD_NAME + " - Fabric Recipies";
     }
 

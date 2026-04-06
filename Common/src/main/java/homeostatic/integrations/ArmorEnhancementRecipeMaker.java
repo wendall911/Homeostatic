@@ -8,11 +8,13 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -53,21 +55,36 @@ public final class ArmorEnhancementRecipeMaker {
                     woolArmorStack.set(HomeostaticComponents.ARMOR, CustomData.of(woolArmorStackTag));
                     recipes.add(Pair.of(woolArmorStack, new RecipeHolder<>(
                         ResourceKey.create(Registries.RECIPE, prefix(group + ".insulated")),
-                        new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, woolArmorStack, insulatedInputs)
+                        new ShapelessRecipe(
+                            RecipeBuilder.createCraftingCommonInfo(true),
+                            RecipeBuilder.createCraftingBookInfo(RecipeCategory.MISC, group),
+                            new ItemStackTemplate(woolArmorStack.getItem(), 1),
+                            insulatedInputs
+                        )
                     )));
 
                     waterproofArmorStackTag.putBoolean("waterproof", true);
                     waterproofArmorStack.set(HomeostaticComponents.ARMOR, CustomData.of(waterproofArmorStackTag));
                     recipes.add(Pair.of(waterproofArmorStack, new RecipeHolder<>(
                         ResourceKey.create(Registries.RECIPE, prefix(group + ".waterproof")),
-                        new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, waterproofArmorStack, waterproofInputs)
+                        new ShapelessRecipe(
+                            RecipeBuilder.createCraftingCommonInfo(true),
+                            RecipeBuilder.createCraftingBookInfo(RecipeCategory.MISC, group),
+                            new ItemStackTemplate(waterproofArmorStack.getItem(), 1),
+                            waterproofInputs
+                        )
                     )));
 
                     radiationArmorStackTag.putBoolean("radiation_protection", true);
                     radiationArmorStack.set(HomeostaticComponents.ARMOR, CustomData.of(radiationArmorStackTag));
                     recipes.add(Pair.of(radiationArmorStack, new RecipeHolder<>(
                         ResourceKey.create(Registries.RECIPE, prefix(group + ".radiation_resistance")),
-                        new ShapelessRecipe(group, CraftingBookCategory.EQUIPMENT, radiationArmorStack, radiationInputs)
+                        new ShapelessRecipe(
+                            RecipeBuilder.createCraftingCommonInfo(true),
+                            RecipeBuilder.createCraftingBookInfo(RecipeCategory.MISC, group),
+                            new ItemStackTemplate(radiationArmorStack.getItem(), 1),
+                            radiationInputs
+                        )
                     )));
                 });
 

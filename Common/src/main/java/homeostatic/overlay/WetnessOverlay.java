@@ -1,9 +1,9 @@
 package homeostatic.overlay;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +20,7 @@ public class WetnessOverlay extends Overlay {
     public WetnessOverlay() {}
 
     @Override
-    public void render(GuiGraphics guiGraphics, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
+    public void render(GuiGraphicsExtractor guiGraphics, Minecraft mc, @Nullable BlockPos pos, int scaledWidth, int scaledHeight) {
         final Player player = mc.player;
 
         if (player == null) return;

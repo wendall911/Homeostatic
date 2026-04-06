@@ -2,7 +2,7 @@ package homeostatic.data.recipe;
 
 import java.util.concurrent.CompletableFuture;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import dev.gigaherz.sewingkit.SewingKitMod;
 import dev.gigaherz.sewingkit.api.SewingRecipeBuilder;
@@ -29,17 +29,17 @@ import static homeostatic.Homeostatic.prefix;
 
 public class NeoForgeRecipeProvider extends RecipeProvider.Runner {
 
-    public NeoForgeRecipeProvider(@NotNull final PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+    public NeoForgeRecipeProvider(@NonNull final PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(packOutput, lookupProvider);
     }
 
     @Override
-    public @NotNull String getName() {
+    public @NonNull String getName() {
         return Homeostatic.MOD_NAME + " - NeoForge Recipes";
     }
 
     @Override
-    protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.@NotNull Provider provider, @NotNull RecipeOutput recipeOutput) {
+    protected @NonNull RecipeProvider createRecipeProvider(HolderLookup.@NonNull Provider provider, @NonNull RecipeOutput recipeOutput) {
         return new VanillaRecipeProvider(provider, recipeOutput) {
 
             @Override

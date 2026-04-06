@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
+import net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 
 import net.minecraft.core.Registry;
@@ -45,14 +45,14 @@ public class HomeostaticFabric implements ModInitializer {
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricDrinkingFluidManager());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricDrinkableItemManager());
 
-        PayloadTypeRegistry.playC2S().register(DrinkWater.TYPE, DrinkWater.STREAM_CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(DrinkWater.TYPE, DrinkWater.STREAM_CODEC);
         ServerPlayNetworking.registerGlobalReceiver(DrinkWater.TYPE, ((payload, context) -> {
             WaterHelper.drinkWater(context.player());
         }));
-        PayloadTypeRegistry.playS2C().register(SyncDrinkingFluids.TYPE, SyncDrinkingFluids.CODEC);
-        PayloadTypeRegistry.playS2C().register(SyncDrinkableItems.TYPE, SyncDrinkableItems.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(SyncDrinkingFluids.TYPE, SyncDrinkingFluids.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(SyncDrinkableItems.TYPE, SyncDrinkableItems.CODEC);
 
-        FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
+        FabricPotionBrewingBuilder.BUILD.register(builder -> {
             builder.registerPotionRecipe(
                 Potions.AWKWARD,
                 Ingredient.of(Items.SNOWBALL),
