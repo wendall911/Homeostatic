@@ -21,15 +21,17 @@ dependencies {
 
     implementation group: 'com.github.wendall911.homeostaticseasons', name: "homeostaticseasons-${minecraft_version}-fabric", version: "${homeostaticseasons_version}"
 
-    //runtimeOnly "dev.architectury:architectury-fabric:${architectury_version}"
-    runtimeOnly("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
+    //localRuntime "dev.architectury:architectury-fabric:${architectury_version}"
+    /*
+    localRuntime("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+    */
     compileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
     compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rei_version}"
     /*
      * TODO Re-enable REI when it is released
-    runtimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
+    localRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
     */
 
     compileOnly "mezz.jei:jei-${jei_minecraft_version}-common-api:${jei_version}"
@@ -43,48 +45,48 @@ dependencies {
     compileOnly "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
     compileOnly "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
 
-    runtimeOnly "net.jodah:typetools:0.6.3"
+    localRuntime "net.jodah:typetools:0.6.3"
     implementation "com.electronwill.night-config:core:3.6.7"
 
-    runtimeOnly group: 'com.terraformersmc', name: 'modmenu', version: "${mod_menu_version}"
+    localRuntime group: 'com.terraformersmc', name: 'modmenu', version: "${mod_menu_version}"
 
     if (System.getenv('DATA_GEN') != null) {
         // Datagen mods
     }
     else {
         // Runtime testing mods
-        runtimeOnly "mezz.jei:jei-${jei_minecraft_version}-fabric:${jei_version}"
+        localRuntime "mezz.jei:jei-${jei_minecraft_version}-fabric:${jei_version}"
         // This doesn't work for whatever reason. Such a strange port
-        //runtimeOnly "curse.maven:create_fabric-624165:${create_fabric_version}"
-        //runtimeOnly "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
-        //runtimeOnly "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
-        //runtimeOnly "curse.maven:terrablender-565956:${terrablender_fabric_version}"
-        //runtimeOnly "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
-        //runtimeOnly "curse.maven:regions-659110:${regions_fabric_version}"
-        //runtimeOnly "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
-        //runtimeOnly "curse.maven:more_food-874343:${more_food_fabric_version}"
-        //runtimeOnly "curse.maven:colorful_hearts-854213:${colorful_hearts_fabric_version}"
-        //runtimeOnly "curse.maven:puzzles_lib-495476:${puzzles_lib_fabric_version}"
-        //runtimeOnly "curse.maven:forge_config_api_port-547434:${forge_config_api_fabric_version}"
-        //runtimeOnly "curse.maven:lmba-281715:${lmba_fabric_version}"
-        //runtimeOnly "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
-        //runtimeOnly "curse.maven:fabric_seasons_extras-839878:${fabric_seasons_extras_version}"
-        //runtimeOnly "curse.maven:byg-1070751:${byg_fabric_version}"
-        //runtimeOnly "curse.maven:tyg-962544:${tyg_fabric_version}"
-        //runtimeOnly "curse.maven:corgilib-693313:${corgilib_fabric_version}"
-        //runtimeOnly "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_fabric_version}"
+        //localRuntime "curse.maven:create_fabric-624165:${create_fabric_version}"
+        //localRuntime "curse.maven:glitchcore-955399:${glitch_core_fabric_version}"
+        //localRuntime "curse.maven:biomesoplenty-220318:${bop_fabric_version}"
+        //localRuntime "curse.maven:terrablender-565956:${terrablender_fabric_version}"
+        //localRuntime "curse.maven:sereneseasons-291874:${serene_seasons_fabric_version}"
+        //localRuntime "curse.maven:regions-659110:${regions_fabric_version}"
+        //localRuntime "curse.maven:simpletextoverlay-321283:${simpletextoverlay_fabric_version}"
+        //localRuntime "curse.maven:more_food-874343:${more_food_fabric_version}"
+        //localRuntime "curse.maven:colorful_hearts-854213:${colorful_hearts_fabric_version}"
+        //localRuntime "curse.maven:puzzles_lib-495476:${puzzles_lib_fabric_version}"
+        //localRuntime "curse.maven:forge_config_api_port-547434:${forge_config_api_fabric_version}"
+        //localRuntime "curse.maven:lmba-281715:${lmba_fabric_version}"
+        //localRuntime "curse.maven:fabric_seasons-413523:${fabric_seasons_version}"
+        //localRuntime "curse.maven:fabric_seasons_extras-839878:${fabric_seasons_extras_version}"
+        //localRuntime "curse.maven:byg-1070751:${byg_fabric_version}"
+        //localRuntime "curse.maven:tyg-962544:${tyg_fabric_version}"
+        //localRuntime "curse.maven:corgilib-693313:${corgilib_fabric_version}"
+        //localRuntime "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_fabric_version}"
         // Bakery and Beach crash in a dev environment.
         // Let's NOT Do architectury please
-        //runtimeOnly "curse.maven:letsdo_bakery-1038130:${letsdo_bakery_fabric_version}"
-        //runtimeOnly "curse.maven:letsdo_beach-858691:${letsdo_beach_fabric_version}"
-        //runtimeOnly "curse.maven:letsdo_blooming-962885:${letsdo_blooming_fabric_version}"
-        //runtimeOnly "curse.maven:letsdo_brewery-1038106:${letsdo_brewery_fabric_version}"
-        //runtimeOnly "curse.maven:letsdo_candlelight-1038117:${letsdo_candlelight_fabric_version}"
-        //runtimeOnly "curse.maven:letsdo_herbal-951221:${letsdo_herbal_fabric_version}"
-        //runtimeOnly "curse.maven:letsdo_meadow-821483:${letsdo_meadow_fabric_version}"
-        //runtimeOnly "curse.maven:letsdo_farm-1038103:${letsdo_farm_fabric_version}"
-        //runtimeOnly "curse.maven:letsdo_vinery-704465:${letsdo_vinery_fabric_version}"
-        //runtimeOnly "curse.maven:letsdo_wilder-1071657:${letsdo_wilder_fabric_version}"
+        //localRuntime "curse.maven:letsdo_bakery-1038130:${letsdo_bakery_fabric_version}"
+        //localRuntime "curse.maven:letsdo_beach-858691:${letsdo_beach_fabric_version}"
+        //localRuntime "curse.maven:letsdo_blooming-962885:${letsdo_blooming_fabric_version}"
+        //localRuntime "curse.maven:letsdo_brewery-1038106:${letsdo_brewery_fabric_version}"
+        //localRuntime "curse.maven:letsdo_candlelight-1038117:${letsdo_candlelight_fabric_version}"
+        //localRuntime "curse.maven:letsdo_herbal-951221:${letsdo_herbal_fabric_version}"
+        //localRuntime "curse.maven:letsdo_meadow-821483:${letsdo_meadow_fabric_version}"
+        //localRuntime "curse.maven:letsdo_farm-1038103:${letsdo_farm_fabric_version}"
+        //localRuntime "curse.maven:letsdo_vinery-704465:${letsdo_vinery_fabric_version}"
+        //localRuntime "curse.maven:letsdo_wilder-1071657:${letsdo_wilder_fabric_version}"
     }
 }
 
