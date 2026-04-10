@@ -50,7 +50,7 @@ public abstract class NeoForgeGuiMixin {
         LivingEntity livingEntity = this.getPlayerVehicleWithHealth();
         int x = this.getVisibleVehicleHeartRows(this.getVehicleMaxHearts(livingEntity));
 
-        if (Services.PLATFORM.isModLoaded(ModIntegration.LMBA_MODID)) {
+        if (Services.WN_PLATFORM.isModLoaded(ModIntegration.LMBA_MODID)) {
             x = x + 1;
         }
 

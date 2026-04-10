@@ -3,6 +3,8 @@ package homeostatic.common.block;
 import java.lang.reflect.Type;
 import java.util.Objects;
 
+import org.jspecify.annotations.NonNull;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -20,6 +22,7 @@ import homeostatic.data.integration.ModIntegration;
 import homeostatic.platform.Services;
 import homeostatic.util.TConHelper;
 
+import static technology.roughness.whitenoise.platform.Services.WN_PLATFORM;
 import static technology.roughness.whitenoise.util.ResourceLocationHelper.parse;
 
 public record BlockRadiation(Identifier loc, double maxRadiation) {
@@ -71,12 +74,12 @@ public record BlockRadiation(Identifier loc, double maxRadiation) {
     public double maxRadiation(BlockState state) {
         Block block = state.getBlock();
 
-        if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.CREATE_MODID)
+        if (WN_PLATFORM.isModLoaded(ModIntegration.CREATE_MODID)
                 && block.toString().contains(ModIntegration.CREATE_MODID)) {
             return Services.PLATFORM.getCreateBlockRadiation(state, maxRadiation);
         }
 
-        if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.TCON_MODID)
+        if (WN_PLATFORM.isModLoaded(ModIntegration.TCON_MODID)
                 && block.toString().contains(ModIntegration.TCON_MODID)) {
             return TConHelper.getBlockRadiation(state, maxRadiation);
         }
@@ -99,7 +102,7 @@ public record BlockRadiation(Identifier loc, double maxRadiation) {
     }
 
     @Override
-    public String toString() {
+    public @NonNull String toString() {
         return "BlockRadiation[" +
                 "loc=" + loc + ", " +
                 "maxRadiation=" + maxRadiation + ']';

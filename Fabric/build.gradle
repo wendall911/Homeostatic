@@ -158,6 +158,8 @@ publishMods {
             optional('betterdays')
             optional('charged-charms')
             optional('creeper-fireworks')
+            optional('homeostatic-seasons')
+            optional('mobchampions')
             optional('simpletextoverlay')
             optional('ready-player-fun')
             optional('jei')
@@ -200,6 +202,8 @@ publishMods {
             optional('betterdays')
             optional('charged-charms')
             optional('creeper-fireworks-mod')
+            optional('homeostatic-seasons')
+            optional('mobchampions')
             optional('simpletextoverlay')
             optional('ready-player-fun')
             optional('create')
@@ -243,7 +247,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId project.group
-            artifactId identifier
+            artifactId "${mod_id}-${minecraft_version}-fabric"
             version project.version
             from components.java
         }

@@ -169,7 +169,9 @@ publishMods {
             optional('betterdays')
             optional('charged-charms')
             optional('creeper-fireworks')
+            optional('homeostatic-seasons')
             optional('magical-psi-revival')
+            optional('mobchampions')
             optional('simpletextoverlay')
             optional('ready-player-fun')
             optional('survivalist-essentials')
@@ -226,7 +228,9 @@ publishMods {
             optional('betterdays')
             optional('charged-charms')
             optional('creeper-fireworks-mod')
+            optional('homeostatic-seasons')
             optional('magical-psi-revival')
+            optional('mobchampions')
             optional('simpletextoverlay')
             optional('ready-player-fun')
             optional('survivalist-essentials')
@@ -275,7 +279,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId project.group
-            artifactId identifier
+            artifactId "${mod_id}-${minecraft_version}-neoforge"
             version project.version
             // This gives us the built version NeoForge requires
             artifact jar

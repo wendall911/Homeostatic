@@ -54,7 +54,7 @@ public class HomeostaticNeoForge {
         Homeostatic.init();
         Homeostatic.initConfig();
 
-        if (Services.PLATFORM.isPhysicalClient()) {
+        if (Services.WN_PLATFORM.isPhysicalClient()) {
             HomeostaticClientNeoForge.init(bus);
         }
 

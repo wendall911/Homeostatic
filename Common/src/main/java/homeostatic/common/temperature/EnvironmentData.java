@@ -27,7 +27,6 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import net.minecraft.world.level.saveddata.WeatherData;
 import net.minecraft.world.level.storage.LevelData;
-import net.minecraft.world.level.storage.ServerLevelData;
 
 import climatesettings.common.biome.BiomeTypeData;
 import climatesettings.common.biome.BiomeTypeDataManager;
@@ -40,6 +39,7 @@ import homeostatic.util.TempHelper;
 import homeostatic.util.WetnessHelper;
 
 import static climatesettings.platform.Services.CLIMATE;
+import static technology.roughness.whitenoise.platform.Services.WN_PLATFORM;
 
 public class EnvironmentData {
 
@@ -130,7 +130,7 @@ public class EnvironmentData {
             if (level.getGameRules().get(GameRules.ADVANCE_WEATHER)) {
                 double chunkHumidity = getBiomeHumidity(level, chunkBiome, chunkPos);
 
-                accumulatedHumidity += chunkHumidity;
+                accumulatedHumidity += (float) chunkHumidity;
             }
         }
 
@@ -334,7 +334,7 @@ public class EnvironmentData {
         /*
          * If not already a snowy biome, add SNOW offset if Primal Winter mod is loaded.
          */
-        if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID)
+        if (WN_PLATFORM.isModLoaded(ModIntegration.PW_MODID)
                 && precipitation != Biome.Precipitation.SNOW) {
             temperature += BiomeTypeData.SNOW_OFFSET;
         }
@@ -396,7 +396,7 @@ public class EnvironmentData {
          *
          * Always will use the full season temperature variation used in RAIN calculations.
          */
-        else if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.PW_MODID)) {
+        else if (WN_PLATFORM.isModLoaded(ModIntegration.PW_MODID)) {
             int season = 7;
             float variation = biomeTypeData.getSeasonVariation(Biome.Precipitation.RAIN);
             double temp = getSeasonTemperature(season, variation, biomeTemp);

@@ -32,7 +32,7 @@ public class Homeostatic {
     public static void initConfig() {
         WhiteNoiseConfigLoader.add(WhiteNoiseConfig.Type.COMMON, ConfigHandler.COMMON_SPEC, MODID);
 
-        if (Services.PLATFORM.isPhysicalClient()) {
+        if (Services.WN_PLATFORM.isPhysicalClient()) {
             WhiteNoiseConfig clientConfig = WhiteNoiseConfigLoader.add(WhiteNoiseConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC, MODID);
             clientConfig.addLoadListener((config, flag) -> ConfigHandler.Client.init());
         }

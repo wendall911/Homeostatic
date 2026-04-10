@@ -18,7 +18,7 @@ import homeostatic.data.integration.ModIntegration;
 public class TooltipEventHandler {
 
     public static void onItemToolTip(ItemStack itemStack, List<Component> toolTip) {
-        boolean sewingKitItem = Services.PLATFORM.isModLoaded(ModIntegration.SK_MODID) && itemStack.is(TagManager.Items.SEWINGKIT_WEARABLE);
+        boolean sewingKitItem = Services.WN_PLATFORM.isModLoaded(ModIntegration.SK_MODID) && itemStack.is(TagManager.Items.SEWINGKIT_WEARABLE);
 
         if (itemStack.get(DataComponents.EQUIPPABLE) != null || sewingKitItem) {
             CompoundTag tags = itemStack.getOrDefault(HomeostaticComponents.ARMOR, CustomData.EMPTY).copyTag();;

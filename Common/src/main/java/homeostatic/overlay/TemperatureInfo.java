@@ -27,6 +27,7 @@ import homeostatic.util.HomeostaticSeasonsClientHelper;
 import homeostatic.util.TempHelper;
 
 import static climatesettings.ClimateSettings.prefix;
+import static technology.roughness.whitenoise.platform.Services.WN_PLATFORM;
 
 public class TemperatureInfo extends Overlay {
 
@@ -98,7 +99,7 @@ public class TemperatureInfo extends Overlay {
                     -1, false);
             });
 
-            if (technology.roughness.whitenoise.platform.Services.PLATFORM.isModLoaded(ModIntegration.HS_MODID)) {
+            if (WN_PLATFORM.isModLoaded(ModIntegration.HS_MODID)) {
                 String season = HomeostaticSeasonsClientHelper.getSeasonName(mc);
                 int seasonWidth = mc.font.width(season);
 
