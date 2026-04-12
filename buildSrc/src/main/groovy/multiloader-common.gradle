@@ -138,6 +138,8 @@ ext.expandProps = [
     'neoforge_mc_version_range': neoforge_mc_version_range,
     'mod_credits': mod_credits,
     'curseforge_slug': curseforge_slug,
+    'fabric_handbook_range': fabric_handbook_range,
+    'handbook_range': handbook_range,
     'fabric_whitenoise_range': fabric_whitenoise_range,
     'whitenoise_range': whitenoise_range
 ]
