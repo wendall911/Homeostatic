@@ -10,6 +10,7 @@ import static homeostatic.Homeostatic.prefix;
 
 public final class HomeostaticFluids {
 
+    public static Identifier PURIFIED_WATER_ID = prefix("purified_water");
     public static Fluid PURIFIED_WATER = new PurifiedWater.Source();
     public static FlowingFluid PURIFIED_WATER_FLOWING = new PurifiedWater.Flowing();
 
@@ -18,7 +19,7 @@ public final class HomeostaticFluids {
     public static final Identifier OVERLAY_FLUID_TEXTURE = prefix("block/purified_water_fluid");
 
     public static void init(BiConsumer<Fluid, Identifier> consumer) {
-        consumer.accept(PURIFIED_WATER, STILL_FLUID_TEXTURE);
+        consumer.accept(PURIFIED_WATER, PURIFIED_WATER_ID);
         consumer.accept(PURIFIED_WATER_FLOWING, FLOWING_FLUID_TEXTURE);
     }
 
