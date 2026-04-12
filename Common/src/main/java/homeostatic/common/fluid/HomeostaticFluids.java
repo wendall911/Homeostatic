@@ -10,6 +10,8 @@ import static homeostatic.Homeostatic.prefix;
 
 public final class HomeostaticFluids {
 
+    // TOOO: fix textures on NeoForge
+
     public static Identifier PURIFIED_WATER_ID = prefix("purified_water");
     public static Fluid PURIFIED_WATER = new PurifiedWater.Source();
     public static FlowingFluid PURIFIED_WATER_FLOWING = new PurifiedWater.Flowing();
