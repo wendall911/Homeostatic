@@ -3,6 +3,7 @@ package homeostatic.util;
 import net.minecraft.client.Minecraft;
 
 import homeostaticseasons.api.HomeostaticSeasonsAPI;
+import homeostaticseasons.api.Season;
 
 public class HomeostaticSeasonsClientHelper {
 
@@ -15,7 +16,13 @@ public class HomeostaticSeasonsClientHelper {
             return "NONE";
         }
 
-        return HomeostaticSeasonsAPI.getCurrentSeason(mc.level).toString();
+        Season season = HomeostaticSeasonsAPI.getCurrentSeason(mc.level);
+
+        if (season == null) {
+            return "NONE";
+        }
+
+        return season.name();
     }
 
 }
