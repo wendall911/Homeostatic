@@ -3,6 +3,8 @@ plugins {
     id 'fabric-loom'
 }
 
+def identifier = "${mod_id}-${minecraft_version}-fabric"
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings(loom.layered {
@@ -42,7 +44,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId project.group
-            artifactId project.archivesBaseName
+            artifactId identifier
             version project.version
             from components.java
         }
