@@ -195,6 +195,9 @@ public class HomeostaticLanguageProvider extends FabricLanguageProvider {
         addTranslation(translationBuilder, "waterbarposition");
         addTranslation(translationBuilder, "waterbaroffsetx");
         addTranslation(translationBuilder, "waterbaroffsety");
+        addTranslation(translationBuilder, "condensationopacity");
+        addTranslation(translationBuilder, "condensationmin");
+        addTranslation(translationBuilder, "condensationmax");
         addTranslation(translationBuilder, "debugenabled");
         addTranslation(translationBuilder, "showtemperaturevalues");
         addTranslation(translationBuilder, "requirethermometer");

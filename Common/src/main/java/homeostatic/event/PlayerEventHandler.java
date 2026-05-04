@@ -71,7 +71,7 @@ public class PlayerEventHandler {
                 boolean updateCore = sp.tickCount % 60 == 0;
                 BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, data, updateCore, true);
 
-                data.setTemperatureData(environmentData.getLocalTemperature(), bodyTemperature);
+                data.setTemperatureData(environmentData, bodyTemperature);
 
                 Services.PLATFORM.syncTemperatureData(sp, environmentData, bodyTemperature);
             }
@@ -105,7 +105,7 @@ public class PlayerEventHandler {
             // Need to do a new Temperature here, as NeoForge isn't honoring not copying data on death
             BodyTemperature bodyTemperature = new BodyTemperature(sp, environmentData, new Temperature());
 
-            data.setTemperatureData(environmentData.getLocalTemperature(), bodyTemperature);
+            data.setTemperatureData(environmentData, bodyTemperature);
 
             Services.PLATFORM.syncTemperatureData(sp, environmentData, bodyTemperature);
         });

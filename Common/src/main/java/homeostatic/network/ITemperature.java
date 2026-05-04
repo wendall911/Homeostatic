@@ -6,6 +6,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 import homeostatic.common.temperature.BodyTemperature;
+import homeostatic.common.temperature.EnvironmentData;
 
 public interface ITemperature {
 
@@ -17,7 +18,9 @@ public interface ITemperature {
 
     void setLocalTemperature(float temperature);
 
-    void setTemperatureData(float localTemperature, BodyTemperature bodyTemperature);
+    void setRelativeHumidity(double relativeHumidity);
+
+    void setTemperatureData(EnvironmentData environmentData, BodyTemperature bodyTemperature);
 
     float getSkinTemperature();
 
@@ -26,6 +29,8 @@ public interface ITemperature {
     float getCoreTemperature();
 
     float getLocalTemperature();
+
+    double getRelativeHumidity();
 
     void checkTemperatureLevel(ServerPlayer player);
 

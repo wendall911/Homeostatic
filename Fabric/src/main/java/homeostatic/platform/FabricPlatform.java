@@ -3,9 +3,11 @@ package homeostatic.platform;
 import java.util.Optional;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -185,6 +187,11 @@ public class FabricPlatform implements IPlatform {
     @Override
     public void sendPacketToPlayer(IPacket packet, ServerPlayer player) {
         ServerPlayNetworking.send(player, packet);
+    }
+
+    @Override
+    public SimpleParticleType simpleParticleType() {
+        return FabricParticleTypes.simple();
     }
 
 }

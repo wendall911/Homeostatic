@@ -16,6 +16,8 @@ public class ClientEventListener {
 
         HydrationOverlay.onClientTick(minecraft);
         WaterHud.onClientTick(minecraft);
+
+        ClientPlayerEventHandler.onClientTick(minecraft);
     }
 
 }

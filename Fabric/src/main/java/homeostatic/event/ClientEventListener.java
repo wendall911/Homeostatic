@@ -11,6 +11,7 @@ public class ClientEventListener {
     public static void init() {
         ClientTickEvents.START_CLIENT_TICK.register(HydrationOverlay::onClientTick);
         ClientTickEvents.START_CLIENT_TICK.register(WaterHud::onClientTick);
+        ClientTickEvents.START_CLIENT_TICK.register(ClientPlayerEventHandler::onClientTick);
         ItemTooltipCallback.EVENT.register((itemStack, context, toolTip, lines) -> {
             TooltipEventHandler.onItemToolTip(itemStack, lines);
         });

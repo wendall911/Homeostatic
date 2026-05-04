@@ -3,6 +3,7 @@ package homeostatic.platform;
 import java.util.Optional;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -47,6 +48,7 @@ import homeostatic.network.NeoForgeWetnessData;
 import homeostatic.platform.services.IPlatform;
 import homeostatic.registries.HomeostaticNeoForgeRegistries;
 import homeostatic.util.CreateHelper;
+import homeostatic.util.EclipticSeasonsHelper;
 import homeostatic.util.HomeostaticSeasonsHelper;
 import homeostatic.util.ItemStackFluidHelper;
 import homeostatic.util.SereneSeasonsForgeHelper;
@@ -123,12 +125,10 @@ public class NeoForgePlatform implements IPlatform {
                 && SereneSeasonsForgeHelper.isSeasonDimension(level)) {
             return SereneSeasonsForgeHelper.getSubSeason(level);
         }
-        /* TODO re-enable when Ecliptic Seasons is updated
         else if(Services.PLATFORM.isModLoaded(ModIntegration.ECLIPTIC_MODID)
                 && EclipticSeasonsHelper.isSeasonDimension(level)) {
             return EclipticSeasonsHelper.getSubSeason(level);
         }
-         */
 
         return null;
     }
@@ -140,7 +140,7 @@ public class NeoForgePlatform implements IPlatform {
 
     @Override
     public void syncTemperatureData(ServerPlayer sp, EnvironmentData environmentData, BodyTemperature bodyTemperature) {
-        PacketDistributor.sendToPlayer(sp, new NeoForgeTemperatureData(environmentData.getLocalTemperature(), bodyTemperature));
+        PacketDistributor.sendToPlayer(sp, new NeoForgeTemperatureData(environmentData, bodyTemperature));
     }
 
     @Override
@@ -197,6 +197,11 @@ public class NeoForgePlatform implements IPlatform {
     @Override
     public void sendPacketToPlayer(IPacket packet, ServerPlayer player) {
         PacketDistributor.sendToPlayer(player, packet);
+    }
+
+    @Override
+    public SimpleParticleType simpleParticleType() {
+        return new SimpleParticleType(false);
     }
 
 }

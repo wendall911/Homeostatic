@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
@@ -71,5 +72,7 @@ public interface IPlatform {
     boolean isVampire(Player player);
 
     void sendPacketToPlayer(IPacket packet, ServerPlayer player);
+
+    SimpleParticleType simpleParticleType();
 
 }

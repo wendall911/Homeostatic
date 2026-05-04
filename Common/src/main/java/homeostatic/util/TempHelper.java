@@ -9,6 +9,17 @@ import homeostatic.common.temperature.TemperatureThreshold;
 
 public class TempHelper {
 
+    private static final double DEFAULT_EXHALED_TEMP_C = 35.0;
+    private static final double DEFAULT_EXHALED_RH = 95.0;
+
+    /*
+     * Iterations for ternary search over mixing fraction when checking condensation.
+     * RH(f) is unimodal: the mixing line between two sub-saturated air states crosses
+     * the convex saturation curve at most twice, guaranteeing a single peak.
+     * 10 iterations gives ~10^-5 precision in f — sufficient for simulation purposes.
+     */
+    private static final int CONDENSATION_SEARCH_ITERATIONS = 10;
+
     public static TemperatureDirection getCoreTemperatureDirection(float lastSkinTemperature, float coreTemperature, float skinTemperature) {
         TemperatureDirection direction = TemperatureDirection.NONE;
 
@@ -173,6 +184,82 @@ public class TempHelper {
         }
 
         return rangeStep;
+    }
+
+    /*
+     * RH above 100% at any mixing ratio means supersaturation, so condensation must occur.
+     * Pass exhaled temperature directly in Celsius to skip MC unit round-trip conversion.
+     * Math derived from:
+     * http://www.sciencebits.com/exhalecondense
+     */
+    public static boolean isMixedAirCondensing(float ambientMcTemp, double ambientRh) {
+        return canExhaledAirCondense(ambientMcTemp, ambientRh, DEFAULT_EXHALED_TEMP_C, DEFAULT_EXHALED_RH);
+    }
+
+    /*
+     * Returns mixed-air RH in percent for a specific outside-air fraction f.
+     * Accepts precomputed endpoint water content and enthalpy to avoid redundant work in loops.
+     */
+    private static double rhAtMixingFraction(double gEx, double gAmb, double hEx, double hAmb, double f) {
+        double gMixed = (1.0 - f) * gEx + f * gAmb;
+        double hMixed = (1.0 - f) * hEx + f * hAmb;
+        // Rearranged moist-air enthalpy equation to recover mixed dry-bulb temperature in C.
+        double mixedTempC = (hMixed + 0.026 - 2.501 * gMixed) / (1.007 + 0.00184 * gMixed);
+
+        return 100.0 * (gMixed / 6.210E-3) / getWaterVaporSaturationPressure(mixedTempC);
+    }
+
+    /*
+     * Ternary search for the peak of RH(f) over (0,1).
+     * Exhaled and ambient states are precomputed once; only the cheap rhAtMixingFraction
+     * inner call (dominated by one Math.exp) runs per iteration.
+     * Exits immediately if either trisection point already exceeds 100%.
+     */
+    private static boolean canExhaledAirCondense(float ambientMcTemp, double ambientRh, double exhaledTempC, double exhaledRh) {
+        double ambientTempC = convertMcTemp(ambientMcTemp, false);
+        // Precompute endpoint states once — constant across all mixing fractions.
+        double gExhaled = getWaterContent(exhaledTempC, exhaledRh);
+        double gAmbient = getWaterContent(ambientTempC, ambientRh);
+        double hExhaled = getMoistAirEnthalpy(exhaledTempC, gExhaled);
+        double hAmbient = getMoistAirEnthalpy(ambientTempC, gAmbient);
+        double lo = 0.0, hi = 1.0;
+
+        for (int i = 0; i < CONDENSATION_SEARCH_ITERATIONS; i++) {
+            double m1 = lo + (hi - lo) / 3.0;
+            double m2 = hi - (hi - lo) / 3.0;
+            double rh1 = rhAtMixingFraction(gExhaled, gAmbient, hExhaled, hAmbient, m1);
+            double rh2 = rhAtMixingFraction(gExhaled, gAmbient, hExhaled, hAmbient, m2);
+
+            if (rh1 > 100.0 || rh2 > 100.0) {
+                return true;
+            }
+
+            if (rh1 < rh2) {
+                lo = m1;
+            } else {
+                hi = m2;
+            }
+        }
+
+        return rhAtMixingFraction(gExhaled, gAmbient, hExhaled, hAmbient, (lo + hi) / 2.0) > 100.0;
+    }
+
+    private static double getWaterContent(double tempC, double rhPercent) {
+        // g [g/kg] = 6.210e-3 * pw [Pa]
+        double rh = Math.clamp(rhPercent, 0.0, 100.0) / 100.0;
+        double waterVaporPressure = rh * getWaterVaporSaturationPressure(tempC);
+
+        return 6.210E-3 * waterVaporPressure;
+    }
+
+    private static double getMoistAirEnthalpy(double tempC, double waterContent) {
+        // h [kJ/kg] approximation used by the mixing model.
+        return (1.007 * tempC - 0.026) + waterContent * (2.501 + 0.00184 * tempC);
+    }
+
+    private static double getWaterVaporSaturationPressure(double tempC) {
+        // Magnus-type saturation pressure relation for water vapor (Pa).
+        return 610.8 * Math.exp((17.2694 * tempC) / (tempC + 238.3));
     }
 
 }

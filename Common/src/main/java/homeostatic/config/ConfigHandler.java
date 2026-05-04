@@ -52,6 +52,9 @@ public class ConfigHandler {
         public final WhiteNoiseConfigSpec.EnumValue<Alignment.AlignmentType> waterBarPosition;
         public final WhiteNoiseConfigSpec.IntValue waterBarOffsetX;
         public final WhiteNoiseConfigSpec.IntValue waterBarOffsetY;
+        public final WhiteNoiseConfigSpec.DoubleValue condensationOpacity;
+        public final WhiteNoiseConfigSpec.IntValue condensationMin;
+        public final WhiteNoiseConfigSpec.IntValue condensationMax;
 
         Client(WhiteNoiseConfigSpec.Builder builder) {
             useFahrenheit = builder
@@ -99,6 +102,15 @@ public class ConfigHandler {
             waterBarOffsetY = builder
                 .comment(getTranslation("waterbaroffsety"))
                 .defineInRange("waterBarOffsetY", 50, -500, 500);
+            condensationOpacity = builder
+                .comment(getTranslation("condensationopacity"))
+                .defineInRange("condensationOpacity", 0.5, 0.0, 1.0);
+            condensationMin = builder
+                .comment(getTranslation("condensationmin"))
+                .defineInRange("condensationMin", 1, 0, 5);
+            condensationMax = builder
+                .comment(getTranslation("condensationmax"))
+                .defineInRange("condensationMax", 10, 6, 20);
         }
 
         public static boolean useFahrenheit() {
@@ -163,6 +175,18 @@ public class ConfigHandler {
 
         public static int waterBarOffsetY() {
             return CLIENT.waterBarOffsetY.get();
+        }
+
+        public static float condensationOpacity() {
+            return CLIENT.condensationOpacity.get().floatValue();
+        }
+
+        public static int condensationMin() {
+            return CLIENT.condensationMin.get();
+        }
+
+        public static int condensationMax() {
+            return CLIENT.condensationMax.get();
         }
 
         public static void init() {

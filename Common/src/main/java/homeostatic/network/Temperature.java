@@ -10,6 +10,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import homeostatic.common.damagesource.HomeostaticDamageTypes;
 import homeostatic.common.effect.HomeostaticEffects;
 import homeostatic.common.temperature.BodyTemperature;
+import homeostatic.common.temperature.EnvironmentData;
 import homeostatic.common.temperature.TemperatureRange;
 import homeostatic.common.temperature.TemperatureThreshold;
 import homeostatic.util.DamageHelper;
@@ -20,6 +21,7 @@ public class Temperature implements ITemperature {
     private float lastSkinTemperature = TemperatureThreshold.NORMAL.temperature;
     private float coreTemperature = TemperatureThreshold.NORMAL.temperature;
     private float localTemperature = 0.0F;
+    private double relativeHumidity = 0.0D;
 
     @Override
     public void setSkinTemperature(float skinTemperature) {
@@ -42,11 +44,17 @@ public class Temperature implements ITemperature {
     }
 
     @Override
-    public void setTemperatureData(float localTemperature, BodyTemperature bodyTemperature) {
+    public void setRelativeHumidity(double relativeHumidity) {
+        this.relativeHumidity = relativeHumidity;
+    }
+
+    @Override
+    public void setTemperatureData(EnvironmentData environmentData, BodyTemperature bodyTemperature) {
         this.setSkinTemperature(bodyTemperature.getSkinTemperature());
         this.setLastSkinTemperature(bodyTemperature.getLastSkinTemperature());
         this.setCoreTemperature(bodyTemperature.getCoreTemperature());
-        this.setLocalTemperature(localTemperature);
+        this.setLocalTemperature(environmentData.getLocalTemperature());
+        this.setRelativeHumidity(environmentData.getRelativeHumidity());
     }
 
     @Override
@@ -67,6 +75,11 @@ public class Temperature implements ITemperature {
     @Override
     public float getLocalTemperature() {
         return this.localTemperature;
+    }
+
+    @Override
+    public double getRelativeHumidity() {
+        return this.relativeHumidity;
     }
 
     @Override
@@ -105,6 +118,7 @@ public class Temperature implements ITemperature {
         tag.putFloat("lastSkinTemperature", this.getLastSkinTemperature());
         tag.putFloat("coreTemperature", this.getCoreTemperature());
         tag.putFloat("localTemperature", this.getLocalTemperature());
+        tag.putDouble("relativeHumidity", this.getRelativeHumidity());
 
         return tag;
     }
@@ -115,6 +129,7 @@ public class Temperature implements ITemperature {
         valueOutput.putFloat("lastSkinTemperature", this.getLastSkinTemperature());
         valueOutput.putFloat("coreTemperature", this.getCoreTemperature());
         valueOutput.putFloat("localTemperature", this.getLocalTemperature());
+        valueOutput.putDouble("relativeHumidity", this.getRelativeHumidity());
 
         return valueOutput;
     }
@@ -125,6 +140,7 @@ public class Temperature implements ITemperature {
         this.setLastSkinTemperature(tag.getFloat("lastSkinTemperature").orElseThrow());
         this.setCoreTemperature(tag.getFloat("coreTemperature").orElseThrow());
         this.setLocalTemperature(tag.getFloat("localTemperature").orElseThrow());
+        this.setRelativeHumidity(tag.getDouble("relativeHumidity").orElseThrow());
     }
 
     @Override
@@ -133,6 +149,7 @@ public class Temperature implements ITemperature {
         this.setLastSkinTemperature(valueInput.getFloatOr("lastSkinTemperature", TemperatureThreshold.NORMAL.temperature));
         this.setCoreTemperature(valueInput.getFloatOr("coreTemperature", TemperatureThreshold.NORMAL.temperature));
         this.setLocalTemperature(valueInput.getFloatOr("localTemperature", TemperatureRange.PARITY.temperature));
+        this.setRelativeHumidity(valueInput.getDoubleOr("relativeHumidity", 0.0D));
     }
 
 }

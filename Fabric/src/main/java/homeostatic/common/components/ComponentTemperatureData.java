@@ -27,7 +27,12 @@ public class ComponentTemperatureData extends Temperature implements Component, 
 
     @Override
     public void writeSyncPacket(@NonNull RegistryFriendlyByteBuf buf, @NonNull ServerPlayer sp) {
-        TemperatureData temperatureData = new TemperatureData(getLocalTemperature(), getSkinTemperature(), getCoreTemperature());
+        TemperatureData temperatureData = new TemperatureData(
+            getLocalTemperature(),
+            getSkinTemperature(),
+            getCoreTemperature(),
+            getRelativeHumidity()
+        );
 
         temperatureData.write(buf);
     }
@@ -39,6 +44,7 @@ public class ComponentTemperatureData extends Temperature implements Component, 
         this.setLocalTemperature(temperatureData.localTemperature);
         this.setSkinTemperature(temperatureData.skinTemperature);
         this.setCoreTemperature(temperatureData.coreTemperature);
+        this.setRelativeHumidity(temperatureData.relativeHumidity);
     }
 
 }

@@ -25,6 +25,7 @@ import homeostatic.common.fluid.FabricDrinkingFluidManager;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.item.FabricDrinkableItemManager;
 import homeostatic.common.item.HomeostaticItems;
+import homeostatic.common.particle.HomeostaticParticles;
 import homeostatic.common.potions.HomeostaticPotions;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.event.ServerEventListener;
@@ -74,6 +75,7 @@ public class HomeostaticFabric implements ModInitializer {
         HomeostaticItems.init(bind(BuiltInRegistries.ITEM));
         FabricCreativeTabs.init(bind(BuiltInRegistries.CREATIVE_MODE_TAB));
         HomeostaticPotions.init(bind(BuiltInRegistries.POTION));
+        HomeostaticParticles.init(bind(BuiltInRegistries.PARTICLE_TYPE));
         HomeostaticComponents.registerDataComponents();
     }
 

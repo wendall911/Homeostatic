@@ -209,7 +209,6 @@ public class EnvironmentData {
      * Only calculate humidity for rain and snow biomes
      */
     private static double getBiomeHumidity(ServerLevel level, Holder<Biome> biomeHolder, BlockPos pos) {
-        LevelData info = level.getLevelData();
         Biome biome = biomeHolder.value();
         WeatherData weatherData = level.getWeatherData();
         double biomeHumidity;

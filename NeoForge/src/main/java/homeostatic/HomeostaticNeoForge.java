@@ -30,6 +30,7 @@ import homeostatic.common.fluid.NeoForgeFluidType;
 import homeostatic.common.fluid.HomeostaticFluids;
 import homeostatic.common.HomeostaticModule;
 import homeostatic.common.item.HomeostaticItems;
+import homeostatic.common.particle.HomeostaticParticles;
 import homeostatic.common.potions.HomeostaticPotions;
 import homeostatic.common.recipe.HomeostaticRecipes;
 import homeostatic.event.ServerEventListener;
@@ -86,6 +87,7 @@ public class HomeostaticNeoForge {
         bind(bus, Registries.RECIPE_SERIALIZER, HomeostaticRecipes::init);
         bind(bus, Registries.ITEM, HomeostaticItems::init);
         bind(bus, Registries.POTION, HomeostaticPotions::init);
+        bind(bus, Registries.PARTICLE_TYPE, HomeostaticParticles::init);
         HomeostaticNeoForgeRegistries.COMPONENT_TYPE_DEFERRED_REGISTER.register(bus);
         HomeostaticComponents.registerDataComponents();
     }

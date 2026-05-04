@@ -14,24 +14,28 @@ public class TemperatureData {
     public float localTemperature;
     public float skinTemperature;
     public float coreTemperature;
+    public double relativeHumidity;
     public static final Identifier ID = prefix("temperature_data");
 
-    public TemperatureData(float localTemperature, float skinTemperature, float coreTemperature) {
+    public TemperatureData(float localTemperature, float skinTemperature, float coreTemperature, double relativeHumidity) {
         this.localTemperature = localTemperature;
         this.skinTemperature = skinTemperature;
         this.coreTemperature = coreTemperature;
+        this.relativeHumidity = relativeHumidity;
     }
 
     public TemperatureData(FriendlyByteBuf buf) {
         localTemperature = buf.readFloat();
         skinTemperature = buf.readFloat();
         coreTemperature = buf.readFloat();
+        relativeHumidity = buf.readDouble();
     }
 
     public void write(FriendlyByteBuf buf) {
         buf.writeFloat(localTemperature);
         buf.writeFloat(skinTemperature);
         buf.writeFloat(coreTemperature);
+        buf.writeDouble(relativeHumidity);
     }
 
     public static void process(Player player, CompoundTag tag) {
@@ -41,7 +45,10 @@ public class TemperatureData {
     }
 
     public String toString() {
-        return "local: " + this.localTemperature + " skin: " + this.skinTemperature + " core: " + this.coreTemperature;
+        return "local: " + this.localTemperature
+            + " rh: " + this.relativeHumidity
+            + " skin: " + this.skinTemperature
+            + " core: " + this.coreTemperature;
     }
 
 }

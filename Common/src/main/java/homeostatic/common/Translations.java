@@ -44,6 +44,12 @@ public class Translations {
         translations.put("waterbaroffsetx", "Water Bar HUD X offset");
         translations.put("waterbaroffsety.title", "Water Bar HUD Y Offset");
         translations.put("waterbaroffsety", "Water Bar HUD Y offset");
+        translations.put("condensationopacity.title", "Breath Condensation Opacity");
+        translations.put("condensationopacity", "The opacity of visible breath condensation. Set to 0 to disable.");
+        translations.put("condensationmin.title", "Breath Condensation Minimum Time");
+        translations.put("condensationmin", "Minimum number of seconds before visible condensation can occur when breath is visible.");
+        translations.put("condensationmax.title", "Breath Condensation Maximum Time");
+        translations.put("condensationmax", "Maximum number of seconds before visible condensation can occur when breath is visible.");
         translations.put("debugenabled.title", "Debug Enabled");
         translations.put("debugenabled", "Set to on/true to show temperature debug info.");
         translations.put("showtemperaturevalues.title", "Show Temperature Values");
