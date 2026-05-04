@@ -52,14 +52,14 @@ dependencies {
     compileOnly "mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}"
 
     compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
-    compileOnly "curse.maven:sereneseasons-291874:${serene_seasons_neoforge_version}"
-    compileOnly "curse.maven:glitchcore-955399:${glitch_core_neoforge_version}"
+    compileOnly "maven.modrinth:serene-seasons:${serene_seasons_neoforge_version}"
+    compileOnly "maven.modrinth:glitchcore:${glitch_core_neoforge_version}"
     //compileOnly "curse.maven:create-328085:${create_forge_version}"
     /*
      * Unavailble for 1.21.10
     compileOnly "curse.maven:vampirism-233029:${vampirism_neoforge_version}"
-    compileOnly "curse.maven:ecliptic-1118306:${ecliptic_neoforge_version}"
     */
+    compileOnly "maven.modrinth:ecliptic-seasons:${ecliptic_neoforge_version}"
     compileOnly "dev.gigaherz.sewingkit:SewingKit-${sewingkit_minecraft_version}:${sewingkit_version}"
 
     if (System.getenv('DATA_GEN') != null) {
