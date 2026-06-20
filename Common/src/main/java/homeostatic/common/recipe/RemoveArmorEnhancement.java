@@ -93,11 +93,16 @@ public class RemoveArmorEnhancement extends CustomRecipe {
             if (stack.is(Items.SHEARS)) {
                 Item item = stack.getItem();
 
-                assert stack.getItem().getCraftingRemainingItem() != null;
-                nonnulllist.set(i, new ItemStack(stack.getItem().getCraftingRemainingItem()));
+                if (item.getCraftingRemainingItem() != null) {
+                    nonnulllist.set(i, new ItemStack(item.getCraftingRemainingItem()));
+                }
+                else {
+                    nonnulllist.set(i, new ItemStack(item));
+                }
             }
             else if (stack.is(Items.WATER_BUCKET) || stack.is(Items.LAVA_BUCKET)) {
                 ItemStack bucket = new ItemStack(Items.BUCKET);
+
                 nonnulllist.set(i, bucket);
             }
         }
