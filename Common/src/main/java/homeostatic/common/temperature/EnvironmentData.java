@@ -30,7 +30,7 @@ import net.minecraft.world.level.storage.ServerLevelData;
 import climatesettings.common.biome.BiomeTypeData;
 import climatesettings.common.biome.BiomeTypeDataManager;
 import climatesettings.common.biome.HomeostaticClimateSettings;
-import homeostatic.Homeostatic;
+
 import homeostatic.data.integration.ModIntegration;
 import homeostatic.platform.Services;
 import homeostatic.util.TempHelper;
@@ -234,10 +234,10 @@ public class EnvironmentData {
     /*
      * Based on sun angle ... do mathy things to get radiation
      */
-    private static double getSunRadiation(ServerLevel world, BlockPos pos) {
+    private static double getSunRadiation(ServerLevel level, BlockPos pos) {
         double radiation = 0.0;
-        double sunlight = world.getBrightness(LightLayer.SKY, pos.above()) - world.getSkyDarken();
-        float f = world.getSunAngle(1.0F);
+        double sunlight = level.getBrightness(LightLayer.SKY, pos.above()) - level.getSkyDarken();
+        float f = level.getSunAngle(1.0F);
 
         if (sunlight > 0) {
             float f1 = f < (float)Math.PI ? 0.0F : ((float)Math.PI * 2F);
@@ -247,7 +247,47 @@ public class EnvironmentData {
 
         radiation += sunlight * 100;
 
-        return Math.max(radiation, 0);
+        double sunRadiation = Math.max(radiation, 0);
+
+        if (sunRadiation > 0) {
+            sunRadiation = radiationOffset(sunRadiation, level);
+        }
+
+        return sunRadiation;
+    }
+
+    /*
+     * Seasonally offset radiation/temperature values.
+     */
+    private static double radiationOffset(double value, ServerLevel level) {
+        LevelData info = level.getLevelData();
+        long time = (level.getDayTime() % 24000);
+        SubSeason subSeason = Services.PLATFORM.getSubSeason(level);
+
+        /*
+         * Seasonal offsets for solar radiation throughout the year.
+         * MID_SPRING is the highest temp zone;
+         */
+        switch (subSeason) {
+            case EARLY_SPRING -> value *= 0.95F;
+            case LATE_SPRING -> value *= 0.87F;
+            case EARLY_SUMMER -> value *= 0.945F;
+            case MID_SUMMER -> value *= 0.92F;
+            case LATE_SUMMER -> value *= 0.888F;
+            case EARLY_AUTUMN -> value *= 0.74F;
+            case MID_AUTUMN -> value *= 0.716F;
+            case LATE_AUTUMN -> value *= 0.56F;
+            case EARLY_WINTER -> value *= 0.2F;
+            case MID_WINTER -> value *= 0.1F;
+            case LATE_WINTER -> value *= 0.3F;
+        }
+
+        // If raining, reduce the day/night offset by 90% during day hours (23000 - 9000)
+        if (info.isRaining() && (time > 23000 || time < 9001)) {
+            value *= 0.1F;
+        }
+
+        return value;
     }
 
     private static double getMaxBiomeHumidity(Holder<Biome> biomeHolder, BlockPos pos) {
@@ -272,8 +312,8 @@ public class EnvironmentData {
         return waterTemp;
     }
 
-    private static float getDayNightOffset(ServerLevel world, Holder<Biome> biome, double relativeHumidity) {
-        ResourceKey<Level> worldKey = world.dimension();
+    private static float getDayNightOffset(ServerLevel level, Holder<Biome> biome, double relativeHumidity) {
+        ResourceKey<Level> worldKey = level.dimension();
 
         /*
          * Only calculate in Overworld.
@@ -283,7 +323,7 @@ public class EnvironmentData {
         }
 
         BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biome);
-        long time = (world.getDayTime() % 24000);
+        long time = (level.getDayTime() % 24000);
         HomeostaticClimateSettings climateSettings = CLIMATE.getClimateSettings(biome);
         float maxTemp = biomeTypeData.getDayNightOffset(climateSettings.getPrecipitationType());
 
@@ -294,11 +334,15 @@ public class EnvironmentData {
         float humidityOffset = 1.0F - (float) (relativeHumidity / 100);
         float offset;
 
+        increaseTemp = (float) radiationOffset(increaseTemp, level);
+
         if (time > 23000) {
-            offset = (24001 - time) * increaseTemp;
-        } else if (time < 9001) {
+            offset = (time - 23000) * increaseTemp;
+        }
+        else if (time < 9001) {
             offset = (time + 1000) * increaseTemp;
-        } else {
+        }
+        else {
             offset = maxTemp - ((time - 9000) * decreaseTemp);
         }
 
@@ -353,7 +397,7 @@ public class EnvironmentData {
         }
 
         BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biomeHolder);
-        SubSeason subSeasonHolder = Services.PLATFORM.getSubSeason(level, biomeHolder);
+        SubSeason subSeasonHolder = Services.PLATFORM.getSubSeason(level);
 
         if (subSeasonHolder != null) {
             int season;
