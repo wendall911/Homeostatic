@@ -46,7 +46,7 @@ public interface IPlatform {
 
     Component getDisplayName(Fluid fluid);
 
-    SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder);
+    SubSeason getSubSeason(ServerLevel level);
 
     Optional<? extends ITemperature> getTemperatureData(Player player);
 
