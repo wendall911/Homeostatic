@@ -26,7 +26,6 @@ import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import net.minecraft.world.level.saveddata.WeatherData;
-import net.minecraft.world.level.storage.LevelData;
 
 import climatesettings.common.biome.BiomeTypeData;
 import climatesettings.common.biome.BiomeTypeDataManager;
@@ -249,7 +248,46 @@ public class EnvironmentData {
 
         radiation += sunlight * 100;
 
-        return Math.max(radiation, 0);
+        double sunRadiation = Math.max(radiation, 0);
+
+        if (sunRadiation > 0) {
+            sunRadiation = radiationOffset(sunRadiation, level);
+        }
+
+        return sunRadiation;
+    }
+
+    /*
+     * Seasonally offset radiation/temperature values.
+     */
+    private static double radiationOffset(double value, ServerLevel level) {
+        long time = (level.getDefaultClockTime() % 24000);
+        SubSeason subSeason = Services.PLATFORM.getSubSeason(level);
+
+        /*
+         * Seasonal offsets for solar radiation throughout the year.
+         * MID_SPRING is the highest temp zone;
+         */
+        switch (subSeason) {
+            case EARLY_SPRING -> value *= 0.95F;
+            case LATE_SPRING -> value *= 0.87F;
+            case EARLY_SUMMER -> value *= 0.945F;
+            case MID_SUMMER -> value *= 0.92F;
+            case LATE_SUMMER -> value *= 0.888F;
+            case EARLY_AUTUMN -> value *= 0.74F;
+            case MID_AUTUMN -> value *= 0.716F;
+            case LATE_AUTUMN -> value *= 0.56F;
+            case EARLY_WINTER -> value *= 0.2F;
+            case MID_WINTER -> value *= 0.1F;
+            case LATE_WINTER -> value *= 0.3F;
+        }
+
+        // If raining, reduce the day/night offset by 90% during day hours (23000 - 9000)
+        if (level.getWeatherData().isRaining() && (time > 23000 || time < 9001)) {
+            value *= 0.1F;
+        }
+
+        return value;
     }
 
     private static float getSunAngle(ServerLevel level) {
@@ -306,11 +344,15 @@ public class EnvironmentData {
         float humidityOffset = 1.0F - (float) (relativeHumidity / 100);
         float offset;
 
+        increaseTemp = (float) radiationOffset(increaseTemp, level);
+
         if (time > 23000) {
-            offset = (24001 - time) * increaseTemp;
-        } else if (time < 9001) {
+            offset = (time - 23000) * increaseTemp;
+        }
+        else if (time < 9001) {
             offset = (time + 1000) * increaseTemp;
-        } else {
+        }
+        else {
             offset = maxTemp - ((time - 9000) * decreaseTemp);
         }
 
@@ -365,7 +407,7 @@ public class EnvironmentData {
         }
 
         BiomeTypeData biomeTypeData = BiomeTypeDataManager.getDataForBiome(biomeHolder);
-        SubSeason subSeasonHolder = Services.PLATFORM.getSubSeason(level, biomeHolder);
+        SubSeason subSeasonHolder = Services.PLATFORM.getSubSeason(level);
 
         if (subSeasonHolder != null) {
             int season;
