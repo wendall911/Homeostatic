@@ -2,7 +2,6 @@ package homeostatic.platform;
 
 import java.util.Optional;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -11,7 +10,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ServerLevelData;
@@ -115,7 +113,7 @@ public class NeoForgePlatform implements IPlatform {
     }
 
     @Override
-    public SubSeason getSubSeason(ServerLevel level, Holder<Biome> biomeHolder) {
+    public SubSeason getSubSeason(ServerLevel level) {
         if (Services.WN_PLATFORM.isModLoaded(ModIntegration.HS_MODID)) {
             int season = HomeostaticSeasonsHelper.getCurrentSeason(level);
 
