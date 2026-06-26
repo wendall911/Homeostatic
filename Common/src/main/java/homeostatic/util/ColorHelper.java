@@ -2,8 +2,6 @@ package homeostatic.util;
 
 import java.awt.Color;
 
-import net.minecraft.util.Tuple;
-
 import technology.roughness.whitenoise.util.ColorHelper.Colors;
 
 import homeostatic.config.ConfigHandler;

@@ -1,7 +1,5 @@
 package homeostatic.util;
 
-import net.minecraft.util.Tuple;
-
 import homeostatic.common.temperature.Environment;
 import homeostatic.common.temperature.TemperatureDirection;
 import homeostatic.common.temperature.TemperatureRange;

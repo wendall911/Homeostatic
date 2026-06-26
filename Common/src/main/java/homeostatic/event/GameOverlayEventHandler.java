@@ -15,7 +15,7 @@ public class GameOverlayEventHandler {
 
         if (!ClientGameModeHelper.shouldLoad()) return;
 
-        if (ConfigHandler.loaded && !mc.options.hideGui) {
+        if (ConfigHandler.loaded && !mc.gui.hud.isHidden()) {
             if (ConfigHandler.Common.debugEnabled()) {
                 overlayManager.renderOverlay(guiGraphics);
             }

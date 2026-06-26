@@ -2,26 +2,30 @@ package homeostatic.data;
 
 import java.util.concurrent.CompletableFuture;
 
+import org.jspecify.annotations.NonNull;
+
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.references.ItemIds;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 
-import homeostatic.common.item.HomeostaticItems;
+import homeostatic.Homeostatic;
 import homeostatic.common.TagManager;
 import homeostatic.data.integration.ModIntegration;
 
-public class HomeostaticItemTagsProvider extends IntrinsicHolderTagsProvider<Item> {
+public class HomeostaticItemTagsProvider extends FabricTagsProvider<Item> {
 
-    HomeostaticItemTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-        super(packOutput, Registries.ITEM, lookupProvider, (item) -> item.builtInRegistryHolder().key());
+    HomeostaticItemTagsProvider(FabricPackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, Registries.ITEM, lookupProvider);
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NonNull Provider provider) {
         getOrCreateRawBuilder(TagManager.Items.INSULATION)
             .addOptionalTag(ItemTags.WOOL.location())
             .addOptionalElement(ModIntegration.alexLoc("bear_fur"))
@@ -56,10 +60,10 @@ public class HomeostaticItemTagsProvider extends IntrinsicHolderTagsProvider<Ite
             .addOptionalElement(ModIntegration.scubaLoc("scuba_boots"));
 
         this.tag(TagManager.Items.RADIATION_PROTECTED_ARMOR)
-            .add(Items.NETHERITE_HELMET)
-            .add(Items.NETHERITE_CHESTPLATE)
-            .add(Items.NETHERITE_LEGGINGS)
-            .add(Items.NETHERITE_BOOTS);
+            .add(ItemIds.NETHERITE_HELMET)
+            .add(ItemIds.NETHERITE_CHESTPLATE)
+            .add(ItemIds.NETHERITE_LEGGINGS)
+            .add(ItemIds.NETHERITE_BOOTS);
 
         getOrCreateRawBuilder(TagManager.Items.SEWINGKIT_WEARABLE)
             .addOptionalElement(ModIntegration.skLoc("wool_hat"))
@@ -67,7 +71,7 @@ public class HomeostaticItemTagsProvider extends IntrinsicHolderTagsProvider<Ite
             .addOptionalElement(ModIntegration.skLoc("wool_pants"))
             .addOptionalElement(ModIntegration.skLoc("wool_shoes"));
 
-        this.tag(ItemTags.BOOKSHELF_BOOKS).add(HomeostaticItems.BOOK);
+        this.tag(ItemTags.BOOKSHELF_BOOKS).add(ResourceKey.create(Registries.ITEM, Homeostatic.prefix("book")));
     }
 
 }

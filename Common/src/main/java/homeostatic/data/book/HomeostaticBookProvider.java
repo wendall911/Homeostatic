@@ -81,7 +81,7 @@ public class HomeostaticBookProvider extends HandbookBookProvider {
         EntryBuilder gameplayBodyTempEntry = category.addEntry(
             "gameplay/body_temp",
             prefix("gameplay.body_temp.name"),
-            new ItemStackTemplate(Items.LIGHT_GRAY_WOOL)
+            new ItemStackTemplate(Items.WOOL.lightGray())
         ).setSortnum(entrySortNum++);
 
         gameplayBodyTempEntry.addImagePage(bookImage("normal_body"))
@@ -180,7 +180,7 @@ public class HomeostaticBookProvider extends HandbookBookProvider {
         .addEntry(
             "education/body_temp",
             prefix("education.body_temp.name"),
-            new ItemStackTemplate(Items.GREEN_WOOL)
+            new ItemStackTemplate(Items.WOOL.green())
         ).setSortnum(entrySortNum++)
         .addTextPage(prefix("education.body_temp.intro")).build()
         .build()

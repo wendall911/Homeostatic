@@ -7,7 +7,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
 
@@ -25,6 +24,7 @@ import homeostatic.util.ColorHelper;
 import homeostatic.util.FontHelper;
 import homeostatic.util.HomeostaticSeasonsClientHelper;
 import homeostatic.util.TempHelper;
+import homeostatic.util.Tuple;
 
 import static climatesettings.ClimateSettings.prefix;
 import static technology.roughness.whitenoise.platform.Services.WN_PLATFORM;

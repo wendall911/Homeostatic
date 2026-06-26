@@ -11,7 +11,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 
 import homeostatic.common.temperature.TemperatureRange;
@@ -22,6 +21,7 @@ import homeostatic.util.Alignment;
 import homeostatic.util.ColorHelper;
 import homeostatic.util.FontHelper;
 import homeostatic.util.TempHelper;
+import homeostatic.util.Tuple;
 
 public class TemperatureGlobeOverlay extends Overlay {
 
