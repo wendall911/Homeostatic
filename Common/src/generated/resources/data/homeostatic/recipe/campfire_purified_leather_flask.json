@@ -1,6 +1,5 @@
 {
   "type": "homeostatic:campfire_purified_leather_flask",
-  "category": "misc",
   "cookingtime": 200,
   "experience": 0.15,
   "ingredient": "homeostatic:leather_flask",

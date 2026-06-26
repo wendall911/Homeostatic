@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "books",
   "ingredients": [
     "minecraft:dirt"
