@@ -15,7 +15,7 @@
     "defaultRequire": 1
   },
   "client": [
-    "FabricGuiMixin",
+    "FabricHudMixin",
     "MinecraftMixin"
   ]
 }

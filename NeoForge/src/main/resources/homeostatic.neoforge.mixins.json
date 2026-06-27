@@ -10,7 +10,7 @@
     "ServerLevelAccessor"
   ],
   "client": [
-    "NeoForgeGuiMixin",
+    "NeoForgeHudMixin",
     "MinecraftMixin"
   ],
   "injectors": {
