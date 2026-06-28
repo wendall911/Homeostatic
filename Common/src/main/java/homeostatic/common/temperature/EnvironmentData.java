@@ -264,6 +264,10 @@ public class EnvironmentData {
         long time = (level.getDefaultClockTime() % 24000);
         SubSeason subSeason = Services.PLATFORM.getSubSeason(level);
 
+        if (subSeason == null) {
+            subSeason = SubSeason.MID_SPRING;
+        }
+
         /*
          * Seasonal offsets for solar radiation throughout the year.
          * MID_SPRING is the highest temp zone;
