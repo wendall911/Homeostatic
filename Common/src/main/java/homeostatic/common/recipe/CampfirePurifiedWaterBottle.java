@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
 
 public class CampfirePurifiedWaterBottle extends CampfireCookingRecipe implements IWaterBottleCookingRecipe {
 
-    public static final MapCodec<CampfirePurifiedWaterBottle> MAP_CODEC = cookingMapCodec(CampfirePurifiedWaterBottle::new, 100);
+    public static final MapCodec<CampfirePurifiedWaterBottle> MAP_CODEC = cookingMapCodec(CampfirePurifiedWaterBottle::new);
     public static final StreamCodec<RegistryFriendlyByteBuf, CampfirePurifiedWaterBottle> STREAM_CODEC = cookingStreamCodec(CampfirePurifiedWaterBottle::new);
     public static final RecipeSerializer<CampfirePurifiedWaterBottle> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 

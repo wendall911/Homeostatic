@@ -18,7 +18,7 @@ import net.minecraft.world.level.Level;
 
 public class SmeltingPurifiedLeatherFlask extends SmeltingRecipe implements IWaterContainerCookingRecipe {
 
-    public static final MapCodec<SmeltingRecipe> MAP_CODEC = cookingMapCodec(SmeltingPurifiedLeatherFlask::new, 100);
+    public static final MapCodec<SmeltingRecipe> MAP_CODEC = cookingMapCodec(SmeltingPurifiedLeatherFlask::new);
     public static final StreamCodec<RegistryFriendlyByteBuf, SmeltingRecipe> STREAM_CODEC = cookingStreamCodec(SmeltingPurifiedLeatherFlask::new);
     public static final RecipeSerializer<SmeltingRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 

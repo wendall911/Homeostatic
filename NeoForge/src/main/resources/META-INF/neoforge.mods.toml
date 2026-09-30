@@ -8,7 +8,7 @@ issueTrackerURL="https://github.com/${mod_author}/${mod_name}/issues"
     displayName="${mod_name}"
     updateJSONURL="https://raw.githubusercontent.com/${mod_author}/${mod_name}/${mod_update_branch}/files/updates.json"
     displayURL="https://github.com/${mod_author}/${mod_name}"
-    logoFile="${mod_id}_icon.png"
+    iconFile="${mod_id}_icon.png"
     authors="${mod_author}"
     credits="${mod_credits}"
     description='''
@@ -21,7 +21,7 @@ issueTrackerURL="https://github.com/${mod_author}/${mod_name}/issues"
 [[dependencies.${mod_id}]]
     modId="neoforge"
     type="required"
-    versionRange="${neoforge_loader_version_range}"
+    versionRange="${neoforge_version_range}"
     ordering="NONE"
     side="BOTH"
 [[dependencies.${mod_id}]]

@@ -5,16 +5,12 @@ import java.util.function.BiConsumer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.Ingredient;
 
 import homeostatic.common.block.FabricBlockRadiationManager;
 import homeostatic.common.block.HomeostaticBlocks;
@@ -52,19 +48,6 @@ public class HomeostaticFabric implements ModInitializer {
         }));
         PayloadTypeRegistry.clientboundPlay().register(SyncDrinkingFluids.TYPE, SyncDrinkingFluids.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(SyncDrinkableItems.TYPE, SyncDrinkableItems.CODEC);
-
-        FabricPotionBrewingBuilder.BUILD.register(builder -> {
-            builder.registerPotionRecipe(
-                Potions.AWKWARD,
-                Ingredient.of(Items.SNOWBALL),
-                BuiltInRegistries.POTION.wrapAsHolder(HomeostaticPotions.FROST_RESISTANCE)
-            );
-            builder.registerPotionRecipe(
-                BuiltInRegistries.POTION.wrapAsHolder(HomeostaticPotions.FROST_RESISTANCE),
-                Ingredient.of(Items.REDSTONE),
-                BuiltInRegistries.POTION.wrapAsHolder(HomeostaticPotions.LONG_FROST_RESISTANCE)
-            );
-        });
     }
 
     private void registryInit() {

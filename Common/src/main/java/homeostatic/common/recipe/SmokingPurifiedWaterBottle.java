@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.SmokingRecipe;
 
 public class SmokingPurifiedWaterBottle extends SmokingRecipe implements IWaterBottleCookingRecipe {
 
-    public static final MapCodec<SmokingPurifiedWaterBottle> MAP_CODEC = cookingMapCodec(SmokingPurifiedWaterBottle::new, 100);
+    public static final MapCodec<SmokingPurifiedWaterBottle> MAP_CODEC = cookingMapCodec(SmokingPurifiedWaterBottle::new);
     public static final StreamCodec<RegistryFriendlyByteBuf, SmokingPurifiedWaterBottle> STREAM_CODEC = cookingStreamCodec(SmokingPurifiedWaterBottle::new);
     public static final RecipeSerializer<SmokingPurifiedWaterBottle> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 

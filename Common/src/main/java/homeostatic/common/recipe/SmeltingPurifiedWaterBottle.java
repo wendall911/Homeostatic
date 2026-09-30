@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 
 public class SmeltingPurifiedWaterBottle extends SmeltingRecipe implements IWaterBottleCookingRecipe {
 
-    public static final MapCodec<SmeltingPurifiedWaterBottle> MAP_CODEC = cookingMapCodec(SmeltingPurifiedWaterBottle::new, 100);
+    public static final MapCodec<SmeltingPurifiedWaterBottle> MAP_CODEC = cookingMapCodec(SmeltingPurifiedWaterBottle::new);
     public static final StreamCodec<RegistryFriendlyByteBuf, SmeltingPurifiedWaterBottle> STREAM_CODEC = cookingStreamCodec(SmeltingPurifiedWaterBottle::new);
     public static final RecipeSerializer<SmeltingPurifiedWaterBottle> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 

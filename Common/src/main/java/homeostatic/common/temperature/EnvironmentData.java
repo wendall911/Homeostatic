@@ -24,7 +24,8 @@ import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
+import net.minecraft.world.level.levelgen.synth.Noise;
+import net.minecraft.world.level.levelgen.synth.SimplexNoise;
 import net.minecraft.world.level.saveddata.WeatherData;
 
 import climatesettings.common.biome.BiomeTypeData;
@@ -50,7 +51,7 @@ public class EnvironmentData {
     private float localTemperature;
     private double envRadiation;
 
-    private static final PerlinSimplexNoise TEMPERATURE_NOISE = new PerlinSimplexNoise(new WorldgenRandom(new LegacyRandomSource(1234L)), ImmutableList.of(0));
+    private static final Noise TEMPERATURE_NOISE = new SimplexNoise(new WorldgenRandom(new LegacyRandomSource(1234L)), true);
 
     /*
      * Returns WBGT
@@ -385,9 +386,11 @@ public class EnvironmentData {
         }
 
         if (pos.getY() > 80) {
-            float noise = (float)(TEMPERATURE_NOISE.getValue((double)((float)pos.getX() / 8.0F), (double)((float)pos.getZ() / 8.0F), false) * 8.0D);
+            float noise = TEMPERATURE_NOISE.get(pos.getX() / 8.0F, pos.getZ() / 8.0F) * 8.0F;
+
             return temperature - (noise + getAdjustedHeight(level, (float)pos.getY()) - 80.0F) * 0.05F / 40.0F;
-        } else {
+        }
+        else {
             return temperature;
         }
     }

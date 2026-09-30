@@ -18,7 +18,7 @@ import net.minecraft.world.level.Level;
 
 public class CampfirePurifiedLeatherFlask extends CampfireCookingRecipe implements IWaterContainerCookingRecipe {
 
-    public static final MapCodec<CampfireCookingRecipe> MAP_CODEC = cookingMapCodec(CampfirePurifiedLeatherFlask::new, 100);
+    public static final MapCodec<CampfireCookingRecipe> MAP_CODEC = cookingMapCodec(CampfirePurifiedLeatherFlask::new);
     public static final StreamCodec<RegistryFriendlyByteBuf, CampfireCookingRecipe> STREAM_CODEC = cookingStreamCodec(CampfirePurifiedLeatherFlask::new);
     public static final RecipeSerializer<CampfireCookingRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
     private final ItemStackTemplate result;

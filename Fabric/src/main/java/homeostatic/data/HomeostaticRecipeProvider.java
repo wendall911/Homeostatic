@@ -7,9 +7,12 @@ import org.jspecify.annotations.NonNull;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.world.item.crafting.Recipe;
 
 import homeostatic.Homeostatic;
 import homeostatic.data.recipe.CommonRecipeProvider;
@@ -21,13 +24,14 @@ public class HomeostaticRecipeProvider extends FabricRecipeProvider {
     }
 
     @Override
-    protected @NonNull RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput recipeOutput) {
-        return new CommonRecipeProvider(registryLookup, recipeOutput);
+    protected @NonNull RecipeProvider createRecipeProvider(@NonNull Provider registries,
+            @NonNull BootstrapContext<Recipe<?>> recipes, @NonNull BootstrapContext<Advancement> advancements) {
+        return new CommonRecipeProvider(registries, recipes, advancements);
     }
 
     @Override
     public @NonNull String getName() {
-        return Homeostatic.MOD_NAME + " - Fabric Recipies";
+        return Homeostatic.MOD_NAME + " - Homeostatic Recipes";
     }
 
 }

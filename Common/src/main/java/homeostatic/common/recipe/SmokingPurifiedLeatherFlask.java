@@ -18,7 +18,7 @@ import net.minecraft.world.level.Level;
 
 public class SmokingPurifiedLeatherFlask extends SmokingRecipe implements IWaterContainerCookingRecipe {
 
-    public static final MapCodec<SmokingRecipe> CODEC = cookingMapCodec(SmokingPurifiedLeatherFlask::new, 100);
+    public static final MapCodec<SmokingRecipe> CODEC = cookingMapCodec(SmokingPurifiedLeatherFlask::new);
     public static final StreamCodec<RegistryFriendlyByteBuf, SmokingRecipe> STREAM_CODEC = cookingStreamCodec(SmokingPurifiedLeatherFlask::new);
     public static final RecipeSerializer<SmokingRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 

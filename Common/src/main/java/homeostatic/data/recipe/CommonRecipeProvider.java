@@ -5,12 +5,14 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.advancements.triggers.InventoryChangeTrigger.TriggerInstance;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -22,6 +24,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
@@ -47,15 +50,18 @@ import static homeostatic.Homeostatic.prefix;
 
 public class CommonRecipeProvider extends RecipeProvider {
 
-    RecipeOutput recipeOutput;
+    BootstrapContext<Recipe<?>> recipeOutput;
+    BootstrapContext<Advancement> advancementOutput;
     HolderLookup.Provider registries;
+
     private static ItemStackTemplate waterBottle;
 
-    public CommonRecipeProvider(HolderLookup.Provider registries, RecipeOutput recipeOutput) {
-        super(registries, recipeOutput);
+    public CommonRecipeProvider(Provider registries, BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput) {
+        super(recipeOutput, advancementOutput);
 
         this.recipeOutput = recipeOutput;
         this.registries = registries;
+        this.advancementOutput = advancementOutput;
     }
 
     @Override
@@ -67,35 +73,35 @@ public class CommonRecipeProvider extends RecipeProvider {
         );
 
         specialRecipe(
-            this.recipeOutput,
+            this.output,
             ArmorEnhancement.SERIALIZER,
             ArmorEnhancement::new
         );
         specialRecipe(
-            this.recipeOutput,
+            this.output,
             PurifiedLeatherFlask.SERIALIZER,
             PurifiedLeatherFlask::new
         );
         specialRecipe(
-            this.recipeOutput,
+            this.output,
             HelmetThermometer.SERIALIZER,
             HelmetThermometer::new
         );
         specialRecipe(
-            this.recipeOutput,
+            this.output,
             RemoveArmorEnhancement.SERIALIZER,
             RemoveArmorEnhancement::new
         );
-        cleanWaterFlaskSmelting(itemRegistry).save(this.recipeOutput, getKey("furnace_purified_leather_flask"));
-        cleanWaterFlaskCampfire(itemRegistry).save(recipeOutput, getKey("campfire_purified_leather_flask"));
-        cleanWaterFlaskSmoking(itemRegistry).save(recipeOutput, getKey("smoking_purified_leather_flask"));
-        leatherFlask(itemRegistry).save(recipeOutput);
-        waterFilter(itemRegistry).save(recipeOutput);
-        thermometer(itemRegistry).save(recipeOutput);
-        cleanWaterBottleSmelting(itemRegistry).save(recipeOutput, getKey("furnace_purified_water_bottle"));
-        cleanWaterBottleCampfire(itemRegistry).save(recipeOutput, getKey("campfire_purified_water_bottle"));
-        cleanWaterBottleSmoking(itemRegistry).save(recipeOutput, getKey("smoking_purified_water_bottle"));
-        book(itemRegistry).save(recipeOutput, "book_from_dirt");
+        cleanWaterFlaskSmelting(itemRegistry).save(this.output, getKey("furnace_purified_leather_flask"));
+        cleanWaterFlaskCampfire(itemRegistry).save(this.output, getKey("campfire_purified_leather_flask"));
+        cleanWaterFlaskSmoking(itemRegistry).save(this.output, getKey("smoking_purified_leather_flask"));
+        leatherFlask(itemRegistry).save(this.output);
+        waterFilter(itemRegistry).save(this.output);
+        thermometer(itemRegistry).save(this.output);
+        cleanWaterBottleSmelting(itemRegistry).save(this.output, getKey("furnace_purified_water_bottle"));
+        cleanWaterBottleCampfire(itemRegistry).save(this.output, getKey("campfire_purified_water_bottle"));
+        cleanWaterBottleSmoking(itemRegistry).save(this.output, getKey("smoking_purified_water_bottle"));
+        book(itemRegistry).save(this.output, "book_from_dirt");
     }
 
     private ResourceKey<Recipe<?>> getKey(String id) {
