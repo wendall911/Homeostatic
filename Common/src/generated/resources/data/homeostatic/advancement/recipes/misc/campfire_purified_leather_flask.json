@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "homeostatic:campfire_purified_leather_flask"
+        "recipes": "homeostatic:campfire_purified_leather_flask"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

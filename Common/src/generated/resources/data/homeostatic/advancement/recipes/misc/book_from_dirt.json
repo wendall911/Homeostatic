@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "homeostatic:book_from_dirt"
+        "recipes": "homeostatic:book_from_dirt"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

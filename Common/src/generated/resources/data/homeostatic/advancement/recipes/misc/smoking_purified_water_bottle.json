@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "homeostatic:smoking_purified_water_bottle"
+        "recipes": "homeostatic:smoking_purified_water_bottle"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

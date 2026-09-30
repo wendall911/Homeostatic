@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "homeostatic:smoking_purified_leather_flask"
+        "recipes": "homeostatic:smoking_purified_leather_flask"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

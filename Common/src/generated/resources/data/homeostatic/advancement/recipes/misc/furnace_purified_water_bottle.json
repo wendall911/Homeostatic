@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "homeostatic:furnace_purified_water_bottle"
+        "recipes": "homeostatic:furnace_purified_water_bottle"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
