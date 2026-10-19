@@ -74,12 +74,12 @@ public class Temperature implements ITemperature {
             player.setTicksFrozen(player.getTicksFrozen() + 5);
         }
         else if (this.coreTemperature > TemperatureThreshold.HIGH.temperature) {
-            float amount = (1.0F + (this.coreTemperature - TemperatureThreshold.HIGH.temperature)) * 0.5F;
+            float amount = (1.0F + (this.coreTemperature - TemperatureThreshold.HIGH.temperature)) * 0.3F;
 
             player.hurt(new DamageSource(DamageHelper.getHolder(player.getServer(), HomeostaticDamageTypes.HYPERTHERMIA)), amount);
         }
         if (this.skinTemperature > TemperatureThreshold.SCALDING.temperature) {
-            float amount = (1.0F + (this.skinTemperature - TemperatureThreshold.SCALDING.temperature)) * 0.25F;
+            float amount = (1.0F + (this.skinTemperature - TemperatureThreshold.SCALDING.temperature)) * 0.1F;
 
             player.hurt(new DamageSource(DamageHelper.getHolder(player.getServer(), HomeostaticDamageTypes.SCALDING)), amount);
         }

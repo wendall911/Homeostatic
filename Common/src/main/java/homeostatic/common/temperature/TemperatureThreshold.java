@@ -8,7 +8,8 @@ public enum TemperatureThreshold {
     HIGH(1.799397591F),
     WARNING_HIGH(1.765963856F),
     SCALDING_WARNING(2.222891566F),
-    SCALDING(2.557228916F);
+    SCALDING(2.557228916F),
+    SKIN_HIGH(4.340361452F);
 
     public final float temperature;
 

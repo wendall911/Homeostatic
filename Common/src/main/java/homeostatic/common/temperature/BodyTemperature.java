@@ -25,6 +25,7 @@ public class BodyTemperature {
     private float LOW = TemperatureThreshold.LOW.temperature;
     private float NORMAL = TemperatureThreshold.NORMAL.temperature;
     private float HIGH = TemperatureThreshold.HIGH.temperature;
+    private float SKIN_HIGH = TemperatureThreshold.SKIN_HIGH.temperature;
 
     public BodyTemperature(ServerPlayer sp, EnvironmentData environmentData, ITemperature tempData) {
         this(sp, environmentData, tempData, false, false);
@@ -105,8 +106,8 @@ public class BodyTemperature {
         boolean canSweat = skinTemperature >= NORMAL && this.wetness == 0;
         boolean inWater = this.environmentData.isSubmerged() || this.environmentData.isPartialSubmersion();
 
-        this.lastSkinTemperature = skinTemperature;
-        this.skinTemperature = skinTemperature;
+        this.lastSkinTemperature = Math.min(skinTemperature, SKIN_HIGH);
+        this.skinTemperature = Math.min(skinTemperature, SKIN_HIGH);
 
         if (!updateSkin) return;
 
@@ -122,14 +123,14 @@ public class BodyTemperature {
         if (tempChange > 0.0F) {
             switch (skinTemperatureDirection) {
                 case COOLING -> {
-                    tempChange = Math.max(-(tempChange) * 70.0F, -(BiomeTypeData.MC_DEGREE * 3.0F));
+                    tempChange = Math.max(-(tempChange) * 70.0F, -(BiomeTypeData.MC_DEGREE * 1.5F));
 
                     if (this.wetness > 0) {
                         tempChange = tempChange * (float) (1.0 + (this.wetness / 20.0));
                     }
                 }
                 case COOLING_RAPIDLY -> {
-                    tempChange = Math.max(-(tempChange) * 100.0F, -(BiomeTypeData.MC_DEGREE * 4.0F));
+                    tempChange = Math.max(-(tempChange) * 100.0F, -(BiomeTypeData.MC_DEGREE * 2.0F));
 
                     if (this.wetness > 0) {
                         tempChange = tempChange * (float) (2.0 + (this.wetness / 20.0));
@@ -156,10 +157,10 @@ public class BodyTemperature {
                         WaterHelper.updateWaterInfo(sp, Math.min(tempChange * 150.0F, 0.3F));
                     }
                     else {
-                        tempChange = Math.min(tempChange * 70.0F, BiomeTypeData.MC_DEGREE * 3.0F);
+                        tempChange = Math.min(tempChange * 70.0F, BiomeTypeData.MC_DEGREE * 1.5F);
                     }
                 }
-                case WARMING_RAPIDLY -> tempChange = Math.min(tempChange * 100.0F, BiomeTypeData.MC_DEGREE * 4.0F);
+                case WARMING_RAPIDLY -> tempChange = Math.min(tempChange * 100.0F, BiomeTypeData.MC_DEGREE * 2.0F);
                 case WARMING_NORMALLY -> {
                     if (canSweat) {
                         // Sweating
